@@ -35,7 +35,7 @@ export class Text extends Component {
     if (!text) text = ''
     let element = this.element
     const draw = this.draw
-    const position = { x: element.attr('x'), y: element.attr('y') }
+    const position = { x: element.attr('x'), y: -element.attr('y') }
     element.clear().remove()
     element = genText(this.draw, text, position)
     element.component = this
@@ -109,7 +109,7 @@ function genText(draw, text, position) {
     .attr('text', text)
     .attr('x', position.x)
     .attr('y', -position.y)
-  genCover(draw, element, position)
+  // genCover(draw, element, position)
   return element
 }
 
