@@ -18,6 +18,30 @@ function init_modules(draw) {
   reconstruct_components(draw)
 }
 
+function execute_script_in_file() {
+  const scripts = document.querySelectorAll('script')
+  scripts.forEach(script => {
+    if (script.getAttribute('xmlns') == FSG_NAMESPACE) {
+      eval(script.textContent)
+    }
+  })
+}
+
+/* Edit Test */
+/* query string is length limited, not good for file.
+ * require server to handle post request.
+ * TODO: 
+ * 1. content => server with a hash
+ * 2. window.location = https://rintaroutw.github.io/fsg?hash=
+ * 3. get the content from server ater opening animation.
+ * 4. loadSVG(content)
+ *
+function edit(content) {
+  const encodedString = encodeURI(`http://localhost:8080?content=${content}`)
+  window.location = encodedString
+}
+*/
+
 function init() {
   // runtime for html/svg, different envs.
   // html -> exported html
@@ -32,15 +56,6 @@ function init() {
 
     window.FSG_RUNTIME = true // runtime should only be loaded once.
 
-    function execute_script_in_file() {
-      const scripts = document.querySelectorAll('script')
-      scripts.forEach(script => {
-        if (script.getAttribute('xmlns') == FSG_NAMESPACE) {
-          eval(script.textContent)
-        }
-      })
-    }
-
     const contentType = document.contentType
     if (contentType.includes('html')) { // html goes here.
 
@@ -50,7 +65,7 @@ function init() {
       // draw.fsg.selection
       // draw.fsg.marker
       // draw.fsg.component
-       const svgs = document.querySelectorAll('svg')
+      const svgs = document.querySelectorAll('svg')
       let fsgs = []
       svgs.forEach(svg => {
         if (SVG(svg).attr('xmlns:fsg') == FSG_NAMESPACE)
@@ -61,7 +76,7 @@ function init() {
         const draw = SVG(svg).first()
         init_modules(draw)
       })
-     // locate the user script and execute it.
+      // locate the user script and execute it.
 
     } else { // svg
       const draw = SVG('svg').first()

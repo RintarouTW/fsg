@@ -133,14 +133,14 @@ export function loadSVG(content) {
 
 function init() {
 
-  window.resizeTo(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT) // default window size
-
   if (typeof CodeMirror === 'undefined') {
     wait(300).then(() => init())
     return
   }
 
   window.FSG = true // define fsg to prevent runtime being init again by the script within svg file.
+
+  window.resizeTo(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT) // default window size
 
   init_color_picker()
 
