@@ -1,1 +1,1 @@
-grep -r $1 *.js --exclude '*.min.js' --exclude-dir lib
+grep -r $1 * --exclude '*.min.js' --exclude-dir 'lib, test'

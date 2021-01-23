@@ -9,8 +9,8 @@ import { saveAsSVG, exportToHTML } from './file.js'
 import { toggle_code_editor } from './code_editor.js'
 // components
 import { LineBaseShape } from '../components/shape.js'
-import { addIntersectPoint, addParallelPoint, addPerpPoint, addPoint } from '../components/point.js'
-import { addLine, addRay, addEdge, addVector } from '../components/line.js'
+import { addIntersectPoint, addPerpPoint, addPoint } from '../components/point.js'
+import { addLine, addRay, addEdge, addVector, addParallelLine } from '../components/line.js'
 import { addPolygon, addCircle } from '../components/fillable.js'
 import { addText } from '../components/text.js'
 import { 
@@ -148,7 +148,7 @@ export function init_keybindings(draw) {
             if (intersectableComponents[1] instanceof LineBaseShape) { // intersect two lines
               const [l1, l2] = intersectableComponents
               const coord = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
-              console.log(coord, l1.direction(), l2, l2.direction())
+              // console.log(coord, l1.direction(), l2, l2.direction())
               const componentRefs = [l1.component_no, l2.component_no]
               const index = 0
               doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
@@ -264,7 +264,8 @@ export function init_keybindings(draw) {
             doAction(draw, addPerpPoint, {draw, coord, componentRefs})
           } else { // Parallel Point
             const coord = { x: center.x + direction.x * 20, y : center.y + direction.y * 20}
-            doAction(draw, addParallelPoint, {draw, coord, componentRefs})
+            // doAction(draw, addParallelPoint, {draw, coord, componentRefs})
+            doAction(draw, addParallelLine, {draw, coord, componentRefs})
           }
         }
         break

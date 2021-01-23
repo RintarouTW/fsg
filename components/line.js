@@ -1,10 +1,11 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR, DEFAULT_STROKE_COLOR } from '../common/define.js'
+import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, DEFAULT_STROKE_COLOR } from '../common/define.js'
 import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { LineBaseShape } from './shape.js'
 import { currentStrokeColor } from '../module/color_picker.js'
+import { addParallelPoint } from './point.js'
 
 function setStrokeColor(element) {
   if (window.FSG) {
@@ -112,6 +113,7 @@ export class Line extends LineBaseShape {
       const box = draw.bbox()
       const coord1 = pointOnScreen(p1.component)
       const coord2 = pointOnScreen(p2.component)
+      // console.log(box, coord1, coord2)
       const [clip1, clip2] = clipping(box, coord1, coord2)
 
       if (!clip1 || !clip2) return
@@ -153,6 +155,7 @@ function getClipped(draw, p1, p2) {
   console.assert(p2, 'p2 must be defined')
 
   const box = draw.bbox()
+  console.log(box)
   const [clip1, clip2] = clipping(box, {x: p1.x, y: p1.y}, {x: p2.x, y: p2.y})
   console.assert(clip1, 'clip1 must be defined')
   console.assert(clip2, 'clip2 must be defined')
@@ -202,3 +205,50 @@ export function addRay({draw, componentRefs, element, cover, component_no}) {
   return new Ray({draw, points, element, cover })
 }
 
+///
+/// ParallelLine
+/// remove if points are removed.
+///
+
+export class ParallelLine extends Line {
+  constructor({draw, points, element, cover}) {
+    super({draw, element, cover, points})
+
+    const componentRefs = points.map(point => {
+    // watch point remove event
+      point.on('remove', this.remove.bind(this))
+      return point.attr('component_no')
+    })
+    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
+  }
+  undo() {
+    const parallelPoint = this.points[1]
+    parallelPoint.remove()
+    super.undo()
+  }
+}
+
+export function addParallelLine({ draw, coord, componentRefs, element, cover, component_no }) {
+
+  let points = componentRefs.map(no => componentByNo(draw, no).element)
+
+  if (!element) {
+    const p1 = points[1] // where points[0] is the line element
+    const parallelPoint = addParallelPoint({draw, coord, componentRefs})
+    const p2 = parallelPoint.element
+    const box = draw.bbox()
+    console.assert(p1, 'p1 must be defined', points)
+    console.assert(p2, 'p2 must be defined', points)
+
+    const coord1 = { x: p1.cx(), y: p1.cy() }
+    const coord2 = { x: p2.cx(), y: p2.cy() }
+    const [clip1, clip2] = clipping(box, coord1, coord2)
+    element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'parallel-line dashed shape component selected')
+    setStrokeColor(element)
+    cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
+    points = [p1, p2]
+  }
+  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+
+  return new ParallelLine({draw, points, element, cover, component_no})
+}

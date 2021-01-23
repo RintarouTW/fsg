@@ -12,6 +12,21 @@ function setStyle(element) {
   element.attr('stroke', strokeColor)
 }
 
+///
+/// UnSelectablePoint
+/// 
+export class UnSelectablePoint extends Component {
+  constructor({ draw, element }) {
+    super({draw, element})
+    unselectComponent(draw, this) 
+  }
+  getAttributes() {
+    console.assert(true, 'unselectable point should not be inspected')
+    return []
+  }
+}
+
+
 //
 // override could prevent event handler explosion for better performance..
 //
@@ -188,7 +203,7 @@ export function addIntersectPoint({ draw, coord, index, componentRefs, element, 
 /// ParallelPoint
 /// removed after the ref components are removed.
 ///
-export class ParallelPoint extends SelectablePoint {
+export class ParallelPoint extends UnSelectablePoint {
   constructor({ draw, componentRefs, element }) {
     super({ draw, element })
 

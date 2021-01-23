@@ -62,15 +62,18 @@ body {
   cursor: grab;
 }
 
-.intersect-point, .parallel-point, .perp-point, .pin-point {
+.intersect-point, .perp-point, .pin-point {
   fill: var(--intersect-point-fill-color);
   stroke: var(--intersect-point-stroke-color);
 }
 
-.intersect-point, .parallel-point, .perp-point:hover {
+.intersect-point, .perp-point:hover {
   cursor: pointer;
 }
 
+.parallel-point {
+  visibility: hidden;
+}
 .axis-x,.axis-y {
   stroke: var(--axis-stroke-color);
   stroke-width: 1.2;

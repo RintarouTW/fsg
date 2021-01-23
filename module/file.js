@@ -1,7 +1,7 @@
 'use strict'
 
 import { COMPONENT_REFS_ATTR, COMPONENT_NO_ATTR, OF_ATTR, SERVER_ROOT, FSG_NAMESPACE } from '../common/define.js'
-import { addEdge, addLine, addRay, addVector, addAxis } from '../components/line.js'
+import { addEdge, addLine, addRay, addVector, addAxis, addParallelLine } from '../components/line.js'
 import { addPolygon, addCircle } from '../components/fillable.js'
 import { addPoint, addIntersectPoint, addParallelPoint, addPerpPoint, addPinPoint } from '../components/point.js'
 import { addText } from '../components/text.js'
@@ -29,6 +29,7 @@ export function reconstruct_components(draw) {
   const covers = draw.find('.cover')
   const list = findAllComponentElements(draw)
   list.forEach(element => {
+    // without cover
     // console.log(element.attr(COMPONENT_NO_ATTR), element, element.classes())
     if (element.hasClass('point')) {
       addPoint({draw, element})
@@ -80,6 +81,7 @@ export function reconstruct_components(draw) {
       addAxis({draw, type, element, cover}) 
       return
     }
+    // with cover
     const refs = element.attr(COMPONENT_REFS_ATTR)
     if (!refs) return
     const componentRefs = refs.split(',').map(item => Number(item))
@@ -106,6 +108,10 @@ export function reconstruct_components(draw) {
     }
     if (element.hasClass('circle')) {
       addCircle({draw, componentRefs, element, cover}) 
+      return
+    }
+    if (element.hasClass('parallel-line')) {
+      addParallelLine({draw, componentRefs, element, cover}) 
       return
     }
     console.log('WARNNING: unsupported component..', element)
