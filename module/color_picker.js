@@ -81,6 +81,13 @@ export function attachColorPicker(hexInput) {
   // console.log(_colorPicker.color.hex8String, _hexInput.value)
 
   _colorPicker.on(["color:init", "color:change"], onColorChange)
+  _colorPicker.on("input:start", () => {
+    document.dispatchEvent(new CustomEvent('colorpicker:change-start'))
+  })
+  _colorPicker.on("input:end", () => {
+    document.dispatchEvent(new CustomEvent('colorpicker:change-end'))
+  })
+
   showColorPicker()
 }
 

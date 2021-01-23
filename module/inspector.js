@@ -50,7 +50,7 @@ function inspect_component(component) {
   attributes.forEach(name => {
     const field = SVG('#field_' + name).node
     let  value = component.getAttribute(name)
-    
+
     if (typeof value === 'undefined')
       value = fieldDefaultValue[name]
 
@@ -92,11 +92,18 @@ export function init_inspector(draw) {
   }).on('inspect-detach', () => {
     inspect_detach()
   })
+  document.addEventListener('colorpicker:change-start', () => {
+    _inspecting_element?.removeClass('inspecting').removeClass('selected')
+  })
+  document.addEventListener('colorpicker:change-end', () => {
+    _inspecting_element?.addClass('selected').addClass('inspecting')
+  })
 }
 
 function init_fields() {
 
-  _inspecting_element?.off('update', update_fields).off('dragend', update_fields)
+  _inspecting_element?.off('update', update_fields)
+    .off('dragend', update_fields)
   _inspecting_element = null
 
   fields.forEach(name => {
