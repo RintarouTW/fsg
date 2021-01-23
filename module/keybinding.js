@@ -9,8 +9,8 @@ import { saveAsSVG, exportToHTML } from './file.js'
 import { toggle_code_editor } from './code_editor.js'
 // components
 import { LineBaseShape } from '../components/shape.js'
-import { addIntersectPoint, addPerpPoint, addPoint } from '../components/point.js'
-import { addLine, addRay, addEdge, addVector, addParallelLine } from '../components/line.js'
+import { addIntersectPoint, addPoint } from '../components/point.js'
+import { addLine, addRay, addEdge, addVector, addParallelLine, addPerpLine } from '../components/line.js'
 import { addPolygon, addCircle } from '../components/fillable.js'
 import { addText } from '../components/text.js'
 import { 
@@ -261,7 +261,8 @@ export function init_keybindings(draw) {
           const direction = line.direction()
           if (evt.shiftKey) { // Perp Point
             const coord = { x: center.x - direction.y * 20, y : center.y + direction.x * 20}
-            doAction(draw, addPerpPoint, {draw, coord, componentRefs})
+            // doAction(draw, addPerpPoint, {draw, coord, componentRefs})
+            doAction(draw, addPerpLine, {draw, coord, componentRefs})
           } else { // Parallel Point
             const coord = { x: center.x + direction.x * 20, y : center.y + direction.y * 20}
             // doAction(draw, addParallelPoint, {draw, coord, componentRefs})

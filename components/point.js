@@ -245,7 +245,7 @@ export function addParallelPoint({ draw, coord, componentRefs, element, componen
 /// PerpPoint 
 /// removed after the ref components are removed.
 ///
-export class PerpPoint extends SelectablePoint {
+export class PerpPoint extends UnSelectablePoint {
   constructor({ draw, componentRefs, element }) {
     super({ draw, element })
 

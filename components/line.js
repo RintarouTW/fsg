@@ -5,7 +5,7 @@ import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { LineBaseShape } from './shape.js'
 import { currentStrokeColor } from '../module/color_picker.js'
-import { addParallelPoint } from './point.js'
+import { addParallelPoint, addPerpPoint } from './point.js'
 
 function setStrokeColor(element) {
   if (window.FSG) {
@@ -251,4 +251,52 @@ export function addParallelLine({ draw, coord, componentRefs, element, cover, co
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
   return new ParallelLine({draw, points, element, cover, component_no})
+}
+
+///
+/// PerpLine
+/// remove if points are removed.
+///
+
+export class PerpLine extends Line {
+  constructor({draw, points, element, cover}) {
+    super({draw, element, cover, points})
+
+    const componentRefs = points.map(point => {
+    // watch point remove event
+      point.on('remove', this.remove.bind(this))
+      return point.attr('component_no')
+    })
+    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
+  }
+  undo() {
+    const perpPoint = this.points[1]
+    perpPoint.remove()
+    super.undo()
+  }
+}
+
+export function addPerpLine({ draw, coord, componentRefs, element, cover, component_no }) {
+
+  let points = componentRefs.map(no => componentByNo(draw, no).element)
+
+  if (!element) {
+    const p1 = points[1] // where points[0] is the line element
+    const parallelPoint = addPerpPoint({draw, coord, componentRefs})
+    const p2 = parallelPoint.element
+    const box = draw.bbox()
+    console.assert(p1, 'p1 must be defined', points)
+    console.assert(p2, 'p2 must be defined', points)
+
+    const coord1 = { x: p1.cx(), y: p1.cy() }
+    const coord2 = { x: p2.cx(), y: p2.cy() }
+    const [clip1, clip2] = clipping(box, coord1, coord2)
+    element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'perp-line dashed shape component selected')
+    setStrokeColor(element)
+    cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
+    points = [p1, p2]
+  }
+  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+
+  return new PerpLine({draw, points, element, cover, component_no})
 }
