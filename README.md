@@ -31,7 +31,7 @@ Create animatable, customizable, re-editable and light weight interactive geomet
 ## Dependency
 
 - SVGJS for SVG elements
-- svgjs.pan.zoom plugin for pan and zoom (it's minor modified for the builder)
+- svg.pan.zoom plugin for pan and zoom (it's minor modified for the builder)
 - KaTeX for LaTeX rendering
 - CodeMirror for code editing
 - iro for color picker
