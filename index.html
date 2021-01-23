@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fast SVG Geometry Builder</title>
+   <!-- LaTeX -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"></script>
+    <!-- 
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
+    </script>
+    <script type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    -->
+    <!-- svgjs -->
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+    <!-- color picker -->
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+    <link rel="stylesheet" type="text/css" href="/style/builder.css">
+    <link rel="stylesheet" type="text/css" href="/style/runtime.css">
+    <link rel="stylesheet" type="text/css" href="/style/code_editor.css">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="manifest.webmanifest"/>
+    <script src="/main.min.js" type="module"></script>
+  </head>
+  <body>
+    <div id="editArea"></div>
+    <div id="hintBox">
+      <span id="message">Scroll Down for Help</span>
+    </div>
+    <div id="inspector">
+      <span class="field_label">x</span><input class="field" id="field_cx"/></br>
+      <span class="field_label">y</span><input class="field" id="field_cy"/></br>
+      <span class="field_label">id</span><input class="field" id="field_id"/></br>
+      <span class="field_label">text</span><input class="field long" id="field_text"/></br>
+      <span class="field_label">class</span><input class="field long" id="field_class"/></br>
+      <input id="file" type="file"/>
+      <a href="https://rintaroutw.github.io/fsg"><img src="/images/fsg-512x512.png" alt="" id="logo"/></a>
+      <img src="/images/run.svg" alt="" id="runButton"/>
+      <img src="/images/reload.svg" alt="" id="reloadButton"/>
+      <input class="field_color" type="text" maxlength="9" value="#8a0238" id="field_fill"/>
+      <input class="field_color" type="text" maxlength="9" value="#8a0238" id="field_stroke"/>
+      <div id="colorPicker"></div>
+      <!-- TODO: stroke width -->
+    </div>
+    <div id="codeEditorWindow" class="l4t-editor-window l4t-hidden">
+      <textarea id="codeEditor"></textarea>
+    </div>
+    <div id="help">
+      <div>
+        <!-- construct -->
+        <span><kbd>a</kbd> append point</span>
+        <span><kbd>c</kbd> circle</span>
+        <span><kbd>e</kbd> edge(line segment)</span>
+        <span><kbd>l</kbd> line</span>
+        <span><kbd>r</kbd> ray</span>
+        <span><kbd>v</kbd> vector</span>
+        <span><kbd>p</kbd> polygon</span>
+        <span><kbd>t</kbd> text</span>
+        <span><kbd>i</kbd> intersect point(s)</span>
+        <span><kbd>x</kbd> project point on line</span>
+        <span><kbd>+</kbd> perpenticular point</span>
+        <span><kbd>=</kbd> parallel point</span>
+        <!-- style -->
+        <span><kbd>f</kbd> toggle filled</span>
+        <span><kbd>h</kbd> toggle hidden</span>
+        <span><kbd>s</kbd> toggle solid/dashed</span>
+        <span><kbd>I</kbd> edit id</span>
+        <span><kbd>T</kbd> edit text</span>
+        <span><kbd>C</kbd> edit class</span>
+        <!-- layer -->
+        <span><kbd>[/]</kbd> backward / forward</span>
+        <span><kbd>shift+[/shift+]</kbd> bottom / top</span>
+        <!-- edit -->
+        <span><kbd>click</kbd> add point/select</span>
+        <span><kbd>drag</kbd> select</span>
+        <span><kbd>shift+drag</kbd> deselect</span>
+        <span><kbd>alt+drag</kbd> pan</span>
+        <span><kbd>pinch/scroll</kbd> zoom</span>
+        <span><kbd>d/D</kbd> deselect last selection / deselect all</span>
+        <span><kbd>u(z)/U(Z)</kbd> undo / redo</span>
+        <!-- script -->
+        <span><kbd>ctrl+e</kbd> execute script</span>
+        <span><kbd>ctrl+r</kbd> reload</span>
+        <!-- file -->
+        <span><kbd>command+e</kbd> export to .html</span>
+        <span><kbd>command+o</kbd> open .svg</span>
+        <span><kbd>command+s</kbd> save as .svg</span>
+      </div>
+    </div>
+  </body>
+</html>

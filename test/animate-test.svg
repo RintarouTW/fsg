@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="525" height="393.75" viewBox="-262.5 -196.875 525 393.75" transform="matrix(1,0,0,-1,0,0)"><defs><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3 , 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker></defs><foreignObject width="525" height="393.75" x="-262.5" y="-196.875"><div id="board"></div></foreignObject><rect width="0" height="0" class="select-box"></rect><line x1="-262.5" y1="0" x2="262.5" y2="0" class="axis-x shape component" marker-end="url(#SvgjsMarker1000)" component_no="1"></line><line x1="-262.5" y1="0" x2="262.5" y2="0" class="cover" of="1"></line><circle r="0.5" cx="-262.5" cy="0" class="hidden-point" id="axis-x-start"></circle><circle r="0.5" cx="262.5" cy="0" class="hidden-point" id="axis-x-end"></circle><line x1="0" y1="-196.875" x2="0" y2="196.875" class="axis-y shape component" marker-end="url(#SvgjsMarker1000)" component_no="2"></line><line x1="0" y1="-196.875" x2="0" y2="196.875" class="cover" of="2"></line><circle r="0.5" cx="0" cy="-196.875" class="hidden-point" id="axis-y-start"></circle><circle r="0.5" cx="0" cy="196.875" class="hidden-point" id="axis-y-end"></circle><circle r="3" cx="100" cy="100" class="point component selected inspecting" component_no="3" id="fooPoint"></circle><filter id="filter_shadow" x="-50%" y="-50%" width="160%" height="160%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
+	<feDropShadow stdDeviation="10 10" in="merge" dx="0" dy="0" flood-color="#ffffff" flood-opacity="1" x="-50%" y="-50%" width="100%" height="100%" result="dropShadow"></feDropShadow>
+</filter><filter id="filter_blur" x="-10%" y="-10%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
+	<feGaussianBlur stdDeviation="0 10" x="-50%" y="-50%" width="100%" height="100%" in="SourceGraphic" edgeMode="none" result="blur"></feGaussianBlur>
+</filter><filter id="filter_color_matrix" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
+	<feColorMatrix type="saturate" values="5" x="-50%" y="-50%" width="100%" height="100%" in="blur" result="colormatrix"></feColorMatrix>
+</filter><style>
+:root {
+  --vector-marker-color: #000;
+  --axis-stroke-color: #000;
+  --text-color: #333;
+  --point-fill-color: #444;
+  --intersect-point-fill-color: #777;
+  --shape-stroke-color: #333;
+  --shape-fill-color: #4a6471;
+}
+
+#board {
+  background-color: rgba(15, 15, 15, 0);
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.cover {
+  stroke: rgba(1,0,0,0);
+  stroke-width: 3;
+  fill: none;
+}
+
+.cover:hover {
+  cursor: pointer;
+}
+
+/* shapes */
+
+.vector-marker-start, .vector-marker-end {
+  fill: var(--vector-marker-color);
+}
+
+.shape {
+  stroke: var(--shape-stroke-color);
+  fill: none;
+  opacity: 0.8;
+}
+
+.shape.filled {
+  fill: var(--shape-fill-color);
+}
+
+.point {
+  fill: var(--point-fill-color);
+  stroke: none;
+}
+
+.point, .pin-point:hover {
+  cursor: grab;
+}
+
+.intersect-point, .parallel-point, .perp-point, .pin-point {
+  fill: var(--intersect-point-fill-color);
+  stroke: none;
+}
+
+.intersect-point, .parallel-point, .perp-point:hover {
+  cursor: pointer;
+}
+
+.axis-x,.axis-y {
+  stroke: var(--axis-stroke-color);
+  stroke-width: 1.2;
+}
+
+.text, .latex, .label {
+  color: var(--text-color);
+  fill: var(--text-color);
+  user-select: none;
+}
+
+.text.selected {
+  background-color: #ff0;
+}
+
+.latex {
+  transform: scaleY(-1);
+}
+
+/* dashed */
+.dashed {
+  stroke-dasharray: 3;
+  stroke-width: 1;
+}
+</style>
+<script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" />
+<script>
+const fooPoint = SVG('#fooPoint')
+fooPoint.animate(3000).ease('-').rotate(360, 0, 0).loop(true)
+</script>
+</svg>
