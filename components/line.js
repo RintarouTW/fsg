@@ -7,10 +7,10 @@ import { LineBaseShape } from './shape.js'
 import { currentStrokeColor } from '../module/color_picker.js'
 
 function setStrokeColor(element) {
-    if (window.FSG) {
-      const strokeColor = currentStrokeColor()
-      element.attr('stroke', strokeColor)
-    }
+  if (window.FSG) {
+    const strokeColor = currentStrokeColor()
+    element.attr('stroke', strokeColor)
+  }
 }
 ///
 /// LineSegment
