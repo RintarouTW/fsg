@@ -69,8 +69,6 @@ function codeEditor() {
         {
           if(evt.ctrlKey) {
             SVG('#runButton').node.click()
-            evt.preventDefault()
-            evt.stopPropagation()
           }
         }
         break
@@ -78,12 +76,12 @@ function codeEditor() {
         {
           if (evt.ctrlKey) { // reload
             SVG('#reloadButton').node.click()
-            evt.preventDefault()
-            evt.stopPropagation()
           }
         }
         break
     } 
+    evt.preventDefault()
+    evt.stopPropagation()
   })
 }
 
