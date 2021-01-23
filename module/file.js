@@ -196,11 +196,13 @@ export function exportToHTML(draw) {
     <title>Fast SVG Geometry</title>
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+    <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/runtime.css">
     <link rel="icon" href="${SERVER_ROOT}/images/favicon.ico" type="image/x-icon" />
   </head>
 `
   // <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/runtime.css">
   // <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/dark-background.css">
+  // <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/theme-dark.css">
   // <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/theme-light.css">
 
   content = '<!DOCTYPE html>' + head + '<body><div style="overflow:hidden">' + content + '</div></body></html>'

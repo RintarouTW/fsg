@@ -44,8 +44,13 @@ function init() {
     const contentType = document.contentType
     if (contentType.includes('html')) { // html goes here.
 
-      // now, support the first one only.
-      const svgs = document.querySelectorAll('svg')
+      // support multiple svgs, find the svgs that's in fsg namespace.
+      // modules should be inited for each svg.
+      // draw.fsg.history
+      // draw.fsg.selection
+      // draw.fsg.marker
+      // draw.fsg.component
+       const svgs = document.querySelectorAll('svg')
       let fsgs = []
       svgs.forEach(svg => {
         if (SVG(svg).attr('xmlns:fsg') == FSG_NAMESPACE)
@@ -56,15 +61,7 @@ function init() {
         const draw = SVG(svg).first()
         init_modules(draw)
       })
-      // locate the user script and execute it.
-
-      // support multiple svgs, find the svgs that's in fsg namespace.
-      // modules should be inited for each svg.
-      // draw.fsg.history
-      // draw.fsg.selection
-      // draw.fsg.marker
-      // draw.fsg.component
-      // locate the user script and execute it.
+     // locate the user script and execute it.
 
     } else { // svg
       const draw = SVG('svg').first()

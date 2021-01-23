@@ -144,7 +144,8 @@ function init() {
 
   init_color_picker()
 
-  _draw = (DEV_TESTING) ? run_tests() : loadSVG() // new file
+  // _draw = (DEV_TESTING) ? run_tests() : loadSVG() // for testing
+  _draw = loadSVG() // new file
   console.assert(_draw, 'something wrong failed to get draw')
 
   SVG('#file').on('change', evt => {
