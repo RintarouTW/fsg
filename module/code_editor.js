@@ -63,12 +63,18 @@ function codeEditor() {
   _window.addEventListener('keydown', evt => {
     switch(evt.code) {
       case 'F1':
-        toggle_code_editor()
+        {
+          toggle_code_editor()
+          evt.preventDefault()
+          evt.stopPropagation()
+        }
         break
       case 'KeyE':
         {
           if(evt.ctrlKey) {
             SVG('#runButton').node.click()
+            evt.preventDefault()
+            evt.stopPropagation()
           }
         }
         break
@@ -76,12 +82,12 @@ function codeEditor() {
         {
           if (evt.ctrlKey) { // reload
             SVG('#reloadButton').node.click()
+            evt.preventDefault()
+            evt.stopPropagation()
           }
         }
         break
     } 
-    evt.preventDefault()
-    evt.stopPropagation()
   })
 }
 
