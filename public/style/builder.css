@@ -1,0 +1,317 @@
+/* ui */
+:root {
+  /* --ui-background-color: #1b262c; */
+  /* --ui-background-color: #424242 !important; */
+  --ui-background-color: #232425 !important;
+
+  --ui-editarea-background-color: #121212 !important;
+  --ui-editarea-border-color: #333 !important;
+
+  --ui-hint-text-color: #fff !important;
+
+  /* --ui-inspector-background-color: #0006158f !important; */
+  --ui-inspector-background-color: #272B2E !important;
+  --ui-inspector-border-color: #333 !important;
+  --ui-inspector-text-color: #eee !important;
+  --ui-inspecting-stroke-color: #89ceff !important;
+
+  --ui-help-background-color: #222831aa !important;
+  --ui-help-border-color: #333 !important;
+  --ui-help-text-color: #bbbbbb !important;
+
+  --ui-hover-stroke-color: #bbe1fa !important;
+  --ui-selected-stroke-color: #dddddd !important;
+  --ui-select-box-stroke-color: #fff !important;
+  --ui-select-box-fill-color: #ffffff33 !important;
+
+  --ui-kbd-text-color: #fff;
+
+/* following override to fast dev and test only without reload */
+  /*
+  --vector-marker-color: #999 !important;
+  --axis-stroke-color: #999 !important;
+  --text-color: #999 !important;
+  --point-fill-color: #444 !important;
+  --point-stroke-color: #777777 !important;
+  --intersect-point-fill-color: #777777aa !important;
+  --intersect-point-stroke-color: #565656aa !important;
+  */
+}
+
+/* override for testing */
+.dashed {
+  stroke-dasharray: 5 3 !important;
+  stroke-width: 1 !important;
+}
+
+body {
+  background-color: var(--ui-background-color);
+  /* background-image: url(/images/plain_blue.jpg); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: Times, serif, monospace;
+}
+
+#editArea {
+  /* background-color: rgba(255,255,255,0); */
+  /* background-color: var(--ui-editarea-background-color); */
+  backdrop-filter: blur(9px);
+  border-radius: 2px;
+  border: 1px solid var(--ui-editarea-border-color);
+  padding: 0;
+  position: relative;
+  width: 98vw;
+  height: 74vw;
+}
+
+.fsg-board {
+  fill: rgba(255,255,255,0) !important;
+  cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"/></svg>') -8 -8, crosshair !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.fadeIn {
+  animation: fadeIn 500ms;
+}
+
+.fadeOut {
+  animation: fadeOut 500ms;
+}
+
+.fadeInOut {
+  animation: fadeInOut 2000ms;
+}
+
+#hintBox {
+  position: absolute;
+  top: calc(70vw);
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+  font-family: 'KaTeX_Math';
+}
+
+#message {
+  background-color: var(--ui-background-color);
+  color: var(--ui-hint-text-color);
+  border: 1px solid #888; 
+  border-radius: 15px;
+  padding: 5px 15px 5px 15px;
+  user-select: none;
+}
+
+#inspector {
+  /* background-color: var(--ui-inspector-background-color); */
+  border: 1px solid var(--ui-inspector-border-color);
+  border-radius: 2px;
+  backdrop-filter: blur(9px);
+  color: var(--ui-inspector-text-color);
+  margin: 10px;
+  padding: 20px 5px 20px 5px;
+  user-select: none;
+  font-family: 'Source Code Pro', monospace;
+  font-size: large;
+  position: relative;
+}
+
+#file {
+ background-color: transparent; 
+ margin-left: 2px;
+ margin-bottom: 5px;
+ cursor: pointer;
+}
+
+#file:focus {
+ outline: 1px dashed #fff;
+}
+
+#logo {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 32px;
+}
+
+#runButton {
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  width: 24px;
+}
+
+#reloadButton {
+  position: absolute;
+  top: 11px;
+  right: 100px;
+  width: 24px;
+}
+
+#colorPicker {
+  position: absolute;
+  right: 120px;
+  top: 45px;
+  /* background-color: #333; */
+  padding: 10px;
+}
+
+#field_fill { /* color picker */
+  top: 11px;
+  right: 150px;
+}
+
+#field_stroke { /* color picker */
+  top: 11px;
+  right: 230px;
+}
+
+.highlight {
+  filter: brightness(130%);
+}
+.button-down {
+  filter: brightness(80%);
+}
+
+#help {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--ui-help-background-color);
+  border: 1px solid var(--ui-help-border-color);
+  border-radius: 5px;
+  color: var(--ui-help-text-color);
+  line-height: 1.6em;
+  user-select: none;
+}
+
+kbd {
+  margin: 10px 8px 10px 8px;
+  background-color: #666;
+  border-radius: 4px;
+  padding: 3px;
+  border: 1px solid #333;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--ui-kbd-text-color);
+}
+
+.field_color {
+  font-family: monospace;
+  position: absolute;
+  padding: 0;
+  width: 78px;
+  text-shadow: 1px 1px 2px #000, -1px -1px 2px #000;
+}
+
+.field_color, .field {
+  margin-top: 3px;
+  margin-left: 10px;
+  margin-bottom: 3px;
+  padding-left: 3px;
+  box-shadow: none;
+  box-sizing: border-box;
+  display: inline-block;
+  line-height: 0.7;
+  resize: none;
+  appearance: none;
+  border: 0; 
+  background-color: #33333363;
+  outline: none;
+  color: #fff;
+}
+
+.field_label {
+  display: inline-block;
+  font-size: 0.7em;
+  width: 4em;
+  margin-left: 10px;
+  user-select: none;
+}
+
+.long {
+  width: 400px;
+}
+
+.hidden {
+  opacity: 0.5 !important;
+  visibility: visible !important;
+}
+
+.ui-hidden {
+  visibility: hidden;
+}
+
+.inspecting {
+  stroke: var(--ui-inspecting-stroke-color) !important;
+}
+
+.text.selected > :first-child {
+  filter: brightness(1.5); 
+}
+
+/* selections */
+
+.ui-select-box {
+  stroke: var(--ui-select-box-stroke-color);
+  stroke-width: 0.5;
+  fill: var(--ui-select-box-fill-color);
+}
+
+.cover {
+  stroke: rgba(255,255,255,0) !important;
+  stroke-width: 10 !important;
+  stroke-dasharray: none important;
+  fill: none;
+}
+
+.hover {
+  cursor: pointer;
+}
+
+.shape.hover {
+  stroke: var(--ui-hover-stroke-color);
+}
+
+.point.hover,
+.pin-point.hover,
+.perp-point.hover,
+.intersect-point.hover,
+.parallel-point.hover {
+  stroke: var(--ui-hover-stroke-color) !important;
+  stroke-width: 1.5 !important;
+}
+
+.shape.selected, .shape.dashed.selected {
+  stroke: var(--ui-selected-stroke-color);
+}
+
+.point {
+  cursor: pointer !important;
+}
+
+.point.selected {
+  stroke: var(--ui-selected-stroke-color);
+  stroke-width: 1;
+}
+
+.intersect-point.selected, .parallel-point.selected, .perp-point.selected, .pin-point.selected {
+  stroke: var(--ui-selected-stroke-color);
+  stroke-width: 0.5;
+}
+
+.dragging:hover {
+  cursor: crosshair;
+}
+
