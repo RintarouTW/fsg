@@ -49,6 +49,7 @@ export function findScript(draw, ns) {
   let found = false
   scripts.forEach(script => {
     if (script.node.getAttribute('namespace') == ns) {
+      // console.log('found ', ns)
       found = script
     }
   })
@@ -58,7 +59,7 @@ export function findScript(draw, ns) {
 export function init_scripts(draw) {
   // const userCode = `console.log('execute');const p1 = SVG('#p1'); if(p1) p1.animate(3000).rotate(360, 0, 0).during(() => SVG('#p1').fire('update'));`
   const userScript = findUserScript(draw)
-  const svgjs = findScript(draw, SVGJS_SCRIPT_URL)
+  const svgjs = findScript(draw, SVGJS_SCRIPT_NAMESPACE)
   const runtime = findScript(draw, FSG_RUNTIME_NAMESPACE)
 
   if (!svgjs)

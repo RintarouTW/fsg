@@ -12,7 +12,7 @@ export const FSG_RUNTIME_NAMESPACE = 'FSG_RUNTIME'
 export const SVGJS_SCRIPT_NAMESPACE = 'SVGJS_SCRIPT'
 
 export const SVGJS_SCRIPT_URL = String.raw`<script xlink:href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" />`
-export const RUNTIME_SCRIPT_URL = String.raw`<script href="${SERVER_ROOT}/runtime.min.js" />`
+export const RUNTIME_SCRIPT_URL = String.raw`<script xlink:href="${SERVER_ROOT}/runtime.min.js" />`
 export const RUNTIME_STYLE_LINK = String.raw`<link xmlns="http://www.w3.org/1999/xhtml" href="${SERVER_ROOT}/style/runtime.css" rel="stylesheet"/>`
 
 // Editor
