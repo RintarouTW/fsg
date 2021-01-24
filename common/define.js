@@ -1,18 +1,18 @@
 'use strict'
 
-export const DEV_TESTING = false
-// export const DEV_TESTING = true
+// export const DEV_TESTING = false
+export const DEV_TESTING = true
 
 let SERVER_ROOT
-SERVER_ROOT = (DEV_TESTING) ? 'https://localhost:8080' : 'https://rintaroutw.github.com/fsg'
+SERVER_ROOT = (DEV_TESTING) ? 'https://localhost:8080' : 'https://rintaroutw.github.io/fsg'
 export { SERVER_ROOT }
 
-export const FSG_NAMESPACE = 'https://rintaroutw.github.com/fsg'
+export const FSG_NAMESPACE = 'https://rintaroutw.github.io/fsg'
 export const FSG_RUNTIME_NAMESPACE = 'FSG_RUNTIME'
 export const SVGJS_SCRIPT_NAMESPACE = 'SVGJS_SCRIPT'
 
-export const SVGJS_SCRIPT_URL = String.raw`<script xlink:href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" />`
-export const RUNTIME_SCRIPT_URL = String.raw`<script xlink:href="${SERVER_ROOT}/runtime.min.js" />`
+export const SVGJS_SCRIPT_URL = String.raw`<script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" />`
+export const RUNTIME_SCRIPT_URL = String.raw`<script href="${SERVER_ROOT}/runtime.min.js" />`
 export const RUNTIME_STYLE_LINK = String.raw`<link xmlns="http://www.w3.org/1999/xhtml" href="${SERVER_ROOT}/style/runtime.css" rel="stylesheet"/>`
 
 // Editor
