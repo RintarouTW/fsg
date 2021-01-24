@@ -15,7 +15,8 @@ export function init_marker(draw) {
     vector_start_marker = draw.marker(VECTOR_START_MARKER_RADIUS * 2, VECTOR_START_MARKER_RADIUS * 2, add => {
       const r = VECTOR_START_MARKER_RADIUS
       add.circle(r).radius(r).cx(r).cy(r).attr('class', 'vector-marker-start')
-    }).attr('class', 'vector-start-marker')
+    })
+    vector_start_marker?.attr('class', 'vector-start-marker')
   }
   draw.fsg.marker.vector_start_marker = vector_start_marker
 
@@ -27,7 +28,8 @@ export function init_marker(draw) {
       add.polygon(path)
         .stroke({width: 1})
         .attr('class', 'vector-marker-end')
-    }).size(VECTOR_END_MARKER_ARROW_LENGTH, VECTOR_END_MARKER_ARROW_WIDTH)
+    })
+    vector_end_marker?.size(VECTOR_END_MARKER_ARROW_LENGTH, VECTOR_END_MARKER_ARROW_WIDTH)
       .ref(VECTOR_END_MARKER_ARROW_LENGTH, VECTOR_END_MARKER_ARROW_WIDTH/2)
       .attr('class', 'vector-end-marker')
   }
