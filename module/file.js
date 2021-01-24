@@ -137,7 +137,7 @@ function patchSVGJS(draw) {
     const mathSVGs = latex.find('svg')
     mathSVGs.each(svg => {
       svg.attr('xmlns:svgjs', null) 
-      svg.attr('xmlns:svgjs', "http://svgjs.com/svgjs") 
+      svg.attr('xmlns:svgjs', "https://svgjs.com/svgjs") 
     })
   })
 }
@@ -156,7 +156,7 @@ export function svgDocument(draw, optional_attributes = {}) {
   /* remove xmlns:svgjs first and add it back to prevent the svgjs redefine bug */
   const tmp = SVG(content)
     .attr('xmlns:svgjs', null)
-    .attr('xmlns:svgjs', "http://svgjs.com/svgjs") 
+    .attr('xmlns:svgjs', "https://svgjs.com/svgjs") 
     .attr('xmlns:fsg', null) // clean first to prevent the same bug of svgjs
     .attr('xmlns:fsg', FSG_NAMESPACE)
 
