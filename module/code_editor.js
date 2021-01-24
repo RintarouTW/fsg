@@ -54,7 +54,7 @@ function codeEditor() {
     tabSize: 2,
     indentUnit: 2,
     lineNumbers: true,
-    placeholder: "Edit code...",
+    placeholder: "Edit code... (F2 to tooggle vim mode)",
     theme: "tomorrow-night-bright"
   })
 
@@ -67,6 +67,21 @@ function codeEditor() {
           toggle_code_editor()
           evt.preventDefault()
           evt.stopPropagation()
+        }
+        break
+      case 'F2': // toggle vim mode
+        {
+          if(_cmInstance.options.keyMap == 'vim') {
+            if (CodeMirror.keyMap['vim']) {
+              CodeMirror.keyMap['vim'].detach(_cmInstance)
+              _cmInstance.options.keyMap = 'default'
+            }
+          } else {
+            if (CodeMirror.keyMap['vim']) {
+              CodeMirror.keyMap['vim'].attach(_cmInstance)
+              _cmInstance.options.keyMap = 'vim'
+            }
+          }
         }
         break
       case 'KeyE':

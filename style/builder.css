@@ -170,6 +170,14 @@ body {
   padding: 10px;
 }
 
+#colorIndicator {
+  position: absolute;
+  right: 260px;
+  top: 33px;
+  width: 13px;
+  transition: right 300ms ease-out;
+}
+
 #field_fill { /* color picker */
   top: 11px;
   right: 150px;

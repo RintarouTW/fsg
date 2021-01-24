@@ -70,12 +70,18 @@ function onColorChange(color) {
 export function attachColorPicker(hexInput) {
   if (!_colorPicker) return
   if (!_enabled) return
-  
+
   // console.assert(hexInput, 'hexInput must exist')
   // console.log('attach to ', hexInput)
 
   _hexInput = hexInput ?? _hexInput
   _hexInput.addEventListener('change', onInputChange)
+
+  if (_hexInput.getAttribute('id') == 'field_fill')
+    document.querySelector('#colorIndicator').style.right = '180px';
+  else
+    document.querySelector('#colorIndicator').style.right = '260px';
+
 
   _colorPicker.color.hex8String = _hexInput.value
   // console.log(_colorPicker.color.hex8String, _hexInput.value)
@@ -88,27 +94,6 @@ export function attachColorPicker(hexInput) {
     document.dispatchEvent(new CustomEvent('colorpicker:change-end'))
   })
 
-  showColorPicker()
-}
-
-/*
-export function detachColorPicker() {
-  if (!_colorPicker) return
-  if (_hexInput) {
-    _hexInput.removeEventListener('change', onInputChange)
-    _colorPicker.off(["color:init", "color:change"], onColorChange)
-    _hexInput = null
-  }
-  hideColorPicker()
-}
-*/
-
-function showColorPicker() {
-  //SVG('#colorPicker').removeClass('ui-hidden')
-}
-
-function hideColorPicker() {
-  //SVG('#colorPicker').addClass('ui-hidden')
 }
 
 export function currentFillColor() {
