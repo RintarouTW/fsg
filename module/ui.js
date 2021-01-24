@@ -41,7 +41,9 @@ export function showHint(text) {
   const message = SVG('#message').node
   message.innerText = text ?? message.innerText
   hintBox.classList.remove('fadeInOut')
-  hintBox.classList.add('fadeInOut')
+  setTimeout(() => {
+    hintBox.classList.add('fadeInOut')
+  }, 100)
 }
 
 export function opening_animation(draw) {

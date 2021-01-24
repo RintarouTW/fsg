@@ -5,7 +5,7 @@ import { intersect, intersectLineAndCircle, projectPointOnLine, twoCirclesInters
 // modules
 import { toggleClass } from './style.js'
 import { undo, redo, doAction } from './history.js'
-import { saveAsSVG, exportToHTML } from './file.js'
+import { saveAsSVG, exportToHTML, svgDocument } from './file.js'
 import { toggle_code_editor } from './code_editor.js'
 // components
 import { LineBaseShape } from '../components/shape.js'
@@ -28,6 +28,7 @@ import {
   deselectLastSelection,
   lastSelectedComponent,
 } from './selection.js'
+import { showHint } from './ui.js'
 
 function editField(fieldId) {
   let element = SVG(fieldId)
@@ -94,6 +95,12 @@ export function init_keybindings(draw) {
           editField('#field_class')
           evt.preventDefault()
           return
+        } else if (evt.metaKey) { // copy to clipboard
+          const content = svgDocument(draw) 
+          navigator.clipboard.writeText(content).then(() => {
+            showHint('Copied!')
+          })
+          return 
         } else {
           if (!points) return
           doAction(draw, addCircle, {draw, componentRefs})

@@ -150,8 +150,7 @@ function cleanupDirtyClasses(draw) {
   })
 }
 
-export function saveAsSVG(draw) {
-  var download = document.createElement('a');
+export function svgDocument(draw, optional_attributes = {}) {
   let content = draw.parent().svg()
 
   /* remove xmlns:svgjs first and add it back to prevent the svgjs redefine bug */
@@ -161,11 +160,19 @@ export function saveAsSVG(draw) {
     .attr('xmlns:fsg', null) // clean first to prevent the same bug of svgjs
     .attr('xmlns:fsg', FSG_NAMESPACE)
 
+  for (const [key, value] of Object.entries(optional_attributes)) {
+    tmp.attr(key, value)
+  }
+
   patchSVGJS(tmp)
   cleanupDirtyClasses(tmp)
 
-  content = tmp.svg()
+  return tmp.svg()
+}
 
+export function saveAsSVG(draw) {
+  var download = document.createElement('a');
+  const content = svgDocument(draw)
   const filename = 'light.svg'
   download.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
   download.setAttribute('download', filename);
@@ -177,20 +184,7 @@ export function saveAsSVG(draw) {
 
 export function exportToHTML(draw) {
   var element = document.createElement('a');
-  let content = draw.parent().svg()
-
-  /* remove xmlns:svgjs first and add it back to prevent the svgjs redefine bug */
-  const tmp = SVG(content)
-    .attr('xmlns:svgjs', null)
-    .attr('xmlns:svgjs', "http://svgjs.com/svgjs") 
-    .attr('xmlns:fsg', null) // clean first to prevent the same bug of svgjs
-    .attr('xmlns:fsg', FSG_NAMESPACE)
-    .attr('style','width:100%;') // for HTML
-
-  patchSVGJS(tmp)
-  cleanupDirtyClasses(tmp)
-
-  content = tmp.svg()
+  let content = svgDocument(draw, { 'style' :  'width:100%;' }) // for HTML
 
   const head = String.raw`<head>
     <title>Fast SVG Geometry</title>

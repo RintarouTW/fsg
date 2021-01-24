@@ -4,7 +4,7 @@
  * editor is the singleton instance per page.
  */
 
-import { DEV_TESTING, DEFAULT_TRANSPARENT_COLOR, CLASS_FSG_BOARD, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT,
+import { DEFAULT_TRANSPARENT_COLOR, CLASS_FSG_BOARD, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT,
 RUNTIME_STYLE_LINK
 } from './common/define.js'
 import { wait } from "./common/common.js"
@@ -20,7 +20,7 @@ import { init_color_picker, enableColorPicker } from './module/color_picker.js'
 import { init_code_editor } from './module/code_editor.js'
 
 import { init_marker } from './module/marker.js'
-import { init_filter } from './module/filter.js'
+// import { init_filter } from './module/filter.js' // not used yet
 import { init_component, deinit_allcomponents } from './components/component.js'
 import { reconstruct_components } from './module/file.js'
 import { execute_user_script, init_scripts } from './module/user_script.js'
@@ -119,7 +119,7 @@ export function loadSVG(content) {
     init_inspector(draw)
     init_keybindings(draw)
     init_axis(draw)
-    init_filter(draw)
+    // init_filter(draw)
     draw.defs().add(SVG(RUNTIME_STYLE_LINK))
   } else { 
     init_keybindings(draw)
