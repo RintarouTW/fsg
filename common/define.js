@@ -4,7 +4,7 @@ export const DEV_TESTING = false
 // export const DEV_TESTING = true
 
 let SERVER_ROOT
-SERVER_ROOT = (DEV_TESTING) ? 'http://localhost:8080' : 'https://rintaroutw.github.com/fsg'
+SERVER_ROOT = (DEV_TESTING) ? 'https://localhost:8080' : 'https://rintaroutw.github.com/fsg'
 export { SERVER_ROOT }
 
 export const FSG_NAMESPACE = 'https://rintaroutw.github.com/fsg'
