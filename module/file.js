@@ -172,7 +172,7 @@ export function svgDocument(draw, optional_attributes = {}) {
 
 export function saveAsSVG(draw) {
   var download = document.createElement('a');
-  const content = svgDocument(draw)
+  const content = svgDocument(draw, { 'style' :  'width:100%;' })
   const filename = 'light.svg'
   download.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
   download.setAttribute('download', filename);
