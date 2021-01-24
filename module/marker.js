@@ -23,7 +23,8 @@ export function init_marker(draw) {
   let vector_end_marker = draw.defs().findOne('.vector-end-marker')
   if (!vector_end_marker) {
     vector_end_marker = draw.marker(VECTOR_END_MARKER_ARROW_LENGTH, VECTOR_END_MARKER_ARROW_WIDTH, add => {
-      add.polygon(`0 0, ${VECTOR_END_MARKER_ARROW_LENGTH} ${VECTOR_END_MARKER_ARROW_WIDTH / 2} , 0 ${VECTOR_END_MARKER_ARROW_WIDTH}`)
+      const path = String.raw`0 0, ${VECTOR_END_MARKER_ARROW_LENGTH} ${VECTOR_END_MARKER_ARROW_WIDTH / 2}, 0 ${VECTOR_END_MARKER_ARROW_WIDTH}`
+      add.polygon(path)
         .stroke({width: 1})
         .attr('class', 'vector-marker-end')
     }).size(VECTOR_END_MARKER_ARROW_LENGTH, VECTOR_END_MARKER_ARROW_WIDTH)
