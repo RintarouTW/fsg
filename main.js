@@ -101,9 +101,9 @@ export function loadSVG(content) {
   const draw = (!isNewFile) ? svg.first() : svg.group().flip('y').translate(viewbox.width/2, viewbox.height/2)
   draw.fsg = {} // create fsg context for modules
 
+  init_marker(draw)
   const userScript = init_scripts(draw)
 
-  init_marker(draw)
   if (isNewFile) {
     draw.rect(viewbox.width, viewbox.height)
       .attr('class', CLASS_FSG_BOARD)

@@ -10,9 +10,9 @@ import { reconstruct_components } from './module/file.js'
 
 function init_modules(draw) {
   draw.fsg = {}
+  init_marker(draw)
   init_history(draw)
   init_selection(draw)
-  init_marker(draw)
   init_component(draw)
   init_drag(draw, false)
   reconstruct_components(draw)
