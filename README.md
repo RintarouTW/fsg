@@ -9,7 +9,7 @@ Create animatable, customizable, re-editable and light weight interactive geomet
 - Save as Draggable, Selectable, Animatable, Re-editable and Reusable light weight SVG.
 - User interactive with the created geometry, not only a static image.
 - .svg could be animated with your user script.
-- Edit and execute your animate script within the builder.
+- Edit and execute your animate script within the builder. (defulat in vim mode, turn on/off vim mode with F2)
 - Runtime supports multiple .svg instances in a single page (fast and light weight).
 - LaTeX support.
 - Color styles druing the construction or customize with CSS.
@@ -26,7 +26,9 @@ Create animatable, customizable, re-editable and light weight interactive geomet
 - runtime.js : the runtime's main function.
 - manifest.webmanifest : support for PWA.
 - index.html : KaTeX, SVGJS, iro are loaded from CDN.
-- dev.html : For Local Development.
+- dev.html : For local development.
+- manifest.webmanifest.dev : for local development.
+- local-serve.sh : for local development with live-server
 
 ## Dependency
 
@@ -37,6 +39,13 @@ Create animatable, customizable, re-editable and light weight interactive geomet
 - iro for color picker
 - (npm) rollup for js code bundler
 - (npm) terser for minify code
+
+### Local Development Dependency
+
+- live-server
+- https.conf.js (need local CA with mkcert)
+- use dev.html to load manifest.webmanifest.dev(PWA) and main.js(as module)
+- modify DEV_TESTING to true in common/define.js to make the generated .svg and .html to load runtime of local server.
 
 ## Why?
 
