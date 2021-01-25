@@ -16,7 +16,7 @@ export function init_drag(draw, click_to_add_point = true) {
     // console.log('select box found', found)
     selectBox = found
   } else {
-    selectBox = draw.rect(0, 0).attr('class', 'ui-select-box')
+    selectBox = draw.parent().rect(0, 0).attr('class', 'ui-select-box')
     draw.add(selectBox)
   }
 
