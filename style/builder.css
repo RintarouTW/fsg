@@ -114,6 +114,7 @@ body {
   border-radius: 15px;
   padding: 5px 15px 5px 15px;
   user-select: none;
+  -webkit-user-select: none;
 }
 
 #inspector {
@@ -125,6 +126,7 @@ body {
   margin: 10px;
   padding: 20px 5px 20px 5px;
   user-select: none;
+  -webkit-user-select: none;
   font-family: 'Source Code Pro', monospace;
   font-size: large;
   position: relative;
@@ -203,6 +205,7 @@ body {
   color: var(--ui-help-text-color);
   line-height: 1.6em;
   user-select: none;
+  -webkit-user-select: none;
 }
 
 kbd {
@@ -246,6 +249,7 @@ kbd {
   width: 4em;
   margin-left: 10px;
   user-select: none;
+  -webkit-user-select: none;
 }
 
 .long {
