@@ -76,30 +76,30 @@ export class ShapeComponent extends Component {
     this.cover.remove()
     super.remove()
   }
-  /// order interface
-  forward() {
+  /// order interface, keep the cover over the element
+  forward() { // override super
     this.cover.forward()
-    super.forward()
+    this.element.forward()
     if (this.cover.next()?.hasClass('cover')) { // forward twice for the cover of previous component
       this.cover.forward()
-      super.forward()
+      this.element.forward()
     }
   }
-  backward() {
+  backward() { // override super
     if (this.element.prev()?.hasClass('cover')) { // backward twice for the cover of previous component
-      super.backward()
+      this.element.backward()
       this.cover.backward()
     }
-    super.backward()
+    this.element.backward()
     this.cover.backward()
   }
-  back() {
+  back() { // override super
     const selectBox = this.draw.findOne('.ui-select-box')
     selectBox.after(this.cover)
-    super.back()
+    selectBox.after(this.element)
   }
-  front() {
-    super.front()
+  front() { // override super
+    this.element.front()
     this.cover.front()
   }
 }

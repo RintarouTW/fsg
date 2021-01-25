@@ -97,8 +97,10 @@ export class Component {
   /// order interface
   forward() {
     this.element.forward()
+    if (this.element.next()?.hasClass('cover')) this.element.forward() // forward again to skip cover
   }
   backward() {
+    if (this.element.prev()?.hasClass('cover')) this.element.backward() // forward again to skip cover
     this.element.backward()
   }
   back() {
