@@ -76,6 +76,24 @@ export class ShapeComponent extends Component {
     this.cover.remove()
     super.remove()
   }
+  /// order interface
+  forward() {
+    this.cover.forward()
+    super.forward()
+  }
+  backward() {
+    this.cover.backward()
+    super.backward()
+  }
+  back() {
+    const selectBox = this.draw.findOne('.ui-select-box')
+    selectBox.after(this.cover)
+    super.back()
+  }
+  front() {
+    this.cover.front()
+    super.front()
+  }
 }
 
 export class FillableShape extends ShapeComponent {

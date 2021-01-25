@@ -102,8 +102,8 @@ export class Component {
     this.element.backward()
   }
   back() {
-    const board = this.draw.findOne('.fsg-board')
-    board.after(this.element)
+    const selectBox = this.draw.findOne('.ui-select-box')
+    selectBox.after(this.element)
   }
   front() {
     this.element.front()
