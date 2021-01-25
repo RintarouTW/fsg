@@ -3,7 +3,7 @@
 import { COMPONENT_REFS_ATTR, COMPONENT_NO_ATTR, OF_ATTR, SERVER_ROOT, FSG_NAMESPACE } from '../common/define.js'
 import { addEdge, addLine, addRay, addVector, addAxis, addParallelLine } from '../components/line.js'
 import { addPolygon, addCircle } from '../components/fillable.js'
-import { addPoint, addIntersectPoint, addParallelPoint, addPerpPoint, addPinPoint } from '../components/point.js'
+import { addPoint, addMidPoint, addIntersectPoint, addParallelPoint, addPerpPoint, addPinPoint } from '../components/point.js'
 import { addText } from '../components/text.js'
 
 // reconstruct order by component_no
@@ -33,6 +33,13 @@ export function reconstruct_components(draw) {
     // console.log(element.attr(COMPONENT_NO_ATTR), element, element.classes())
     if (element.hasClass('point')) {
       addPoint({draw, element})
+      return
+    }
+    if (element.hasClass('mid-point')) {
+      const refs_attr = element.attr(COMPONENT_REFS_ATTR)
+      if (!refs_attr) return
+      const componentRefs = refs_attr.split(',').map(item => Number(item))
+      addMidPoint({draw, componentRefs, element})
       return
     }
     if (element.hasClass('intersect-point')) {

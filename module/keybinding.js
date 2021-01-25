@@ -9,7 +9,7 @@ import { saveAsSVG, exportToHTML, svgDocument } from './file.js'
 import { toggle_code_editor } from './code_editor.js'
 // components
 import { LineBaseShape } from '../components/shape.js'
-import { addIntersectPoint, addPoint } from '../components/point.js'
+import { addIntersectPoint, addPoint, addMidPoint } from '../components/point.js'
 import { addLine, addRay, addEdge, addVector, addParallelLine, addPerpLine } from '../components/line.js'
 import { addPolygon, addCircle } from '../components/fillable.js'
 import { addText } from '../components/text.js'
@@ -202,6 +202,12 @@ export function init_keybindings(draw) {
         {
           if (!points) return
           doAction(draw, addLine, {draw, componentRefs})
+        }
+        break
+      case 'KeyM':
+        {
+          if (!points) return
+          doAction(draw, addMidPoint, {draw, componentRefs})
         }
         break
       case 'KeyP':

@@ -421,3 +421,56 @@ export function addPinPoint({ draw, coord, type, componentRef, element, componen
   return new PinPoint({ draw, type, componentRef, element })
 }
 
+///
+/// MidPoint
+///
+export class MidPoint extends SelectablePoint {
+  constructor({ draw, componentRefs, element }) {
+    super({ draw, element })
+
+    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
+
+    // watch components
+    const refComponents = componentRefs.map(no => componentByNo(draw, no))
+    this.refComponents = refComponents
+    refComponents.forEach(target => {
+      target.element.on('update', this.update.bind(this))
+      target.element.on('remove', this.remove.bind(this))
+    })
+  }
+  remove() {
+    this.refComponents.forEach(target => {
+      target.element.off('update', this.update)
+    })
+    super.remove()
+  }
+  update() {
+    // console.log('update', this.element)
+    const refComponents = this.refComponents
+    console.assert(refComponents)
+    // Project the point on line
+    const [p1, p2] = refComponents
+    const coord1 = p1.center()
+    const coord2 = p2.center()
+    const coord = {x: (coord1.x + coord2.x) / 2, y: (coord1.y + coord2.y) /2 }
+    this.element.center(coord.x, coord.y)
+    this.element.fire('update')
+    return
+  }
+}
+
+export function addMidPoint({ draw, componentRefs, element, component_no })  {
+  const points = componentRefs.map(no => componentByNo(draw, no).element)
+  if (!element) {
+    const [p1, p2] = points
+    const coord1 = {x: p1.cx(), y: p1.cy() }
+    const coord2 = {x: p2.cx(), y: p2.cy() }
+    const coord = {x: (coord1.x + coord2.x) / 2, y: (coord1.y + coord2.y) /2 }
+     element = draw.circle(POINT_RADIUS)
+      .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
+      .attr('class', 'mid-point component')
+  }
+  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  return new MidPoint({ draw, componentRefs, element })
+}
+

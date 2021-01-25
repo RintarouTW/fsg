@@ -62,12 +62,12 @@ body {
   cursor: grab;
 }
 
-.intersect-point, .pin-point {
+.mid-point, .intersect-point, .pin-point {
   fill: var(--intersect-point-fill-color);
   stroke: var(--intersect-point-stroke-color);
 }
 
-.intersect-point:hover {
+.mid-point, .intersect-point:hover {
   cursor: pointer;
 }
 

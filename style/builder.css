@@ -299,6 +299,7 @@ kbd {
 .point.hover,
 .pin-point.hover,
 .perp-point.hover,
+.mid-point.hover,
 .intersect-point.hover,
 .parallel-point.hover {
   stroke: var(--ui-hover-stroke-color) !important;
@@ -318,7 +319,7 @@ kbd {
   stroke-width: 1;
 }
 
-.intersect-point.selected, .parallel-point.selected, .perp-point.selected, .pin-point.selected {
+.mid-point.selected, .intersect-point.selected, .parallel-point.selected, .perp-point.selected, .pin-point.selected {
   stroke: var(--ui-selected-stroke-color);
   stroke-width: 0.5;
 }
