@@ -1,7 +1,7 @@
 'use strict'
 
 import { COMPONENT_REFS_ATTR, COMPONENT_NO_ATTR, OF_ATTR, SERVER_ROOT, FSG_NAMESPACE } from '../common/define.js'
-import { addEdge, addLine, addRay, addVector, addAxis, addParallelLine } from '../components/line.js'
+import { addEdge, addLine, addRay, addVector, addAxis, addParallelLine, addPerpLine } from '../components/line.js'
 import { addPolygon, addCircle } from '../components/fillable.js'
 import { addPoint, addMidPoint, addIntersectPoint, addParallelPoint, addPerpPoint, addPinPoint } from '../components/point.js'
 import { addText } from '../components/text.js'
@@ -121,7 +121,11 @@ export function reconstruct_components(draw) {
       addParallelLine({draw, componentRefs, element, cover}) 
       return
     }
-    console.log('WARNNING: unsupported component..', element)
+    if (element.hasClass('perp-line')) {
+      addPerpLine({draw, componentRefs, element, cover}) 
+      return
+    }
+    console.warn('WARNNING: Fixme - unsupported component..', element)
   })
   return
 }

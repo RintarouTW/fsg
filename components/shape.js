@@ -80,10 +80,18 @@ export class ShapeComponent extends Component {
   forward() {
     this.cover.forward()
     super.forward()
+    if (this.cover.next()?.hasClass('cover')) { // forward twice for the cover of previous component
+      this.cover.forward()
+      super.forward()
+    }
   }
   backward() {
-    this.cover.backward()
+    if (this.element.prev()?.hasClass('cover')) { // backward twice for the cover of previous component
+      super.backward()
+      this.cover.backward()
+    }
     super.backward()
+    this.cover.backward()
   }
   back() {
     const selectBox = this.draw.findOne('.ui-select-box')
@@ -91,8 +99,8 @@ export class ShapeComponent extends Component {
     super.back()
   }
   front() {
-    this.cover.front()
     super.front()
+    this.cover.front()
   }
 }
 
