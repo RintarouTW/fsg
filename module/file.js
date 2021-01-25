@@ -25,14 +25,20 @@ function elementByNo(components, no) {
   return found
 }
 
+// 
+// check element position after reconstruction, make sure the reconstruction won't change the order of elements
+//
+
 export function reconstruct_components(draw) {
   const covers = draw.find('.cover')
   const list = findAllComponentElements(draw)
   list.forEach(element => {
     // without cover
     // console.log(element.attr(COMPONENT_NO_ATTR), element, element.classes())
+    const position = element.position()
     if (element.hasClass('point')) {
       addPoint({draw, element})
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('mid-point')) {
@@ -40,6 +46,7 @@ export function reconstruct_components(draw) {
       if (!refs_attr) return
       const componentRefs = refs_attr.split(',').map(item => Number(item))
       addMidPoint({draw, componentRefs, element})
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('intersect-point')) {
@@ -47,6 +54,7 @@ export function reconstruct_components(draw) {
       if (!refs_attr) return
       const componentRefs = refs_attr.split(',').map(item => Number(item))
       addIntersectPoint({draw, componentRefs, element})
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('parallel-point')) {
@@ -54,6 +62,7 @@ export function reconstruct_components(draw) {
       if (!refs_attr) return
       const componentRefs = refs_attr.split(',').map(item => Number(item))
       addParallelPoint({draw, componentRefs, element})
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('perp-point')) {
@@ -61,6 +70,7 @@ export function reconstruct_components(draw) {
       if (!refs_attr) return
       const componentRefs = refs_attr.split(',').map(item => Number(item))
       addPerpPoint({draw, componentRefs, element})
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('pin-point')) {
@@ -71,21 +81,26 @@ export function reconstruct_components(draw) {
       let type = 'line'
       if (refElement instanceof SVG.Circle) type = 'circle'
       addPinPoint({draw, type, componentRef, element})
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('text')) {
       addText({draw, element})
+      console.assert(position == element.position(), 'position of element changed', position, element)
+      return
     }
     if (element.hasClass('axis-x')) { // axis component has no refs
       const cover = coverOf(covers, element.attr(COMPONENT_NO_ATTR))
       const type = 'axis-x'
       addAxis({draw, type, element, cover}) 
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('axis-y')) {
       const cover = coverOf(covers, element.attr(COMPONENT_NO_ATTR))
       const type = 'axis-y'
       addAxis({draw, type, element, cover}) 
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     // with cover
@@ -95,34 +110,42 @@ export function reconstruct_components(draw) {
     const cover = coverOf(covers, element.attr(COMPONENT_NO_ATTR))
     if (element.hasClass('edge')) {
       addEdge({draw, componentRefs, element, cover}) 
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('vector')) {
       addVector({draw, componentRefs, element, cover}) 
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('line')) {
       addLine({draw, componentRefs, element, cover}) 
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('ray')) {
       addRay({draw, componentRefs, element, cover}) 
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('polygon')) {
       addPolygon({draw, componentRefs, element, cover}) 
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('circle')) {
       addCircle({draw, componentRefs, element, cover}) 
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('parallel-line')) {
       addParallelLine({draw, componentRefs, element, cover}) 
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('perp-line')) {
       addPerpLine({draw, componentRefs, element, cover}) 
+      console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     console.warn('WARNNING: Fixme - unsupported component..', element)

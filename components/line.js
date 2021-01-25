@@ -3,7 +3,7 @@
 import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, DEFAULT_STROKE_COLOR } from '../common/define.js'
 import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
-import { LineBaseShape } from './shape.js'
+import { LineBaseShape, putBehindPoints } from './shape.js'
 import { currentStrokeColor } from '../module/color_picker.js'
 import { addParallelPoint, addPerpPoint } from './point.js'
 
@@ -50,6 +50,7 @@ export function addEdge({draw, componentRefs, element, cover, component_no}) {
     element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'edge dashed shape component selected')
     setStrokeColor(element)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
+    putBehindPoints(draw, points, cover, element)
   }
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
@@ -66,6 +67,7 @@ export function addVector({draw, componentRefs, element, cover, component_no}) {
     element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'vector dashed shape component selected')
     setStrokeColor(element)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
+    putBehindPoints(draw, points, cover, element)
   }
   element.marker('start', draw.fsg.marker.vector_start_marker)
   element.marker('end', draw.fsg.marker.vector_end_marker)
@@ -90,6 +92,7 @@ export function addAxis({draw, type, element, cover, component_no}) {
       .attr('class', type + ' dashed shape component selected')
       .attr('stroke', DEFAULT_STROKE_COLOR)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
+    putBehindPoints(draw, points, cover, element)
   }
   element.marker('end', draw.fsg.marker.vector_end_marker)
   element.removeClass('dashed')
@@ -140,6 +143,7 @@ export function addLine({draw, componentRefs, element, cover, component_no}) {
     setStrokeColor(element)
     // element.attr('filter', 'url(#filter_shadow)')
     cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
+    putBehindPoints(draw, points, cover, element)
   }
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
@@ -199,6 +203,7 @@ export function addRay({draw, componentRefs, element, cover, component_no}) {
     element = draw.line(coord1.x, coord1.y, clip.x, clip.y).attr('class', 'ray dashed shape component selected')
     setStrokeColor(element)
     cover = draw.line(coord1.x, coord1.y, clip.x, clip.y).attr('class', 'cover')
+    putBehindPoints(draw, points, cover, element)
   }
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
@@ -247,6 +252,7 @@ export function addParallelLine({ draw, coord, componentRefs, element, cover, co
     setStrokeColor(element)
     cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
     points = [p1, p2]
+    putBehindPoints(draw, points, cover, element)
   }
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
@@ -295,6 +301,7 @@ export function addPerpLine({ draw, coord, componentRefs, element, cover, compon
     setStrokeColor(element)
     cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
     points = [p1, p2]
+    putBehindPoints(draw, points, cover, element)
   }
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 

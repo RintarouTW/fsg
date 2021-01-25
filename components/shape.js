@@ -17,6 +17,20 @@ function findBottom(draw, points) {
   return bottom
 }
 
+export function putBehindPoints(draw, points, cover, element) {
+    // TODO: The order of the element should only be manipulated when the component first time constructed in editor.
+    // After that, user can change the order of the component, and that order should be keeped even after reconstruction.
+    //
+    // find the most bottom point
+    // FIXME: there's a bug in svgjs. somehow it's possible have an element with index = -1
+    // even it's indeed a child of draw. (weird)
+    const bottom = findBottom(draw, points)
+    if (draw.index(bottom) > 0) {
+      cover.insertBefore(bottom)
+      element.insertBefore(cover)
+    }
+}
+
 ///
 /// Shape
 ///
@@ -39,15 +53,6 @@ export class ShapeComponent extends Component {
     cover.attr(OF_ATTR, this.component_no)
       .attr('fill', DEFAULT_FILL_COLOR) // fill with transparent color
     this.cover = cover
-
-    // find the most bottom point
-    // FIXME: there's a bug in svgjs. somehow it's possible have an element with index = -1
-    // even it's indeed a child of draw. (weird)
-    const bottom = findBottom(draw, points)
-    if (draw.index(bottom) > 0) {
-      cover.insertBefore(bottom)
-      element.insertBefore(cover)
-    }
 
     // selectable by mousedown
     const mousedown = evt => {

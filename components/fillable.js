@@ -4,7 +4,7 @@ import { COMPONENT_NO_ATTR } from '../common/define.js'
 import { pointOnScreen } from '../common/math.js'
 
 import { componentByNo } from './component.js'
-import { FillableShape } from './shape.js'
+import { FillableShape, putBehindPoints } from './shape.js'
 import { addAppendingPinPoint } from './appending-point.js'
 import { currentFillColor, currentStrokeColor } from '../module/color_picker.js'
 
@@ -67,6 +67,7 @@ export function addCircle({draw, componentRefs, element, cover, component_no}) {
       element.attr('stroke', strokeColor)
     }
     cover = draw.circle().radius(radius).center(cp.cx(), cp.cy()).attr('class', 'cover')
+    putBehindPoints(draw, points, cover, element)
   }
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
@@ -108,6 +109,7 @@ export function addPolygon({draw, componentRefs, element, cover, component_no}) 
       element.attr('stroke', strokeColor)
     }
     cover = draw.polygon(pts).attr('class', 'cover')
+    putBehindPoints(draw, points, cover, element)
   }
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 

@@ -49,8 +49,8 @@ export class Component {
   constructor({draw, element}) {
     console.assert(draw, 'draw is required')
     console.assert(element, 'element is required')
-
-    draw.add(element)
+    console.assert(draw === element.parent(), 'element must be the child of draw')
+    // draw.add(element) // don't call add, or it'll change the order of the element
     this.draw = draw
     this.element = element
     element.component = this
