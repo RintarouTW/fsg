@@ -61,14 +61,20 @@ export function init_keybindings(draw) {
       case 'BracketLeft':
         {
           const component = lastSelectedComponent(draw)
-          if (!component) return
+          if (!component) {
+            showHint('Select one component first!')
+            return
+          }
           (evt.shiftKey) ? component.back() : component.backward()
         }
         break
       case 'BracketRight':
         {
           const component = lastSelectedComponent(draw)
-          if (!component) return
+          if (!component) {
+            showHint('Select one component first!')
+            return
+          }
           (evt.shiftKey) ? component.front() : component.forward()
         }
         break
@@ -76,7 +82,11 @@ export function init_keybindings(draw) {
         {
           const component = getLastSelectedAppendableComponent(draw)
           // console.log(component)
-          if(component) component.endAppendMode(draw)
+          if(!component) {
+            showHint('Select one line or circle first!')
+            return
+          }
+          component.endAppendMode(draw)
         }
         break
       case 'KeyA':
@@ -102,7 +112,10 @@ export function init_keybindings(draw) {
           })
           return 
         } else {
-          if (!points) return
+          if (!points) {
+            showHint('Select 2 points first!')
+            return
+          }
           doAction(draw, addCircle, {draw, componentRefs})
         }
         break
@@ -125,22 +138,33 @@ export function init_keybindings(draw) {
           evt.stopPropagation()
           SVG('#runButton').node.click()
         } else {
-          if (!points) return
+          if (!points) {
+            showHint('Select 2 points first!')
+            return
+          }
           doAction(draw, addEdge, {draw, componentRefs})
         }
         break
       case 'KeyF':
         {
           const components = getSelectedFillableShapes(draw)
+          if (components.length == 0) {
+            showHint('Select one circle or polygon first!')
+            return
+          }
           const className = 'none'
-          if (components.length) doAction(draw, toggleClass, {components, className})
+          doAction(draw, toggleClass, {components, className})
         }
         break
       case 'KeyH':
         {
           const components = getSelectedComponents(draw)
+          if (components.length == 0) {
+            showHint('Selection one component first')
+            return
+          }
           const className = 'hidden'
-          if (components.length) doAction(draw, toggleClass, {components, className})
+          doAction(draw, toggleClass, {components, className})
         }
         break
       case 'KeyI':
@@ -150,7 +174,10 @@ export function init_keybindings(draw) {
           return
         } else { 
           const intersectableComponents = getLast2SelectedIntersectableComponents(draw)
-          if (!intersectableComponents) return
+          if (!intersectableComponents) {
+            showHint('Select 2 intersectable components(line or circle) first')
+            return
+          }
           if (intersectableComponents[0] instanceof LineBaseShape) {
             if (intersectableComponents[1] instanceof LineBaseShape) { // intersect two lines
               const [l1, l2] = intersectableComponents
@@ -200,27 +227,36 @@ export function init_keybindings(draw) {
         break
       case 'KeyL':
         {
-          if (!points) return
+          if (!points) {
+            showHint('Select 2 points first!')
+            return
+          }
           doAction(draw, addLine, {draw, componentRefs})
         }
         break
       case 'KeyM':
         {
-          if (!points) return
+          if (!points) {
+            showHint('Select 2 points first!')
+            return
+          }
           doAction(draw, addMidPoint, {draw, componentRefs})
         }
         break
       case 'KeyP':
         {
           points = getSelectedPointElements(draw)
-          if (!points) return
+          if (!points || points.length < 3) {
+            showHint('Select at least 3 points first!')
+            return
+          }
           componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
           doAction(draw, addPolygon, {draw, componentRefs})
         }
         break
       case 'KeyO':
         {
-          if (evt.metaKey) {
+          if (evt.metaKey) { // open file
             const file = SVG('#file')
             file.node.click()
           }
@@ -243,8 +279,12 @@ export function init_keybindings(draw) {
           evt.stopPropagation()
         } else {
           const components = getSelectedShapes(draw)
+          if (components.length == 0) {
+            showHint('Select one component first!')
+            return
+          }
           const className = 'dashed'
-          if (components.length) doAction(draw, toggleClass, {components, className})
+          doAction(draw, toggleClass, {components, className})
         }
         break
       case 'KeyT': // text
@@ -259,7 +299,10 @@ export function init_keybindings(draw) {
         break
       case 'KeyV':
         {
-          if (!points) return
+          if (!points) {
+            showHint('Select 2 points first!')
+            return
+          }
           doAction(draw, addVector, {draw, componentRefs})
         }
         break
@@ -267,18 +310,19 @@ export function init_keybindings(draw) {
         {
           const lineAndPoint = getLastSelectedLineBaseAndPointComponent(draw)
           // console.log(lineAndPoint)
-          if (!lineAndPoint) return
+          if (!lineAndPoint) {
+            showHint('Select one line/edge/vector and one point first')
+            return
+          }
           const [ line, point ] = lineAndPoint
           const componentRefs = [line.component_no, point.component_no]
           const center = point.center()
           const direction = line.direction()
-          if (evt.shiftKey) { // Perp Point
+          if (evt.shiftKey) { // Perp Line
             const coord = { x: center.x - direction.y * 20, y : center.y + direction.x * 20}
-            // doAction(draw, addPerpPoint, {draw, coord, componentRefs})
             doAction(draw, addPerpLine, {draw, coord, componentRefs})
-          } else { // Parallel Point
+          } else { // Parallel Line
             const coord = { x: center.x + direction.x * 20, y : center.y + direction.y * 20}
-            // doAction(draw, addParallelPoint, {draw, coord, componentRefs})
             doAction(draw, addParallelLine, {draw, coord, componentRefs})
           }
         }
@@ -287,7 +331,10 @@ export function init_keybindings(draw) {
         {
           // Project point on line
           const lineAndPoint = getLastSelectedLineBaseAndPointComponent(draw)
-          if (!lineAndPoint) return
+          if (!lineAndPoint) {
+            showHint('Select one line/edge/vector and one point first')
+            return
+          }
           const [ line, point ] = lineAndPoint
           const coord = projectPointOnLine(point.center(), line.startPoint(), line.direction())
           const componentRefs = [line.component_no, point.component_no]
