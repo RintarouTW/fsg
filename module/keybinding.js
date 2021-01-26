@@ -138,6 +138,20 @@ export function init_keybindings(draw) {
           evt.stopPropagation()
           SVG('#runButton').node.click()
         } else {
+          if (evt.shiftKey) { // close with edge
+            points = getSelectedPointElements(draw)
+            if (!points || points.length < 3) {
+              console.log(points.length)
+              showHint('At least 3 points to close the shape')
+              return
+            }
+            componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+            const firstRef = componentRefs[0]
+            const lastRef = componentRefs[points.length - 1]
+            componentRefs = [lastRef, firstRef]
+            doAction(draw, addEdge, {draw, componentRefs})
+            return
+          }
           if (!points) {
             showHint('Select 2 points first!')
             return
