@@ -102,6 +102,9 @@ export function loadSVG(content) {
   draw.fsg = {} // create fsg context for modules
 
   init_marker(draw)
+  if (isNewFile) { // put the style before scripts
+    draw.defs().add(SVG(RUNTIME_STYLE_LINK))
+  }
   const userScript = init_scripts(draw)
 
   if (isNewFile) {
@@ -120,7 +123,6 @@ export function loadSVG(content) {
     init_keybindings(draw)
     init_axis(draw)
     // init_filter(draw)
-    draw.defs().add(SVG(RUNTIME_STYLE_LINK))
   } else { 
     init_keybindings(draw)
     reconstruct_components(draw)
