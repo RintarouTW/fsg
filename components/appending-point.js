@@ -34,6 +34,7 @@ export class AppendingPinPoint {
       this.type = 'circle'
     else
       this.type = 'line'
+    this.update()
   }
   remove() {
     this.targetComponent.element.off('update', this.update)
@@ -47,6 +48,7 @@ export class AppendingPinPoint {
     const coord = { x: this.element.cx(), y: this.element.cy() }
     const componentRef = this.targetComponent.component_no
     this.remove()
+    this.targetComponent.endAppendMode()
     return {draw, coord, type, componentRef}
   }
   update() {
