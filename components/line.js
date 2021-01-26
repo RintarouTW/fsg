@@ -76,6 +76,18 @@ export function addVector({draw, componentRefs, element, cover, component_no}) {
   return new LineSegment({draw, points, element, cover})
 }
 
+export class Axis extends LineSegment {
+  constructor({draw, points, element, cover, isHiddenPoint}) {
+    super({draw, element, cover, points, isHiddenPoint})
+  }
+  remove() { // remove the hidden points too.
+    const [p1, p2] = this.points
+    p1.remove()
+    p2.remove()
+    super.remove()
+  }
+}
+
 export function addAxis({draw, type, element, cover, component_no}) {
   const start = draw.findOne('#' + type + '-start')
   const end = draw.findOne('#' + type + '-end')
@@ -92,7 +104,6 @@ export function addAxis({draw, type, element, cover, component_no}) {
       .attr('class', type + ' dashed shape component selected')
       .attr('stroke', DEFAULT_STROKE_COLOR)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
-    putBehindPoints(draw, points, cover, element)
   }
   element.marker('end', draw.fsg.marker.vector_end_marker)
   element.removeClass('dashed')
@@ -100,7 +111,7 @@ export function addAxis({draw, type, element, cover, component_no}) {
 
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-  return new LineSegment({draw, points, element, cover, isHiddenPoint})
+  return new Axis({draw, points, element, cover, isHiddenPoint})
 }
 
 ///
