@@ -204,10 +204,9 @@ export function svgDocument(draw, optional_attributes = {}) {
   return tmp.svg()
 }
 
-export function saveAsSVG(draw) {
+export function saveAsSVG(draw, filename = 'fsg.svg') {
   var download = document.createElement('a');
   const content = svgDocument(draw, { 'style' :  'width:100%;' })
-  const filename = 'fsg.svg'
   download.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
   download.setAttribute('download', filename);
   download.style.display = 'none';
@@ -216,7 +215,7 @@ export function saveAsSVG(draw) {
   document.body.removeChild(download);
 }
 
-export function exportToHTML(draw) {
+export function exportToHTML(draw, filename = 'fsg.html') {
   var element = document.createElement('a');
   let content = svgDocument(draw, { 'style' :  'width:100%;' }) // for HTML
 
@@ -234,7 +233,6 @@ export function exportToHTML(draw) {
   // <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/theme-light.css">
 
   content = '<!DOCTYPE html>' + head + '<body><div style="overflow:hidden">' + content + '</div></body></html>'
-  const filename = 'light.html'
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
   element.setAttribute('download', filename);
   element.style.display = 'none';

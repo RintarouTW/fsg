@@ -273,6 +273,8 @@ export function init_keybindings(draw) {
           if (evt.metaKey) { // open file
             const file = SVG('#file')
             file.node.click()
+            evt.preventDefault()
+            evt.stopPropagation()
           }
         }
         break
