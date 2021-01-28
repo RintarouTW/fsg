@@ -318,3 +318,90 @@ export function addPerpLine({ draw, coord, componentRefs, element, cover, compon
 
   return new PerpLine({draw, points, element, cover, component_no})
 }
+
+///
+/// BisectorLine
+/// remove if points are removed.
+///
+
+export class BisectorLine extends LineBaseShape {
+  constructor({draw, points, element, cover}) {
+    super({draw, element, cover, points})
+
+    const [p1, p2, p3] = points
+    this.tracePoints(points, () => {
+      const box = draw.bbox()
+      const bp = coordOfBisectorPoint(p1, p2, p3)
+      const coord1 = { x: p2.cx(), y: p2.cy() }
+      const coord2 = { x: bp.x, y: bp.y }
+      const [clip1, clip2] = clipping(box, coord1, coord2)
+      // console.log(box, coord1, coord2)
+
+      if (!clip1 || !clip2) return
+      element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      if(this.label) this.label.move(element.cx(), -element.cy())
+    })
+
+    const componentRefs = points.map(point => {
+      // watch point remove event
+      point.on('remove', this.remove.bind(this))
+      return point.attr('component_no')
+    })
+    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
+  }
+  startPoint() {
+    const p = this.points[1]
+    let coord = {x: p.cx(), y: p.cy()}
+    if (p.component)
+      coord = pointOnScreen(p.component)
+    return coord
+  }
+  direction() {
+    const [p1, p2, p3] = this.points
+    const bp = coordOfBisectorPoint(p1, p2, p3)
+    const sp = this.startPoint()
+    const dx = bp.x - sp.x
+    const dy = bp.y - sp.y
+    const length = Math.sqrt(dx ** 2 + dy **2)
+    return {x: dx/length , y: dy/length}
+  }
+}
+
+function coordOfBisectorPoint(p1, p2, p3) {
+  // console.assert(p1, 'p1 must be defined')
+  // console.assert(p2, 'p2 must be defined')
+  // console.assert(p3, 'p3 must be defined')
+  const dx1 = p1.cx() - p2.cx()
+  const dy1 = p1.cy() - p2.cy()
+  const dx2 = p3.cx() - p2.cx()
+  const dy2 = p3.cy() - p2.cy()
+  const v1_length = Math.sqrt(dx1 ** 2 + dy1 ** 2)
+  const v2_length = Math.sqrt(dx2 ** 2 + dy2 ** 2)
+  const v1 = { x: dx1 / v1_length, y: dy1 / v1_length }
+  const v2 = { x: dx2 / v2_length, y: dy2 / v2_length }
+  return { x: p2.cx() + (v1.x + v2.x) / 2, y: p2.cy() + (v1.y + v2.y) /2 }
+}
+
+export function addBisectorLine({ draw, componentRefs, element, cover, component_no }) {
+
+  let points = componentRefs.map(no => componentByNo(draw, no).element)
+
+  if (!element) {
+    const [p1, p2, p3] = points
+    const box = draw.bbox()
+    const bp = coordOfBisectorPoint(p1, p2, p3)
+    const coord1 = { x: p2.cx(), y: p2.cy() }
+    const coord2 = { x: bp.x, y: bp.y }
+    const [clip1, clip2] = clipping(box, coord1, coord2)
+    element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'bisector-line dashed shape component selected')
+    setStrokeColor(element)
+    cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
+    putBehindPoints(draw, points, cover, element)
+  }
+  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+
+  return new BisectorLine({draw, points, element, cover})
+}
+
+

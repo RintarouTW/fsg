@@ -10,7 +10,7 @@ import { toggle_code_editor } from './code_editor.js'
 // components
 import { LineBaseShape } from '../components/shape.js'
 import { addIntersectPoint, addPoint, addMidPoint } from '../components/point.js'
-import { addLine, addRay, addEdge, addVector, addParallelLine, addPerpLine } from '../components/line.js'
+import { addLine, addRay, addEdge, addVector, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
 import { addPolygon, addCircle } from '../components/fillable.js'
 import { addText } from '../components/text.js'
 import { 
@@ -89,6 +89,18 @@ export function init_keybindings(draw) {
           component.endAppendMode(draw)
         }
         break
+      case 'KeyB':
+        {
+          points = getSelectedPointElements(draw)
+          if (!points || points.length < 3) {
+            showHint('Select 3 points first!')
+            return
+          }
+          points = [points[0], points[1], points[2]] // use only the last 3 points
+          componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+          doAction(draw, addBisectorLine, {draw, componentRefs})
+          return
+        }
       case 'KeyA':
         {
           const component = getLastSelectedAppendableComponent(draw)
