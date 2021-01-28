@@ -26,7 +26,6 @@ export class Circle extends FillableShape {
       element.center(cp.cx(), cp.cy())
       cover.radius(r)
       cover.center(cp.cx(), cp.cy())
-      if (this.label) this.label.move(element.cx(), -element.cy())
       element.fire('update')
     })
   }
@@ -89,7 +88,6 @@ class Polygon extends FillableShape {
       })
       element.plot(pts)
       cover.plot(pts)
-      if (this.label) this.label.move(element.cx(), -element.cy())
     })
   }
 }

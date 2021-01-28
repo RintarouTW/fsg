@@ -32,8 +32,6 @@ export class LineSegment extends LineBaseShape {
         const coord2 = pointOnScreen(p2.component)
         element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
         cover.plot(coord1.x, coord1.y, coord2.x, coord2.y)
-
-        this.label?.move(element.cx(), -element.cy())
       })
     }
   }
@@ -133,7 +131,6 @@ export class Line extends LineBaseShape {
       if (!clip1 || !clip2) return
       element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
       cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      if(this.label) this.label.move(element.cx(), -element.cy())
     })
   }
 }
@@ -198,7 +195,6 @@ export class Ray extends LineBaseShape {
 
       element.plot(coord1.x, coord1.y, clip.x, clip.y)
       cover.plot(coord1.x, coord1.y, clip.x, clip.y)
-      if(this.label) this.label.move(element.cx(), -element.cy())
     })
   }
 }
@@ -340,7 +336,6 @@ export class BisectorLine extends LineBaseShape {
       if (!clip1 || !clip2) return
       element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
       cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      if(this.label) this.label.move(element.cx(), -element.cy())
     })
 
     const componentRefs = points.map(point => {

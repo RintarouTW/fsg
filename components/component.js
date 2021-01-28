@@ -207,7 +207,7 @@ export class Component {
 
           const offsetX = label.attr('offset_x')
           const offsetY = label.attr('offset_y')
-          console.log(offsetX, offsetY)
+          // console.log(offsetX, offsetY)
           const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }
           // bug fix:
           // update label location for the label which is located at (0,0) and not visible.
