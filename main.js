@@ -142,7 +142,7 @@ function init() {
     return
   }
 
-  window.FSG = true // define fsg to prevent runtime being init again by the script within svg file.
+  window.FSG_BUILDER = true // define to prevent runtime being init again by the script within svg file.
 
   window.resizeTo(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT) // default window size
 

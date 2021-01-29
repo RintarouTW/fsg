@@ -44,7 +44,7 @@ export function init_keybindings(draw) {
   _keydownHandler = evt => {
     console.log(evt.code)
 
-    if (typeof window.FSG !== 'undefined' && evt.target != document.body) return
+    if (typeof window.FSG_BUILDER !== 'undefined' && evt.target != document.body) return
     // if (evt.metaKey) return
     if (!draw.ready) return // ready to action after the opening animation
 

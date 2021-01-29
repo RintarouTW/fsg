@@ -9,7 +9,7 @@ import { addAppendingPinPoint } from './appending-point.js'
 import { currentFillColor, currentStrokeColor } from '../module/color_picker.js'
 
 function useCurrentColors(element) {
-    if (window.FSG) { // run in editor
+    if (window.FSG_BUILDER) { // run in editor
       const fillColor = currentFillColor()
       const strokeColor = currentStrokeColor()
       element.attr('fill', fillColor)

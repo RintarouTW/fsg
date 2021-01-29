@@ -8,7 +8,7 @@ import { currentStrokeColor } from '../module/color_picker.js'
 import { addParallelPoint, addPerpPoint } from './point.js'
 
 function setStrokeColor(element) {
-  if (window.FSG) {
+  if (window.FSG_BUILDER) {
     const strokeColor = currentStrokeColor()
     element.attr('stroke', strokeColor)
   }

@@ -27,28 +27,13 @@ function execute_script_in_file() {
   })
 }
 
-/* Edit Test */
-/* query string is length limited, not good for file.
- * require server to handle post request.
- * TODO: 
- * 1. content => server with a hash
- * 2. window.location = https://rintaroutw.github.io/fsg?hash=
- * 3. get the content from server ater opening animation.
- * 4. loadSVG(content)
- *
-function edit(content) {
-  const encodedString = encodeURI(`http://localhost:8080?content=${content}`)
-  window.location = encodedString
-}
-*/
-
 function init() {
   // runtime for html/svg, different envs.
   // html -> exported html
   // svg -> saved svg
-  if (window.FSG) {
+  if (window.FSG_BUILDER) {
     // run under editor? this should not happen.
-    console.log('runtime should not be run under editor')
+    console.error('runtime should not be run under builder')
 
   } else {
 
