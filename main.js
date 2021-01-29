@@ -58,6 +58,7 @@ function openSVG(file) {
 }
 
 function resized(draw) {
+  console.log('resized')
   const clientWidth = document.body.clientWidth
   const viewbox = { x: 0, y: 0, width: clientWidth, height: clientWidth * 0.75 }
   draw.parent().size(viewbox.width, viewbox.height).viewbox(viewbox)
@@ -165,7 +166,10 @@ function init() {
   window.addEventListener('focus', reset_mouse_position)
   window.addEventListener('blur', reset_mouse_position)
   window.addEventListener('resize', () => {
-    resized(_draw)
+    // Bug fix:
+    // chrome downloader would trigger the window resize event,
+    // disable it while downloading.
+    if(!_draw.isSaving) resized(_draw)
   })
 
   // when mouse up out of drag area.

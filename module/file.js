@@ -190,7 +190,7 @@ function cleanupDirtyClasses(draw) {
 }
 
 export function svgDocument(draw, optional_attributes = {}) {
-  let content = draw.parent().svg()
+  let content = draw.parent().svg() 
 
   /* remove xmlns:svgjs first and add it back to prevent the svgjs redefine bug */
   const tmp = SVG(content)
@@ -210,14 +210,18 @@ export function svgDocument(draw, optional_attributes = {}) {
 }
 
 export function saveAsSVG(draw, filename = 'fsg.svg') {
-  var download = document.createElement('a');
+  draw.isSaving = true
+  var download = document.createElement('a')
   const content = svgDocument(draw, { 'style' :  'width:100%;' })
-  download.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-  download.setAttribute('download', filename);
-  download.style.display = 'none';
-  document.body.appendChild(download);
-  download.click();
-  document.body.removeChild(download);
+  download.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content))
+  download.setAttribute('download', filename)
+  download.style.display = 'none'
+  document.body.appendChild(download)
+  download.click()
+  document.body.removeChild(download)
+  setTimeout(() => {
+    draw.isSaving = false
+  }, 300)
 }
 
 export function exportToHTML(draw, filename = 'fsg.html') {
