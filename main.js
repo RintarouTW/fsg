@@ -15,7 +15,7 @@ import { init_keybindings } from './module/keybinding.js'
 
 import { init_drag } from './module/drag.js'
 import { init_inspector } from './module/inspector.js'
-import { init_axis, buttonClass, opening_animation } from './module/ui.js'
+import { init_axis, buttonClass, opening_animation, showHint } from './module/ui.js'
 import { init_color_picker, enableColorPicker } from './module/color_picker.js'
 import { init_code_editor } from './module/code_editor.js'
 
@@ -24,6 +24,7 @@ import { init_marker } from './module/marker.js'
 import { init_component, deinit_allcomponents } from './components/component.js'
 import { reconstruct_components } from './module/file.js'
 import { execute_user_script, init_scripts } from './module/user_script.js'
+import { getCode } from './module/server.js'
 import './lib/svg.panzoom.js'
 
 // Tests
@@ -169,10 +170,22 @@ function init() {
 
   // when mouse up out of drag area.
   document.addEventListener('mouseup', () => {
-    _draw.fire('mouseup_on_document')
+    _draw?.fire('mouseup_on_document')
   })
 
-  opening_animation(_draw)
+  opening_animation(_draw, () => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.has('hash')) {
+      const hash = params.get('hash')
+      getCode(hash).then(json => {
+        // console.log(json)
+        loadSVG(json.code)
+      }).catch(error => {
+        // console.log(error)
+        showHint(error.message)
+      })
+    }
+  })
 }
 
 SVG.on(document, 'DOMContentLoaded', () => init())

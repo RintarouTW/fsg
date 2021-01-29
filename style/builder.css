@@ -44,6 +44,16 @@
   stroke-width: 1 !important;
 }
 
+.menu_item {
+  fill: #888;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.menu_item:hover {
+  fill: #fff;
+  cursor: pointer;
+}
+
 body {
   background-color: var(--ui-background-color);
   /* background-image: url(/images/plain_blue.jpg); */

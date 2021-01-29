@@ -18,6 +18,16 @@ body {
   font-family: Times, serif, monospace;
 }
 
+.menu_item {
+  fill: #888;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.menu_item:hover {
+  fill: #fff;
+  cursor: pointer;
+}
+
 .ui-select-box {
   stroke: var(--ui-select-box-stroke-color);
   stroke-width: 0.5;

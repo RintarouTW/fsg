@@ -46,7 +46,7 @@ export function showHint(text) {
   }, 100)
 }
 
-export function opening_animation(draw) {
+export function opening_animation(draw, callback) {
   // open animation
   const text = String.raw`\text{Fast SVG Geometry Builder}`
   const unselect = true
@@ -62,5 +62,6 @@ export function opening_animation(draw) {
       const coord = { x: 0, y: 0 }
       addPoint({draw, coord})
       showHint()
+      callback?.()
     })
 }
