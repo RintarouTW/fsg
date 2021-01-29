@@ -3,13 +3,14 @@
 import { SERVER_ROOT, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT } from '../common/define.js'
 import { getHash, postCode } from './server.js'
 
+// so far, menu is only working in runtime, not the editor.
+
 const MENU_PADDING_LEFT = 10 
 const MENU_PADDING_TOP = 5
 
 class Menu {
   constructor(draw, coord) {
     this.draw = draw
-    draw.on('contextmenu', evt => evt.preventDefault())
     const menu = draw.group().translate(coord.x, coord.y).attr('class', 'menu')
     menu.rect(100, 50).flip('y')  // background
       .stroke({ color:'#666', width: 0.3})

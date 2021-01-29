@@ -11,6 +11,9 @@ import { gen_menu } from './menu.js'
 
 export function init_drag(draw, click_to_add_point = true) {
 
+  // disable default right click menu
+  draw.on('contextmenu', evt => evt.preventDefault())
+
   let selectBox
   const found = draw.findOne('.ui-select-box')
   if (found) { // reuse exist element
@@ -39,6 +42,7 @@ export function init_drag(draw, click_to_add_point = true) {
       draw.menu = null
       return
     }
+    if (evt.button != 0) return // skip other buttons
 
     // drag handling
     if (draw.dragTarget && (draw.dragTarget.component instanceof AppendingPinPoint)) {
