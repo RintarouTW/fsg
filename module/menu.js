@@ -1,6 +1,6 @@
 'use strict'
 
-import { SERVER_ROOT } from '../common/define.js'
+import { SERVER_ROOT, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT } from '../common/define.js'
 import { getHash, postCode } from './server.js'
 
 const MENU_PADDING_LEFT = 10 
@@ -17,25 +17,24 @@ class Menu {
     const item = menu.text('Edit').flip('y')
       .attr('class', 'menu_item')
       .move(MENU_PADDING_LEFT, MENU_PADDING_TOP)
-    item.on('click', () => {
+    item.on('mousedown', evt => {
       this.editSVG(draw, menu)
+      evt.preventDefault()
+      evt.stopPropagation()
     })
     this.menu = menu
-  }
-  show(coord) {
-    this.menu.translate(coord.x, coord.y)
-    this.menu.removeClass('ui-hidden')
-  }
-  hide() {
-    this.menu.addClass('ui-hidden')
+    draw.menu = menu
   }
   editSVG(draw, menu) {
     menu.remove()
+    draw.menu = null
     const code = { code : draw.parent().svg() }
     getHash().then( json => {
       const hash = json.hash
-      postCode(hash, code).then( json => {
-        window.open(SERVER_ROOT + '?source=pwa&hash=' + hash, '_blank', 'resizable')
+      postCode(hash, code).then( () => {
+        window.open(SERVER_ROOT + '?source=pwa&hash=' + hash,
+          '_blank',
+          `resizable, width=${DEFAULT_WINDOW_WIDTH},height=${DEFAULT_WINDOW_HEIGHT}`)
       }).catch( error => console.log(error) )
     }).catch( error => console.log(error) )
   }
