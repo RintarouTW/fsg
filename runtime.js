@@ -84,6 +84,8 @@ function init() {
       draw.ready = true
       execute_script_in_file()
     }
+
+    console.log('runtime done')
   }
 }
 

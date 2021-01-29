@@ -13,6 +13,24 @@ export const SVGJS_SCRIPT_NAMESPACE = 'SVGJS_SCRIPT'
 
 export const SVGJS_SCRIPT_URL = String.raw`<script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" />`
 export const RUNTIME_SCRIPT_URL = String.raw`<script href="${SERVER_ROOT}/runtime.min.js" />`
+
+// loadScript won't work in pure .svg
+/*
+export const RUNTIME_SCRIPT_URL = String.raw`<script>
+function loadScript(url, aSync = false) {
+  let s = document.createElement('script')
+  s.type = "text/javascript"
+  s.href = url
+  s.async = aSync;
+  document.currentScript.parentNode.insertBefore(s, document.currentScript)
+}
+if (!window.FSG_RUNTIME) {
+  console.log('loading runtime')
+  loadScript('${SERVER_ROOT}/runtime.min.js')
+}
+</script>`
+*/
+
 export const RUNTIME_STYLE_LINK = String.raw`<link xmlns="http://www.w3.org/1999/xhtml" href="${SERVER_ROOT}/style/runtime.css" rel="stylesheet"/>`
 
 // Editor
