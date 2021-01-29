@@ -19,16 +19,19 @@ class Menu {
       .attr('class', 'menu_item')
       .move(MENU_PADDING_LEFT, MENU_PADDING_TOP)
     item.on('mousedown', evt => {
-      this.editSVG(draw, menu)
+      this.editSVG(draw)
       evt.preventDefault()
       evt.stopPropagation()
     })
     this.menu = menu
-    draw.menu = menu
+    draw.menu = this
   }
-  editSVG(draw, menu) {
-    menu.remove()
-    draw.menu = null
+  remove() {
+    this.menu.remove()
+    this.draw.menu = null
+  }
+  editSVG(draw) {
+    this.remove()
     const code = { code : draw.parent().svg() }
     getHash().then( json => {
       const hash = json.hash
