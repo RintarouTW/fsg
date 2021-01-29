@@ -30,16 +30,16 @@ export function init_drag(draw, click_to_add_point = true) {
   draw.dragStart = null
   draw.on('mousedown', evt => {
     // console.log('draw.mousedown')
+    if (draw.menu) { // if menu exist(shown) remove menu
+      draw.menu.remove()
+      draw.menu = null
+      return
+    }
     // right click for menu
     if (window.FSG_RUNTIME && evt.button == 2) {
       gen_menu(draw, draw.point(evt.clientX, evt.clientY))
       evt.preventDefault()
       evt.stopPropagation()
-      return
-    }
-    if (draw.menu) { // if menu exist(shown) remove menu
-      draw.menu.remove()
-      draw.menu = null
       return
     }
     if (evt.button != 0) return // skip other buttons
