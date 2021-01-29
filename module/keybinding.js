@@ -11,7 +11,7 @@ import { toggle_code_editor } from './code_editor.js'
 import { LineBaseShape } from '../components/shape.js'
 import { addIntersectPoint, addPoint, addMidPoint } from '../components/point.js'
 import { addLine, addRay, addEdge, addVector, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
-import { addPolygon, addCircle } from '../components/fillable.js'
+import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
 import { addText } from '../components/text.js'
 import { 
   unselectAllSelections,
@@ -89,6 +89,28 @@ export function init_keybindings(draw) {
           component.endAppendMode(draw)
         }
         break
+      case 'KeyA':
+        {
+          if (evt.shiftKey) {
+            points = getSelectedPointElements(draw)
+            if (!points || points.length < 3) {
+              showHint('Select 3 points first!')
+              return
+            }
+            points = [points[0], points[1], points[2]] // use only the last 3 points
+            componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+            doAction(draw, addAngle, {draw, componentRefs})
+            return
+          }
+          const component = getLastSelectedAppendableComponent(draw)
+          if(component) {
+            component.toggleAppendMode(draw)
+          } else {
+            const coord = draw.mousePosition
+            doAction(draw, addPoint, {draw, coord})
+          }
+        }
+        break
       case 'KeyB':
         {
           points = getSelectedPointElements(draw)
@@ -101,17 +123,6 @@ export function init_keybindings(draw) {
           doAction(draw, addBisectorLine, {draw, componentRefs})
           return
         }
-      case 'KeyA':
-        {
-          const component = getLastSelectedAppendableComponent(draw)
-          if(component) {
-            component.toggleAppendMode(draw)
-          } else {
-            const coord = draw.mousePosition
-            doAction(draw, addPoint, {draw, coord})
-          }
-        }
-        break
       case 'KeyC':
         if (evt.shiftKey) {
           editField('#field_class')

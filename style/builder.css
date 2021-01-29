@@ -44,6 +44,10 @@
   stroke-width: 1 !important;
 }
 
+.solid {
+  stroke-width: 1 !important;
+}
+
 .menu_item {
   fill: #888;
   user-select: none;

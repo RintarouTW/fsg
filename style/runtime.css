@@ -116,3 +116,7 @@ span.base {
   stroke-dasharray: 5 3;
   stroke-width: 1.2;
 }
+
+.solid {
+  stroke-width: 1.2;
+}

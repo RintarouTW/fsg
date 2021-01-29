@@ -1,7 +1,7 @@
 'use strict'
 
-export const DEV_TESTING = false
-// export const DEV_TESTING = true
+// export const DEV_TESTING = false
+export const DEV_TESTING = true
 
 let SERVER_ROOT
 SERVER_ROOT = (DEV_TESTING) ? 'https://localhost:8080' : 'https://rintaroutw.github.io/fsg'
@@ -63,6 +63,9 @@ export const DEFAULT_LABEL_OFFSET_Y = 5
 export const DEFAULT_FILL_COLOR = '#ff0f6328'
 export const DEFAULT_STROKE_COLOR = '#888888aa'
 export const DEFAULT_TRANSPARENT_COLOR = '#ffffff00'
+
+// Angle
+export const DEFAULT_ANGLE_RADIUS = 15
 
 /// Tests
 export const test_user_script = String.raw`console.log('execute user script')
