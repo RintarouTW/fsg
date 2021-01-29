@@ -18,6 +18,12 @@ body {
   font-family: Times, serif, monospace;
 }
 
+.menu_title {
+  fill: #aaa;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
 .menu_item {
   fill: #888;
   user-select: none;
@@ -117,6 +123,3 @@ span.base {
   stroke-width: 1.2;
 }
 
-.solid {
-  stroke-width: 1.2;
-}

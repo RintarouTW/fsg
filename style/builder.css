@@ -43,11 +43,12 @@
   stroke-dasharray: 5 3 !important;
   stroke-width: 1 !important;
 }
-
-.solid {
-  stroke-width: 1 !important;
+.menu_title {
+  fill: #aaa;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
-
 .menu_item {
   fill: #888;
   user-select: none;
