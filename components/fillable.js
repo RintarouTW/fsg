@@ -154,7 +154,11 @@ export class Arc extends FillableShape {
   constructor({draw, points, element, cover}) {
     super({draw, element, cover, points})
 
-    this.large_arc = false
+    const large_arc = element.attr('large_arc')
+    if (typeof large_arc === 'undefined')
+      this.large_arc = false
+    else
+      this.large_arc = (large_arc == 'true') ? true : false
     const [p1, p2, p3] = points
     this.tracePoints(points, () => {
       const arcPath = arcOf(p1, p2, p3, this.large_arc)
@@ -171,6 +175,7 @@ export class Arc extends FillableShape {
   }
   toggleMode() {
     this.large_arc = !this.large_arc
+    this.element.attr('large_arc', (this.large_arc) ? 'true' : 'false')
     this.points[0].fire('update')
   }
 }
