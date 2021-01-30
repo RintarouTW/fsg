@@ -4,8 +4,13 @@
  * editor is the singleton instance per page.
  */
 
-import { DEFAULT_TRANSPARENT_COLOR, CLASS_FSG_BOARD, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT,
-RUNTIME_STYLE_LINK
+import {
+  DEFAULT_TRANSPARENT_COLOR,
+  CLASS_FSG_BOARD,
+  DEFAULT_BOARD_RADIUS,
+  DEFAULT_WINDOW_WIDTH,
+  DEFAULT_WINDOW_HEIGHT,
+  RUNTIME_STYLE_LINK
 } from './common/define.js'
 import { wait } from "./common/common.js"
 
@@ -113,6 +118,7 @@ export function loadSVG(content) {
     draw.rect(viewbox.width, viewbox.height)
       .attr('class', CLASS_FSG_BOARD)
       .attr('fill', DEFAULT_TRANSPARENT_COLOR) // fill with transparent color
+      .radius(DEFAULT_BOARD_RADIUS)
       .move(-viewbox.width/2, -viewbox.height/2)
   }
   init_history(draw)

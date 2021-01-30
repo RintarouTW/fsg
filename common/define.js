@@ -38,6 +38,7 @@ export const DEFAULT_WINDOW_HEIGHT = 910
 
 // Runtime
 export const CLASS_FSG_BOARD = 'fsg-board'
+export const DEFAULT_BOARD_RADIUS = 8
 
 // component attributes
 export const COMPONENT_NO_ATTR = 'component_no'
