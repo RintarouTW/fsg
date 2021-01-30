@@ -15,6 +15,7 @@
 
 body {
   background-color: var(--ui-background-color);
+  color: var(--text-color); /* text color */
   font-family: Times, serif, monospace;
 }
 
@@ -103,7 +104,7 @@ span.base {
  position: relative !important;
 }
 
-/* don't use .text which is used by katex */
+/* WARNNING: don't use .text which is used by katex */
 .latex, .label {
   color: var(--text-color);
   fill: var(--text-color);

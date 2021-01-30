@@ -2,18 +2,22 @@
 
 import { DEFAULT_TEXT } from '../common/define.js'
 import { Component } from './component.js'
-import { currentFillColor } from '../module/color_picker.js'
+import { currentStrokeColor } from '../module/color_picker.js'
 
 function useCurrentColors(element) {
   if (window.FSG_BUILDER) { // run in editor
-    const fillColor = currentFillColor()
-    element.attr('style', `color: ${fillColor};`)
+    const strokeColor = currentStrokeColor()
+    element.attr('style', `color: ${strokeColor};`)
   }
 }
 
 export class Text extends Component {
   constructor({draw, element}) {
     super({draw, element})
+    { // patch old diagrams(.text) to new class(.latex)
+      element.removeClass('text')
+      element.addClass('latex')
+    }
     this.makeDraggable(draw, element)
   }
   makeDraggable(draw, element) {
@@ -55,20 +59,19 @@ export class Text extends Component {
     return this.element.attr('text')
   }
   getAttributes() {
-    return ['id', 'class', 'cx', 'cy', 'text', 'fill']
+    return ['id', 'class', 'cx', 'cy', 'text', 'stroke']
   }
   getAttribute(attributeName) {
-    if (attributeName == 'fill') {
+    if (attributeName == 'stroke') {
       const color = this.element.node.getAttribute('style')
-      if (typeof color === 'undefined')
-        return '#fafff5c6' // default text color
-      const value = color.replace(/(color| |:|;)/g, '')
-      return value
+      const value = color?.replace(/(color| |:|;)/g, '')
+      console.log(value)
+      return value ?? '#999999ff' // default text color
     }
     return super.getAttribute(attributeName)
   }
   setAttribute(attributeName, value) {
-    if (attributeName == 'fill') {
+    if (attributeName == 'stroke') {
       this.element.attr('style', `color: ${value};`)
       return
     }
