@@ -142,7 +142,7 @@ export class IntersectPoint extends SelectablePoint {
       return
     }
 
-    if (refComponents[0] instanceof LineBaseShape) {
+    if (refComponents[0] instanceof LineBaseShape) { // line + line
       if (refComponents[1] instanceof LineBaseShape) {
         const [l1, l2] = refComponents
         // console.log(l1.direction(), l2.direction())
@@ -150,7 +150,7 @@ export class IntersectPoint extends SelectablePoint {
         // console.log(p)
         if (!p) return
         this.element.center(p.x, p.y)
-      } else {
+      } else { // line + circle
         const [line, circle] = refComponents
         // console.log(line, circle, circle.radius)
         const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
@@ -163,7 +163,7 @@ export class IntersectPoint extends SelectablePoint {
         this.element.center(p.x, p.y)
       }
     } else {
-      if (refComponents[1] instanceof LineBaseShape) {
+      if (refComponents[1] instanceof LineBaseShape) { // circle + line
         const [circle, line] = refComponents
         const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
         if (!intersectPoints) return
