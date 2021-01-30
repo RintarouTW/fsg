@@ -2,6 +2,14 @@
 
 import { DEFAULT_TEXT } from '../common/define.js'
 import { Component } from './component.js'
+import { currentFillColor } from '../module/color_picker.js'
+
+function useCurrentColors(element) {
+  if (window.FSG_BUILDER) { // run in editor
+    const fillColor = currentFillColor()
+    element.attr('style', `color: ${fillColor};`)
+  }
+}
 
 export class Text extends Component {
   constructor({draw, element}) {
@@ -47,7 +55,24 @@ export class Text extends Component {
     return this.element.attr('text')
   }
   getAttributes() {
-    return ['id', 'class', 'cx', 'cy', 'text']
+    return ['id', 'class', 'cx', 'cy', 'text', 'fill']
+  }
+  getAttribute(attributeName) {
+    if (attributeName == 'fill') {
+      const color = this.element.node.getAttribute('style')
+      if (typeof color === 'undefined')
+        return '#fafff5c6' // default text color
+      const value = color.replace(/(color| |:|;)/g, '')
+      return value
+    }
+    return super.getAttribute(attributeName)
+  }
+  setAttribute(attributeName, value) {
+    if (attributeName == 'fill') {
+      this.element.attr('style', `color: ${value};`)
+      return
+    }
+    super.setAttribute(attributeName, value)
   }
 }
 
@@ -109,10 +134,11 @@ function genCover(draw, element, position) {
 
 function genText(draw, text, position) {
   const element = foreignTex(draw, text).flip('y')
-    .attr('class', 'text selected component')
+    .attr('class', 'latex selected component')
     .attr('text', text)
     .attr('x', position.x)
     .attr('y', -position.y)
+    .attr('style', 'color: #888')
   // genCover(draw, element, position)
   return element
 }
@@ -127,6 +153,7 @@ export function addText({draw, element, text, unselect}) {
     const position = draw.mousePosition
     text = text ?? DEFAULT_TEXT
     element = genText(draw, text, position)
+    useCurrentColors(element)
   }
   const component = new Text({draw, element})
   if(unselect) unselectComponent(draw, component)

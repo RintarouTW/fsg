@@ -84,7 +84,7 @@ export function reconstruct_components(draw) {
       console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
-    if (element.hasClass('text')) {
+    if (element.hasClass('latex') || element.hasClass('text')) {
       addText({draw, element})
       console.assert(position == element.position(), 'position of element changed', position, element)
       return

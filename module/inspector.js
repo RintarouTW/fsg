@@ -55,9 +55,10 @@ function inspect_component(component) {
       value = fieldDefaultValue[name]
 
     if (name == 'fill' || name == 'stroke') {
-      value = element.attr(name)
-      if (value === null)
-        value = fieldDefaultValue[name]
+      /// use component.getAttribute() now, don't access element attributes directly anymore.
+      // value = element.attr(name)
+      // if (value === null)
+      // value = fieldDefaultValue[name]
       field.style.backgroundColor = value
       field.value = value
       SVG(field).fire('change')
