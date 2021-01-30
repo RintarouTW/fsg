@@ -295,6 +295,7 @@ export function init_keybindings(draw) {
         {
           if (evt.metaKey) { // open file
             const file = SVG('#file')
+            file.node.value = '' // reset or the same file won't be opened. bug fixed: issue #3
             file.node.click()
             evt.preventDefault()
             evt.stopPropagation()

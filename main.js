@@ -52,6 +52,7 @@ let _draw = null
 let _content = null
 
 function openSVG(file) {
+  if(!file) return
   const reader = new FileReader();
   reader.addEventListener("load", function () {
     _draw = loadSVG(reader.result)
@@ -63,7 +64,6 @@ function openSVG(file) {
 }
 
 function resized(draw) {
-  console.log('resized')
   const clientWidth = document.body.clientWidth
   const viewbox = { x: 0, y: 0, width: clientWidth, height: clientWidth * 0.75 }
   draw.parent().size(viewbox.width, viewbox.height).viewbox(viewbox)
@@ -158,7 +158,7 @@ function init() {
   _draw = loadSVG() // new file
   console.assert(_draw, 'something wrong failed to get draw')
 
-  SVG('#file').on('change', evt => {
+  SVG('#file').on('input', evt => {
     openSVG(evt.target.files[0])
   })
 
