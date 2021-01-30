@@ -44,25 +44,31 @@ function init() {
     const contentType = document.contentType
     if (contentType.includes('html')) { // html goes here.
 
+      const draw = SVG('svg').first()
+      init_modules(draw)
+      draw.ready = true
+      execute_script_in_file()
+
+      // Major issue:
+      // There is no way to prevent naming polution of user scripts.
+      console.warn('not full supported yet, only one svg is ok.')
+      //
       // support multiple svgs, find the svgs that's in fsg namespace.
       // modules should be inited for each svg.
       // draw.fsg.history
       // draw.fsg.selection
       // draw.fsg.marker
       // draw.fsg.component
+      /*
       const svgs = document.querySelectorAll('svg')
-      let fsgs = []
       svgs.forEach(svg => {
-        if (SVG(svg).attr('xmlns:fsg') == FSG_NAMESPACE)
-          fsgs.push(svg)
-      })
-
-      svgs.forEach(svg => {
-        const draw = SVG(svg).first()
-        init_modules(draw)
+        if (SVG(svg).attr('xmlns:fsg') == FSG_NAMESPACE) {
+          const draw = SVG(svg).first()
+          init_modules(draw)
+        }
       })
       // locate the user script and execute it.
-
+      */
     } else { // svg
       const draw = SVG('svg').first()
       init_modules(draw)

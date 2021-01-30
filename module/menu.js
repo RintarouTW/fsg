@@ -85,6 +85,12 @@ class RuntimeMenu extends Menu {
       }).catch( error => console.log(error) )
     }
     this.addMenuItem(editItem)
+    const reloadItem = new MenuItem(draw, this.menu, 'Reload')
+    reloadItem.onMouseDown = () => {
+      this.remove()
+      location.reload()
+    }
+    this.addMenuItem(reloadItem)
   }
 }
 
