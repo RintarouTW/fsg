@@ -135,6 +135,9 @@ function arcOf(p1, p2, p3) {
   const p1y = p2.y + v1.y
   const p3x = p2.x + v2.x
   const p3y = p2.y + v2.y
+  if ((v2.y == v1.x) && (v2.x == -v1.y)) { // right angle
+    return String.raw`M ${p2.x} ${p2.y} L ${p1x} ${p1y} L ${p1x + v2.x} ${p1y + v2.y} L ${p3x} ${p3y} Z`
+  }
   const large = (v1.x * v2.y - v1.y * v2.x >= 0) ? 0 : 1
   const ccw = 1
   return String.raw`M ${p1x} ${p1y} A ${radius} ${radius} 0 ${large} ${ccw} ${p3x} ${p3y} L ${p2.x} ${p2.y} Z`
