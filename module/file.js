@@ -211,7 +211,9 @@ export function svgDocument(draw, optional_attributes = {}) {
   patchSVGJS(tmp)
   cleanupDirtyClasses(tmp)
 
-  return tmp.svg()
+  // &nbsp; is not a defined entity in svg, replace it with &#160;
+  const html = tmp.svg()
+  return html.replace(/\&nbsp;/g, '&#160;')
 }
 
 export function saveAsSVG(draw, filename = 'fsg.svg') {

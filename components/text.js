@@ -78,6 +78,10 @@ function foreignTex(draw, text) {
   let foreignObject
   try {
     renderMathInElement(tex.node, katex_options)
+    // &nbsp; is not a defined entity in svg, replace it with &#160;
+    let str = tex.node.innerHTML
+    str = str.replace(/\&nbsp;/g, '&#160;')
+    tex.node.innerHTML = str
     foreignObject = draw.foreignObject(500, 200).add(tex)
     const {width, height} = tex.node.getBoundingClientRect()
     /*
