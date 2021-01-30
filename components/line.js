@@ -127,7 +127,6 @@ export class Line extends LineBaseShape {
       const coord2 = pointOnScreen(p2.component)
       // console.log(box, coord1, coord2)
       const [clip1, clip2] = clipping(box, coord1, coord2)
-
       if (!clip1 || !clip2) return
       element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
       cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
@@ -227,7 +226,7 @@ export class ParallelLine extends Line {
     super({draw, element, cover, points})
 
     const componentRefs = points.map(point => {
-    // watch point remove event
+      // watch point remove event
       point.on('remove', this.remove.bind(this))
       return point.attr('component_no')
     })
@@ -276,7 +275,7 @@ export class PerpLine extends Line {
     super({draw, element, cover, points})
 
     const componentRefs = points.map(point => {
-    // watch point remove event
+      // watch point remove event
       point.on('remove', this.remove.bind(this))
       return point.attr('component_no')
     })
