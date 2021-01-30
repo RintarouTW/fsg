@@ -7,7 +7,7 @@ import { AppendingPinPoint } from '../components/appending-point.js'
 import { Text } from '../components/text.js'
 
 import { doAction } from './history.js'
-import { gen_menu } from './menu.js'
+import { RuntimeMenu, BuilderMenu } from './menu.js'
 
 export function init_drag(draw, click_to_add_point = true) {
 
@@ -36,8 +36,12 @@ export function init_drag(draw, click_to_add_point = true) {
     }
     // right click for menu
     // if (/*window.FSG_RUNTIME &&*/ evt.button == 2) {
-    if (window.FSG_RUNTIME && evt.button == 2) {
-      gen_menu(draw, draw.point(evt.clientX, evt.clientY))
+    if (evt.button == 2) {
+      if (window.FSG_RUNTIME) {
+        new RuntimeMenu(draw, draw.point(evt.clientX, evt.clientY))
+      } else if (window.FSG_BUILDER) {
+        new BuilderMenu(draw, draw.point(evt.clientX, evt.clientY))
+      }
       evt.preventDefault()
       evt.stopPropagation()
       return
