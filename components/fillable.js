@@ -117,7 +117,7 @@ export function addPolygon({draw, componentRefs, element, cover, component_no}) 
 /// Arc
 ///
 
-function arcOf(p1, p2, p3) {
+function arcOf(p1, p2, p3, large_arc = false) {
   // console.assert(p1, 'p1 must be defined')
   // console.assert(p2, 'p2 must be defined')
   // console.assert(p3, 'p3 must be defined')
@@ -129,8 +129,11 @@ function arcOf(p1, p2, p3) {
   const dy2 = p3.cy() - p2.y
   const v1_length = Math.sqrt(dx1 ** 2 + dy1 ** 2)
   const v2_length = Math.sqrt(dx2 ** 2 + dy2 ** 2)
-  const v1 = { x: dx1 / v1_length * radius, y: dy1 / v1_length * radius}
-  const v2 = { x: dx2 / v2_length * radius, y: dy2 / v2_length * radius}
+  if (v1_length == 0 || v2_length == 0) {
+    return '' // empty path, draw nothing
+  }
+  let v1 = { x: dx1 / v1_length * radius, y: dy1 / v1_length * radius}
+  let v2 = { x: dx2 / v2_length * radius, y: dy2 / v2_length * radius}
   const p1x = p2.x + v1.x
   const p1y = p2.y + v1.y
   const p3x = p2.x + v2.x
@@ -138,8 +141,12 @@ function arcOf(p1, p2, p3) {
   if ((v2.y == v1.x) && (v2.x == -v1.y)) { // right angle
     return String.raw`M ${p2.x} ${p2.y} L ${p1x} ${p1y} L ${p1x + v2.x} ${p1y + v2.y} L ${p3x} ${p3y} Z`
   }
-  const large = (v1.x * v2.y - v1.y * v2.x >= 0) ? 0 : 1
-  const ccw = 1
+  let large = (v1.x * v2.y - v1.y * v2.x >= 0) ? 0 : 1
+  let ccw = 1
+  if (!large_arc) {
+    ccw = (large == 1) ? 0 : 1
+    large = 0
+  }
   return String.raw`M ${p1x} ${p1y} A ${radius} ${radius} 0 ${large} ${ccw} ${p3x} ${p3y} L ${p2.x} ${p2.y} Z`
 }
 
@@ -147,9 +154,10 @@ export class Arc extends FillableShape {
   constructor({draw, points, element, cover}) {
     super({draw, element, cover, points})
 
+    this.large_arc = false
     const [p1, p2, p3] = points
     this.tracePoints(points, () => {
-      const arcPath = arcOf(p1, p2, p3)
+      const arcPath = arcOf(p1, p2, p3, this.large_arc)
       element.plot(arcPath)
       cover.plot(arcPath)
     })
@@ -161,6 +169,10 @@ export class Arc extends FillableShape {
     })
     element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
   }
+  toggleMode() {
+    this.large_arc = !this.large_arc
+    this.points[0].fire('update')
+  }
 }
 
 export function addAngle({ draw, componentRefs, element, cover, component_no }) {
@@ -169,7 +181,7 @@ export function addAngle({ draw, componentRefs, element, cover, component_no }) 
 
   if (!element) {
     const [p1, p2, p3] = points
-    const arcPath = arcOf(p1, p2, p3)
+    const arcPath = arcOf(p1, p2, p3, false /* large_arc */)
     console.log(arcPath)
     element = draw.path(arcPath).attr('class', 'angle shape component selected none')
     useCurrentColors(element)

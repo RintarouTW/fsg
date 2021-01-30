@@ -27,6 +27,7 @@ import {
   getLastSelectedAppendableComponent,
   deselectLastSelection,
   lastSelectedComponent,
+  getLastSelectedAngleComponents,
 } from './selection.js'
 import { showHint } from './ui.js'
 
@@ -54,6 +55,16 @@ export function init_keybindings(draw) {
     switch(evt.code) {
       case 'F1':
         toggle_code_editor()
+        break
+      case 'Tab':
+        {
+          const components = getLastSelectedAngleComponents(draw)
+          components.forEach(angle => {
+            angle.toggleMode()
+          })
+          evt.preventDefault()
+          evt.stopPropagation()
+        }
         break
       case 'Backspace':
         removeAllSelections(draw)

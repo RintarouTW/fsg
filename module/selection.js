@@ -1,7 +1,7 @@
 'use strict'
 
 import { Component } from '../components/component.js'
-import { Circle } from '../components/fillable.js'
+import { Circle, Arc } from '../components/fillable.js'
 import { SelectablePoint } from '../components/point.js'
 import { ShapeComponent, FillableShape, LineBaseShape } from '../components/shape.js'
 
@@ -209,4 +209,12 @@ export function getSelectedComponents(draw) {
   return shapes
 }
 
-
+export function getLastSelectedAngleComponents(draw) {
+  console.assert(draw, 'draw must exist')
+  const selections = draw.fsg.selection.selections
+  let angles = []
+  selections.forEach(item => {
+    if (item instanceof Arc) angles.push(item) 
+  })
+  return angles
+}
