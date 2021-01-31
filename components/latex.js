@@ -65,7 +65,6 @@ export class LaTeX extends Component {
     if (attributeName == 'stroke') {
       const color = this.element.node.getAttribute('style')
       const value = color?.replace(/(color| |:|;)/g, '')
-      console.log(value)
       return value ?? '#999999ff' // default text color
     }
     return super.getAttribute(attributeName)
