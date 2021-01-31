@@ -4,7 +4,7 @@ import { snapTo } from '../common/common.js'
 
 import { addPoint, PinPoint, addPinPoint } from '../components/point.js'
 import { AppendingPinPoint } from '../components/appending-point.js'
-import { Text } from '../components/text.js'
+import { LaTeX } from '../components/latex.js'
 
 import { doAction } from './history.js'
 import { RuntimeMenu, BuilderMenu } from './menu.js'
@@ -101,7 +101,7 @@ export function init_drag(draw, click_to_add_point = true) {
         const coord = mousePosition
         // only update if changed (better performance)
         if ((coord.x != org.x) || (coord.y != org.y)) {
-          if (dragTarget.type == 'text' || dragTarget.component instanceof Text)
+          if (dragTarget.type == 'text' || dragTarget.component instanceof LaTeX)
             dragTarget.center(coord.x, -coord.y)
           else
             dragTarget.center(coord.x, coord.y)

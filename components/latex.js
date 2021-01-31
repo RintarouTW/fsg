@@ -11,7 +11,7 @@ function useCurrentColors(element) {
   }
 }
 
-export class Text extends Component {
+export class LaTeX extends Component {
   constructor({draw, element}) {
     super({draw, element})
     { // patch old diagrams(.text) to new class(.latex)
@@ -43,19 +43,19 @@ export class Text extends Component {
     })
   }
   // override default label interface
-  setText(text) {
+  setLaTeX(text) {
     if (!text) text = ''
     let element = this.element
     const draw = this.draw
     const position = { x: element.attr('x'), y: -element.attr('y') }
     element.clear().remove()
-    element = genText(this.draw, text, position)
+    element = genLaTeX(this.draw, text, position)
     element.component = this
     this.makeDraggable(draw, element)
     draw.add(element)
     this.element = element
   }
-  getText() {
+  getLaTeX() {
     return this.element.attr('text')
   }
   getAttributes() {
@@ -135,7 +135,7 @@ function genCover(draw, element, position) {
   element.add(cover)
 }
 
-function genText(draw, text, position) {
+function genLaTeX(draw, text, position) {
   const element = foreignTex(draw, text).flip('y')
     .attr('class', 'latex selected component')
     .attr('text', text)
@@ -146,7 +146,7 @@ function genText(draw, text, position) {
   return element
 }
 
-export function addText({draw, element, text, unselect}) {
+export function addLaTeX({draw, element, text, unselect}) {
   if (!element) {
     /*
      * <g label=''>
@@ -155,10 +155,10 @@ export function addText({draw, element, text, unselect}) {
      */
     const position = draw.mousePosition
     text = text ?? DEFAULT_TEXT
-    element = genText(draw, text, position)
+    element = genLaTeX(draw, text, position)
     useCurrentColors(element)
   }
-  const component = new Text({draw, element})
+  const component = new LaTeX({draw, element})
   if(unselect) unselectComponent(draw, component)
   return component
 }

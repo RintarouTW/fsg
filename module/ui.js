@@ -2,7 +2,7 @@
 
 import { addPoint } from '../components/point.js'
 import { addAxis } from '../components/line.js'
-import { addText } from '../components/text.js'
+import { addLaTeX } from '../components/latex.js'
 import { enableColorPicker } from '../module/color_picker.js'
 
 export function init_axis(draw) {
@@ -50,7 +50,7 @@ export function opening_animation(draw, callback) {
   // open animation
   const text = String.raw`\text{Fast SVG Geometry Builder}`
   const unselect = true
-  const element = addText({draw, text, unselect}).element
+  const element = addLaTeX({draw, text, unselect}).element
   element.center(0, 0).attr('opacity', 0)
   element.animate(600).dmove(0, -30).attr('opacity', 1)
     .animate(600, 700).attr('opacity', 0)

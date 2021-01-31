@@ -4,7 +4,7 @@ import { COMPONENT_REFS_ATTR, COMPONENT_NO_ATTR, OF_ATTR, SERVER_ROOT, FSG_NAMES
 import { addEdge, addLine, addRay, addVector, addAxis, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
 import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
 import { addPoint, addMidPoint, addIntersectPoint, addParallelPoint, addPerpPoint, addPinPoint } from '../components/point.js'
-import { addText } from '../components/text.js'
+import { addLaTeX } from '../components/latex.js'
 
 // reconstruct order by component_no
 function findAllComponentElements(draw) {
@@ -85,7 +85,7 @@ export function reconstruct_components(draw) {
       return
     }
     if (element.hasClass('latex') || element.hasClass('text')) {
-      addText({draw, element})
+      addLaTeX({draw, element})
       console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }

@@ -12,7 +12,7 @@ import { LineBaseShape } from '../components/shape.js'
 import { addIntersectPoint, addPoint, addMidPoint } from '../components/point.js'
 import { addLine, addRay, addEdge, addVector, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
 import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
-import { addText } from '../components/text.js'
+import { addLaTeX } from '../components/latex.js'
 import { 
   unselectAllSelections,
   removeAllSelections,
@@ -344,7 +344,7 @@ export function init_keybindings(draw) {
             editField('#field_text')
             evt.preventDefault()
           } else {
-            doAction(draw, addText, {draw})
+            doAction(draw, addLaTeX, {draw})
           }
         }
         break
