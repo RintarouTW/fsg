@@ -43,7 +43,7 @@ export class LaTeX extends Component {
     })
   }
   // override default label interface
-  setLaTeX(text) {
+  setText(text) {
     if (!text) text = ''
     let element = this.element
     const draw = this.draw
@@ -55,7 +55,7 @@ export class LaTeX extends Component {
     draw.add(element)
     this.element = element
   }
-  getLaTeX() {
+  getText() {
     return this.element.attr('text')
   }
   getAttributes() {
