@@ -20,6 +20,12 @@ export class UnSelectablePoint extends Component {
     super({draw, element})
     unselectComponent(draw, this) 
   }
+  select() {
+    // do nothing.
+  }
+  unselect() {
+    // do nothing.
+  }
   getAttributes() {
     console.assert(true, 'unselectable point should not be inspected')
     return []

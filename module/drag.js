@@ -2,7 +2,7 @@
 
 import { snapTo } from '../common/common.js'
 
-import { addPoint, PinPoint, addPinPoint } from '../components/point.js'
+import { addPoint, PinPoint, addPinPoint, UnSelectablePoint } from '../components/point.js'
 import { AppendingPinPoint } from '../components/appending-point.js'
 import { LaTeX } from '../components/latex.js'
 
@@ -123,6 +123,8 @@ export function init_drag(draw, click_to_add_point = true) {
 function selectAllInBox(draw, selectBox, isShiftPressed) {
   const list = draw.find('.component')
   list.forEach(element => {
+    // skip unselectable points
+    if (element.component instanceof UnSelectablePoint) return
     // skip already selected element, so the selections would be in order.
     if (!isShiftPressed && element.hasClass('selected')) return 
     const itemBox = element.bbox()
