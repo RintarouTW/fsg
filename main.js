@@ -32,22 +32,6 @@ import { execute_user_script, init_scripts } from './module/user_script.js'
 import { getCode } from './module/server.js'
 import './lib/svg.panzoom.js'
 
-// Tests
-import { 
-  basic_svg_test,
-  intersect_test,
-  latex_test,
-} from './test/test.js'
-
-function run_tests() {
-  basic_svg_test()
-  intersect_test()
-  latex_test()
-}
-
-// CAUTION:
-// css would override the styles.
-
 let _draw = null
 let _content = null
 
@@ -154,7 +138,6 @@ function init() {
 
   init_color_picker()
 
-  // _draw = (DEV_TESTING) ? run_tests() : loadSVG() // for testing
   _draw = loadSVG() // new file
   console.assert(_draw, 'something wrong failed to get draw')
 
