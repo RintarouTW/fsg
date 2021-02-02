@@ -216,12 +216,12 @@ export function svgDocument(draw, optional_attributes = {}) {
   return html.replace(/\&nbsp;/g, '&#160;')
 }
 
-export function saveAsSVG(draw, filename = 'fsg.svg') {
+export function saveAsSVG(draw) {
   draw.isSaving = true
   var download = document.createElement('a')
   const content = svgDocument(draw, { 'style' :  'width:100%;' })
   download.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content))
-  download.setAttribute('download', filename)
+  download.setAttribute('download', draw.fsg.filename)
   download.style.display = 'none'
   document.body.appendChild(download)
   download.click()
@@ -231,7 +231,8 @@ export function saveAsSVG(draw, filename = 'fsg.svg') {
   }, 300)
 }
 
-export function exportToHTML(draw, filename = 'fsg.html') {
+export function exportToHTML(draw) {
+  const filename = draw.fsg.filename.replace(/\.svg/, '.html')
   var element = document.createElement('a');
   let content = svgDocument(draw, { 'style' :  'width:100%;' }) // for HTML
 

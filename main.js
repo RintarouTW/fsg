@@ -41,11 +41,9 @@ function openFile(file) {
   const reader = new FileReader();
   reader.addEventListener("load", function () {
     _draw = loadFSG(reader.result)
+    if (_draw) _draw.fsg.filename = file.name
   }, false);
-
-  if (file) {
-    reader.readAsText(file);
-  }
+  reader.readAsText(file);
 }
 
 function resized(draw) {
@@ -80,6 +78,7 @@ export function newFSG() {
 
   const draw = svg.group().flip('y').translate(viewbox.width/2, viewbox.height/2)
   draw.fsg = {} // create fsg context for modules
+  draw.fsg.filename = 'fsg.svg'
 
   init_marker(draw)
   // put the style before scripts
@@ -138,6 +137,7 @@ export function loadFSG(content) {
 
   const draw = svg.first()
   draw.fsg = {} // create fsg context for modules
+  draw.fsg.filename = 'fsg.svg'
 
   init_marker(draw)
 
