@@ -35,11 +35,11 @@ import './lib/svg.panzoom.js'
 let _draw = null
 let _content = null
 
-function openSVG(file) {
+function openFile(file) {
   if(!file) return
   const reader = new FileReader();
   reader.addEventListener("load", function () {
-    _draw = loadSVG(reader.result)
+    _draw = loadFSG(reader.result)
   }, false);
 
   if (file) {
@@ -55,32 +55,81 @@ function resized(draw) {
   draw.translate(viewbox.width / 2 - transform.translateX, viewbox.height / 2 - transform.translateY)
 }
 
-// exported only for tests
-export function loadSVG(content) {
+function cleanUp() {
+  if (_draw) deinit_allcomponents(_draw)
+  // clear edit areas
+  SVG('#editArea').clear()
+  _draw = null
+  _content = null
+}
 
+export function newFSG() {
+
+  cleanUp()
+
+  const svg = SVG()
+
+  // init edit area
+  const clientWidth = document.body.clientWidth
+  const viewbox = { width: clientWidth, height: clientWidth * 0.75 }
+  svg.addTo('#editArea')
+    .size(viewbox.width, viewbox.height)
+    .viewbox(0, 0, viewbox.width, viewbox.height)
+    .panZoom({zoomMin: 1, zoomMax: 3})
+
+  const draw = svg.group().flip('y').translate(viewbox.width/2, viewbox.height/2)
+  draw.fsg = {} // create fsg context for modules
+
+  init_marker(draw)
+  // put the style before scripts
+  draw.defs().add(SVG(RUNTIME_STYLE_LINK))
+  const userScript = init_scripts(draw)
+
+  // creat board as background
+  draw.rect(viewbox.width, viewbox.height)
+    .attr('class', CLASS_FSG_BOARD)
+    .attr('fill', DEFAULT_TRANSPARENT_COLOR) // fill with transparent color
+    .radius(DEFAULT_BOARD_RADIUS)
+    .move(-viewbox.width/2, -viewbox.height/2)
+  init_history(draw)
+  init_selection(draw)
+  init_component(draw)
+  init_drag(draw)
+
+  init_inspector(draw)
+  init_keybindings(draw)
+  init_axis(draw)
+
+  init_code_editor(userScript)
+  return draw
+}
+
+function loadAsSVG(content) {
   let svg
-
   // deal with corrupted content.
   try {
     svg = SVG(content)
   } catch(err) {
     console.log(err)
     alert(err)
-    return
+    return null
   }
   if (!svg || svg.type !== 'svg') {
     alert('not correct svg file')
-    return
+    return null
   }
+  return svg
+}
 
-  if (_draw) deinit_allcomponents(_draw)
-  // clear edit areas
-  SVG('#editArea').clear()
+// exported only for tests
+export function loadFSG(content) {
 
-  _draw = null
+  const svg = loadAsSVG(content)
+  if (!svg) return
+
+  cleanUp()
+
   _content = content
-
-  const isNewFile = !content
 
   const clientWidth = document.body.clientWidth
   const viewbox = { width: clientWidth, height: clientWidth * 0.75 }
@@ -89,38 +138,22 @@ export function loadSVG(content) {
     .viewbox(0, 0, viewbox.width, viewbox.height)
     .panZoom({zoomMin: 1, zoomMax: 3})
 
-  const draw = (!isNewFile) ? svg.first() : svg.group().flip('y').translate(viewbox.width/2, viewbox.height/2)
+  const draw = svg.first()
   draw.fsg = {} // create fsg context for modules
 
   init_marker(draw)
-  if (isNewFile) { // put the style before scripts
-    draw.defs().add(SVG(RUNTIME_STYLE_LINK))
-  }
   const userScript = init_scripts(draw)
-
-  if (isNewFile) {
-    draw.rect(viewbox.width, viewbox.height)
-      .attr('class', CLASS_FSG_BOARD)
-      .attr('fill', DEFAULT_TRANSPARENT_COLOR) // fill with transparent color
-      .radius(DEFAULT_BOARD_RADIUS)
-      .move(-viewbox.width/2, -viewbox.height/2)
-  }
+  
   init_history(draw)
   init_selection(draw)
   init_component(draw)
   init_drag(draw)
 
-  if(isNewFile) {
-    init_inspector(draw)
-    init_keybindings(draw)
-    init_axis(draw)
-    // init_filter(draw)
-  } else { 
-    init_keybindings(draw)
-    reconstruct_components(draw)
-    draw.ready = true
-    enableColorPicker()
-  }
+  init_keybindings(draw)
+  reconstruct_components(draw)
+  draw.ready = true
+  enableColorPicker()
+
   init_code_editor(userScript)
   return draw
 }
@@ -138,15 +171,17 @@ function init() {
 
   init_color_picker()
 
-  _draw = loadSVG() // new file
+  _draw = newFSG() // new file
   console.assert(_draw, 'something wrong failed to get draw')
 
   SVG('#file').on('input', evt => {
-    openSVG(evt.target.files[0])
+    openFile(evt.target.files[0])
   })
 
   buttonClass(SVG('#runButton'), () => execute_user_script(_draw))
-  buttonClass(SVG('#reloadButton'), () => _draw = loadSVG(_content))
+  buttonClass(SVG('#reloadButton'), () => {
+    if (_content) _draw = loadFSG(_content)
+  })
 
   _draw.mousePosition = { x: -150, y: 30 }
   const reset_mouse_position = () => {
@@ -172,7 +207,7 @@ function init() {
       const hash = params.get('hash')
       getCode(hash).then(json => {
         // console.log(json)
-        loadSVG(json.code)
+        loadFSG(json.code)
       }).catch(error => {
         // console.log(error)
         showHint(error.message)
