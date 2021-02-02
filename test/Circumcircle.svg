@@ -1,1 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" style="width:100%;" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="ui-select-box" x="74.5" y="-60"></rect><circle r="138.5101470493372" cx="15" cy="-14.015151515151494" class="circle dashed shape component none" fill="#ff0f6328" stroke="#dededeaa" component_no="21" component_refs="16,6"></circle><circle r="138.5101470493372" cx="15" cy="-14.015151515151494" class="cover" of="21" fill="#ff0f6328"></circle><circle r="0.5" cx="-433.5" cy="0" class="hidden-point" id="axis-x-start"></circle><circle r="0.5" cx="433.5" cy="0" class="hidden-point" id="axis-x-end"></circle><circle r="0.5" cx="0" cy="-325.125" class="hidden-point" id="axis-y-start"></circle><circle r="0.5" cx="0" cy="325.125" class="hidden-point" id="axis-y-end"></circle><line x1="-120" y1="-45" x2="150" y2="-45" class="edge shape component" stroke="#888888aa" component_no="7" component_refs="5,6"></line><line x1="-120" y1="-45" x2="150" y2="-45" class="cover" of="7" fill="#ff0f6328"></line><line x1="-120" y1="-45" x2="-20" y2="120" class="edge shape component" stroke="#888888aa" component_no="12" component_refs="5,11"></line><line x1="-120" y1="-45" x2="-20" y2="120" class="cover" of="12" fill="#ff0f6328"></line><circle r="3" cx="-120" cy="-45" class="point component" stroke="#888888aa" component_no="5"></circle><line x1="-20" y1="120" x2="150" y2="-45" class="edge shape component" stroke="#888888aa" component_no="17" component_refs="11,6"></line><line x1="-20" y1="120" x2="150" y2="-45" class="cover" of="17" fill="#ff0f6328"></line><circle r="3" cx="150" cy="-45" class="point component" stroke="#888888aa" component_no="6"></circle><line x1="15" y1="-325.625" x2="15" y2="325.625" class="perp-line dashed shape component" stroke="#888888aa" component_no="10" component_refs="8,9"></line><line x1="15" y1="-325.625" x2="15" y2="325.625" class="cover" of="10" fill="#ff0f6328"></line><circle r="3" cx="15" cy="-45" class="mid-point component" component_no="8" component_refs="5,6"></circle><circle r="3" cx="15" cy="-25" class="perp-point component" component_no="9" component_refs="7,8"></circle><circle r="3" cx="-20" cy="120" class="point component" stroke="#888888aa" component_no="11"></circle><line x1="-434" y1="258.1060606060605" x2="434.00000000000006" y2="-267.9545454545454" class="perp-line dashed shape component" stroke="#888888aa" component_no="15" component_refs="13,14"></line><line x1="-434" y1="258.1060606060605" x2="434.00000000000006" y2="-267.9545454545454" class="cover" of="15" fill="#ff0f6328"></line><circle r="3" cx="-70" cy="37.5" class="mid-point component" component_no="13" component_refs="5,11"></circle><circle r="3" cx="-87.10395663108037" cy="47.866034321866884" class="perp-point component" component_no="14" component_refs="12,13"></circle><circle r="3" cx="15" cy="-14.015151515151494" class="intersect-point component" index="0" component_no="16" component_refs="15,10"></circle><line x1="-287.4448529411766" y1="-325.625" x2="344.65073529411774" y2="325.625" class="perp-line dashed shape component" stroke="#888888aa" component_no="20" component_refs="18,19"></line><line x1="-287.4448529411766" y1="-325.625" x2="344.65073529411774" y2="325.625" class="cover" of="20" fill="#ff0f6328"></line><circle r="3" cx="65" cy="37.5" class="mid-point component" component_no="18" component_refs="11,6"></circle><circle r="3" cx="78.9295075433732" cy="51.85161383256633" class="perp-point component" component_no="19" component_refs="17,18"></circle></g><defs><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3, 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><link xmlns="http://www.w3.org/1999/xhtml" href="https://rintaroutw.github.io/fsg/style/runtime.css" rel="stylesheet"></link><script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://localhost:8080/runtime.min.js" namespace="FSG_RUNTIME"></script><script xmlns="https://rintaroutw.github.io/fsg"></script></defs></svg>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" style="width:100%;" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="ui-select-box" x="74.5" y="-60"></rect><circle r="138.5101470493372" cx="15" cy="-14.015151515151494" class="circle dashed shape component none" fill="#ff0f6328" stroke="#dededeaa" component_no="21" component_refs="16,6"></circle><circle r="138.5101470493372" cx="15" cy="-14.015151515151494" class="cover" of="21" fill="#ff0f6328"></circle><circle r="0.5" cx="-433.5" cy="0" class="hidden-point" id="axis-x-start"></circle><circle r="0.5" cx="433.5" cy="0" class="hidden-point" id="axis-x-end"></circle><circle r="0.5" cx="0" cy="-325.125" class="hidden-point" id="axis-y-start"></circle><circle r="0.5" cx="0" cy="325.125" class="hidden-point" id="axis-y-end"></circle><line x1="-120" y1="-45" x2="150" y2="-45" class="edge shape component" stroke="#888888aa" component_no="7" component_refs="5,6"></line><line x1="-120" y1="-45" x2="150" y2="-45" class="cover" of="7" fill="#ff0f6328"></line><line x1="-120" y1="-45" x2="-20" y2="120" class="edge shape component" stroke="#888888aa" component_no="12" component_refs="5,11"></line><line x1="-120" y1="-45" x2="-20" y2="120" class="cover" of="12" fill="#ff0f6328"></line><circle r="3" cx="-120" cy="-45" class="point component" stroke="#888888aa" component_no="5"></circle><line x1="-20" y1="120" x2="150" y2="-45" class="edge shape component" stroke="#888888aa" component_no="17" component_refs="11,6"></line><line x1="-20" y1="120" x2="150" y2="-45" class="cover" of="17" fill="#ff0f6328"></line><circle r="3" cx="150" cy="-45" class="point component" stroke="#888888aa" component_no="6"></circle><line x1="15" y1="-325.625" x2="15" y2="325.625" class="perp-line dashed shape component" stroke="#888888aa" component_no="10" component_refs="8,9"></line><line x1="15" y1="-325.625" x2="15" y2="325.625" class="cover" of="10" fill="#ff0f6328"></line><circle r="3" cx="15" cy="-45" class="mid-point component" component_no="8" component_refs="5,6"></circle><circle r="3" cx="15" cy="-25" class="perp-point component" component_no="9" component_refs="7,8"></circle><circle r="3" cx="-20" cy="120" class="point component" stroke="#888888aa" component_no="11"></circle><line x1="-434" y1="258.1060606060605" x2="434.00000000000006" y2="-267.9545454545454" class="perp-line dashed shape component" stroke="#888888aa" component_no="15" component_refs="13,14"></line><line x1="-434" y1="258.1060606060605" x2="434.00000000000006" y2="-267.9545454545454" class="cover" of="15" fill="#ff0f6328"></line><circle r="3" cx="-70" cy="37.5" class="mid-point component" component_no="13" component_refs="5,11"></circle><circle r="3" cx="-87.10395663108037" cy="47.866034321866884" class="perp-point component" component_no="14" component_refs="12,13"></circle><circle r="3" cx="15" cy="-14.015151515151494" class="intersect-point component" index="0" component_no="16" component_refs="15,10"></circle><line x1="-287.4448529411766" y1="-325.625" x2="344.65073529411774" y2="325.625" class="perp-line dashed shape component" stroke="#888888aa" component_no="20" component_refs="18,19"></line><line x1="-287.4448529411766" y1="-325.625" x2="344.65073529411774" y2="325.625" class="cover" of="20" fill="#ff0f6328"></line><circle r="3" cx="65" cy="37.5" class="mid-point component" component_no="18" component_refs="11,6"></circle><circle r="3" cx="78.9295075433732" cy="51.85161383256633" class="perp-point component" component_no="19" component_refs="17,18"></circle></g><defs><style>
+.menu_title {
+  fill: #aaa;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.menu_item {
+  fill: #888;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.menu_item:hover {
+  fill: #fff;
+  cursor: pointer;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.cover {
+  stroke: rgba(1,0,0,0);
+  stroke-width: 10;
+  fill: none;
+}
+
+.cover:hover {
+  cursor: pointer;
+}
+
+.shape.none{
+  fill: none;
+}
+
+.parallel-point, .perp-point{
+  visibility: hidden;
+}
+
+.dashed {
+  stroke-dasharray: 5 3;
+  stroke-width: 1.2;
+}
+
+.point, .pin-point:hover {
+  cursor: grab;
+}
+
+.mid-point, .intersect-point:hover {
+  cursor: pointer;
+}
+
+g, div, foreignObject, span {
+  position: relative;
+}
+
+span.base {
+ position: relative !important;
+}
+
+.latex-container {
+  width: fit-content;
+  height: fit-content;
+  position: fixed; /* important for Safari */
+}
+</style><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3, 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><link xmlns="http://www.w3.org/1999/xhtml" href="https://rintaroutw.github.io/fsg/style/runtime.css" rel="stylesheet"></link><script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://localhost:8080/runtime.min.js" namespace="FSG_RUNTIME"></script><script xmlns="https://rintaroutw.github.io/fsg"></script></defs></svg>

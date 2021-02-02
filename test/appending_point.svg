@@ -1,10 +1,75 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="742" height="556.5" viewBox="-371 -278.25 742 556.5" transform="matrix(1,0,0,-1,0,0)"><defs><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3 , 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker></defs><foreignObject width="742" height="556.5" x="-371" y="-278.25"><div id="board"></div></foreignObject><rect width="0" height="0" class="select-box" x="-13" y="-39.75"></rect><filter id="filter_shadow" x="0%" y="0%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="742" height="556.5" viewBox="-371 -278.25 742 556.5" transform="matrix(1,0,0,-1,0,0)" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg" style="width:100%;"><defs><style>
+.menu_title {
+  fill: #aaa;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.menu_item {
+  fill: #888;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.menu_item:hover {
+  fill: #fff;
+  cursor: pointer;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.cover {
+  stroke: rgba(1,0,0,0);
+  stroke-width: 10;
+  fill: none;
+}
+
+.cover:hover {
+  cursor: pointer;
+}
+
+.shape.none{
+  fill: none;
+}
+
+.parallel-point, .perp-point{
+  visibility: hidden;
+}
+
+.dashed {
+  stroke-dasharray: 5 3;
+  stroke-width: 1.2;
+}
+
+.point, .pin-point:hover {
+  cursor: grab;
+}
+
+.mid-point, .intersect-point:hover {
+  cursor: pointer;
+}
+
+g, div, foreignObject, span {
+  position: relative;
+}
+
+span.base {
+ position: relative !important;
+}
+
+.latex-container {
+  width: fit-content;
+  height: fit-content;
+  position: fixed; /* important for Safari */
+}
+</style><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3 , 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://rintaroutw.github.io/fsg/runtime.min.js" namespace="FSG_RUNTIME"></script><script xmlns="https://rintaroutw.github.io/fsg"></script><rect width="0" height="0" class="ui-select-box"></rect></defs><foreignObject width="742" height="556.5" x="-371" y="-278.25"><div id="board"></div></foreignObject><rect width="0" height="0" class="select-box" x="-13" y="-39.75"></rect><filter id="filter_shadow" x="0%" y="0%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
 	<feDropShadow stdDeviation="5 5" in="merge" dx="0" dy="0" flood-color="#0000ff" flood-opacity="1" x="-50%" y="-50%" width="120%" height="120%" result="dropShadow"></feDropShadow>
 </filter><filter id="filter_blur" x="-10%" y="-10%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
 	<feGaussianBlur stdDeviation="0 10" x="-50%" y="-50%" width="100%" height="100%" in="SourceGraphic" edgeMode="none" result="blur"></feGaussianBlur>
 </filter><filter id="filter_color_matrix" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
 	<feColorMatrix type="saturate" values="5" x="-50%" y="-50%" width="100%" height="100%" in="blur" result="colormatrix"></feColorMatrix>
-</filter><line x1="-371" y1="0" x2="371" y2="0" class="axis-x shape component" marker-end="url(#SvgjsMarker1000)" component_no="1"></line><line x1="-371" y1="0" x2="371" y2="0" class="cover line-select-box" of="1"></line><circle r="0.5" cx="-371" cy="0" class="hidden-point" id="axis-x-start"></circle><circle r="0.5" cx="371" cy="0" class="hidden-point" id="axis-x-end"></circle><line x1="0" y1="-278.25" x2="0" y2="278.25" class="axis-y shape component" marker-end="url(#SvgjsMarker1000)" component_no="2"></line><line x1="0" y1="-278.25" x2="0" y2="278.25" class="cover line-select-box" of="2"></line><circle r="0.5" cx="0" cy="-278.25" class="hidden-point" id="axis-y-start"></circle><circle r="0.5" cx="0" cy="278.25" class="hidden-point" id="axis-y-end"></circle><circle r="95.524865872714" cx="0" cy="0" class="circle dashed shape component selected inspecting" filter="url(#filter_shadow)" component_no="5" component_refs="3,4"></circle><circle r="95.524865872714" cx="0" cy="0" class="cover line-select-box" of="5"></circle><polygon points="0,0 66.04394415630283,69.01592164333645 66.04394415630281,0" class="polygon dashed shape component selected filled" component_no="9" component_refs="3,6,7"></polygon><polygon points="0,0 66.04394415630283,69.01592164333645 66.04394415630281,0" class="cover line-select-box" of="9"></polygon><circle r="3" cx="0" cy="0" class="point component selected" component_no="3"></circle><style>
+</filter><line x1="-371" y1="0" x2="371" y2="0" class="axis-x shape component" marker-end="url(#SvgjsMarker1000)" component_no="1"></line><line x1="-371" y1="0" x2="371" y2="0" class="cover line-select-box" of="1"></line><circle r="0.5" cx="-371" cy="0" class="hidden-point" id="axis-x-start"></circle><circle r="0.5" cx="371" cy="0" class="hidden-point" id="axis-x-end"></circle><line x1="0" y1="-278.25" x2="0" y2="278.25" class="axis-y shape component" marker-end="url(#SvgjsMarker1000)" component_no="2"></line><line x1="0" y1="-278.25" x2="0" y2="278.25" class="cover line-select-box" of="2"></line><circle r="0.5" cx="0" cy="-278.25" class="hidden-point" id="axis-y-start"></circle><circle r="0.5" cx="0" cy="278.25" class="hidden-point" id="axis-y-end"></circle><circle r="95.524865872714" cx="0" cy="0" class="circle dashed shape component" filter="url(#filter_shadow)" component_no="5" component_refs="3,4"></circle><circle r="95.524865872714" cx="0" cy="0" class="cover line-select-box" of="5"></circle><polygon points="0,0 66.04394415630283,69.01592164333645 66.04394415630281,0" class="polygon dashed shape component filled" component_no="9" component_refs="3,6,7"></polygon><polygon points="0,0 66.04394415630283,69.01592164333645 66.04394415630281,0" class="cover line-select-box" of="9"></polygon><circle r="3" cx="0" cy="0" class="point component" component_no="3"></circle><style>
 :root {
   --vector-marker-color: #1dd3fd;
   --axis-stroke-color: #1dd3fd;
@@ -77,4 +142,4 @@
 .dashed {
   stroke-dasharray: 3;
 }
-</style><circle r="3" cx="65" cy="-70" class="point component selected" component_no="4"></circle><circle r="3" cx="66.04394415630283" cy="69.01592164333645" class="pin-point component selected" component_no="6" component_refs="5"></circle><circle r="3" cx="66.04394415630281" cy="0" class="intersect-point component selected" component_no="7" component_refs="1,6"></circle></svg>
+</style><circle r="3" cx="65" cy="-70" class="point component" component_no="4"></circle><circle r="3" cx="66.04394415630283" cy="69.01592164333645" class="pin-point component" component_no="6" component_refs="5"></circle><circle r="3" cx="66.04394415630281" cy="0" class="intersect-point component" component_no="7" component_refs="1,6"></circle></svg>
