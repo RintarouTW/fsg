@@ -131,11 +131,7 @@ export function loadFSG(content) {
 
   _content = content
 
-  const clientWidth = document.body.clientWidth
-  const viewbox = { width: clientWidth, height: clientWidth * 0.75 }
-  svg.addTo('#editArea')
-    .size(viewbox.width, viewbox.height)
-    .viewbox(0, 0, viewbox.width, viewbox.height)
+  svg.addTo('#editArea') // use content's viewbox
     .panZoom({zoomMin: 1, zoomMax: 3})
 
   const draw = svg.first()
@@ -143,7 +139,7 @@ export function loadFSG(content) {
 
   init_marker(draw)
   const userScript = init_scripts(draw)
-  
+
   init_history(draw)
   init_selection(draw)
   init_component(draw)
