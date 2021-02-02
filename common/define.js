@@ -29,6 +29,73 @@ if (!window.FSG_RUNTIME) {
 </script>`
 */
 
+/* default styles, functional related, not related to theme */
+export const RUNTIME_DEFAULT_STYLE = String.raw`<style>
+.menu_title {
+  fill: #aaa;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.menu_item {
+  fill: #888;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.menu_item:hover {
+  fill: #fff;
+  cursor: pointer;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.cover {
+  stroke: rgba(1,0,0,0);
+  stroke-width: 10;
+  fill: none;
+}
+
+.cover:hover {
+  cursor: pointer;
+}
+
+.shape.none{
+  fill: none;
+}
+
+.parallel-point, .perp-point{
+  visibility: hidden;
+}
+
+.dashed {
+  stroke-dasharray: 5 3;
+  stroke-width: 1.2;
+}
+
+.point, .pin-point:hover {
+  cursor: grab;
+}
+
+.mid-point, .intersect-point:hover {
+  cursor: pointer;
+}
+
+g, div, foreignObject, span {
+  position: relative;
+}
+
+span.base {
+ position: relative !important;
+}
+
+.latex-container {
+  width: fit-content;
+  height: fit-content;
+  position: fixed; /* important for Safari */
+}
+</style>`
 export const RUNTIME_STYLE_LINK = String.raw`<link xmlns="http://www.w3.org/1999/xhtml" href="${SERVER_ROOT}/style/runtime.css" rel="stylesheet"/>`
 
 // Editor

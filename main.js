@@ -10,6 +10,7 @@ import {
   DEFAULT_BOARD_RADIUS,
   DEFAULT_WINDOW_WIDTH,
   DEFAULT_WINDOW_HEIGHT,
+  RUNTIME_DEFAULT_STYLE,
   RUNTIME_STYLE_LINK
 } from './common/define.js'
 import { wait } from "./common/common.js"
@@ -82,6 +83,7 @@ export function newFSG() {
 
   init_marker(draw)
   // put the style before scripts
+  draw.defs().add(SVG(RUNTIME_DEFAULT_STYLE))
   draw.defs().add(SVG(RUNTIME_STYLE_LINK))
   const userScript = init_scripts(draw)
 
@@ -138,6 +140,15 @@ export function loadFSG(content) {
   draw.fsg = {} // create fsg context for modules
 
   init_marker(draw)
+
+  //
+  // Fix the old fsg files which doesn't have default style.
+  //
+  const defs = draw.defs()
+  if(defs.find('style').length == 0) {
+    defs.first().before(SVG(RUNTIME_DEFAULT_STYLE))
+  }
+
   const userScript = init_scripts(draw)
 
   init_history(draw)
