@@ -138,14 +138,22 @@ function arcOf(p1, p2, p3, large_arc = false) {
   const p1y = p2.y + v1.y
   const p3x = p2.x + v2.x
   const p3y = p2.y + v2.y
-  if ((v2.y == v1.x) && (v2.x == -v1.y)) { // right angle
-    return String.raw`M ${p2.x} ${p2.y} L ${p1x} ${p1y} L ${p1x + v2.x} ${p1y + v2.y} L ${p3x} ${p3y} Z`
-  }
   let large = (v1.x * v2.y - v1.y * v2.x >= 0) ? 0 : 1
   let ccw = 1
+  const error = 0.000001 // the error for floating point tolerance.
   if (!large_arc) {
     ccw = (large == 1) ? 0 : 1
     large = 0
+    // support both cw and ccw right angles
+    if (((Math.abs(v2.x + v1.y) < error) && (Math.abs(v2.y - v1.x) < error)) || 
+      ((Math.abs(v1.x + v2.y) < error) && (Math.abs(v1.y - v2.x) < error)) ) { // right angle
+      return String.raw`M ${p2.x} ${p2.y} L ${p1x} ${p1y} L ${p1x + v2.x} ${p1y + v2.y} L ${p3x} ${p3y} Z`
+    }
+  } else { // support the large arc mode the angle could be larger than 180 degree.
+    // in this case, only ccw right angle is support.
+    if ((Math.abs(v2.x + v1.y) < error) && (Math.abs(v2.y - v1.x) < error)) { // right angle
+      return String.raw`M ${p2.x} ${p2.y} L ${p1x} ${p1y} L ${p1x + v2.x} ${p1y + v2.y} L ${p3x} ${p3y} Z`
+    }
   }
   return String.raw`M ${p1x} ${p1y} A ${radius} ${radius} 0 ${large} ${ccw} ${p3x} ${p3y} L ${p2.x} ${p2.y} Z`
 }
@@ -187,7 +195,7 @@ export function addAngle({ draw, componentRefs, element, cover, component_no }) 
   if (!element) {
     const [p1, p2, p3] = points
     const arcPath = arcOf(p1, p2, p3, false /* large_arc */)
-    console.log(arcPath)
+    // console.log(arcPath)
     element = draw.path(arcPath).attr('class', 'angle shape component selected none')
     useCurrentColors(element)
     cover = draw.path(arcPath).attr('class', 'cover')
