@@ -16,8 +16,17 @@
     <script src="convert.js" type="module"></script>
 <style>
 #dropArea {
-  height: 30%;
+  height: 200px;
   border: 1px #fff solid;
+  position: relative;
+}
+#file {
+  display: none;
+}
+#dropMsg {
+  position: absolute;
+  left: 40%;
+  top: 45%;
 }
 </style>
   </head>
@@ -26,13 +35,16 @@
     <div id="hintBox">
       <span id="message">Scroll Down for Help</span>
     </div>
-    <div id="inspector">
+    <form id="dropArea" action="">
+      <input id="file" type="file" multiple/>
+      <span id="dropMsg">Drag and drop files here.</span>
+    </form>
+    <div id="inspector" style="visibility: hidden;">
       <span class="field_label">x</span><input class="field" id="field_cx"/></br>
       <span class="field_label">y</span><input class="field" id="field_cy"/></br>
       <span class="field_label">id</span><input class="field" id="field_id"/></br>
       <span class="field_label">text</span><input class="field long" id="field_text"/></br>
       <span class="field_label">class</span><input class="field long" id="field_class"/></br>
-      <input id="file" type="file" multiple="true"/>
       <a href="https://rintaroutw.github.io/fsg"><img src="images/fsg-512x512.png" alt="" id="logo"/></a>
       <img src="images/run.svg" alt="" id="runButton"/>
       <img src="images/reload.svg" alt="" id="reloadButton"/>
@@ -42,7 +54,7 @@
       <div id="colorPicker"></div>
       <!-- TODO: stroke width -->
     </div>
-    <div id="codeEditorWindow" class="l4t-editor-window l4t-hidden">
+    <div id="codeEditorWindow" class="l4t-editor-window l4t-hidden" style="visibility: hidden;">
       <textarea id="codeEditor"></textarea>
     </div>
   </body>
