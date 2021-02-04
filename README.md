@@ -21,6 +21,7 @@ Create animatable, customizable style, re-editable and light weight interactive 
 ### Builder
 
 https://rintaroutw.github.io/fsg
+![](./images/screenshot0.png)
 
 ### Screenshots
 ![](./images/screenshot1.png)
