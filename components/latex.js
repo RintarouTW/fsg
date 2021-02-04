@@ -101,7 +101,8 @@ function foreignTex(draw, text) {
 /* KaTeX Implementation */
 function foreignTex(draw, text) {
   /* new implementation depends on css fit-content */
-  const tex = SVG(String.raw`<div class="latex-container">$${text}$</div>`)
+  /* xmlns="http://www.w3.org/1999/xhtml" is required for foreignObject that could be rendered in standalonee svg */
+  const tex = SVG(String.raw`<div xmlns="http://www.w3.org/1999/xhtml" class="latex-container">$${text}$</div>`)
   let foreignObject
   try {
     renderMathInElement(tex.node, katex_options)
