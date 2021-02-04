@@ -29,7 +29,6 @@ export const test_svg = String.raw`<svg xmlns="http://www.w3.org/2000/svg" versi
 /* ui */
 body {
   background-color: var(--ui-background-color);
-  background-image: url(images/sky.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   font-family: 'Source Code Pro', monospace;
