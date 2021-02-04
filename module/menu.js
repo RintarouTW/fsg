@@ -1,6 +1,7 @@
 'use strict'
 
 import { SERVER_ROOT, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT } from '../common/define.js'
+import { execute_user_script } from './user_script.js'
 import { getHash, postCode } from './server.js'
 
 // so far, menu is only working in runtime, not the editor.
@@ -81,11 +82,17 @@ export class RuntimeMenu extends Menu {
         postCode(hash, code).then( () => {
           window.open(SERVER_ROOT + '?source=pwa&hash=' + hash,
             '_blank',
-            `resizable, width=${DEFAULT_WINDOW_WIDTH},height=${DEFAULT_WINDOW_HEIGHT}`)
+            `resizable, width=${DEFAULT_WINDOW_WIDTH}, height=${DEFAULT_WINDOW_HEIGHT}`)
         }).catch( error => console.log(error) )
       }).catch( error => console.log(error) )
     }
     this.addMenuItem(editItem)
+    const playItem = new MenuItem(draw, this.menu, 'Play')
+    playItem.onMouseDown = () => {
+      this.remove()
+      execute_user_script(draw)
+    }
+    this.addMenuItem(playItem)
     const reloadItem = new MenuItem(draw, this.menu, 'Reload')
     reloadItem.onMouseDown = () => {
       this.remove()

@@ -1,6 +1,5 @@
 'use strict'
 
-import { FSG_NAMESPACE } from './common/define.js'
 import { init_component } from './components/component.js'
 import { init_marker } from './module/marker.js'
 import { init_drag } from './module/drag.js'
@@ -16,15 +15,6 @@ function init_modules(draw) {
   init_component(draw)
   init_drag(draw, false)
   reconstruct_components(draw)
-}
-
-function execute_script_in_file() {
-  const scripts = document.querySelectorAll('script')
-  scripts.forEach(script => {
-    if (script.getAttribute('xmlns') == FSG_NAMESPACE) {
-      eval(script.textContent)
-    }
-  })
 }
 
 function init() {
@@ -44,10 +34,11 @@ function init() {
     const contentType = document.contentType
     if (contentType.includes('html')) { // html goes here.
 
-      const draw = SVG('svg').first()
+      const svg = SVG('svg')
+      const draw = svg.first()
+      draw._content = svg.svg() // remember the original content
       init_modules(draw)
       draw.ready = true
-      execute_script_in_file()
 
       // Major issue:
       // There is no way to prevent naming polution of user scripts.
@@ -70,10 +61,11 @@ function init() {
       // locate the user script and execute it.
       */
     } else { // svg
-      const draw = SVG('svg').first()
+      const svg = SVG('svg')
+      const draw = svg.first()
+      draw._content = svg.svg() // remember the original content
       init_modules(draw)
       draw.ready = true
-      execute_script_in_file()
     }
 
     console.log('runtime done')

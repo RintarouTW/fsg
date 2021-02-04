@@ -166,7 +166,7 @@ function getClipped(draw, p1, p2) {
   console.assert(p2, 'p2 must be defined')
 
   const box = draw.bbox()
-  console.log(box)
+  // console.log(box)
   const [clip1, clip2] = clipping(box, {x: p1.x, y: p1.y}, {x: p2.x, y: p2.y})
   console.assert(clip1, 'clip1 must be defined')
   console.assert(clip2, 'clip2 must be defined')

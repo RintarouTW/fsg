@@ -97,6 +97,7 @@ span.base {
 }
 </style>`
 export const RUNTIME_STYLE_LINK = String.raw`<link xmlns="http://www.w3.org/1999/xhtml" href="${SERVER_ROOT}/style/runtime.css" rel="stylesheet"/>`
+export const KATEX_STYLE_LINK = String.raw`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"/>`
 
 // Editor
 export const SNAP_GRID_INTERVAL = 5.0

@@ -11,7 +11,8 @@ import {
   DEFAULT_WINDOW_WIDTH,
   DEFAULT_WINDOW_HEIGHT,
   RUNTIME_DEFAULT_STYLE,
-  RUNTIME_STYLE_LINK
+  RUNTIME_STYLE_LINK,
+  KATEX_STYLE_LINK
 } from './common/define.js'
 import { wait } from "./common/common.js"
 
@@ -84,6 +85,7 @@ export function newFSG() {
   // put the style before scripts
   draw.defs().add(SVG(RUNTIME_DEFAULT_STYLE))
   draw.defs().add(SVG(RUNTIME_STYLE_LINK))
+  draw.defs().add(SVG(KATEX_STYLE_LINK))
   const userScript = init_scripts(draw)
 
   // creat board as background
