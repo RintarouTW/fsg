@@ -219,6 +219,18 @@ function patchStyles(draw) {
   defs.first().after(SVG(RUNTIME_STYLE_LINK))
 }
 
+///
+/// patch the old LaTeX containers
+///
+
+function patchForeignObjectLaTeX(draw) {
+  const latexContainers = draw.find('div.latex-container')
+  latexContainers.forEach(div => {
+    div.attr('xmlns', null) // in case it exists already
+       .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+  })
+}
+
 export function svgDocument(draw, optional_attributes = {}) {
   let content = draw.parent().svg() 
 
@@ -236,6 +248,7 @@ export function svgDocument(draw, optional_attributes = {}) {
   patchSVGJS(tmp)
   cleanupDirtyClasses(tmp)
   patchStyles(tmp)
+  patchForeignObjectLaTeX(tmp)
 
   // &nbsp; is not a defined entity in svg, replace it with &#160;
   const html = tmp.svg()
