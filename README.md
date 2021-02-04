@@ -16,6 +16,15 @@ Create animatable, customizable style, re-editable and light weight interactive 
 - PWA support, you can easily turn the web builder to your local application.
 - Export to .html (Inline SVG)
 
+## Demo
+
+Builder
+https://rintaroutw.github.io/fsg
+
+Examples
+![](./test/determinant.svg)
+https://rintaroutw.github.io/fsg/example.html
+
 ## Code Structure
 
 - common/ : shared definition and helpers.
