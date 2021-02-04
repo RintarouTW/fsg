@@ -5,6 +5,7 @@ import {
   COMPONENT_NO_ATTR,
   OF_ATTR, SERVER_ROOT,
   FSG_NAMESPACE,
+  RUNTIME_DEFAULT_STYLE,
   RUNTIME_STYLE_LINK,
   KATEX_STYLE_LINK,
 } from '../common/define.js'
@@ -206,13 +207,16 @@ function cleanupDirtyClasses(draw) {
 /// patch for the old files that doesn't have KATEX_STYLE_LINK
 ///
 function patchStyles(draw) {
-  const links = draw.defs().find('link')
-  links.forEach(link => {
-    link.remove()
-  })
+  const defs = draw.defs()
+  const styles = defs.find('style')
+  styles.forEach(style => style.remove())
+  defs.first().before(SVG(RUNTIME_DEFAULT_STYLE))
+
+  const links = defs.find('link')
+  links.forEach(link => link.remove())
   // first() is the the default style
-  draw.defs().first().after(SVG(RUNTIME_STYLE_LINK))
-  draw.defs().first().after(SVG(KATEX_STYLE_LINK))
+  defs.first().after(SVG(RUNTIME_STYLE_LINK))
+  defs.first().after(SVG(KATEX_STYLE_LINK))
 }
 
 export function svgDocument(draw, optional_attributes = {}) {
