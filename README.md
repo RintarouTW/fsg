@@ -18,12 +18,19 @@ Create animatable, customizable style, re-editable and light weight interactive 
 
 ## Demo
 
-Builder
+### Builder
+
 https://rintaroutw.github.io/fsg
 
-Examples
-![](./test/determinant.svg)
+### Screenshots
+![](./images/screenshot1.png)
+![](./images/screenshot2.png)
+
+### Examples Live Demo 
+
 https://rintaroutw.github.io/fsg/example.html
+
+More examples are in `test` folder.
 
 ## Code Structure
 
