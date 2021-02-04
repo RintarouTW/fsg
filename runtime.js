@@ -6,6 +6,7 @@ import { init_drag } from './module/drag.js'
 import { init_history } from './module/history.js'
 import { init_selection } from './module/selection.js'
 import { reconstruct_components } from './module/file.js'
+import { fetchSrc } from './common/common.js'
 
 function init_modules(draw) {
   draw.fsg = {}
@@ -34,32 +35,20 @@ function init() {
     const contentType = document.contentType
     if (contentType.includes('html')) { // html goes here.
 
-      const svg = SVG('svg')
-      const draw = svg.first()
-      draw._content = svg.svg() // remember the original content
-      init_modules(draw)
-      draw.ready = true
-
-      // Major issue:
-      // There is no way to prevent naming polution of user scripts.
-      console.warn('not full supported yet, only one svg is ok.')
-      //
-      // support multiple svgs, find the svgs that's in fsg namespace.
-      // modules should be inited for each svg.
-      // draw.fsg.history
-      // draw.fsg.selection
-      // draw.fsg.marker
-      // draw.fsg.component
-      /*
-      const svgs = document.querySelectorAll('svg')
-      svgs.forEach(svg => {
-        if (SVG(svg).attr('xmlns:fsg') == FSG_NAMESPACE) {
-          const draw = SVG(svg).first()
+      const fsgs = SVG.find('fsg')
+      fsgs.forEach(fsg => {
+        const url = fsg.attr('src')
+        fetchSrc(url).then(content => {
+          if (!content) return
+          const svg = SVG(content)
+          const draw = svg.first()
+          draw._content = svg.svg()
           init_modules(draw)
-        }
+          draw.ready = true
+          fsg.add(svg)
+        })
       })
-      // locate the user script and execute it.
-      */
+
     } else { // svg
       const svg = SVG('svg')
       const draw = svg.first()

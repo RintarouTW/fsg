@@ -60,3 +60,6 @@ body {
   font-family: 'KaTeX_Math', 'Times New Roman', Times, serif;
 }
 
+fsg {
+  overflow: hidden;
+}

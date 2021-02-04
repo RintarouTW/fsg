@@ -160,7 +160,7 @@ export class IntersectPoint extends SelectablePoint {
         const [line, circle] = refComponents
         // console.log(line, circle, circle.radius)
         const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-        console.assert(intersectPoints, 'intersect point must be defined', intersectPoints)
+        // console.assert(intersectPoints, 'intersect point must be defined', intersectPoints)
         if (!intersectPoints) return
         const p = intersectPoints[this.index]
         if (!p) {

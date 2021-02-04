@@ -17,6 +17,20 @@ function isExperimental() {
   return false
 }
 
+function stdGetHeader() {
+  return {
+    method: 'GET',
+    headers: new Headers({'Content-Type': 'text/plain'})
+  }
+}
+
+function fetchSrc(url) {
+  return fetch(url, stdGetHeader()).then(response => {
+    if (response.ok)
+    return response.text()
+  })
+}
+
 function fetchURL(url, init) {
   return new Promise((resolve, reject) => {
     fetch(url, init).then(response => {
@@ -63,4 +77,4 @@ function makeid(length) {
   return result
 }
 
-export { isExperimental, isDebug, wait, makeid, loadCSS, loadScript, fetchURL }
+export { isExperimental, isDebug, wait, makeid, loadCSS, loadScript, fetchURL, fetchSrc }
