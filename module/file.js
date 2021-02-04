@@ -215,8 +215,8 @@ function patchStyles(draw) {
   const links = defs.find('link')
   links.forEach(link => link.remove())
   // first() is the the default style
-  defs.first().after(SVG(RUNTIME_STYLE_LINK))
   defs.first().after(SVG(KATEX_STYLE_LINK))
+  defs.first().after(SVG(RUNTIME_STYLE_LINK))
 }
 
 export function svgDocument(draw, optional_attributes = {}) {
