@@ -5,17 +5,10 @@
  */
 
 import {
-  // DEFAULT_TRANSPARENT_COLOR,
-  // CLASS_FSG_BOARD,
-  // DEFAULT_BOARD_RADIUS,
   RUNTIME_DEFAULT_STYLE,
-  // RUNTIME_STYLE_LINK
 } from './common/define.js'
 
 import { init_selection } from './module/selection.js'
-
-// import { enableColorPicker } from './module/color_picker.js'
-
 import { init_marker } from './module/marker.js'
 import { init_component, deinit_allcomponents } from './components/component.js'
 import { reconstruct_components, saveAsSVG } from './module/file.js'

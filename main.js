@@ -12,7 +12,7 @@ import {
   DEFAULT_WINDOW_HEIGHT,
   RUNTIME_DEFAULT_STYLE,
   RUNTIME_STYLE_LINK,
-  KATEX_STYLE_LINK
+  KATEX_STYLE_LINK,
 } from './common/define.js'
 import { wait } from "./common/common.js"
 

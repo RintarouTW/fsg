@@ -1,6 +1,14 @@
 'use strict'
 
-import { COMPONENT_REFS_ATTR, COMPONENT_NO_ATTR, OF_ATTR, SERVER_ROOT, FSG_NAMESPACE } from '../common/define.js'
+import { 
+  COMPONENT_REFS_ATTR,
+  COMPONENT_NO_ATTR,
+  OF_ATTR, SERVER_ROOT,
+  FSG_NAMESPACE,
+  RUNTIME_STYLE_LINK,
+  KATEX_STYLE_LINK,
+} from '../common/define.js'
+
 import { addEdge, addLine, addRay, addVector, addAxis, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
 import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
 import { addPoint, addMidPoint, addIntersectPoint, addParallelPoint, addPerpPoint, addPinPoint } from '../components/point.js'
@@ -194,6 +202,19 @@ function cleanupDirtyClasses(draw) {
   })
 }
 
+///
+/// patch for the old files that doesn't have KATEX_STYLE_LINK
+///
+function patchStyles(draw) {
+  const links = draw.defs().find('link')
+  links.forEach(link => {
+    link.remove()
+  })
+  // first() is the the default style
+  draw.defs().first().after(SVG(RUNTIME_STYLE_LINK))
+  draw.defs().first().after(SVG(KATEX_STYLE_LINK))
+}
+
 export function svgDocument(draw, optional_attributes = {}) {
   let content = draw.parent().svg() 
 
@@ -210,6 +231,7 @@ export function svgDocument(draw, optional_attributes = {}) {
 
   patchSVGJS(tmp)
   cleanupDirtyClasses(tmp)
+  patchStyles(tmp)
 
   // &nbsp; is not a defined entity in svg, replace it with &#160;
   const html = tmp.svg()
