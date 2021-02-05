@@ -8,6 +8,7 @@ import {
   RUNTIME_DEFAULT_STYLE,
   RUNTIME_STYLE_LINK,
   KATEX_STYLE_LINK,
+  DEFAULT_TRANSPARENT_COLOR,
 } from '../common/define.js'
 
 import { addEdge, addLine, addRay, addVector, addAxis, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
@@ -234,6 +235,11 @@ function patchForeignObjectLaTeX(draw) {
   })
 }
 
+function patchCoverFillColor(draw) {
+  const covers = draw.find('.cover')
+  covers.forEach(cover => cover.attr('fill', DEFAULT_TRANSPARENT_COLOR))
+}
+
 export function svgDocument(draw, optional_attributes = {}) {
   let content = draw.parent().svg() 
 
@@ -252,6 +258,7 @@ export function svgDocument(draw, optional_attributes = {}) {
   cleanupDirtyClasses(tmp)
   patchStyles(tmp)
   patchForeignObjectLaTeX(tmp)
+  patchCoverFillColor(tmp)
 
   // &nbsp; is not a defined entity in svg, replace it with &#160;
   const html = tmp.svg()

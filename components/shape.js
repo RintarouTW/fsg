@@ -1,6 +1,6 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, OF_ATTR, DEFAULT_FILL_COLOR } from '../common/define.js'
+import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, OF_ATTR, DEFAULT_TRANSPARENT_COLOR } from '../common/define.js'
 import { pointOnScreen } from '../common/math.js'
 import { Component } from './component.js'
 import { addAppendingPinPoint } from './appending-point.js'
@@ -51,7 +51,7 @@ export class ShapeComponent extends Component {
     }
     this.points = points
     cover.attr(OF_ATTR, this.component_no)
-      .attr('fill', DEFAULT_FILL_COLOR) // fill with transparent color
+      .attr('fill', DEFAULT_TRANSPARENT_COLOR) // fill with transparent color
     this.cover = cover
 
     // selectable by mousedown
