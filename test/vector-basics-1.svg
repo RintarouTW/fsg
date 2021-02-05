@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" style="width:100%;" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" rx="8" ry="8" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="ui-select-box" x="179.5" y="125"></rect><circle r="0.5" cx="-433.5" cy="0" class="hidden-point" id="axis-x-start"></circle><circle r="0.5" cx="433.5" cy="0" class="hidden-point" id="axis-x-end"></circle><circle r="0.5" cx="0" cy="-325.125" class="hidden-point" id="axis-y-start"></circle><circle r="0.5" cx="0" cy="325.125" class="hidden-point" id="axis-y-end"></circle><line x1="-433.5" y1="0" x2="433.5" y2="0" class="axis-x shape component" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" component_no="1"></line><line x1="-433.5" y1="0" x2="433.5" y2="0" class="cover" of="1" fill="#ff0f6328"></line><line x1="0" y1="-325.125" x2="0" y2="325.125" class="axis-y shape component" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" component_no="2"></line><line x1="0" y1="-325.125" x2="0" y2="325.125" class="cover" of="2" fill="#ff0f6328"></line><line x1="0" y1="0" x2="60" y2="85" class="vector shape component" stroke="#08d2ffff" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="6" component_refs="4,5" label="v1"></line><line x1="0" y1="0" x2="60" y2="85" class="cover" of="6" fill="#ff0f6328"></line><line x1="0" y1="0" x2="60" y2="0" class="vector shape component" stroke="#08d2ffff" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="17" component_refs="4,7" fill="#ff00e128"></line><line x1="0" y1="0" x2="60" y2="0" class="cover" of="17" fill="#ff0f6328"></line><line x1="0" y1="0" x2="0" y2="85" class="vector shape component" stroke="#08d2ffff" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="18" component_refs="4,9"></line><line x1="0" y1="0" x2="0" y2="85" class="cover" of="18" fill="#ff0f6328"></line><circle r="3" cx="0" cy="0" class="point component" stroke="#888888aa" component_no="4"></circle><line x1="60" y1="85" x2="60" y2="0" class="edge dashed shape component" stroke="#888888aa" component_no="8" component_refs="5,7"></line><line x1="60" y1="85" x2="60" y2="0" class="cover" of="8" fill="#ff0f6328"></line><line x1="60" y1="85" x2="0" y2="85" class="edge shape component dashed" stroke="#888888aa" component_no="10" component_refs="5,9"></line><line x1="60" y1="85" x2="0" y2="85" class="cover" of="10" fill="#ff0f6328"></line><line x1="60" y1="85" x2="195" y2="225" class="vector shape component dashed" stroke="#ff00aaff" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="12" component_refs="5,11" label="v2"></line><line x1="60" y1="85" x2="195" y2="225" class="cover" of="12" fill="#ff0f6328"></line><line x1="60" y1="85" x2="195" y2="85" class="vector shape component" stroke="#ff00aaff" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="22" component_refs="5,21"></line><line x1="60" y1="85" x2="195" y2="85" class="cover" of="22" fill="#ff0f6328"></line><line x1="60" y1="85" x2="60" y2="225" class="vector shape component" stroke="#ff00aaff" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="24" component_refs="5,23"></line><line x1="60" y1="85" x2="60" y2="225" class="cover" of="24" fill="#ff0f6328"></line><circle r="3" cx="60" cy="85" class="point component" stroke="#888888aa" component_no="5"></circle><circle r="3" cx="60" cy="0" class="intersect-point component" index="0" component_no="7" component_refs="1,5"></circle><circle r="3" cx="0" cy="85" class="intersect-point component" index="0" component_no="9" component_refs="2,5"></circle><line x1="195" y1="225" x2="195" y2="0" class="edge shape component dashed" stroke="#888888aa" component_no="14" component_refs="11,13"></line><line x1="195" y1="225" x2="195" y2="0" class="cover" of="14" fill="#ff0f6328"></line><line x1="195" y1="225" x2="0" y2="225" class="edge shape component dashed" stroke="#888888aa" component_no="16" component_refs="11,15"></line><line x1="195" y1="225" x2="0" y2="225" class="cover" of="16" fill="#ff0f6328"></line><circle r="3" cx="195" cy="225" class="point component" stroke="#888888aa" component_no="11"></circle><circle r="3" cx="195" cy="0" class="intersect-point component" index="0" component_no="13" component_refs="1,11"></circle><circle r="3" cx="0" cy="225" class="intersect-point component" index="0" component_no="15" component_refs="2,11"></circle><text class="label" offset_x="5" offset_y="5" of="6" transform="matrix(1,0,0,-1,0,0)" x="35" y="-49.765625" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="35" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">v1</tspan></text><text class="label" offset_x="5" offset_y="5" of="12" transform="matrix(1,0,0,-1,0,0)" x="135" y="-162.265625" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="135" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">v2</tspan></text><circle r="3" cx="195" cy="85" class="intersect-point component" index="0" component_no="21" component_refs="14,5"></circle><circle r="3" cx="60" cy="225" class="intersect-point component" index="0" component_no="23" component_refs="16,5"></circle></g><defs><style>
+.menu_title {
+  fill: #aaa;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.menu_item {
+  fill: #888;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.menu_item:hover {
+  fill: #fff;
+  cursor: pointer;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.cover {
+  stroke: rgba(1,0,0,0);
+  stroke-width: 10;
+  fill: none;
+}
+
+.cover:hover {
+  cursor: pointer;
+}
+
+.shape.none{
+  fill: none;
+}
+
+.parallel-point, .perp-point{
+  visibility: hidden;
+}
+
+.dashed {
+  stroke-dasharray: 5 3;
+  stroke-width: 1.2;
+}
+
+.point, .pin-point:hover {
+  cursor: grab;
+}
+
+.mid-point, .intersect-point:hover {
+  cursor: pointer;
+}
+
+g, div, foreignObject, span {
+  position: relative;
+}
+
+span.base {
+ position: relative !important;
+}
+
+.latex-container {
+  width: fit-content;
+  height: fit-content;
+  position: fixed; /* important for Safari */
+}
+</style><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://rintaroutw.github.io/fsg/style/runtime.css"></link><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"></link><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker" id="SvgjsMarker1001"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3, 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://rintaroutw.github.io/fsg/runtime.min.js" namespace="FSG_RUNTIME"></script><script xmlns="https://rintaroutw.github.io/fsg"></script></defs></svg>
