@@ -20,9 +20,12 @@ function findAllComponentElements(draw) {
   const componentElements = draw.find('.component')
   // sort by component_no
   componentElements.sort((a, b) => {
-    return Number(a.attr(COMPONENT_NO_ATTR)) - Number(b.attr(COMPONENT_NO_ATTR))
+    const no1 = Number(a.attr(COMPONENT_NO_ATTR)) 
+    console.assert(a, "component has no component_no")
+    const no2 = Number(b.attr(COMPONENT_NO_ATTR)) 
+    console.assert(b, "component has no component_no")
+    return no1 - no2
   })
-  // console.log(componentElements)
   return componentElements
 }
 
