@@ -41,7 +41,12 @@ body {
   stroke: var(--point-stroke-color);
 }
 
-.mid-point, .intersect-point, .pin-point {
+.pin-point {
+  fill: var(--intersect-point-fill-color);
+  stroke: var(--point-stroke-color);
+}
+
+.mid-point, .intersect-point {
   fill: var(--intersect-point-fill-color);
   stroke: var(--intersect-point-stroke-color);
 }
