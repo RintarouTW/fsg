@@ -21,43 +21,47 @@ body {
   font-family: Times, serif, monospace;
 }
 
-.ui-select-box {
+svg .ui-select-box {
   stroke: var(--ui-select-box-stroke-color);
   stroke-width: 0.5;
   fill: var(--ui-select-box-fill-color);
 }
 
-.fsg-board {
+svg .fsg-board {
   fill: var(--ui-background-color);
   cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"/></svg>') -8 -8, crosshair;
 }
 
-.vector-marker-start, .vector-marker-end {
+svg .vector-marker-start,
+svg .vector-marker-end {
   fill: var(--vector-marker-color);
 }
 
-.point {
+svg .point {
   fill: var(--point-fill-color);
   stroke: var(--point-stroke-color);
 }
 
-.pin-point {
+svg .pin-point {
   fill: var(--intersect-point-fill-color);
   stroke: var(--point-stroke-color);
 }
 
-.mid-point, .intersect-point {
+svg .mid-point,
+svg .intersect-point {
   fill: var(--intersect-point-fill-color);
   stroke: var(--intersect-point-stroke-color);
 }
 
-.axis-x,.axis-y {
+svg .axis-x,
+svg .axis-y {
   stroke: var(--axis-stroke-color);
   stroke-width: 1.2;
 }
 
 /* WARNNING: don't use .text which is used by katex */
-.latex, .label {
+svg .latex,
+svg .label {
   color: var(--text-color);
   fill: var(--text-color);
   user-select: none;
@@ -65,6 +69,6 @@ body {
   font-family: 'KaTeX_Math', 'Times New Roman', Times, serif;
 }
 
-fsg {
+svg fsg {
   overflow: hidden;
 }
