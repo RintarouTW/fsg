@@ -56,6 +56,7 @@ export function setFillColor(id, color) {
 function toggleCSS(element, className) {
   if (element.hasClass(className)) element.removeClass(className)
   else element.addClass(className)
+  element.fire('update') // let the inspector to know the element status is changed.
 }
 
 class ToggleAction {
