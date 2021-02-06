@@ -13,14 +13,14 @@
   --ui-inspector-background-color: #272B2E !important;
   --ui-inspector-border-color: #333 !important;
   --ui-inspector-text-color: #eee !important;
-  --ui-inspecting-stroke-color: #89ceff !important;
+  --ui-inspecting-stroke-color: #ee90ff !important;
 
   --ui-help-background-color: #222831aa !important;
   --ui-help-border-color: #333 !important;
   --ui-help-text-color: #bbbbbb !important;
 
   --ui-hover-stroke-color: #bbe1fa !important;
-  --ui-selected-stroke-color: #dddddd !important;
+  --ui-selected-stroke-color: #89ceff !important;
   --ui-select-box-stroke-color: #fff !important;
   --ui-select-box-fill-color: #ffffff33 !important;
 

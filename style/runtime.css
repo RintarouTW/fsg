@@ -2,15 +2,15 @@
 
 :root {
   --vector-marker-color: #999;
-  --axis-stroke-color: #999;
+  --axis-stroke-color: #555;
   --text-color: #999;
   --point-fill-color: #2f2f2f;
-  --point-stroke-color: #bb8;
+  --point-stroke-color: #ff0;
   --intersect-point-fill-color: #777777aa;
   --intersect-point-stroke-color: #565656aa;
 
   --ui-background-color: #151c23;
-  --ui-selected-stroke-color: #dddddd;
+  --ui-selected-stroke-color: #ff0;
   --ui-select-box-stroke-color: #777;
   --ui-select-box-fill-color: #ffffff33;
 }
