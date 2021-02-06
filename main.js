@@ -28,7 +28,7 @@ import { init_code_editor } from './module/code_editor.js'
 
 import { init_marker } from './module/marker.js'
 // import { init_filter } from './module/filter.js' // not used yet
-import { init_component, deinit_allcomponents } from './components/component.js'
+import { init_component, deinit_allcomponents, componentByNo } from './components/component.js'
 import { reconstruct_components } from './module/file.js'
 import { execute_user_script, init_scripts } from './module/user_script.js'
 import { getCode } from './module/server.js'
@@ -61,6 +61,16 @@ function cleanUp() {
   SVG('#editArea').clear()
   _draw = null
   _content = null
+}
+
+function setSnapshotHandler(draw) {
+  draw.on('loadSnapshot', evt => {
+    _draw = loadFSG(evt.detail.content)
+    _draw.ready = true
+    evt.detail.selections.forEach( component_no => {
+      selectComponent(_draw, componentByNo(_draw, component_no))
+    })
+  })
 }
 
 export function newFSG() {
@@ -104,6 +114,7 @@ export function newFSG() {
   init_axis(draw)
 
   init_code_editor(userScript)
+  setSnapshotHandler(draw)
   return draw
 }
 
@@ -164,6 +175,8 @@ export function loadFSG(content) {
   enableColorPicker()
 
   init_code_editor(userScript)
+
+  setSnapshotHandler(draw)
   return draw
 }
 
@@ -216,7 +229,7 @@ function init() {
       const hash = params.get('hash')
       getCode(hash).then(json => {
         // console.log(json)
-        loadFSG(json.code)
+        _draw = loadFSG(json.code)
       }).catch(error => {
         // console.log(error)
         showHint(error.message)

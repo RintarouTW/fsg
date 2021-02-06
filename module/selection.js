@@ -81,10 +81,10 @@ export function deselectLastSelection(draw) {
 
 export function unselectAllSelections(draw) {
   console.assert(draw, 'draw must exist')
+  detach()
   const selections = draw.fsg.selection.selections
   const action = new UnSelectAllAction(draw, selections)
   draw.fsg.selection.selections = []
-  detach()
   return action
 }
 
@@ -94,12 +94,29 @@ export function numberOfSelections(draw) {
   return selections.length
 }
 
+class DeleteAllSelectionsAction {
+  constructor(draw) {
+    detach()
+    this.content = draw.parent().svg()
+    this.draw = draw
+    this.selections = []
+    draw.fsg.selection.selections.forEach( item => {
+      this.selections.push(item.component_no)
+      item.remove() 
+    })
+    draw.fsg.selection.selections = []
+  }
+  undo() { // reconstruct
+    this.draw.fire('loadSnapshot', { content : this.content, selections: this.selections })
+  }
+}
+
+
 // TODO: fixme, removed items won't be undo so far.
-export function removeAllSelections(draw) {
+export function removeAllSelections({draw}) {
   console.assert(draw, 'draw must exist')
-  draw.fsg.selection.selections.forEach( item => item.remove() )
-  draw.fsg.selection.selections = []
-  detach()
+  const action = new DeleteAllSelectionsAction(draw)
+  return action
 }
 
 // helpers

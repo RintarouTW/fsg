@@ -67,7 +67,7 @@ export function init_keybindings(draw) {
         }
         break
       case 'Backspace':
-        removeAllSelections(draw)
+        doAction(draw, removeAllSelections, { draw })
         break
       case 'BracketLeft':
         {
