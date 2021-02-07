@@ -58,6 +58,10 @@ export function opening_animation(draw, callback) {
       element.remove()
       draw.ready = true
       enableColorPicker()
+      // select the axises by default
+      const axis_x = draw.findOne('.axis-x').component
+      const axis_y = draw.findOne('.axis-y').component
+      selectComponent(draw, [axis_x, axis_y])
       // add the first point
       const coord = { x: 0, y: 0 }
       addPoint({draw, coord})

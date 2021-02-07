@@ -111,8 +111,6 @@ class DeleteAllSelectionsAction {
   }
 }
 
-
-// TODO: fixme, removed items won't be undo so far.
 export function removeAllSelections({draw}) {
   console.assert(draw, 'draw must exist')
   const action = new DeleteAllSelectionsAction(draw)
