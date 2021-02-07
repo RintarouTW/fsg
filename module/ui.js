@@ -51,6 +51,7 @@ export function opening_animation(draw, callback) {
   const text = String.raw`\text{Fast SVG Geometry Builder}`
   const unselect = true
   const element = addLaTeX({draw, text, unselect}).element
+  element.attr('style', 'color: #fff;')
   element.center(0, 0).attr('opacity', 0)
   element.animate(600).dmove(0, -30).attr('opacity', 1)
     .animate(600, 700).attr('opacity', 0)
