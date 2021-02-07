@@ -3,6 +3,7 @@
 import { SERVER_ROOT, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT } from '../common/define.js'
 import { execute_user_script } from './user_script.js'
 import { getHash, postCode } from './server.js'
+import { saveAsSVG, exportToHTML, svgDocument } from './file.js'
 
 // so far, menu is only working in runtime, not the editor.
 
@@ -105,6 +106,27 @@ export class RuntimeMenu extends Menu {
 export class BuilderMenu extends Menu {
   constructor(draw, coord) {
     super(draw, coord, 'Menu')
+    const copyAsItem = new MenuItem(draw, this.menu, 'Copy As SVG')
+    copyAsItem.onMouseDown = () => {
+      this.remove()
+      const content = svgDocument(draw) 
+      navigator.clipboard.writeText(content).then(() => {
+        showHint('Copied!')
+      })
+    }
+    this.addMenuItem(copyAsItem)
+    const saveAsItem = new MenuItem(draw, this.menu, 'Save As SVG')
+    saveAsItem.onMouseDown = () => {
+      this.remove()
+      saveAsSVG(draw)
+    }
+    this.addMenuItem(saveAsItem)
+    const exportToItem = new MenuItem(draw, this.menu, 'Export to HTML')
+    exportToItem.onMouseDown = () => {
+      this.remove()
+      exportToHTML(draw)
+    }
+    this.addMenuItem(exportToItem)
     const resetItem = new MenuItem(draw, this.menu, 'Reset Viewbox')
     resetItem.onMouseDown = () => {
       this.remove()
