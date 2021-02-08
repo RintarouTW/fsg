@@ -27,7 +27,7 @@ function drawTitle(draw, title) {
   const { height } = draw.parent().viewbox()
   const tw = text.bbox().width
   const position = {x: -tw/2, y: height/2 - 30}
-  console.log(position, text.bbox())
+  // console.log(position, text.bbox())
   text.move(position.x, position.y)
   draw.add(text)
 }
