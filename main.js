@@ -25,6 +25,7 @@ import { init_inspector } from './module/inspector.js'
 import { init_axis, buttonClass, opening_animation, showHint } from './module/ui.js'
 import { init_color_picker, enableColorPicker } from './module/color_picker.js'
 import { init_code_editor } from './module/code_editor.js'
+import { init_preference } from './module/preference.js'
 
 import { init_marker } from './module/marker.js'
 // import { init_filter } from './module/filter.js' // not used yet
@@ -73,7 +74,7 @@ function setSnapshotHandler(draw) {
   })
 }
 
-export function newFSG() {
+function newFSG() {
 
   cleanUp()
 
@@ -114,6 +115,7 @@ export function newFSG() {
   init_axis(draw)
 
   init_code_editor(userScript)
+  init_preference(draw)
   setSnapshotHandler(draw)
   return draw
 }
@@ -175,6 +177,7 @@ export function loadFSG(content) {
   enableColorPicker()
 
   init_code_editor(userScript)
+  init_preference(draw)
 
   setSnapshotHandler(draw)
   return draw

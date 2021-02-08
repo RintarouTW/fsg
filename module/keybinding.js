@@ -30,6 +30,7 @@ import {
   getLastSelectedAngleComponents,
 } from './selection.js'
 import { showHint } from './ui.js'
+import { toggle_preference_window } from './preference.js'
 
 function editField(fieldId) {
   let element = SVG(fieldId)
@@ -55,6 +56,13 @@ export function init_keybindings(draw) {
     switch(evt.code) {
       case 'F1':
         toggle_code_editor()
+        break
+      case 'Comma':
+        {
+          if(evt.metaKey) {
+            toggle_preference_window()
+          }
+        }
         break
       case 'Tab':
         {

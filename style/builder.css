@@ -67,6 +67,28 @@ body {
   font-family: Times, serif, monospace;
 }
 
+#preferenceWindow {
+  position: absolute;
+  background-color: #232425;
+  padding: 5px 20px 20px 20px;
+  top: calc(50vw - 150px);
+  left: calc((100vw - 320px)/2);
+  width: 300px;
+  border: 1px #444 solid;
+  color: #bbb;
+  visibility: hidden;
+}
+
+.windowTitle {
+  padding-bottom: 3px;
+  margin-bottom: 3px;
+  border-bottom: 1px #444 solid;
+}
+
+.field.digits {
+  width: 40px
+}
+
 #editArea {
   /* background-color: rgba(255,255,255,0); */
   /* background-color: var(--ui-editarea-background-color); */
