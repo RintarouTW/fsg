@@ -18,6 +18,20 @@ function init_modules(draw) {
   reconstruct_components(draw)
 }
 
+function drawTitle(draw) {
+  const text = draw.text(title)
+    .attr('class', 'label')
+    .attr('offset_x', 0)
+    .attr('offset_y', 0)
+    .flip('y')
+  const { height } = draw.parent().viewbox()
+  const tw = text.bbox().width
+  const position = {x: -tw/2, y: height/2 - 30}
+  console.log(position, text.bbox())
+  text.move(position.x, position.y)
+  draw.add(text)
+}
+
 function init() {
   // runtime for html/svg, different envs.
   // html -> exported html
@@ -46,6 +60,8 @@ function init() {
           init_modules(draw)
           draw.ready = true
           fsg.add(svg)
+          const title = fsg.attr('title')
+          if (title) drawTitle(draw)
         })
       })
 
@@ -55,6 +71,9 @@ function init() {
       draw._content = svg.svg() // remember the original content
       init_modules(draw)
       draw.ready = true
+      // get title specified by the user in iframe
+      const title = window.frameElement.getAttribute('title')
+      if (title) drawTitle(draw)
     }
 
     console.log('runtime done')
