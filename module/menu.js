@@ -4,6 +4,7 @@ import { SERVER_ROOT, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT } from '../com
 import { execute_user_script } from './user_script.js'
 import { getHash, postCode } from './server.js'
 import { saveAsSVG, exportToHTML, svgDocument } from './file.js'
+import { toggle_preference_window } from './preference.js'
 
 // so far, menu is only working in runtime, not the editor.
 
@@ -106,6 +107,12 @@ export class RuntimeMenu extends Menu {
 export class BuilderMenu extends Menu {
   constructor(draw, coord) {
     super(draw, coord, 'Menu')
+    const prefItem =  new MenuItem(draw, this.menu, 'Preference')
+    prefItem.onMouseDown = () => {
+      this.remove()
+      toggle_preference_window()
+    }
+    this.addMenuItem(prefItem)
     const copyAsItem = new MenuItem(draw, this.menu, 'Copy As SVG')
     copyAsItem.onMouseDown = () => {
       this.remove()
