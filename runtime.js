@@ -18,7 +18,7 @@ function init_modules(draw) {
   reconstruct_components(draw)
 }
 
-function drawTitle(draw) {
+function drawTitle(draw, title) {
   const text = draw.text(title)
     .attr('class', 'label')
     .attr('offset_x', 0)
@@ -61,7 +61,7 @@ function init() {
           draw.ready = true
           fsg.add(svg)
           const title = fsg.attr('title')
-          if (title) drawTitle(draw)
+          if (title) drawTitle(draw, title)
         })
       })
 
@@ -73,7 +73,7 @@ function init() {
       draw.ready = true
       // get title specified by the user in iframe
       const title = window.frameElement.getAttribute('title')
-      if (title) drawTitle(draw)
+      if (title) drawTitle(draw, title)
     }
 
     console.log('runtime done')
