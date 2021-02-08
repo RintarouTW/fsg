@@ -18,8 +18,8 @@ function findBottom(draw, points) {
 }
 
 export function putBehindPoints(draw, points, cover, element) {
-    // TODO: The order of the element should only be manipulated when the component first time constructed in editor.
-    // After that, user can change the order of the component, and that order should be keeped even after reconstruction.
+    // The order of the element should only be manipulated when the component constructed in editor.
+    // After that, user can change the order of the component, and that order should be kept even after reconstruction.
     //
     // find the most bottom point
     // FIXME: there's a bug in svgjs. somehow it's possible have an element with index = -1

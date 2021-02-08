@@ -172,6 +172,7 @@ export class Arc extends FillableShape {
       const arcPath = arcOf(p1, p2, p3, this.large_arc)
       element.plot(arcPath)
       cover.plot(arcPath)
+      element.fire('update') // update event, so the label knows the element is updated.
     })
 
     const componentRefs = points.map(point => {
