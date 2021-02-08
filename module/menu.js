@@ -5,6 +5,7 @@ import { execute_user_script } from './user_script.js'
 import { getHash, postCode } from './server.js'
 import { saveAsSVG, exportToHTML, svgDocument } from './file.js'
 import { toggle_preference_window } from './preference.js'
+import { showHint } from './ui.js'
 
 // so far, menu is only working in runtime, not the editor.
 
@@ -13,9 +14,10 @@ const MENU_PADDING_LEFT = 10
 const MENU_PADDING_TOP = 5
 const MENU_PADDING_BOTTOM = 5
 const MENU_ITEM_HEIGHT = 23
-const MENU_BACKGROUND_COLOR = '#333'
+const MENU_BACKGROUND_COLOR = '#202020'
 const MENU_BORDER_COLOR = '#666'
-const MENU_SEPARATOR_COLOR = '#555'
+const MENU_SEPARATOR_COLOR_TOP = '#555'
+const MENU_SEPARATOR_COLOR_BOTTOM = '#121212'
 
 ///
 /// MenuItem
@@ -57,11 +59,18 @@ class Menu {
     this.background = bg
     draw.menu = this
   }
-  addMenuItem(item) {
+  addMenuItem(title, action) {
+    const item = new MenuItem(this.draw, this.menu, title)
+    item.onMouseDown = () => {
+      this.remove()
+      action()
+    }
     this.numItems++
     const y = MENU_PADDING_TOP + MENU_ITEM_HEIGHT * this.numItems
     this.menu.line(MENU_PADDING_LEFT - 5, y, MENU_WIDTH + 5 - MENU_PADDING_LEFT, y).flip('y')
-      .stroke(MENU_SEPARATOR_COLOR)
+      .stroke(MENU_SEPARATOR_COLOR_TOP)
+    this.menu.line(MENU_PADDING_LEFT - 5, y+1, MENU_WIDTH + 5 - MENU_PADDING_LEFT, y+1).flip('y')
+      .stroke(MENU_SEPARATOR_COLOR_BOTTOM)
     item.move(MENU_PADDING_LEFT, y + 3)
     // update background
     this.background.size(MENU_WIDTH, y + MENU_ITEM_HEIGHT + MENU_PADDING_BOTTOM)
@@ -75,9 +84,8 @@ class Menu {
 export class RuntimeMenu extends Menu {
   constructor(draw, coord) {
     super(draw, coord, 'Menu')
-    const editItem = new MenuItem(draw, this.menu, 'Edit')
-    editItem.onMouseDown = () => {
-      this.remove()
+
+    this.addMenuItem('Edit', () => {
       const code = { code : draw.parent().svg() }
       getHash().then( json => {
         const hash = json.hash
@@ -87,60 +95,33 @@ export class RuntimeMenu extends Menu {
             `resizable, width=${DEFAULT_WINDOW_WIDTH}, height=${DEFAULT_WINDOW_HEIGHT}`)
         }).catch( error => console.log(error) )
       }).catch( error => console.log(error) )
-    }
-    this.addMenuItem(editItem)
-    const playItem = new MenuItem(draw, this.menu, 'Play')
-    playItem.onMouseDown = () => {
-      this.remove()
-      execute_user_script(draw)
-    }
-    this.addMenuItem(playItem)
-    const reloadItem = new MenuItem(draw, this.menu, 'Reload')
-    reloadItem.onMouseDown = () => {
-      this.remove()
-      location.reload()
-    }
-    this.addMenuItem(reloadItem)
+    })
+    
+    this.addMenuItem('Play', () => execute_user_script(draw) )
+    this.addMenuItem('Reload', () => location.reload() )
   }
 }
 
 export class BuilderMenu extends Menu {
   constructor(draw, coord) {
     super(draw, coord, 'Menu')
-    const prefItem =  new MenuItem(draw, this.menu, 'Preference')
-    prefItem.onMouseDown = () => {
-      this.remove()
-      toggle_preference_window()
-    }
-    this.addMenuItem(prefItem)
-    const copyAsItem = new MenuItem(draw, this.menu, 'Copy As SVG')
-    copyAsItem.onMouseDown = () => {
-      this.remove()
+
+    this.addMenuItem('Copy As SVG', () => {
       const content = svgDocument(draw) 
       navigator.clipboard.writeText(content).then(() => {
         showHint('Copied!')
       })
-    }
-    this.addMenuItem(copyAsItem)
-    const saveAsItem = new MenuItem(draw, this.menu, 'Save As SVG')
-    saveAsItem.onMouseDown = () => {
-      this.remove()
-      saveAsSVG(draw)
-    }
-    this.addMenuItem(saveAsItem)
-    const exportToItem = new MenuItem(draw, this.menu, 'Export to HTML')
-    exportToItem.onMouseDown = () => {
-      this.remove()
-      exportToHTML(draw)
-    }
-    this.addMenuItem(exportToItem)
-    const resetItem = new MenuItem(draw, this.menu, 'Reset Viewbox')
-    resetItem.onMouseDown = () => {
-      this.remove()
+    })
+
+    this.addMenuItem('Save As SVG', () => saveAsSVG(draw) )
+    this.addMenuItem('Export to HTML', () => exportToHTML(draw) )
+
+    this.addMenuItem('Reset Viewbox', () => {
       const width = draw.parent().attr('width')
       const height = draw.parent().attr('height')
       draw.parent().viewbox(0, 0, width, height)
-    }
-    this.addMenuItem(resetItem)
+    })
+    
+    this.addMenuItem('Preference', () => toggle_preference_window() )
   }
 }

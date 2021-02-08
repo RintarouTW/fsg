@@ -43,6 +43,11 @@
   stroke-dasharray: 5 3 !important;
   stroke-width: 1 !important;
 }
+
+.menu {
+  font-family: .86em Helvetica, Sans-Serif, Times, serif, monospace;
+}
+
 .menu_title {
   fill: #aaa;
   user-select: none;
@@ -64,8 +69,7 @@ body {
   /* background-image: url(/images/plain_blue.jpg); */
   background-size: cover;
   background-repeat: no-repeat;
-  /* font-family: Times, serif, monospace; */
-  font: normal .86em/1 "Lucida Grande", Lucida, Arial, sans-serif;
+  font-family: .86em Helvetica, Sans-Serif, Times, serif, monospace;
 }
 
 #preferenceWindow {
@@ -88,11 +92,11 @@ body {
 
 .pref_field_label {
   display: inline-block;
-  width: 63px;
+  width: 50px;
 }
 
 .field.digits {
-  width: 50px
+  width: 80px
 }
 
 #pref_close_button {
