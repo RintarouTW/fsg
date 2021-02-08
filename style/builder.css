@@ -64,7 +64,8 @@ body {
   /* background-image: url(/images/plain_blue.jpg); */
   background-size: cover;
   background-repeat: no-repeat;
-  font-family: Times, serif, monospace;
+  /* font-family: Times, serif, monospace; */
+  font: normal .86em/1 "Lucida Grande", Lucida, Arial, sans-serif;
 }
 
 #preferenceWindow {
@@ -74,19 +75,24 @@ body {
   top: calc(50vw - 150px);
   left: calc((100vw - 320px)/2);
   width: 300px;
-  border: 1px #444 solid;
+  border: 1px #555 solid;
   color: #bbb;
-  /* visibility: hidden; */
+  visibility: hidden;
 }
 
 .windowTitle {
-  padding-bottom: 3px;
+  padding-bottom: 5px;
   margin-bottom: 3px;
   border-bottom: 1px #444 solid;
 }
 
+.pref_field_label {
+  display: inline-block;
+  width: 63px;
+}
+
 .field.digits {
-  width: 40px
+  width: 50px
 }
 
 #pref_close_button {
