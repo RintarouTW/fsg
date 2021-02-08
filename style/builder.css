@@ -76,7 +76,7 @@ body {
   width: 300px;
   border: 1px #444 solid;
   color: #bbb;
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 
 .windowTitle {
@@ -87,6 +87,18 @@ body {
 
 .field.digits {
   width: 40px
+}
+
+#pref_close_button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  filter: invert(0.8);
+  border: 0px;
+}
+
+#pref_close_button:hover {
+  filter: invert(0.3);
 }
 
 #editArea {
