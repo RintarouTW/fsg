@@ -45,9 +45,8 @@
 }
 
 .menu {
-  font-family: .86em Helvetica, Sans-Serif, Times, serif, monospace;
+  font: 0.9em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
 }
-
 .menu_title {
   fill: #aaa;
   user-select: none;
@@ -55,6 +54,7 @@
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 .menu_item {
+  font-weight: 300;
   fill: #888;
   user-select: none;
   -webkit-user-select: none;
@@ -69,7 +69,7 @@ body {
   /* background-image: url(/images/plain_blue.jpg); */
   background-size: cover;
   background-repeat: no-repeat;
-  font-family: .86em Helvetica, Sans-Serif, Times, serif, monospace;
+  font: 1em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
 }
 
 #preferenceWindow {

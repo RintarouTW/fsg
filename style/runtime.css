@@ -19,7 +19,7 @@
 body {
   background-color: var(--ui-background-color);
   color: var(--text-color); /* text color */
-  font-family: Times, serif, monospace;
+  font: 1em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
 }
 
 svg .ui-select-box {

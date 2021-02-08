@@ -22,7 +22,7 @@ svg .ui-select-box {
 }
 
 svg .menu {
-  font-family: .86em Helvetica, Sans-Serif, Times, serif, monospace;
+  font: 0.9em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
 }
 
 svg .menu_title {
@@ -33,6 +33,7 @@ svg .menu_title {
 }
 
 svg .menu_item {
+  font-weight: 300;
   fill: #888;
   user-select: none;
   -webkit-user-select: none;
