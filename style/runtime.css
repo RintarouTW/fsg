@@ -4,6 +4,7 @@
   --vector-marker-color: #999;
   --axis-stroke-color: #555;
   --text-color: #999;
+  --title-color: #ffbd02;
   --point-fill-color: #2f2f2f;
   --point-stroke-color: #ff0;
   --intersect-point-fill-color: #777777aa;
@@ -70,8 +71,8 @@ svg .label {
 }
 
 svg .title {
-  color: var(--text-color);
-  fill: var(--text-color);
+  color: var(--title-color);
+  fill: var(--title-color);
   user-select: none;
   -webkit-user-select: none; /* for Safari */
   font-family: 'KaTeX_Math', 'Times New Roman', Times, serif;
