@@ -69,6 +69,14 @@ svg .label {
   font-family: 'KaTeX_Math', 'Times New Roman', Times, serif;
 }
 
+svg .title {
+  color: var(--text-color);
+  fill: var(--text-color);
+  user-select: none;
+  -webkit-user-select: none; /* for Safari */
+  font-family: 'KaTeX_Math', 'Times New Roman', Times, serif;
+}
+
 svg fsg {
   overflow: hidden;
 }

@@ -20,7 +20,7 @@ function init_modules(draw) {
 
 function drawTitle(draw, title) {
   const text = draw.text(title)
-    .attr('class', 'label')
+    .attr('class', 'title')
     .attr('offset_x', 0)
     .attr('offset_y', 0)
     .flip('y')
