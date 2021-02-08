@@ -6,6 +6,8 @@ export function init_preference(draw) {
   const field_width = SVG('#field_pref_width')
   const field_height = SVG('#field_pref_height')
   const field_background = SVG('#field_pref_background')
+  const close_button = SVG('#pref_close_button')
+  close_button.on('click', () => hide())
 }
 
 function show() {

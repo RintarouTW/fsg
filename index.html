@@ -9,11 +9,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
     <!-- color picker -->
     <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-    <link rel="stylesheet" type="text/css" href="style/builder.css">
-    <link rel="stylesheet" type="text/css" href="style/runtime.css">
-    <link rel="stylesheet" type="text/css" href="style/code_editor.css">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"/>
+    <link rel="stylesheet" type="text/css" href="style/builder.css"/>
+    <link rel="stylesheet" type="text/css" href="style/runtime.css"/>
+    <link rel="stylesheet" type="text/css" href="style/code_editor.css"/>
+    <link rel="stylesheet" type="text/css" href="style/keys.css"/>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
     <link rel="manifest" href="manifest.webmanifest"/>
     <script src="main.min.js" type="module"></script>
   </head>
@@ -41,16 +42,24 @@
     <div id="codeEditorWindow" class="l4t-editor-window l4t-hidden">
       <textarea id="codeEditor"></textarea>
     </div>
+    <div id="preferenceWindow" class="preferenceWindow">
+      <div class="windowTitle">Preference</div></br>
+      <button id="pref_close_button">✗</button>
+      <span>Width</span><input class="field digits" maxlength="4" id="field_pref_width"/></br>
+      <span>Height</span><input class="field digits" maxlength="4" id="field_pref_height"/></br>
+      <span>Background</span>
+      <input class="field_color" type="text" maxlength="9" value="" id="field_pref_background"/><br>
+    </div>
     <div id="help">
       <div>
         <!-- construct -->
         <span> Construct </span></br>
         <span><kbd>a</kbd> append point</span>
-        <span><kbd>shift+a</kbd> angle</span>
+        <span><kbd>shift + a</kbd> angle</span>
         <span><kbd>b</kbd> bisector line</span>
         <span><kbd>c</kbd> circle</span>
         <span><kbd>e</kbd> edge (line segment)</span>
-        <span><kbd>shift+e</kbd> close edge between last and first selected points</span>
+        <span><kbd>shift + e</kbd> close edge between last and first selected points</span>
         <span><kbd>l</kbd> line</span>
         <span><kbd>r</kbd> ray</span>
         <span><kbd>v</kbd> vector</span>
@@ -59,8 +68,8 @@
         <span><kbd>i</kbd> intersect point(s)</span>
         <span><kbd>m</kbd> mid point between two points</span>
         <span><kbd>x</kbd> project point on line</span>
-        <span><kbd>+</kbd> perpenticular line</span>
         <span><kbd>=</kbd> parallel line</span>
+        <span><kbd>+</kbd> perpenticular line</span>
         <!-- style -->
         </br><span> Style </span></br>
         <span><kbd>f</kbd> toggle filled</span>
@@ -70,8 +79,8 @@
         </br><span> Layer </span></br>
         <span><kbd>[</kbd> backward</span>
         <span><kbd>]</kbd> forward</span>
-        <span><kbd>shift+[</kbd> bottom</span>
-        <span><kbd>shift+]</kbd> top</span>
+        <span><kbd>shift + [</kbd> bottom</span>
+        <span><kbd>shift + ]</kbd> top</span>
         <!-- edit -->
         </br><span> Edit </span></br>
         <span><kbd>I</kbd> edit id</span>
@@ -80,24 +89,25 @@
         <span><kbd>Backspace</kbd> delete selections</span>
         <span><kbd>click</kbd> add point/select</span>
         <span><kbd>drag</kbd> select</span>
-        <span><kbd>shift+drag</kbd> deselect</span>
+        <span><kbd>shift + drag</kbd> deselect</span>
         <span><kbd>d</kbd> deselect last selection</span>
         <span><kbd>D</kbd> deselect all</span>
         <span><kbd>u/z</kbd> undo</span>
         <span><kbd>U/Z</kbd> redo</span>
-        <span><kbd>alt+drag</kbd> pan</span>
-        <span><kbd>alt+pinch/scroll</kbd> zoom</span>
+        <span><kbd>alt + drag</kbd> pan</span>
+        <span><kbd>alt + pinch/scroll</kbd> zoom</span>
         <!-- script -->
         </br><span> Script </span></br>
         <span><kbd>F1</kbd> Toggle script editor</span>
-        <span><kbd>ctrl+e</kbd> execute script</span>
-        <span><kbd>ctrl+r</kbd> reload</span>
+        <span><kbd>ctrl + e</kbd> execute script</span>
+        <span><kbd>ctrl + r</kbd> reload</span>
         <!-- file -->
         </br><span> File </span></br>
-        <span><kbd>⌘+c</kbd> Copy as SVG</span>
-        <span><kbd>⌘+e</kbd> Export to .html</span>
-        <span><kbd>⌘+o</kbd> Open .svg</span>
-        <span><kbd>⌘+s</kbd> Save as .svg</span>
+        <span><kbd>⌘ + ,</kbd> Preference</span>
+        <span><kbd>⌘ + c</kbd> Copy as SVG</span>
+        <span><kbd>⌘ + e</kbd> Export to .html</span>
+        <span><kbd>⌘ + o</kbd> Open .svg</span>
+        <span><kbd>⌘ + s</kbd> Save as .svg</span>
       </div>
     </div>
   </body>
