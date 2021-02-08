@@ -6,6 +6,7 @@ import { init_drag } from './module/drag.js'
 import { init_history } from './module/history.js'
 import { init_selection } from './module/selection.js'
 import { reconstruct_components } from './module/file.js'
+import { contain_user_script, execute_user_script } from './module/user_script.js'
 import { fetchSrc } from './common/common.js'
 
 function init_modules(draw) {
@@ -30,6 +31,16 @@ function drawTitle(draw, title) {
   // console.log(position, text.bbox())
   text.move(position.x, position.y)
   draw.add(text)
+}
+
+function showPlayButton(draw) {
+  const runButton = SVG('<path d="M1 33V1L31 17L1 33Z" fill="#919191" stroke="black"/>')
+  const { width, height } = draw.parent().viewbox()
+  runButton.move(width/2 - 44, height/2 - 44)
+    .on('click', () => execute_user_script(draw) )
+    .on('mouseover', () => runButton.attr('fill', '#fff') )
+    .on('mouseleave', () => runButton.attr('fill', '#919191') )
+  draw.add(runButton)
 }
 
 function init() {
@@ -62,6 +73,7 @@ function init() {
           fsg.add(svg)
           const title = fsg.attr('title')
           if (title) drawTitle(draw, title)
+          if (contain_user_script(draw)) showPlayButton(draw)
         })
       })
 
@@ -74,6 +86,7 @@ function init() {
       // get title specified by the user in iframe
       const title = window.frameElement.getAttribute('title')
       if (title) drawTitle(draw, title)
+      if (contain_user_script(draw)) showPlayButton(draw)
     }
 
     console.log('runtime done')
