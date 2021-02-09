@@ -1,7 +1,5 @@
 /* ui */
 :root {
-  /* --ui-background-color: #1b262c; */
-  /* --ui-background-color: #424242 !important; */
   --ui-background-color: #232425 !important;
 
   --ui-editarea-background-color: #121212 !important;
@@ -9,7 +7,6 @@
 
   --ui-hint-text-color: #fff !important;
 
-  /* --ui-inspector-background-color: #0006158f !important; */
   --ui-inspector-background-color: #272B2E !important;
   --ui-inspector-border-color: #333 !important;
   --ui-inspector-text-color: #eee !important;
@@ -25,17 +22,6 @@
   --ui-select-box-fill-color: #ffffff33 !important;
 
   --ui-kbd-text-color: #fff;
-
-/* following override to fast dev and test only without reload */
-  /*
-  --vector-marker-color: #999 !important;
-  --axis-stroke-color: #999 !important;
-  --text-color: #999 !important;
-  --point-fill-color: #444 !important;
-  --point-stroke-color: #777777 !important;
-  --intersect-point-fill-color: #777777aa !important;
-  --intersect-point-stroke-color: #565656aa !important;
-  */
 }
 
 /* override for testing */
@@ -51,7 +37,6 @@
   fill: #aaa;
   user-select: none;
   -webkit-user-select: none;
-  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 .menu_item {
   font-weight: 300;
@@ -66,7 +51,6 @@
 
 body {
   background-color: var(--ui-background-color);
-  /* background-image: url(/images/plain_blue.jpg); */
   background-size: cover;
   background-repeat: no-repeat;
   font: 1em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
@@ -186,7 +170,7 @@ body {
   padding: 20px 5px 20px 5px;
   user-select: none;
   -webkit-user-select: none;
-  font-family: 'Source Code Pro', monospace;
+  font-family: Roboto, monospace;
   font-size: large;
   position: relative;
 }
