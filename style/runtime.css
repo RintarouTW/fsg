@@ -23,9 +23,9 @@ body {
 }
 
 svg .ui-select-box {
-  stroke: var(--ui-select-box-stroke-color);
+  stroke: var(--ui-select-box-stroke-color) !important;
   stroke-width: 0.5;
-  fill: var(--ui-select-box-fill-color);
+  fill: var(--ui-select-box-fill-color) !important;
 }
 
 svg .fsg-board {
