@@ -57,6 +57,13 @@ function init() {
 
     window.FSG_RUNTIME = true // runtime should only be loaded once.
 
+    // extend SVG.Runner
+    SVG.extend(SVG.Runner, {
+      update: function() {
+        this.during( () => this.element().fire('update') )
+      }
+    })
+
     const contentType = document.contentType
     if (contentType.includes('html')) { // html goes here.
 

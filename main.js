@@ -194,6 +194,13 @@ function init() {
 
   window.resizeTo(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT) // default window size
 
+  // extend SVG.Runner
+  SVG.extend(SVG.Runner, {
+    update: function() {
+      this.during( () => this.element().fire('update') )
+    }
+  })
+
   init_color_picker()
 
   _draw = newFSG() // new file
