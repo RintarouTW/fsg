@@ -91,7 +91,7 @@ function init() {
       init_modules(draw)
       draw.ready = true
       // get title specified by the user in iframe
-      const title = window.frameElement.getAttribute('title')
+      const title = window.frameElement?.getAttribute('title')
       if (title) drawTitle(draw, title)
       if (contain_user_script(draw)) showPlayButton(draw)
     }
