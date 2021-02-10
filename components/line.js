@@ -3,7 +3,7 @@
 import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, DEFAULT_STROKE_COLOR } from '../common/define.js'
 import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
-import { LineBaseShape, putBehindPoints } from './shape.js'
+import { ShapeComponent, putBehindPoints } from './shape.js'
 import { currentStrokeColor } from '../module/color_picker.js'
 import { addParallelPoint, addPerpPoint } from './point.js'
 
@@ -13,6 +13,53 @@ function setStrokeColor(element) {
     element.attr('stroke', strokeColor)
   }
 }
+
+export class LineBaseShape extends ShapeComponent {
+  constructor({draw, element, cover, points, isHiddenPoint}) {
+    super({draw, element, cover, points, isHiddenPoint})
+    this.isAppending = null
+  }
+  startPoint() {
+    const p = this.points[0]
+    let coord = {x: p.cx(), y: p.cy()}
+    if (p.component)
+      coord = pointOnScreen(p.component)
+    return coord
+  }
+  direction() {
+    const [p1, p2] = this.points
+    // hidden points won't be transformed
+    let coord1 = { x: p1.cx(), y: p1.cy() }
+    let coord2 = { x: p2.cx(), y: p2.cy() }
+    if (p1.component && p2.component) { // element of a component may be transformed
+      coord1 = pointOnScreen(p1.component)
+      coord2 = pointOnScreen(p2.component)
+    }
+    const dx = coord2.x - coord1.x
+    const dy = coord2.y - coord1.y
+    const length = Math.sqrt(dx ** 2 + dy **2)
+    return {x: dx/length , y: dy/length}
+  }
+  // Appendable Interface
+  endAppendMode() {
+    if (this.isAppending) {
+      this.isAppending.remove()
+      this.isAppending = null
+    }
+  }
+  toggleAppendMode(draw) {
+    if (!this.isAppending) {
+      const componentRef = this.component_no
+      this.isAppending = addAppendingPinPoint({draw, componentRef})
+      return
+    } 
+    this.endAppendMode()
+  }
+  getAttributes() {
+    return ['id', 'class', 'cx', 'cy', 'text', 'stroke']
+  }
+}
+
 ///
 /// LineSegment
 ///

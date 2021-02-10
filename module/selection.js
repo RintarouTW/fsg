@@ -3,7 +3,9 @@
 import { Component } from '../components/component.js'
 import { Circle, Arc } from '../components/fillable.js'
 import { SelectablePoint, UnSelectablePoint } from '../components/point.js'
-import { ShapeComponent, FillableShape, LineBaseShape } from '../components/shape.js'
+import { ShapeComponent } from '../components/shape.js'
+import { FillableShape } from '../components/fillable.js'
+import { LineBaseShape } from '../components/line.js'
 
 export function init_selection(draw) {
   console.assert(draw, 'draw must exist')

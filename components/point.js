@@ -3,7 +3,7 @@
 import { POINT_RADIUS, COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR } from '../common/define.js'
 import { intersect, projectPointOnLine, intersectLineAndCircle, twoCirclesIntersection, pointOnScreen } from '../common/math.js'
 import { Component, componentByNo } from './component.js'
-import { LineBaseShape } from './shape.js'
+import { LineBaseShape } from './line.js'
 import { currentStrokeColor } from '../module/color_picker.js'
 
 
