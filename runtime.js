@@ -31,6 +31,14 @@ function drawTitle(draw, title) {
   // console.log(position, text.bbox())
   text.move(position.x, position.y)
   draw.add(text)
+
+  const bbox = text.bbox()
+  const bg = draw.rect(bbox.width + 30, bbox.height + 8)
+    .radius(10, 15)
+    .attr('fill', '#000')
+    .attr('stroke', '#888')
+    .center(text.cx(), -text.cy())
+  bg.insertBefore(text)
 }
 
 function showPlayButton(draw) {
