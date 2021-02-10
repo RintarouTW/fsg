@@ -66,9 +66,12 @@ export function loadFSG(content) {
   // Fix the old fsg files which doesn't have default style.
   //
   const defs = draw.defs()
-  if(defs.find('style').length == 0) {
-    defs.first().before(SVG(RUNTIME_DEFAULT_STYLE))
-  }
+  // remove the old style, force to use new default anyway.
+  const defaultStyle = defs.find('style')
+  if (defaultStyle) defaultStyle.remove()
+  // if(defs.find('style').length == 0) {
+  defs.first().before(SVG(RUNTIME_DEFAULT_STYLE))
+  // }
 
   init_scripts(draw)
 
