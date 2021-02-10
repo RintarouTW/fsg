@@ -1,7 +1,7 @@
 'use strict'
 
-import { DEFAULT_TEXT } from '../common/define.js'
-import { Component } from './component.js'
+import { DEFAULT_TEXT, OF_ATTR } from '../common/define.js'
+import { Component, componentByNo } from './component.js'
 import { currentStrokeColor } from '../module/color_picker.js'
 
 function useCurrentColors(element) {
@@ -11,16 +11,33 @@ function useCurrentColors(element) {
   }
 }
 
+///
+/// LaTeX 
+/// (optional) componentRef is the target component no that this latex relative to.
+///
 export class LaTeX extends Component {
-  constructor({draw, element}) {
+  constructor({draw, element, componentRef}) {
     super({draw, element})
     { // patch old diagrams(.text) to new class(.latex)
       element.removeClass('text')
       element.addClass('latex')
     }
+
+    if (componentRef) {
+      const target = componentByNo(draw, componentRef).element
+      this.target = target
+      this.tracePoints([this.target], () => {
+        const offsetX = element.attr('offset_x')
+        const offsetY = element.attr('offset_y')
+        const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }
+        element.move(position.x, position.y)
+      })
+    }
+
     this.makeDraggable(draw, element)
   }
   makeDraggable(draw, element) {
+    const target = this.target
     // selectable and draggable
     element.on('mousedown', evt => {
       element.lastEvent = 'mousedown'
@@ -38,6 +55,10 @@ export class LaTeX extends Component {
     }).on('dragend', () => {
       element.removeClass('dragging')
       draw.dragTarget = null
+      if (target) {
+        const offset = { dx: element.x() - target.cx(), dy: element.y() + target.cy() }
+        element.attr('offset_x', offset.dx).attr('offset_y', offset.dy)
+      }
     }).on('dragmove', () => {
       element.fire('update', { target: this })
     })
@@ -98,32 +119,32 @@ function foreignTex(draw, text) {
 }
 */
 
-/* KaTeX Implementation */
-function foreignTex(draw, text) {
-  /* new implementation depends on css fit-content */
-  /* xmlns="http://www.w3.org/1999/xhtml" is required for foreignObject that could be rendered in standalonee svg */
-  const tex = SVG(String.raw`<div xmlns="http://www.w3.org/1999/xhtml" class="latex-container"></div>`)
-  let foreignObject
-  try {
-    let html = katex.renderToString(text, katex_options)
-    // &nbsp; is not a defined entity in svg, replace it with &#160;
-    html = html.replace(/\&nbsp;/g, '&#160;')
-    tex.node.innerHTML = html
-    foreignObject = draw.foreignObject(800, 600).add(tex)
-    const {width, height} = tex.node.getBoundingClientRect()
-    /*
+    /* KaTeX Implementation */
+    function foreignTex(draw, text) {
+      /* new implementation depends on css fit-content */
+      /* xmlns="http://www.w3.org/1999/xhtml" is required for foreignObject that could be rendered in standalonee svg */
+      const tex = SVG(String.raw`<div xmlns="http://www.w3.org/1999/xhtml" class="latex-container"></div>`)
+      let foreignObject
+      try {
+        let html = katex.renderToString(text, katex_options)
+        // &nbsp; is not a defined entity in svg, replace it with &#160;
+        html = html.replace(/\&nbsp;/g, '&#160;')
+        tex.node.innerHTML = html
+        foreignObject = draw.foreignObject(800, 600).add(tex)
+        const {width, height} = tex.node.getBoundingClientRect()
+        /*
     const katex = tex.node.firstElementChild
     const height = tex.node.getBoundingClientRect().height
     const width = katex.getBoundingClientRect().width
     */
-    foreignObject.size(width, height)
-    return foreignObject
-  } catch(err) {
-    console.log(err)
-    if (foreignObject) foreignObject.remove()
-    return null
-  }
-}
+        foreignObject.size(width, height)
+        return foreignObject
+      } catch(err) {
+        console.log(err)
+        if (foreignObject) foreignObject.remove()
+        return null
+      }
+    }
 
 // for debug
 function genCover(draw, element, position) {
@@ -144,19 +165,29 @@ function genLaTeX(draw, text, position) {
   return element
 }
 
-export function addLaTeX({draw, element, text, unselect}) {
+export function addLaTeX({draw, element, text, unselect, componentRef}) {
   if (!element) {
     /*
      * <g label=''>
      *   <foreignObject></foreignObject>
      * </g>
      */
-    const position = draw.mousePosition
-    text = text ?? DEFAULT_TEXT
-    element = genLaTeX(draw, text, position)
-    useCurrentColors(element)
+    if (!componentRef) {
+      const position = draw.mousePosition
+      text = text ?? DEFAULT_TEXT
+      element = genLaTeX(draw, text, position)
+      useCurrentColors(element)
+    } else {
+      let position = componentByNo(draw, componentRef).center()
+      text = text ?? DEFAULT_TEXT
+      element = genLaTeX(draw, text, position)
+      element.attr('offset_x', 0)
+        .attr('offset_y', 0)
+        .attr(OF_ATTR, componentRef)
+      useCurrentColors(element)
+    }
   }
-  const component = new LaTeX({draw, element})
+  const component = new LaTeX({draw, element, componentRef})
   if(unselect) unselectComponent(draw, component)
   return component
 }

@@ -143,7 +143,7 @@ export function init_keybindings(draw) {
           return
         }
       case 'KeyC':
-        if (evt.shiftKey) {
+        if (evt.ctrlKey) {
           editField('#field_class')
           evt.preventDefault()
           return
@@ -224,7 +224,7 @@ export function init_keybindings(draw) {
         }
         break
       case 'KeyI':
-        if (evt.shiftKey) {
+        if (evt.ctrlKey) {
           editField('#field_id')
           evt.preventDefault()
           return
@@ -348,9 +348,17 @@ export function init_keybindings(draw) {
         break
       case 'KeyT': // text
         {
-          if (evt.shiftKey) {
+          if (evt.ctrlKey) {
             editField('#field_text')
             evt.preventDefault()
+          } else if (evt.shiftKey) {
+            const target = lastSelectedComponent(draw)
+            if (!target) {
+              showHint('Select the target component first!')
+              return
+            }
+            const componentRef = target.component_no
+            doAction(draw, addLaTeX, {draw, componentRef})
           } else {
             doAction(draw, addLaTeX, {draw})
           }

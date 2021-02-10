@@ -92,6 +92,7 @@ class Polygon extends FillableShape {
       })
       element.plot(pts)
       cover.plot(pts)
+      element.fire('update')
     })
   }
 }
