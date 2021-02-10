@@ -1,9 +1,13 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, OF_ATTR, DEFAULT_TRANSPARENT_COLOR } from '../common/define.js'
-import { pointOnScreen } from '../common/math.js'
+import { 
+  COMPONENT_NO_ATTR,
+  COMPONENT_REFS_ATTR,
+  OF_ATTR,
+  DEFAULT_TRANSPARENT_COLOR
+} from '../common/define.js'
+
 import { Component } from './component.js'
-import { addAppendingPinPoint } from './appending-point.js'
 
 function findBottom(draw, points) {
   let bottom = points[0]

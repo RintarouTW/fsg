@@ -1,6 +1,11 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR, OF_ATTR, DEFAULT_LABEL_OFFSET_X, DEFAULT_LABEL_OFFSET_Y } from '../common/define.js'
+import { 
+  COMPONENT_NO_ATTR,
+  OF_ATTR,
+  DEFAULT_LABEL_OFFSET_X,
+  DEFAULT_LABEL_OFFSET_Y
+} from '../common/define.js'
 
 export function init_component(draw) {
   draw.fsg.component = {}
