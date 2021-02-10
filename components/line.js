@@ -118,6 +118,8 @@ function getClipped(draw, p1, p2) {
   const box = draw.bbox()
   // console.log(box)
   const [clip1, clip2] = clipping(box, {x: p1.x, y: p1.y}, {x: p2.x, y: p2.y})
+  if (typeof clip1 === 'undefined' || typeof clip2 === 'undefined') return
+
   console.assert(clip1, 'clip1 must be defined')
   console.assert(clip2, 'clip2 must be defined')
 
@@ -141,6 +143,7 @@ export class Ray extends LineBaseShape {
       const coord1 = pointOnScreen(p1.component)
       const coord2 = pointOnScreen(p2.component)
       const clip = getClipped(draw, coord1, coord2)
+      if (!clip) return
 
       element.plot(coord1.x, coord1.y, clip.x, clip.y)
       cover.plot(coord1.x, coord1.y, clip.x, clip.y)
@@ -157,6 +160,7 @@ export function addRay({draw, componentRefs, element, cover, component_no}) {
     const coord1 = { x: p1.cx(), y: p1.cy() }
     const coord2 = { x: p2.cx(), y: p2.cy() }
     const clip = getClipped(draw, coord1, coord2)
+    console.assert(clip, 'clip must exist')
     element = draw.line(coord1.x, coord1.y, clip.x, clip.y).attr('class', 'ray dashed shape component selected')
     setStrokeColor(element)
     cover = draw.line(coord1.x, coord1.y, clip.x, clip.y).attr('class', 'cover')
