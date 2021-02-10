@@ -26,7 +26,7 @@ export class LaTeX extends Component {
     if (componentRef) {
       const target = componentByNo(draw, componentRef).element
       this.target = target
-      this.tracePoints([this.target], () => {
+      this.watchUpdate([this.target], () => {
         const offsetX = element.attr('offset_x')
         const offsetY = element.attr('offset_y')
         const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }

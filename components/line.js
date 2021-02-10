@@ -27,11 +27,12 @@ export class LineSegment extends LineBaseShape {
     } else {
 
       const [p1, p2] = points
-      this.tracePoints(points, () => {
+      this.watchUpdate(points, () => {
         const coord1 = pointOnScreen(p1.component)
         const coord2 = pointOnScreen(p2.component)
         element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
         cover.plot(coord1.x, coord1.y, coord2.x, coord2.y)
+        element.fire('update')
       })
     }
   }
@@ -79,7 +80,7 @@ export class Axis extends LineSegment {
     super({draw, element, cover, points, isHiddenPoint})
 
     const [p1, p2] = points
-    this.tracePoints(points, () => {
+    this.watchUpdate(points, () => {
       const coord1 = { x: p1.cx(), y: p1.cy() }
       const coord2 = { x: p2.cx(), y: p2.cy() }
       element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
@@ -130,7 +131,7 @@ export class Line extends LineBaseShape {
     super({draw, element, cover, points})
 
     const [p1, p2] = points
-    this.tracePoints(points, () => {
+    this.watchUpdate(points, () => {
       const box = draw.bbox()
       const coord1 = pointOnScreen(p1.component)
       const coord2 = pointOnScreen(p2.component)
@@ -139,6 +140,7 @@ export class Line extends LineBaseShape {
       if (!clip1 || !clip2) return
       element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
       cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      element.fire('update')
     })
   }
 }
@@ -196,13 +198,14 @@ export class Ray extends LineBaseShape {
     super({draw, element, cover, points})
 
     const [p1, p2] = points
-    this.tracePoints(points, () => {
+    this.watchUpdate(points, () => {
       const coord1 = pointOnScreen(p1.component)
       const coord2 = pointOnScreen(p2.component)
       const clip = getClipped(draw, coord1, coord2)
 
       element.plot(coord1.x, coord1.y, clip.x, clip.y)
       cover.plot(coord1.x, coord1.y, clip.x, clip.y)
+      element.fire('update')
     })
   }
 }
@@ -333,7 +336,7 @@ export class BisectorLine extends LineBaseShape {
     super({draw, element, cover, points})
 
     const [p1, p2, p3] = points
-    this.tracePoints(points, () => {
+    this.watchUpdate(points, () => {
       const box = draw.bbox()
       const bp = coordOfBisectorPoint(p1, p2, p3)
       const coord1 = { x: p2.cx(), y: p2.cy() }
@@ -344,6 +347,7 @@ export class BisectorLine extends LineBaseShape {
       if (!clip1 || !clip2) return
       element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
       cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      element.fire('update')
     })
 
     const componentRefs = points.map(point => {

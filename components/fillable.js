@@ -28,7 +28,7 @@ export class Circle extends FillableShape {
     this.radius = radius
 
     const [cp, rp] = points
-    this.tracePoints(points, () => {
+    this.watchUpdate(points, () => {
       const r = Math.sqrt((rp.cx() - cp.cx()) ** 2 + (rp.cy() - cp.cy()) ** 2)
       this.radius = r
       element.radius(r)
@@ -85,7 +85,7 @@ class Polygon extends FillableShape {
   constructor({ draw, points, element, cover }) {
     super({ draw, element, cover, points })
 
-    this.tracePoints(points, () => {
+    this.watchUpdate(points, () => {
       let pts = points.map(p => {
         const coord = pointOnScreen(p.component)
         return [coord.x, coord.y]
@@ -169,11 +169,11 @@ export class Arc extends FillableShape {
     else
       this.large_arc = (large_arc == 'true') ? true : false
     const [p1, p2, p3] = points
-    this.tracePoints(points, () => {
+    this.watchUpdate(points, () => {
       const arcPath = arcOf(p1, p2, p3, this.large_arc)
       element.plot(arcPath)
       cover.plot(arcPath)
-      element.fire('update') // update event, so the label knows the element is updated.
+      element.fire('update')
     })
 
     const componentRefs = points.map(point => {

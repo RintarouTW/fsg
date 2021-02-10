@@ -118,12 +118,7 @@ export class FillableShape extends ShapeComponent {
 export class LineBaseShape extends ShapeComponent {
   constructor({draw, element, cover, points, isHiddenPoint}) {
     super({draw, element, cover, points, isHiddenPoint})
-
     this.isAppending = null
-
-    if (!isHiddenPoint) this.tracePoints(points, () => {
-      element.fire('update')
-    })
   }
   startPoint() {
     const p = this.points[0]

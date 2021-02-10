@@ -77,7 +77,7 @@ export class Component {
     draw.fsg.component.allComponents.push(this)
     // this.watchAnimateUpdate()
   }
-  tracePoints(points, callback) {
+  watchUpdate(points, callback) {
     points.forEach(point => {
       point.on('update', evt => {
         callback(evt)
@@ -192,7 +192,7 @@ export class Component {
       label.attr('offset_x', offset.dx).attr('offset_y', offset.dy)
     })
 
-    this.tracePoints([target], () => {
+    this.watchUpdate([target], () => {
       const offsetX = label.attr('offset_x')
       const offsetY = label.attr('offset_y')
       const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }
