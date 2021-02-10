@@ -48,7 +48,7 @@ export function showHint(text) {
 
 export function opening_animation(draw, callback) {
   // open animation
-  const text = String.raw`\text{Fast SVG Geometry Builder}`
+  const text = String.raw`\text{Fast SVG Geometry Builder}\space`
   const unselect = true
   const element = addLaTeX({draw, text, unselect}).element
   element.attr('style', 'color: #fff;')
