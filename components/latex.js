@@ -186,6 +186,8 @@ export function addLaTeX({draw, element, text, unselect, componentRef}) {
         .attr(OF_ATTR, componentRef)
       useCurrentColors(element)
     }
+  } else {
+    componentRef = element.attr(OF_ATTR)
   }
   const component = new LaTeX({draw, element, componentRef})
   if(unselect) unselectComponent(draw, component)
