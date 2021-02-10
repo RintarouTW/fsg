@@ -2,7 +2,7 @@
 
 import { Component } from '../components/component.js'
 import { Circle, Arc } from '../components/fillable.js'
-import { SelectablePoint, UnSelectablePoint } from '../components/point.js'
+import { SelectablePoint, InvisiblePoint } from '../components/point.js'
 import { ShapeComponent } from '../components/shape.js'
 import { FillableShape } from '../components/fillable.js'
 import { LineBaseShape } from '../components/line.js'
@@ -32,7 +32,7 @@ function selectComponent(draw, component) {
   let list = Array.isArray(component) ? component : [component]
   list.forEach(item => {
     console.assert(item, list)
-    if(item instanceof UnSelectablePoint) return // skip unselectable points
+    if(item instanceof InvisiblePoint) return // skip unselectable points
     item.select()
     selections = selections.filter(comp => comp !== item)
     selections.push(item)

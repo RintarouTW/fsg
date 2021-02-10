@@ -13,9 +13,9 @@ function setStyle(element) {
 }
 
 ///
-/// UnSelectablePoint
+/// InvisiblePoint
 /// 
-export class UnSelectablePoint extends Component {
+export class InvisiblePoint extends Component {
   constructor({ draw, element }) {
     super({draw, element})
     unselectComponent(draw, this) 
@@ -209,7 +209,7 @@ export function addIntersectPoint({ draw, coord, index, componentRefs, element, 
 /// ParallelPoint
 /// removed after the ref components are removed.
 ///
-export class ParallelPoint extends UnSelectablePoint {
+export class ParallelPoint extends InvisiblePoint {
   constructor({ draw, componentRefs, element }) {
     super({ draw, element })
 
@@ -251,7 +251,7 @@ export function addParallelPoint({ draw, coord, componentRefs, element, componen
 /// PerpPoint 
 /// removed after the ref components are removed.
 ///
-export class PerpPoint extends UnSelectablePoint {
+export class PerpPoint extends InvisiblePoint {
   constructor({ draw, componentRefs, element }) {
     super({ draw, element })
 
