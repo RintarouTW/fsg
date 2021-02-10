@@ -8,10 +8,10 @@ import { undo, redo, doAction } from './history.js'
 import { saveAsSVG, exportToHTML, svgDocument } from './file.js'
 import { toggle_code_editor } from './code_editor.js'
 // components
-import { LineBaseShape } from '../components/line.js'
 import { addIntersectPoint, addMidPoint } from '../components/point.js'
 import { addPoint } from '../components/draggable-point.js'
-import { addLine, addRay, addEdge, addVector, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
+import { LineBaseShape, addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
+import { addEdge, addVector } from '../components/line-segment.js'
 import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
 import { addLaTeX } from '../components/latex.js'
 import { 

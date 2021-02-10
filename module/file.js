@@ -11,7 +11,8 @@ import {
   DEFAULT_TRANSPARENT_COLOR,
 } from '../common/define.js'
 
-import { addEdge, addLine, addRay, addVector, addAxis, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
+import { addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
+import { addEdge, addVector, addAxis } from '../components/line-segment.js'
 import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
 import { addMidPoint, addIntersectPoint } from '../components/point.js'
 import { addPoint, addPinPoint } from '../components/draggable-point.js'
