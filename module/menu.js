@@ -106,6 +106,12 @@ export class BuilderMenu extends Menu {
   constructor(draw, coord) {
     super(draw, coord, 'Menu')
 
+    this.addMenuItem('Open File', () => {
+      const file = SVG('#file')
+      file.node.value = '' // reset or the same file won't be opened. bug fixed: issue #3
+      file.node.click()
+    })
+
     this.addMenuItem('Copy As SVG', () => {
       const content = svgDocument(draw) 
       navigator.clipboard.writeText(content).then(() => {
@@ -121,7 +127,7 @@ export class BuilderMenu extends Menu {
       const height = draw.parent().attr('height')
       draw.parent().viewbox(0, 0, width, height)
     })
-    
+
     this.addMenuItem('Preference', () => toggle_preference_window(draw) )
   }
 }

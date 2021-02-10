@@ -222,6 +222,8 @@ function init() {
 
   SVG('#file').on('input', evt => {
     openFile(evt.target.files[0])
+    evt.preventDefault()
+    evt.stopPropagation()
   })
 
   buttonClass(SVG('#runButton'), () => execute_user_script(_draw))
