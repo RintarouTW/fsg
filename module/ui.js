@@ -1,6 +1,6 @@
 'use strict'
 
-import { addPoint } from '../components/point.js'
+import { addPoint } from '../components/draggable-point.js'
 import { addAxis } from '../components/line.js'
 import { addLaTeX } from '../components/latex.js'
 import { enableColorPicker } from '../module/color_picker.js'

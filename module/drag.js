@@ -2,7 +2,8 @@
 
 import { snapTo } from '../common/common.js'
 
-import { addPoint, PinPoint, addPinPoint, InvisiblePoint } from '../components/point.js'
+import { addPoint, PinPoint, addPinPoint } from '../components/draggable-point.js'
+import { InvisiblePoint } from '../components/invisible-point.js'
 import { AppendingPinPoint } from '../components/appending-point.js'
 import { LaTeX } from '../components/latex.js'
 

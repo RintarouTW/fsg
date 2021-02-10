@@ -13,7 +13,9 @@ import {
 
 import { addEdge, addLine, addRay, addVector, addAxis, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
 import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
-import { addPoint, addMidPoint, addIntersectPoint, addParallelPoint, addPerpPoint, addPinPoint } from '../components/point.js'
+import { addMidPoint, addIntersectPoint } from '../components/point.js'
+import { addPoint, addPinPoint } from '../components/draggable-point.js'
+import { addParallelPoint, addPerpPoint } from '../components/invisible-point.js'
 import { addLaTeX } from '../components/latex.js'
 
 // reconstruct order by component_no

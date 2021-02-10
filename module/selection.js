@@ -2,7 +2,8 @@
 
 import { Component } from '../components/component.js'
 import { Circle, Arc } from '../components/fillable.js'
-import { SelectablePoint, InvisiblePoint } from '../components/point.js'
+import { SelectablePoint } from '../components/point.js'
+import { InvisiblePoint } from '../components/invisible-point.js'
 import { ShapeComponent } from '../components/shape.js'
 import { FillableShape } from '../components/fillable.js'
 import { LineBaseShape } from '../components/line.js'

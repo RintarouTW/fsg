@@ -5,7 +5,7 @@ import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { ShapeComponent, putBehindPoints } from './shape.js'
 import { currentStrokeColor } from '../module/color_picker.js'
-import { addParallelPoint, addPerpPoint } from './point.js'
+import { addParallelPoint, addPerpPoint } from './invisible-point.js'
 import { addAppendingPinPoint } from './appending-point.js'
 
 function setStrokeColor(element) {
