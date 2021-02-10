@@ -118,10 +118,10 @@ function getClipped(draw, p1, p2) {
   const box = draw.bbox()
   // console.log(box)
   const [clip1, clip2] = clipping(box, {x: p1.x, y: p1.y}, {x: p2.x, y: p2.y})
-  if (typeof clip1 === 'undefined' || typeof clip2 === 'undefined') return
-
-  console.assert(clip1, 'clip1 must be defined')
-  console.assert(clip2, 'clip2 must be defined')
+  if (!clip1 || !clip2) return
+  // if (typeof clip1 === 'undefined' || typeof clip2 === 'undefined') return
+  // console.assert(clip1, 'clip1 must be defined')
+  // console.assert(clip2, 'clip2 must be defined')
 
   const v = { x: p2.x - p1.x, y: p2.y - p1.y }
   const v1 = { x: clip1.x - p1.x, y: clip1.y - p1.y }
