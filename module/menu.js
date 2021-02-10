@@ -122,6 +122,6 @@ export class BuilderMenu extends Menu {
       draw.parent().viewbox(0, 0, width, height)
     })
     
-    this.addMenuItem('Preference', () => toggle_preference_window() )
+    this.addMenuItem('Preference', () => toggle_preference_window(draw) )
   }
 }

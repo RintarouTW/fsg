@@ -20,12 +20,17 @@ export function init_preference(draw) {
     const svg = draw.parent()
     svg.attr('height', value)
   })
-  const field_background = SVG('#field_pref_background')
+  // const field_background = SVG('#field_pref_background')
   const close_button = SVG('#pref_close_button')
   close_button.on('click', () => hide())
 }
 
-function show() {
+function show(draw) {
+  const svg = draw.parent()
+  const field_width = SVG('#field_pref_width')
+  field_width.node.value = svg.attr('width')
+  const field_height = SVG('#field_pref_height')
+  field_height.node.value = svg.attr('height')
   SVG('#preferenceWindow').attr('style', 'visibility: visible;')
   _visible = true
 }
@@ -35,6 +40,6 @@ function hide() {
   _visible = false
 }
 
-export function toggle_preference_window() {
-  (_visible) ? hide() : show()
+export function toggle_preference_window(draw) {
+  (_visible) ? hide() : show(draw)
 }

@@ -60,7 +60,7 @@ export function init_keybindings(draw) {
       case 'Comma':
         {
           if(evt.metaKey) {
-            toggle_preference_window()
+            toggle_preference_window(draw)
           }
         }
         break
