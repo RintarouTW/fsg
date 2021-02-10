@@ -1,66 +1,82 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" style="width:100%;" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="ui-select-box" x="185" y="-24.875"></rect><line x1="-220" y1="-115" x2="-15" y2="-115" class="edge shape component" stroke="#888888aa" component_no="8" component_refs="5,6"></line><line x1="-220" y1="-115" x2="-15" y2="-115" class="cover" of="8" fill="#ffffff00"></line><line x1="-250" y1="75" x2="-220" y2="-115" class="edge shape component" stroke="#888888aa" component_no="13" component_refs="9,5"></line><line x1="-250" y1="75" x2="-220" y2="-115" class="cover" of="13" fill="#ffffff00"></line><line x1="-220" y1="-115" x2="334.92154318235885" y2="75" class="edge shape component" stroke="#888888aa" component_no="15" component_refs="5,12"></line><line x1="-220" y1="-115" x2="334.92154318235885" y2="75" class="cover" of="15" fill="#ffffff00"></line><circle r="3" cx="-220" cy="-115" class="point component" stroke="#888888aa" component_no="5" label="A"></circle><line x1="-250" y1="75" x2="-15" y2="-115" class="edge shape component" stroke="#888888aa" component_no="14" component_refs="9,6"></line><line x1="-250" y1="75" x2="-15" y2="-115" class="cover" of="14" fill="#ffffff00"></line><line x1="334.92154318235885" y1="75" x2="-15" y2="-115" class="edge shape component" stroke="#888888aa" component_no="16" component_refs="12,6"></line><line x1="334.92154318235885" y1="75" x2="-15" y2="-115" class="cover" of="16" fill="#ffffff00"></line><circle r="3" cx="-15" cy="-115" class="point component" stroke="#888888aa" component_no="6" label="B"></circle><text class="label" offset_x="5" offset_y="5" of="6" transform="matrix(1,0,0,-1,0,0)" x="-10" y="110.203125" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-10" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">B</tspan></text><text class="label" offset_x="5" offset_y="5" of="5" transform="matrix(1,0,0,-1,0,0)" x="-215" y="110.65625" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-215" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">A</tspan></text><line x1="-433.5" y1="75" x2="433.5" y2="75" class="parallel-line dashed shape component" stroke="#888888aa" component_no="11" component_refs="9,10"></line><line x1="-433.5" y1="75" x2="433.5" y2="75" class="cover" of="11" fill="#ffffff00"></line><circle r="3" cx="-250" cy="75" class="point component" stroke="#888888aa" component_no="9"></circle><circle r="3" cx="-230" cy="75" class="parallel-point component" component_no="10" component_refs="8,9" label="C"></circle><circle r="3" cx="334.92154318235885" cy="75" class="pin-point component" component_no="12" component_refs="11" label="D"></circle><text class="label" offset_x="5" offset_y="5" of="12" transform="matrix(1,0,0,-1,0,0)" x="339.9274474688874" y="-79.78833930132618" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="339.9274474688874" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">D</tspan></text><text class="label" offset_x="-41.09375" offset_y="7.84375" of="10" transform="matrix(1,0,0,-1,0,0)" x="-271.0926798179422" y="-76.67547060266489" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-271.0926798179422" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">C</tspan></text><line x1="-433.5" y1="-4.594594594594582" x2="433.50000000000006" y2="-4.594594594594582" class="parallel-line dashed shape component" stroke="#888888aa" component_no="19" component_refs="17,18"></line><line x1="-433.5" y1="-4.594594594594582" x2="433.50000000000006" y2="-4.594594594594582" class="cover" of="19" fill="#ffffff00"></line><line x1="-237.43243243243245" y1="-4.594594594594582" x2="-151.55405405405406" y2="-4.594594594594582" class="edge shape component" stroke="#e6e6e6aa" component_no="24" component_refs="17,20"></line><line x1="-237.43243243243245" y1="-4.594594594594582" x2="-151.55405405405406" y2="-4.594594594594582" class="cover" of="24" fill="#ffffff00"></line><circle r="3" cx="-237.43243243243245" cy="-4.594594594594582" class="pin-point component" component_no="17" component_refs="13"></circle><circle r="3" cx="-217.43243243243245" cy="-4.594594594594582" class="parallel-point component" component_no="18" component_refs="8,17" label="E"></circle><circle r="3" cx="-151.55405405405406" cy="-4.594594594594582" class="intersect-point component" index="0" component_no="20" component_refs="19,14" label="F"></circle><line x1="102.454410227587" y1="-4.594594594594582" x2="188.3327886059653" y2="-4.594594594594582" class="edge shape component" stroke="#e6e6e6aa" component_no="23" component_refs="21,22"></line><line x1="102.454410227587" y1="-4.594594594594582" x2="188.3327886059653" y2="-4.594594594594582" class="cover" of="23" fill="#ffffff00"></line><circle r="3" cx="102.454410227587" cy="-4.594594594594582" class="intersect-point component" index="0" component_no="21" component_refs="15,19" label="G"></circle><circle r="3" cx="188.3327886059653" cy="-4.594594594594582" class="intersect-point component" index="0" component_no="22" component_refs="16,19" label="H"></circle><text class="label" offset_x="-12.841216216216225" offset_y="8.781672297297305" of="18" transform="matrix(1,0,0,-1,0,0)" x="-230.2728040540552" y="3.5821368243249765" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-230.2728040540552" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">E</tspan></text><text class="label" offset_x="5" offset_y="5" of="20" transform="matrix(1,0,0,-1,0,0)" x="-146.54729729729434" y="-0.19847972973057892" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-146.54729729729434" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">F</tspan></text><text class="label" offset_x="5" offset_y="5" of="21" transform="matrix(1,0,0,-1,0,0)" x="107.46331679030453" y="0.08277027026952055" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="107.46331679030453" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">G</tspan></text><text class="label" offset_x="5" offset_y="5" of="22" transform="matrix(1,0,0,-1,0,0)" x="193.3412728713772" y="-0.19847972973057892" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="193.3412728713772" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">H</tspan></text></g><defs><style>
-.menu_title {
+svg .ui-select-box {
+  stroke-width: 0.5;
+  fill: none;
+}
+
+svg .menu {
+  font: 0.9em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
+}
+
+svg .menu_title {
   fill: #aaa;
   user-select: none;
   -webkit-user-select: none;
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
-.menu_item {
+
+svg .menu_item {
+  font-weight: 300;
   fill: #888;
   user-select: none;
   -webkit-user-select: none;
 }
-.menu_item:hover {
+
+svg .menu_item:hover {
   fill: #fff;
   cursor: pointer;
 }
 
-.hidden {
+svg .hidden {
   visibility: hidden;
 }
 
-.cover {
+svg .cover {
   stroke: rgba(1,0,0,0);
   stroke-width: 10;
   fill: none;
 }
 
-.cover:hover {
+svg .cover:hover {
   cursor: pointer;
 }
 
-.shape.none{
+svg .shape.none{
   fill: none;
 }
 
-.parallel-point, .perp-point{
+svg .parallel-point, svg .perp-point{
   visibility: hidden;
 }
 
-.dashed {
+svg .dashed {
   stroke-dasharray: 5 3;
   stroke-width: 1.2;
 }
 
-.point, .pin-point:hover {
+svg .point, svg .pin-point:hover {
   cursor: grab;
 }
 
-.mid-point, .intersect-point:hover {
+svg .mid-point, svg .intersect-point:hover {
   cursor: pointer;
 }
 
-g, div, foreignObject, span {
+svg g, svg div, svg foreignObject, svg span {
   position: relative;
 }
 
-span.base {
+svg span.base {
  position: relative !important;
 }
 
-.latex-container {
-  width: fit-content;
-  height: fit-content;
+svg .latex, svg .label, svg .title {
+  user-select: none;
+}
+
+svg .latex-container {
+  width: max-content;
+  height: max-content;
   position: fixed; /* important for Safari */
 }
 </style><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://rintaroutw.github.io/fsg/style/runtime.css"></link><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"></link><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3, 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://rintaroutw.github.io/fsg/runtime.min.js" namespace="FSG_RUNTIME"></script><script xmlns="https://rintaroutw.github.io/fsg"></script></defs></svg>
