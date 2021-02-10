@@ -77,6 +77,15 @@ export function addVector({draw, componentRefs, element, cover, component_no}) {
 export class Axis extends LineSegment {
   constructor({draw, points, element, cover, isHiddenPoint}) {
     super({draw, element, cover, points, isHiddenPoint})
+
+    const [p1, p2] = points
+    this.tracePoints(points, () => {
+      const coord1 = { x: p1.cx(), y: p1.cy() }
+      const coord2 = { x: p2.cx(), y: p2.cy() }
+      element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
+      cover.plot(coord1.x, coord1.y, coord2.x, coord2.y)
+      element.fire('update')
+    })
   }
   remove() { // remove the hidden points too.
     const [p1, p2] = this.points

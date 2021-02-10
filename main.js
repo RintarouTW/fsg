@@ -54,6 +54,20 @@ function resized(draw) {
   draw.parent().size(viewbox.width, viewbox.height).viewbox(viewbox)
   const transform = draw.transform()
   draw.translate(viewbox.width / 2 - transform.translateX, viewbox.height / 2 - transform.translateY)
+
+  // update board size and position
+  draw.findOne('.fsg-board')?.size(viewbox.width, viewbox.height).center(0, 0)
+
+  // update axises
+  // 
+  let coord = { x: -viewbox.width/2 , y: 0}
+  draw.findOne('#axis-x-start')?.center(coord.x, coord.y)
+  coord = { x: viewbox.width/2, y: 0}
+  draw.findOne('#axis-x-end')?.center(coord.x, coord.y).fire('update')
+  coord = { x: 0, y: -viewbox.height/2 }
+  draw.findOne('#axis-y-start')?.center(coord.x, coord.y)
+  coord = { x: 0, y: viewbox.height/2 }
+  draw.findOne('#axis-y-end')?.center(coord.x, coord.y).fire('update')
 }
 
 function cleanUp() {
