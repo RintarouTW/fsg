@@ -23,18 +23,21 @@ export class LaTeX extends Component {
       element.addClass('latex')
     }
 
-    if (componentRef) {
+    if (componentRef) 
+      this.watchTarget(draw, componentRef)
+
+    this.makeDraggable(draw, element)
+  }
+  watchTarget(draw, componentRef) {
       const target = componentByNo(draw, componentRef).element
       this.target = target
       this.watchUpdate([this.target], () => {
-        const offsetX = element.attr('offset_x')
-        const offsetY = element.attr('offset_y')
+        const offsetX = this.element.attr('offset_x')
+        const offsetY = this.element.attr('offset_y')
         const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }
-        element.move(position.x, position.y)
+        this.element.move(position.x, position.y)
+        this.element.fire('update')
       })
-    }
-
-    this.makeDraggable(draw, element)
   }
   makeDraggable(draw, element) {
     const target = this.target
@@ -68,13 +71,25 @@ export class LaTeX extends Component {
     if (!text) text = ''
     let element = this.element
     const draw = this.draw
+    // get original state
     const position = { x: element.attr('x'), y: -element.attr('y') }
+    const offset = { x: element.attr('offset_x') ?? 0, y: element.attr('offset_y') ?? 0 }
+    const componetRef = element.attr(OF_ATTR)
+    const strokeColor = this.getAttribute('stroke')
+
     element.clear().remove()
+    // apply to the new text(latex) element
     element = genLaTeX(this.draw, text, position)
+      .attr('offset_x', offset.x)
+      .attr('offset_y', offset.y)
+    if (componetRef)
+      element.attr(OF_ATTR, componetRef)
     element.component = this
-    this.makeDraggable(draw, element)
-    draw.add(element)
     this.element = element
+    this.watchTarget(draw, componetRef)
+    this.makeDraggable(draw, element)
+    this.setAttribute('stroke', strokeColor)
+    draw.add(element)
   }
   getText() {
     return this.element.attr('text')
