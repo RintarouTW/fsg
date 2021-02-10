@@ -1,6 +1,6 @@
 'use strict'
 
-import { DEFAULT_TEXT, OF_ATTR } from '../common/define.js'
+import { DEFAULT_TEXT, OF_ATTR, COMPONENT_NO_ATTR } from '../common/define.js'
 import { Component, componentByNo } from './component.js'
 import { currentStrokeColor } from '../module/color_picker.js'
 
@@ -29,15 +29,16 @@ export class LaTeX extends Component {
     this.makeDraggable(draw, element)
   }
   watchTarget(draw, componentRef) {
-      const target = componentByNo(draw, componentRef).element
-      this.target = target
-      this.watchUpdate([this.target], () => {
-        const offsetX = this.element.attr('offset_x')
-        const offsetY = this.element.attr('offset_y')
-        const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }
-        this.element.move(position.x, position.y)
-        this.element.fire('update')
-      })
+    const target = componentByNo(draw, componentRef)?.element
+    if(!target) return
+    this.target = target
+    this.watchUpdate([this.target], () => {
+      const offsetX = this.element.attr('offset_x')
+      const offsetY = this.element.attr('offset_y')
+      const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }
+      this.element.move(position.x, position.y)
+      this.element.fire('update')
+    })
   }
   makeDraggable(draw, element) {
     const target = this.target
@@ -77,19 +78,23 @@ export class LaTeX extends Component {
     const componetRef = element.attr(OF_ATTR)
     const strokeColor = this.getAttribute('stroke')
 
-    element.clear().remove()
+    element.clear().remove() // remove the old element
+
     // apply to the new text(latex) element
-    element = genLaTeX(this.draw, text, position)
-      .attr('offset_x', offset.x)
+    const newElement = genLaTeX(this.draw, text, position)
+    if (!newElement) return
+
+    newElement.attr('offset_x', offset.x)
       .attr('offset_y', offset.y)
-    if (componetRef)
-      element.attr(OF_ATTR, componetRef)
-    element.component = this
-    this.element = element
-    this.watchTarget(draw, componetRef)
-    this.makeDraggable(draw, element)
+      .attr(COMPONENT_NO_ATTR, this.component_no)
+
+    if (componetRef) newElement.attr(OF_ATTR, componetRef)
+    newElement.component = this
+    this.element = newElement
+    if (componetRef) this.watchTarget(draw, componetRef)
+    this.makeDraggable(draw, newElement)
     this.setAttribute('stroke', strokeColor)
-    draw.add(element)
+    draw.add(newElement)
   }
   getText() {
     return this.element.attr('text')
@@ -171,7 +176,8 @@ function genCover(draw, element, position) {
 
 function genLaTeX(draw, text, position) {
   const element = foreignTex(draw, text).flip('y')
-    .attr('class', 'latex selected component')
+  if (!element) return null
+  element.attr('class', 'latex selected component')
     .attr('text', text)
     .attr('x', position.x)
     .attr('y', -position.y)

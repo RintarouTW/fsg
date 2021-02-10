@@ -92,8 +92,8 @@ svg .latex, svg .label, svg .title {
 }
 
 svg .latex-container {
-  width: fit-content;
-  height: fit-content;
+  width: max-content;
+  height: max-content;
   position: fixed; /* important for Safari */
 }
 </style>`
