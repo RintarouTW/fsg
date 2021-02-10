@@ -102,15 +102,14 @@ function foreignTex(draw, text) {
 function foreignTex(draw, text) {
   /* new implementation depends on css fit-content */
   /* xmlns="http://www.w3.org/1999/xhtml" is required for foreignObject that could be rendered in standalonee svg */
-  const tex = SVG(String.raw`<div xmlns="http://www.w3.org/1999/xhtml" class="latex-container">$${text}$</div>`)
+  const tex = SVG(String.raw`<div xmlns="http://www.w3.org/1999/xhtml" class="latex-container"></div>`)
   let foreignObject
   try {
-    renderMathInElement(tex.node, katex_options)
+    let html = katex.renderToString(text, katex_options)
     // &nbsp; is not a defined entity in svg, replace it with &#160;
-    let str = tex.node.innerHTML
-    str = str.replace(/\&nbsp;/g, '&#160;')
-    tex.node.innerHTML = str
-    foreignObject = draw.foreignObject(500, 200).add(tex)
+    html = html.replace(/\&nbsp;/g, '&#160;')
+    tex.node.innerHTML = html
+    foreignObject = draw.foreignObject(800, 600).add(tex)
     const {width, height} = tex.node.getBoundingClientRect()
     /*
     const katex = tex.node.firstElementChild
@@ -118,7 +117,6 @@ function foreignTex(draw, text) {
     const width = katex.getBoundingClientRect().width
     */
     foreignObject.size(width, height)
-    // .attr('xmlns', 'http://w3.org/1999/xhtml')
     return foreignObject
   } catch(err) {
     console.log(err)
