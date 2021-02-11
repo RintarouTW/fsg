@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="670" height="502.5" viewBox="0 0 670 502.5" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,335,251.25)"><rect width="670" height="502.5" class="fsg-board" fill="#ffffff00" rx="8" ry="8" x="-335" y="-251.25"></rect><rect width="0" height="0" class="ui-select-box" x="-20" y="155"></rect><circle r="0.5" cx="-335" cy="0" class="hidden-point" id="axis-x-start"></circle><circle r="0.5" cx="335" cy="0" class="hidden-point" id="axis-x-end"></circle><circle r="0.5" cx="0" cy="-251.25" class="hidden-point" id="axis-y-start"></circle><circle r="0.5" cx="0" cy="251.25" class="hidden-point" id="axis-y-end"></circle><line x1="-335" y1="0" x2="335" y2="0" class="axis-x shape component hidden" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" component_no="1"></line><line x1="-335" y1="0" x2="335" y2="0" class="cover" of="1" fill="#ffffff00"></line><line x1="0" y1="-251.25" x2="0" y2="251.25" class="axis-y shape component hidden" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" component_no="2"></line><line x1="0" y1="-251.25" x2="0" y2="251.25" class="cover" of="2" fill="#ffffff00"></line><circle r="192" cx="0" cy="0" class="circle dashed shape component none" fill="#ff0f6328" stroke="#88888842" component_no="6" component_refs="4,5"></circle><circle r="192" cx="0" cy="0" class="cover" of="6" fill="#ffffff00"></circle><circle r="3" cx="0" cy="0" class="point component hidden" stroke="#888888aa" component_no="4"></circle><line x1="-192" y1="0" x2="192" y2="0" class="vector shape component" stroke="#888888aa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="9" component_refs="8,5"></line><line x1="-192" y1="0" x2="192" y2="0" class="cover" of="9" fill="#ffffff00"></line><circle r="3" cx="192" cy="0" class="pin-point component" component_no="5" component_refs="1" label="z"></circle><circle r="3" cx="-192" cy="0" class="intersect-point component" index="1" component_no="8" component_refs="1,6"></circle><line x1="0" y1="-192" x2="0" y2="192" class="vector shape component" stroke="#888888aa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="12" component_refs="11,10"></line><line x1="0" y1="-192" x2="0" y2="192" class="cover" of="12" fill="#ffffff00"></line><circle r="3" cx="0" cy="192" class="intersect-point component" index="0" component_no="10" component_refs="2,6" label="x"></circle><circle r="3" cx="0" cy="-192" class="intersect-point component" index="1" component_no="11" component_refs="2,6"></circle><text class="label" offset_x="5" offset_y="5" of="5" transform="matrix(1,0,0,-1,0,0)" x="197" y="-4.796875" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="197" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">z</tspan></text><text class="label" offset_x="6.03125" offset_y="-22.15625" of="10" transform="matrix(1,0,0,-1,0,0)" x="6.03125" y="-223.9453125" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="6.03125" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">x</tspan></text></g><defs><style>
+svg .ui-select-box {
+  stroke-width: 0.5;
+  fill: none;
+}
+
+svg .menu {
+  font: 0.9em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
+}
+
+svg .menu_title {
+  fill: #aaa;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+svg .menu_item {
+  font-weight: 300;
+  fill: #888;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+svg .menu_item:hover {
+  fill: #fff;
+  cursor: pointer;
+}
+
+svg .hidden {
+  visibility: hidden;
+}
+
+svg .cover {
+  stroke: rgba(1,0,0,0);
+  stroke-width: 10;
+  fill: none;
+}
+
+svg .cover:hover {
+  cursor: pointer;
+}
+
+svg .shape.none{
+  fill: none;
+}
+
+svg .parallel-point, svg .perp-point{
+  visibility: hidden;
+}
+
+svg .dashed {
+  stroke-dasharray: 5 3;
+  stroke-width: 1.2;
+}
+
+svg .point, svg .pin-point:hover {
+  cursor: grab;
+}
+
+svg .mid-point, svg .intersect-point:hover {
+  cursor: pointer;
+}
+
+svg g, svg div, svg foreignObject, svg span {
+  position: relative;
+}
+
+svg span.base {
+ position: relative !important;
+}
+
+svg .latex, svg .label, svg .title {
+  user-select: none;
+}
+
+svg .latex-container {
+  width: max-content;
+  height: max-content;
+  position: fixed; /* important for Safari */
+}
+</style><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://rintaroutw.github.io/fsg/style/runtime.css"></link><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"></link><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker" id="SvgjsMarker1001"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3, 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://rintaroutw.github.io/fsg/runtime.min.js" namespace="FSG_RUNTIME"></script><script xmlns="https://rintaroutw.github.io/fsg"></script></defs></svg>
