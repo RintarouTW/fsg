@@ -19,6 +19,11 @@ const fieldDefaultValue = {
   'stroke' : DEFAULT_STROKE_COLOR
 }
 
+export function editField(fieldId) {
+  let element = SVG(fieldId)
+  element.node.focus()
+}
+
 let _inspecting_element
 
 function inspect_component(component) {

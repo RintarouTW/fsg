@@ -32,11 +32,7 @@ import {
 } from './selection.js'
 import { showHint } from './ui.js'
 import { toggle_preference_window } from './preference.js'
-
-function editField(fieldId) {
-  let element = SVG(fieldId)
-  element.node.focus()
-}
+import { editField } from './inspector.js'
 
 let _keydownHandler
 
@@ -349,10 +345,7 @@ export function init_keybindings(draw) {
         break
       case 'KeyT': // text
         {
-          if (evt.altKey) {
-            editField('#field_text')
-            evt.preventDefault()
-          } else if (evt.shiftKey) {
+          if (evt.shiftKey) { // append LaTeX
             const target = lastSelectedComponent(draw)
             if (!target) {
               showHint('Select the target component first!')
@@ -360,9 +353,11 @@ export function init_keybindings(draw) {
             }
             const componentRef = target.component_no
             doAction(draw, addLaTeX, {draw, componentRef})
-          } else {
+          } else if (!evt.altKey) { // add LaTeX
             doAction(draw, addLaTeX, {draw})
           }
+          editField('#field_text')
+          evt.preventDefault()
         }
         break
       case 'KeyV':
