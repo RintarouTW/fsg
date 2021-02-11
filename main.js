@@ -194,6 +194,10 @@ export function loadFSG(content) {
   init_preference(draw)
 
   setSnapshotHandler(draw)
+
+  // respect svg's width, make the window to fit to it automatically.
+  const width = draw.parent().attr('width') + (window.innerWidth - document.body.clientWidth)
+  window.resizeTo(width, window.innerHeight)
   return draw
 }
 
