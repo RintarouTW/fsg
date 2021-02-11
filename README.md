@@ -7,7 +7,7 @@ Create animatable, customizable style, re-editable and light weight interactive 
 - Extremely fast and light weight geometry construction.
 - Hot keys based geometry construction
 - Save as Draggable, Selectable, Animatable, Re-editable and Reusable light weight SVG.
-- User interactive with the geometry, not just a static image.
+- Users can interact with the geometry, not only a static image.
 - .svg could be animated with your user script.
 - Edit and execute your animate script within the builder. (defulat in vim mode, turn on/off vim mode with F2)
 - Runtime supports multiple .svg instances in a single page (fast and light weight).
