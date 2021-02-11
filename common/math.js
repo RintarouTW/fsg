@@ -65,7 +65,7 @@ export function clipping(box, p1, p2) {
 ///
 export function intersect(p1, v1, p2, v2) {
   let det = v1.x * v2.y - v2.x * v1.y
-  if (det == 0) return null
+  if (det == 0 || isNaN(det)) return null
   let l = ((p2.x - p1.x) * v2.y - (p2.y - p1.y) * v2.x) / det
   // let m = (v1.x * (p2.y - p1.y) - (p2.x - p1.x) * v1.y) / det
   return { x: p1.x + l * v1.x, y: p1.y + l * v1.y }

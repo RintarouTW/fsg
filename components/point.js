@@ -74,7 +74,7 @@ export class IntersectPoint extends SelectablePoint {
         const [l1, l2] = refComponents
         // console.log(l1.direction(), l2.direction())
         const p = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
-        // console.log(p)
+        // console.log(p, v1, v2, det)
         if (!p) return
         this.element.center(p.x, p.y)
       } else { // line + circle
@@ -87,7 +87,7 @@ export class IntersectPoint extends SelectablePoint {
         if (!p) {
           console.log(this.index)
         } else 
-        this.element.center(p.x, p.y)
+          this.element.center(p.x, p.y)
       }
     } else {
       if (refComponents[1] instanceof LineBaseShape) { // circle + line
@@ -115,9 +115,9 @@ export function addIntersectPoint({ draw, coord, index, componentRefs, element, 
   if (!element) {
     console.assert(typeof index !== 'undefined', 'index must be defined')
     element = draw.circle(POINT_RADIUS)
-    .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
-    .attr('class', 'intersect-point component')
-    .attr('index', index)
+      .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
+      .attr('class', 'intersect-point component')
+      .attr('index', index)
   } else {
     index = element.attr('index')
     console.assert(typeof index !== 'undefined', 'index must be defined')
@@ -171,7 +171,7 @@ export function addMidPoint({ draw, componentRefs, element, component_no })  {
     const coord1 = {x: p1.cx(), y: p1.cy() }
     const coord2 = {x: p2.cx(), y: p2.cy() }
     const coord = {x: (coord1.x + coord2.x) / 2, y: (coord1.y + coord2.y) /2 }
-     element = draw.circle(POINT_RADIUS)
+    element = draw.circle(POINT_RADIUS)
       .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
       .attr('class', 'mid-point component')
   }
