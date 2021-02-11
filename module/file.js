@@ -252,6 +252,7 @@ export function svgDocument(draw, optional_attributes = {}) {
     .attr('xmlns:svgjs', "https://svgjs.com/svgjs") 
     .attr('xmlns:fsg', null) // clean first to prevent the same bug of svgjs
     .attr('xmlns:fsg', FSG_NAMESPACE)
+    .attr('style', null)
 
   for (const [key, value] of Object.entries(optional_attributes)) {
     tmp.attr(key, value)
@@ -271,7 +272,7 @@ export function svgDocument(draw, optional_attributes = {}) {
 export function saveAsSVG(draw) {
   draw.isSaving = true
   var download = document.createElement('a')
-  const content = svgDocument(draw, { 'style' :  'width:100%;' })
+  const content = svgDocument(draw)
   download.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content))
   download.setAttribute('download', draw.fsg.filename)
   download.style.display = 'none'
@@ -286,7 +287,7 @@ export function saveAsSVG(draw) {
 export function exportToHTML(draw) {
   const filename = draw.fsg.filename.replace(/\.svg/, '.html')
   var element = document.createElement('a');
-  let content = svgDocument(draw, { 'style' :  'width:100%;' }) // for HTML
+  let content = svgDocument(draw, { 'style' :  'width:100%;' }) // only for HTML
 
   const head = String.raw`<head>
     <title>Fast SVG Geometry</title>

@@ -55,21 +55,26 @@ export class Component {
     console.assert(draw, 'draw is required')
     console.assert(element, 'element is required')
     console.assert(draw === element.parent(), 'element must be the child of draw')
+
+    //
     // draw.add(element) // don't call add, or it'll change the order of the element
+    //
     this.draw = draw
     this.element = element
     element.component = this
-    const number = element.attr(COMPONENT_NO_ATTR)
-    if(typeof number === 'undefined') {
+    let component_no = element.attr(COMPONENT_NO_ATTR)
+    if(typeof component_no === 'undefined') {
       draw.fsg.component.max_component_no++
-      element.attr(COMPONENT_NO_ATTR, draw.fsg.component.max_component_no)
+      component_no = draw.fsg.component.max_component_no
+      element.attr(COMPONENT_NO_ATTR, component_no)
     }
-    this.component_no = Number(element.attr(COMPONENT_NO_ATTR)) 
+    this.component_no = Number(component_no) 
 
+    // Label
     const labelText = element.attr('label')
-    if (labelText) 
-      this.addLabel(draw, labelText)
+    if (labelText) this.addLabel(draw, labelText)
 
+    // Mouse Hover
     element.on('mouseenter', () => {
       if (!draw.dragTarget && !draw.dragSelectStart) {
         element.addClass('hover')
@@ -78,13 +83,13 @@ export class Component {
       element.removeClass('hover')
     })
 
+    // Select by default
     selectComponent(this.draw, this)
     draw.fsg.component.allComponents.push(this)
-    // this.watchAnimateUpdate()
   }
-  watchUpdate(points, callback) {
-    points.forEach(point => {
-      point.on('update', evt => {
+  watchUpdate(targets, callback) {
+    targets.forEach(target => {
+      target.on('update', evt => {
         callback(evt)
       })
     })
