@@ -23,7 +23,7 @@ export function contain_user_script(draw) {
 
 export function execute_user_script(draw) {
   if (!draw) draw = _draw
-  const scripts = draw.defs().find('script')
+  const scripts = draw.parent().defs().find('script')
   scripts.forEach(script => {
     if (script.node.getAttribute('xmlns') == FSG_NAMESPACE) {
       // TODO: security issue though. don't care so far.

@@ -19,36 +19,55 @@ function init_modules(draw) {
   reconstruct_components(draw)
 }
 
+function UILayer(draw) {
+  let ui = draw.parent().findOne('#FSG_UI_LAYER')
+  if (!ui) {
+    ui = draw.parent().group().attr('id', 'FSG_UI_LAYER')
+  }
+  return ui
+}
+
 function drawTitle(draw, title) {
-  const text = draw.text(title)
+  const ui = UILayer(draw)
+  const text = ui.text(title)
     .attr('class', 'title')
     .attr('offset_x', 0)
     .attr('offset_y', 0)
-    .flip('y')
-  const { height } = draw.parent().viewbox()
+  const { width, height } = ui.parent().viewbox()
   const tw = text.bbox().width
-  const position = {x: -tw/2, y: height/2 - 30}
+  const position = {x: (width - tw)/2, y: height - 30}
   // console.log(position, text.bbox())
   text.move(position.x, position.y)
-  draw.add(text)
+  ui.add(text)
 
   const bbox = text.bbox()
-  const bg = draw.rect(bbox.width + 30, bbox.height + 8)
+  const bg = ui.rect(bbox.width + 30, bbox.height + 8)
     .radius(10, 15)
     .attr('fill', '#000')
     .attr('stroke', '#888')
-    .center(text.cx(), -text.cy())
+    .center(text.cx(), text.cy())
   bg.insertBefore(text)
 }
 
 function showPlayButton(draw) {
-  const runButton = SVG('<path d="M1 33V1L31 17L1 33Z" fill="#919191" stroke="black"/>')
-  const { width, height } = draw.parent().viewbox()
-  runButton.move(width/2 - 44, height/2 - 44)
-    .on('click', () => execute_user_script(draw) )
-    .on('mouseover', () => runButton.attr('fill', '#fff') )
-    .on('mouseleave', () => runButton.attr('fill', '#919191') )
-  draw.add(runButton)
+  // inject filter for the hover effect.
+  let filter = draw.parent().defs().findOne('#FSG_HOVER_FILTER')
+  if (!filter) {
+    filter = SVG(String.raw`<filter id="FSG_HOVER_FILTER" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
+  <feBlend mode="screen" x="0%" y="0%" width="100%" height="100%" in="SourceGraphic" in2="SourceGraphic" result="blend1"/>
+</filter>`)
+    draw.parent().defs().add(filter)
+  }
+
+  const ui = UILayer(draw)
+  const runButton = ui.image('/images/run.svg').size(34, 34)
+  // embeding svg would change draw.defs(), maybe the bug of SVGJS. don't use it so far.
+  // use image filter instead.
+  const { width } = draw.parent().viewbox()
+  runButton.move(width - 44, 10)
+    .on('click', () => { execute_user_script(draw) })
+    .on('mouseover', () => runButton.attr('filter', 'url(#FSG_HOVER_FILTER)') )
+    .on('mouseleave', () => runButton.attr('filter', null) )
 }
 
 function init() {
@@ -104,7 +123,7 @@ function init() {
       if (contain_user_script(draw)) showPlayButton(draw)
     }
 
-    console.log('runtime done')
+    // console.log('runtime done')
   }
 }
 
