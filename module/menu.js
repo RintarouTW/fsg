@@ -86,7 +86,10 @@ export class RuntimeMenu extends Menu {
     super(draw, coord, 'Menu')
 
     this.addMenuItem('Edit', () => {
-      const code = { code : draw.parent().svg() }
+      const tmp = SVG(draw.parent().svg())
+      tmp.findOne('#FSG_UI_LAYER')?.remove() // remove the ui layer created by runtime.
+      tmp.findOne('#FSG_HOVER_FILTER')?.remove() // remove the filter created by runtime for the ui.
+      const code = { code : tmp.svg() }
       getHash().then( json => {
         const hash = json.hash
         postCode(hash, code).then( () => {

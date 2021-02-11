@@ -8,6 +8,7 @@ import { init_selection } from './module/selection.js'
 import { reconstruct_components } from './module/file.js'
 import { contain_user_script, execute_user_script } from './module/user_script.js'
 import { fetchSrc } from './common/common.js'
+import {SERVER_ROOT} from './common/define.js'
 
 function init_modules(draw) {
   draw.fsg = {}
@@ -60,7 +61,7 @@ function showPlayButton(draw) {
   }
 
   const ui = UILayer(draw)
-  const runButton = ui.image('/images/run.svg').size(34, 34)
+  const runButton = ui.image(`${SERVER_ROOT}/images/run.svg`).size(34, 34)
   // embeding svg would change draw.defs(), maybe the bug of SVGJS. don't use it so far.
   // use image filter instead.
   const { width } = draw.parent().viewbox()
