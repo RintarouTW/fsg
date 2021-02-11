@@ -144,7 +144,7 @@ export function init_keybindings(draw) {
           return
         }
       case 'KeyC':
-        if (evt.ctrlKey) {
+        if (evt.altKey) {
           editField('#field_class')
           evt.preventDefault()
           return
@@ -225,7 +225,7 @@ export function init_keybindings(draw) {
         }
         break
       case 'KeyI':
-        if (evt.ctrlKey) {
+        if (evt.altKey) {
           editField('#field_id')
           evt.preventDefault()
           return
@@ -349,7 +349,7 @@ export function init_keybindings(draw) {
         break
       case 'KeyT': // text
         {
-          if (evt.ctrlKey) {
+          if (evt.altKey) {
             editField('#field_text')
             evt.preventDefault()
           } else if (evt.shiftKey) {
