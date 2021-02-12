@@ -18,6 +18,7 @@ export class InvisiblePoint extends Component {
   unselect() {
     // do nothing.
     console.warn('FIXME: this should not be called')
+    console.assert('this should not be called, fixme now')
   }
   getAttributes() {
     console.assert(true, 'unselectable point should not be inspected')

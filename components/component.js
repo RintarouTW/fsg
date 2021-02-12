@@ -85,7 +85,6 @@ export class Component {
   }
   remove() {
     this.removeLabel()
-    unselectComponent(this.draw, this)
     this.element.fire('remove')
     this.element.remove()
     this.draw.fsg.component.allComponents = this.draw.fsg.component.allComponents.filter(item => item !== this)
@@ -246,6 +245,10 @@ export class SelectableComponent extends Component {
 
     // Select by default
     selectComponent(this.draw, this)
+  }
+  remove() {
+    unselectComponent(this.draw, this)
+    super.remove()
   }
   /// toggling selection
   toggleSelected() {

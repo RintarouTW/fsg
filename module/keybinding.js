@@ -29,6 +29,7 @@ import {
   deselectLastSelection,
   lastSelectedComponent,
   getLastSelectedAngleComponents,
+  selectAllSelectableComponents,
 } from './selection.js'
 import { showHint } from './ui.js'
 import { toggle_preference_window } from './preference.js'
@@ -107,6 +108,10 @@ export function init_keybindings(draw) {
         break
       case 'KeyA':
         {
+          if (evt.ctrlKey) {
+            doAction(draw, selectAllSelectableComponents, {draw})
+            return
+          } 
           if (evt.shiftKey) {
             points = getSelectedPointElements(draw)
             if (!points || points.length < 3) {

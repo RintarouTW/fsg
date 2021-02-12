@@ -1,6 +1,6 @@
 'use strict'
 
-import { Component } from '../components/component.js'
+import { SelectableComponent } from '../components/component.js'
 import { Circle, Arc } from '../components/fillable.js'
 import { SelectablePoint } from '../components/point.js'
 import { InvisiblePoint } from '../components/invisible-point.js'
@@ -52,12 +52,36 @@ function unselectComponent(draw, component) {
     selections = selections.filter(s => s !== item)
   })
   const length = selections.length
-  if (length == 0)
-    detach()
-  else 
-    inspect(selections[length - 1])
+  if (length == 0) detach()
+  else inspect(selections[length - 1])
+
   draw.fsg.selection.selections = selections
   return component
+}
+
+class SelectAllAction {
+  constructor(draw) {
+    this.draw = draw
+
+    const components = draw.find('.component')
+    let selections = []
+    components.forEach(item => {
+      const component = item.component
+      if (component instanceof SelectableComponent) {
+        component.select()
+        selections.push(component)
+      }
+    })
+    draw.fsg.selection.selections = selections
+    this.components = selections
+  }
+  undo() {
+    unselectComponent(this.draw, this.components)
+  }
+}
+
+export function selectAllSelectableComponents({draw}) {
+  return new SelectAllAction(draw)
 }
 
 class UnSelectAllAction {
@@ -74,7 +98,7 @@ class UnSelectAllAction {
 export function deselectLastSelection(draw) {
   console.assert(draw, 'draw must exist')
   const selections = draw.fsg.selection.selections
-  
+
   const lastSelection = selections.pop()
   const action = new UnSelectAllAction(draw, [lastSelection])
   if (selections.length == 0) detach()
@@ -223,7 +247,7 @@ export function getSelectedComponents(draw) {
   const selections = draw.fsg.selection.selections
   let shapes = []
   selections.forEach(item => {
-    if (item instanceof Component) shapes.push(item) 
+    if (item instanceof SelectableComponent) shapes.push(item) 
   })
   return shapes
 }
