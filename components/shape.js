@@ -7,7 +7,7 @@ import {
   DEFAULT_TRANSPARENT_COLOR
 } from '../common/define.js'
 
-import { Component } from './component.js'
+import { SelectableComponent } from './component.js'
 
 function findBottom(draw, points) {
   let bottom = points[0]
@@ -39,14 +39,15 @@ export function putBehindPoints(draw, points, cover, element) {
 /// Shape
 ///
 
-export class ShapeComponent extends Component {
-  constructor({draw, element, cover, points /*, isHiddenPoint */}) {
+export class ShapeComponent extends SelectableComponent {
+  constructor({draw, element, cover, points }) {
     console.assert(draw, "draw is required")
     console.assert(element, "element is required")
     console.assert(cover, "cover is required")
     console.assert(points, "points is required")
 
     super({draw, element})
+
     const point_refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
     const refs = point_refs.join(',')
     if (refs.length > 1) { // Axis has no refs to other components.
@@ -60,12 +61,6 @@ export class ShapeComponent extends Component {
 
     // selectable by mousedown
     const mousedown = evt => {
-      /*
-      if (!isHiddenPoint) { // hidden point has no component.
-        let pointComponents = points.map(p => p.component)
-        if (element.hasClass('selected')) unselectComponent(pointComponents) 
-        else selectComponent(pointComponents)
-      }*/
       this.toggleSelected()
       evt.stopPropagation()
     }
@@ -79,7 +74,6 @@ export class ShapeComponent extends Component {
         element.removeClass('hover')
         cover.removeClass('hover')
       })
-    element.on('mousedown', mousedown)
   }
   remove() {
     this.cover.remove()

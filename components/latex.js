@@ -1,7 +1,7 @@
 'use strict'
 
 import { DEFAULT_TEXT, OF_ATTR, COMPONENT_NO_ATTR } from '../common/define.js'
-import { Component, componentByNo } from './component.js'
+import { SelectableComponent, componentByNo } from './component.js'
 import { currentStrokeColor } from '../module/color_picker.js'
 
 function useCurrentColors(element) {
@@ -15,7 +15,7 @@ function useCurrentColors(element) {
 /// LaTeX 
 /// (optional) componentRef is the target component no that this latex relative to.
 ///
-export class LaTeX extends Component {
+export class LaTeX extends SelectableComponent {
   constructor({draw, element, componentRef}) {
     super({draw, element})
     { // patch old diagrams(.text) to new class(.latex)

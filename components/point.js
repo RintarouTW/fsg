@@ -2,13 +2,13 @@
 
 import { POINT_RADIUS, COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR } from '../common/define.js'
 import { intersect, projectPointOnLine, intersectLineAndCircle, twoCirclesIntersection, pointOnScreen } from '../common/math.js'
-import { Component, componentByNo } from './component.js'
+import { SelectableComponent, componentByNo } from './component.js'
 import { LineBaseShape } from './line.js'
 
 //
 // override could prevent event handler explosion for better performance..
 //
-export class SelectablePoint extends Component {
+export class SelectablePoint extends SelectableComponent {
   constructor({draw, element, override}) {
     if (!override) {
       element.on('mousedown', evt => {

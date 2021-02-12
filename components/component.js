@@ -74,17 +74,6 @@ export class Component {
     const labelText = element.attr('label')
     if (labelText) this.addLabel(draw, labelText)
 
-    // Mouse Hover
-    element.on('mouseenter', () => {
-      if (!draw.dragTarget && !draw.dragSelectStart) {
-        element.addClass('hover')
-      }
-    }).on('mouseleave', () => {
-      element.removeClass('hover')
-    })
-
-    // Select by default
-    selectComponent(this.draw, this)
     draw.fsg.component.allComponents.push(this)
   }
   watchUpdate(targets, callback) {
@@ -123,17 +112,6 @@ export class Component {
   /// default undo interface, redo is handled by history automatically.
   undo() {
     this.remove()
-  }
-  /// selection interface
-  select() {
-    this.element.addClass('selected')
-  }
-  unselect() {
-    this.element.removeClass('selected')
-    this.element.removeClass('hover')
-  }
-  toggleSelected() {
-    (this.element.hasClass('selected')) ? unselectComponent(this.draw, this) : selectComponent(this.draw, this)
   }
   /// Attribute Inerface
   getAttributes() {
@@ -238,3 +216,50 @@ export class Component {
   }
 }
 
+//
+// override : true if the subclass wants to deal with the events by itself,
+// keeps the event handlers simple would be good for performance.
+//
+export class SelectableComponent extends Component {
+  constructor({draw, element, override}) {
+    super({draw, element})
+
+    if (!override) {
+      // Mouse Hover
+      element.on('mouseenter', () => {
+        if (!draw.dragTarget && !draw.dragSelectStart) {
+          element.addClass('hover')
+        }
+      }).on('mouseleave', () => {
+        element.removeClass('hover')
+      })
+
+      // Selection
+      element.on('mousedown', evt => {
+        element.lastEvent = 'mousedown'
+        evt.stopPropagation()
+      }).on('mouseup', () => {
+        if (element.lastEvent == 'mousedown') this.toggleSelected()
+        element.lastEvent = 'mouseup'
+      })
+    }
+
+    // Select by default
+    selectComponent(this.draw, this)
+  }
+  /// toggling selection
+  toggleSelected() {
+    this.isSelected() ? unselectComponent(this.draw, this) : selectComponent(this.draw, this)
+  }
+  isSelected() {
+    return this.element.hasClass('selected')
+  }
+  // selection looks only, called by selection module
+  select() {
+    this.element.addClass('selected')
+  }
+  unselect() {
+    this.element.removeClass('selected')
+    this.element.removeClass('hover')
+  }
+}

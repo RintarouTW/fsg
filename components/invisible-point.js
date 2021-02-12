@@ -10,13 +10,14 @@ import { Component, componentByNo } from './component.js'
 export class InvisiblePoint extends Component {
   constructor({ draw, element }) {
     super({draw, element})
-    unselectComponent(draw, this) 
   }
   select() {
     // do nothing.
+    console.warn('FIXME: this should not be called')
   }
   unselect() {
     // do nothing.
+    console.warn('FIXME: this should not be called')
   }
   getAttributes() {
     console.assert(true, 'unselectable point should not be inspected')

@@ -221,6 +221,7 @@ export function init_keybindings(draw) {
         }
         break
       case 'KeyI':
+        if (evt.metaKey) return
         if (evt.altKey) {
           editField('#field_id')
           evt.preventDefault()
