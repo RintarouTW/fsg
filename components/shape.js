@@ -44,17 +44,15 @@ export class Shape extends SelectableComponent {
     console.assert(draw, "draw is required")
     console.assert(element, "element is required")
     console.assert(cover, "cover is required")
-    console.assert(points, "points is required")
 
     super({draw, element})
 
-    const point_refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
-    const refs = point_refs.join(',')
-    if (refs.length > 1) { // Axis has no refs to other components.
-      // console.log(this, refs, refs.length)
+    if (points) {
+      const point_refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
       element.attr(COMPONENT_REFS_ATTR, point_refs.join(','))
+      this.points = points
     }
-    this.points = points
+
     cover.attr(OF_ATTR, this.component_no)
       .attr('fill', DEFAULT_TRANSPARENT_COLOR) // fill with transparent color
     this.cover = cover

@@ -11,14 +11,13 @@ import { LineShape, setStrokeColor } from './line.js'
 ///
 
 export class LineSegment extends LineShape {
-  constructor({draw, points, element, cover, isHiddenPoint}) {
+  constructor({draw, points, element, cover}) {
 
-    super({draw, element, cover, points, isHiddenPoint})
+    super({draw, element, cover, points})
 
-    if(isHiddenPoint) {
+    if(!points) {
       unselectComponent(draw, this) 
     } else {
-
       const [p1, p2] = points
       this.watchUpdate(points, () => {
         const coord1 = pointOnScreen(p1.component)
@@ -69,38 +68,38 @@ export function addVector({draw, componentRefs, element, cover, component_no}) {
 }
 
 export class Axis extends LineSegment {
-  constructor({draw, points, element, cover, isHiddenPoint}) {
-    super({draw, element, cover, points, isHiddenPoint})
-
-    const [p1, p2] = points
-    this.watchUpdate(points, () => {
-      const coord1 = { x: p1.cx(), y: p1.cy() }
-      const coord2 = { x: p2.cx(), y: p2.cy() }
-      element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
-      cover.plot(coord1.x, coord1.y, coord2.x, coord2.y)
-      element.fire('update')
-    })
+  constructor({draw, element, cover}) {
+    super({draw, element, cover})
   }
-  remove() { // remove the hidden points too.
-    const [p1, p2] = this.points
-    p1.remove()
-    p2.remove()
-    super.remove()
+  startPoint() {
+    return {x: this.element.attr('x1'), y: this.element.attr('y1')}
+  }
+  direction() {
+    const coord1 = {x: this.element.attr('x1'), y: this.element.attr('y1')}
+    const coord2 = {x: this.element.attr('x2'), y: this.element.attr('y2')}
+    const dx = coord2.x - coord1.x
+    const dy = coord2.y - coord1.y
+    const length = Math.sqrt(dx ** 2 + dy **2)
+    return {x: dx/length , y: dy/length}
+  }
+  setCoord(coord1, coord2) {
+    this.element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
+    this.cover.plot(coord1.x, coord1.y, coord2.x, coord2.y)
+    this.element.fire('update')
   }
 }
 
 export function addAxis({draw, type, element, cover, component_no}) {
-  const start = draw.findOne('#' + type + '-start')
-  const end = draw.findOne('#' + type + '-end')
-  console.assert(start, 'axis start point is required')
-  console.assert(end, 'axis end point is required')
-
-  const points = [start, end]
-  const isHiddenPoint = true
   if (!element) {
-    const [p1, p2] = points
-    const coord1 = { x: p1.cx(), y: p1.cy() }
-    const coord2 = { x: p2.cx(), y: p2.cy() }
+    const viewbox = draw.parent().viewbox()
+    let coord1, coord2
+    if (type == 'axis-x') {
+      coord1 = { x: -viewbox.width/2, y: 0}
+      coord2 = { x: viewbox.width/2, y: 0}
+    } else {
+      coord1 = { x: 0, y: -viewbox.height/2 }
+      coord2 = { x: 0, y: viewbox.height/2 }
+    }
     element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y)
       .attr('class', type + ' dashed shape component selected')
       .attr('stroke', DEFAULT_STROKE_COLOR)
@@ -112,7 +111,7 @@ export function addAxis({draw, type, element, cover, component_no}) {
 
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-  return new Axis({draw, points, element, cover, isHiddenPoint})
+  return new Axis({draw, element, cover})
 }
 
 

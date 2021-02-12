@@ -18,8 +18,8 @@ function useCurrentColors(element) {
 }
 
 export class FillableShape extends Shape {
-  constructor({draw, element, cover, points, isHiddenPoint}) {
-    super({draw, element, cover, points, isHiddenPoint})
+  constructor({draw, element, cover, points}) {
+    super({draw, element, cover, points})
   }
 }
 

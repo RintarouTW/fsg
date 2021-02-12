@@ -16,8 +16,8 @@ export function setStrokeColor(element) {
 }
 
 export class LineShape extends Shape {
-  constructor({draw, element, cover, points, isHiddenPoint}) {
-    super({draw, element, cover, points, isHiddenPoint})
+  constructor({draw, element, cover, points}) {
+    super({draw, element, cover, points})
     this.isAppending = null
   }
   startPoint() {

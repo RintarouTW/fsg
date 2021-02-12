@@ -60,14 +60,12 @@ function resized(draw) {
 
   // update axises
   // 
-  let coord = { x: -viewbox.width/2 , y: 0}
-  draw.findOne('#axis-x-start')?.center(coord.x, coord.y)
-  coord = { x: viewbox.width/2, y: 0}
-  draw.findOne('#axis-x-end')?.center(coord.x, coord.y).fire('update')
-  coord = { x: 0, y: -viewbox.height/2 }
-  draw.findOne('#axis-y-start')?.center(coord.x, coord.y)
-  coord = { x: 0, y: viewbox.height/2 }
-  draw.findOne('#axis-y-end')?.center(coord.x, coord.y).fire('update')
+  let coord1 = { x: -viewbox.width/2 , y: 0}
+  let coord2 = { x: viewbox.width/2, y: 0}
+  draw.findOne('.axis-x')?.component.setCoord(coord1, coord2)
+  coord1 = { x: 0, y: -viewbox.height/2 }
+  coord2 = { x: 0, y: viewbox.height/2 }
+  draw.findOne('.axis-y')?.component.setCoord(coord1, coord2)
 }
 
 function cleanUp() {

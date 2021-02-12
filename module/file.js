@@ -204,9 +204,12 @@ function patchSVGJS(draw) {
 
 // clean up the classes used by editor
 function cleanupDirtyClasses(draw) {
-  const dirtyElements = draw.find('.selected, .inspecting, dragging')
+  const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hidden-point')
   dirtyElements.each(element => {
-    element.removeClass('selected').removeClass('inspecting').removeClass('dragging')
+    if (element.hasClass('hidden-point')) 
+      element.remove()
+    else
+      element.removeClass('selected').removeClass('inspecting').removeClass('dragging')
   })
 }
 
@@ -234,7 +237,7 @@ function patchForeignObjectLaTeX(draw) {
   const latexContainers = draw.find('div.latex-container')
   latexContainers.forEach(div => {
     div.attr('xmlns', null) // in case it exists already
-       .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+      .attr('xmlns', 'http://www.w3.org/1999/xhtml')
   })
 }
 

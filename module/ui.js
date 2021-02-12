@@ -6,15 +6,6 @@ import { addLaTeX } from '../components/latex.js'
 import { enableColorPicker } from '../module/color_picker.js'
 
 export function init_axis(draw) {
-  const viewbox = draw.parent().viewbox()
-  let coord = { x: -viewbox.width/2 , y: 0}
-  draw.circle(1).center(coord.x, coord.y).attr('class', 'hidden-point').attr('id', 'axis-x-start')
-  coord = { x: viewbox.width/2, y: 0}
-  draw.circle(1).center(coord.x, coord.y).attr('class', 'hidden-point').attr('id', 'axis-x-end')
-  coord = { x: 0, y: -viewbox.height/2 }
-  draw.circle(1).center(coord.x, coord.y).attr('class', 'hidden-point').attr('id', 'axis-y-start')
-  coord = { x: 0, y: viewbox.height/2 }
-  draw.circle(1).center(coord.x, coord.y).attr('class', 'hidden-point').attr('id', 'axis-y-end')
   let type = 'axis-x'
   addAxis({draw, type})
   type = 'axis-y'
