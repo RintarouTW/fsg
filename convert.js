@@ -10,7 +10,7 @@ import {
 
 import { init_selection } from './module/selection.js'
 import { init_marker } from './module/marker.js'
-import { init_component, deinit_allcomponents } from './components/component.js'
+import { init_component_system, deinit_component_system } from './components/component.js'
 import { reconstruct_components, saveAsSVG } from './module/file.js'
 import { init_scripts } from './module/user_script.js'
 import './lib/svg.panzoom.js'
@@ -19,7 +19,7 @@ let _draw = null
 let _content = null
 
 function cleanUp() {
-  if (_draw) deinit_allcomponents(_draw)
+  if (_draw) deinit_component_system(_draw)
   // clear edit areas
   SVG('#editArea').clear()
   _draw = null
@@ -76,7 +76,7 @@ export function loadFSG(content) {
   init_scripts(draw)
 
   init_selection(draw)
-  init_component(draw)
+  init_component_system(draw)
 
   reconstruct_components(draw)
   draw.ready = true

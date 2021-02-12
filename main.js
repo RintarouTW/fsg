@@ -29,7 +29,7 @@ import { init_preference } from './module/preference.js'
 
 import { init_marker } from './module/marker.js'
 // import { init_filter } from './module/filter.js' // not used yet
-import { init_component, deinit_allcomponents, componentByNo } from './components/component.js'
+import { init_component_system, deinit_component_system, componentByNo } from './components/component.js'
 import { reconstruct_components } from './module/file.js'
 import { execute_user_script, init_scripts } from './module/user_script.js'
 import { getCode } from './module/server.js'
@@ -71,7 +71,7 @@ function resized(draw) {
 }
 
 function cleanUp() {
-  if (_draw) deinit_allcomponents(_draw)
+  if (_draw) deinit_component_system(_draw)
   // clear edit areas
   SVG('#editArea').clear()
   _draw = null
@@ -121,7 +121,7 @@ function newFSG() {
     .move(-viewbox.width/2, -viewbox.height/2)
   init_history(draw)
   init_selection(draw)
-  init_component(draw)
+  init_component_system(draw)
   init_drag(draw)
 
   init_inspector(draw)
@@ -182,7 +182,7 @@ export function loadFSG(content) {
 
   init_history(draw)
   init_selection(draw)
-  init_component(draw)
+  init_component_system(draw)
   init_drag(draw)
 
   init_keybindings(draw)

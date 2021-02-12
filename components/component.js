@@ -7,7 +7,7 @@ import {
   DEFAULT_LABEL_OFFSET_Y
 } from '../common/define.js'
 
-export function init_component(draw) {
+export function init_component_system(draw) {
   draw.fsg.component = {}
   const list = draw.find('.component')
   let max_component_no = 0
@@ -17,20 +17,20 @@ export function init_component(draw) {
     // console.log(item)
   })
   draw.fsg.component.max_component_no = max_component_no
-  draw.fsg.component.allComponents = []
+  draw.fsg.component.all = []
   // console.log(max_component_no)
 }
 
-export function deinit_allcomponents(draw) {
+export function deinit_component_system(draw) {
   // clean up is important to load another .svg
-  draw.fsg.component.allComponents.forEach(item => {
+  draw.fsg.component.all.forEach(item => {
     item.remove()
   })
-  draw.fsg.component.allComponents = []
+  draw.fsg.component.all = []
 }
 
 export function componentByNo(draw, no) {
-  const found = draw.fsg.component.allComponents.find(item => item.component_no == Number(no))
+  const found = draw.fsg.component.all.find(item => item.component_no == Number(no))
   console.assert(found, 'component not found', no)
   return found
 }
@@ -74,7 +74,7 @@ export class Component {
     const labelText = element.attr('label')
     if (labelText) this.addLabel(draw, labelText)
 
-    draw.fsg.component.allComponents.push(this)
+    draw.fsg.component.all.push(this)
   }
   watchUpdate(targets, callback) {
     targets.forEach(target => {
@@ -87,7 +87,7 @@ export class Component {
     this.removeLabel()
     this.element.fire('remove')
     this.element.remove()
-    this.draw.fsg.component.allComponents = this.draw.fsg.component.allComponents.filter(item => item !== this)
+    this.draw.fsg.component.all = this.draw.fsg.component.all.filter(item => item !== this)
   }
   center() {
     return { x: this.element.cx(), y: this.element.cy() }

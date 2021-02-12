@@ -1,6 +1,6 @@
 'use strict'
 
-import { init_component } from './components/component.js'
+import { init_component_system } from './components/component.js'
 import { init_marker } from './module/marker.js'
 import { init_drag } from './module/drag.js'
 import { init_history } from './module/history.js'
@@ -15,7 +15,7 @@ function init_modules(draw) {
   init_marker(draw)
   init_history(draw)
   init_selection(draw)
-  init_component(draw)
+  init_component_system(draw)
   init_drag(draw, false)
   reconstruct_components(draw)
 }
