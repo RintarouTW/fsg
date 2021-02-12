@@ -3,7 +3,7 @@
 import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR } from '../common/define.js'
 import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
-import { ShapeComponent, putBehindPoints } from './shape.js'
+import { Shape, putBehindPoints } from './shape.js'
 import { currentStrokeColor } from '../module/color_picker.js'
 import { addParallelPoint, addPerpPoint } from './invisible-point.js'
 import { addAppendingPinPoint } from './appending-point.js'
@@ -15,7 +15,7 @@ export function setStrokeColor(element) {
   }
 }
 
-export class LineBaseShape extends ShapeComponent {
+export class LineShape extends Shape {
   constructor({draw, element, cover, points, isHiddenPoint}) {
     super({draw, element, cover, points, isHiddenPoint})
     this.isAppending = null
@@ -65,7 +65,7 @@ export class LineBaseShape extends ShapeComponent {
 /// Line
 ///
 
-export class Line extends LineBaseShape {
+export class Line extends LineShape {
   constructor({draw, points, element, cover}) {
     super({draw, element, cover, points})
 
@@ -134,7 +134,7 @@ function getClipped(draw, p1, p2) {
   return clip
 }
 
-export class Ray extends LineBaseShape {
+export class Ray extends LineShape {
   constructor({ draw, points, element, cover }) {
     super({draw, element, cover, points})
 
@@ -274,7 +274,7 @@ export function addPerpLine({ draw, coord, componentRefs, element, cover, compon
 /// remove if points are removed.
 ///
 
-export class BisectorLine extends LineBaseShape {
+export class BisectorLine extends LineShape {
   constructor({draw, points, element, cover}) {
     super({draw, element, cover, points})
 

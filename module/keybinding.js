@@ -10,7 +10,7 @@ import { toggle_code_editor } from './code_editor.js'
 // components
 import { addIntersectPoint, addMidPoint } from '../components/point.js'
 import { addPoint } from '../components/draggable-point.js'
-import { LineBaseShape, addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
+import { LineShape, addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
 import { addEdge, addVector } from '../components/line-segment.js'
 import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
 import { addLaTeX } from '../components/latex.js'
@@ -232,8 +232,8 @@ export function init_keybindings(draw) {
             showHint('Select 2 intersectable components(line or circle) first')
             return
           }
-          if (intersectableComponents[0] instanceof LineBaseShape) {
-            if (intersectableComponents[1] instanceof LineBaseShape) { // intersect two lines
+          if (intersectableComponents[0] instanceof LineShape) {
+            if (intersectableComponents[1] instanceof LineShape) { // intersect two lines
               const [l1, l2] = intersectableComponents
               const coord = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
               // console.log(coord, l1.direction(), l2, l2.direction())
@@ -252,7 +252,7 @@ export function init_keybindings(draw) {
               doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
             }
           } else { // circle + line
-            if (intersectableComponents[1] instanceof LineBaseShape) {
+            if (intersectableComponents[1] instanceof LineShape) {
               const [circle, line] = intersectableComponents
               const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
               const componentRefs = [line.component_no, circle.component_no]

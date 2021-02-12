@@ -4,9 +4,9 @@ import { Component } from '../components/component.js'
 import { Circle, Arc } from '../components/fillable.js'
 import { SelectablePoint } from '../components/point.js'
 import { InvisiblePoint } from '../components/invisible-point.js'
-import { ShapeComponent } from '../components/shape.js'
+import { Shape } from '../components/shape.js'
 import { FillableShape } from '../components/fillable.js'
-import { LineBaseShape } from '../components/line.js'
+import { LineShape } from '../components/line.js'
 
 export function init_selection(draw) {
   console.assert(draw, 'draw must exist')
@@ -127,7 +127,7 @@ export function getLastSelectedAppendableComponent(draw) {
   for(let i = selections.length - 1; i >= 0; i--) {
     const item = selections[i]
     // console.log(item)
-    if (item instanceof LineBaseShape) return item
+    if (item instanceof LineShape) return item
     else if (item instanceof Circle) return item
   }
   return null
@@ -140,7 +140,7 @@ export function getLastSelectedLineBaseAndPointComponent(draw) {
   for(let i = selections.length - 1; i >= 0; i--) {
     const item = selections[i]
     // console.log(item)
-    if (!line && (item instanceof LineBaseShape)) line = item
+    if (!line && (item instanceof LineShape)) line = item
     if (!point && (item instanceof SelectablePoint)) point = item
     if (line && point) return [line, point]
   }
@@ -153,7 +153,7 @@ export function getLast2SelectedIntersectableComponents(draw) {
   const found = []
   for(let i = selections.length - 1; i >= 0; i--) {
     const item = selections[i]
-    if ((item instanceof LineBaseShape) || (item instanceof Circle)) found.push(item)
+    if ((item instanceof LineShape) || (item instanceof Circle)) found.push(item)
     if (found.length == 2) return [found[1], found[0]] // swap order
   }
   return null
@@ -165,7 +165,7 @@ export function getLast2SelectedLineBaseComponents(draw) {
   const found = []
   for(let i = selections.length - 1; i >= 0; i--) {
     const item = selections[i] //; console.log(item)
-    if (item instanceof LineBaseShape)
+    if (item instanceof LineShape)
       found.push(item)
     if (found.length == 2) return [found[1], found[0]] // swap order
   }
@@ -213,7 +213,7 @@ export function getSelectedShapes(draw) {
   const selections = draw.fsg.selection.selections
   let shapes = []
   selections.forEach(item => {
-    if (item instanceof ShapeComponent) shapes.push(item) 
+    if (item instanceof Shape) shapes.push(item) 
   })
   return shapes
 }

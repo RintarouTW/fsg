@@ -3,7 +3,7 @@
 import { POINT_RADIUS, COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR } from '../common/define.js'
 import { intersect, projectPointOnLine, intersectLineAndCircle, twoCirclesIntersection, pointOnScreen } from '../common/math.js'
 import { SelectableComponent, componentByNo } from './component.js'
-import { LineBaseShape } from './line.js'
+import { LineShape } from './line.js'
 
 //
 // override could prevent event handler explosion for better performance..
@@ -69,8 +69,8 @@ export class IntersectPoint extends SelectablePoint {
       return
     }
 
-    if (refComponents[0] instanceof LineBaseShape) { // line + line
-      if (refComponents[1] instanceof LineBaseShape) {
+    if (refComponents[0] instanceof LineShape) { // line + line
+      if (refComponents[1] instanceof LineShape) {
         const [l1, l2] = refComponents
         // console.log(l1.direction(), l2.direction())
         const p = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
@@ -90,7 +90,7 @@ export class IntersectPoint extends SelectablePoint {
           this.element.center(p.x, p.y)
       }
     } else {
-      if (refComponents[1] instanceof LineBaseShape) { // circle + line
+      if (refComponents[1] instanceof LineShape) { // circle + line
         const [circle, line] = refComponents
         const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
         if (!intersectPoints) return

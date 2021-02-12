@@ -4,13 +4,13 @@ import { COMPONENT_NO_ATTR, DEFAULT_STROKE_COLOR } from '../common/define.js'
 import { pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { putBehindPoints } from './shape.js'
-import { LineBaseShape, setStrokeColor } from './line.js'
+import { LineShape, setStrokeColor } from './line.js'
 
 ///
 /// LineSegment
 ///
 
-export class LineSegment extends LineBaseShape {
+export class LineSegment extends LineShape {
   constructor({draw, points, element, cover, isHiddenPoint}) {
 
     super({draw, element, cover, points, isHiddenPoint})

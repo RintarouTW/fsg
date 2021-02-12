@@ -4,7 +4,7 @@ import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, DEFAULT_ANGLE_RADIUS} from '../
 import { pointOnScreen } from '../common/math.js'
 
 import { componentByNo } from './component.js'
-import { ShapeComponent, putBehindPoints } from './shape.js'
+import { Shape, putBehindPoints } from './shape.js'
 import { addAppendingPinPoint } from './appending-point.js'
 import { currentFillColor, currentStrokeColor } from '../module/color_picker.js'
 
@@ -17,7 +17,7 @@ function useCurrentColors(element) {
     }
 }
 
-export class FillableShape extends ShapeComponent {
+export class FillableShape extends Shape {
   constructor({draw, element, cover, points, isHiddenPoint}) {
     super({draw, element, cover, points, isHiddenPoint})
   }
