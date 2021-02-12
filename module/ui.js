@@ -5,7 +5,7 @@ import { addAxis } from '../components/line-segment.js'
 import { addLaTeX } from '../components/latex.js'
 import { enableColorPicker } from '../module/color_picker.js'
 
-export function init_axis(draw) {
+export function init_ui_axis(draw) {
   let type = 'axis-x'
   addAxis({draw, type})
   type = 'axis-y'

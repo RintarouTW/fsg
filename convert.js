@@ -8,11 +8,11 @@ import {
   RUNTIME_DEFAULT_STYLE,
 } from './common/define.js'
 
-import { init_selection } from './module/selection.js'
+import { init_module_selection } from './module/selection.js'
 import { init_module_marker } from './module/marker.js'
 import { init_component_system, deinit_component_system } from './components/component.js'
 import { reconstruct_components, saveAsSVG } from './module/file.js'
-import { init_scripts } from './module/user_script.js'
+import { init_module_script } from './module/script.js'
 import './lib/svg.panzoom.js'
 
 let _draw = null
@@ -73,11 +73,10 @@ export function loadFSG(content) {
   defs.first().before(SVG(RUNTIME_DEFAULT_STYLE))
   // }
 
-  init_scripts(draw)
+  init_module_script(draw)
+  init_module_selection(draw)
 
-  init_selection(draw)
   init_component_system(draw)
-
   reconstruct_components(draw)
   draw.ready = true
   return draw

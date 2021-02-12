@@ -8,8 +8,6 @@ import {
   RUNTIME_SCRIPT_URL
 } from '../common/define.js'
 
-let _draw
-
 export function contain_user_script(draw) {
   const scripts = draw.defs().find('script')
   let found = false
@@ -22,7 +20,8 @@ export function contain_user_script(draw) {
 }
 
 export function execute_user_script(draw) {
-  if (!draw) draw = _draw
+  console.assert(draw, 'draw must be defined')
+
   const scripts = draw.parent().defs().find('script')
   scripts.forEach(script => {
     if (script.node.getAttribute('xmlns') == FSG_NAMESPACE) {
@@ -67,9 +66,8 @@ export function findScript(draw, ns) {
   return found
 }
 
-export function init_scripts(draw) {
-  // const userCode = `console.log('execute');const p1 = SVG('#p1'); if(p1) p1.animate(3000).rotate(360, 0, 0).during(() => SVG('#p1').fire('update'));`
-  const userScript = findUserScript(draw)
+export function init_module_script(draw) {
+
   const svgjs = findScript(draw, SVGJS_SCRIPT_NAMESPACE)
   const runtime = findScript(draw, FSG_RUNTIME_NAMESPACE)
 
@@ -78,9 +76,7 @@ export function init_scripts(draw) {
   if (!runtime)
     draw.defs().add(SVG(RUNTIME_SCRIPT_URL).attr('namespace', FSG_RUNTIME_NAMESPACE))
 
-  draw.defs().add(userScript)
-  _draw = draw
-
-  return userScript
+  const userScript = findUserScript(draw)
+  if (userScript) draw.defs().add(userScript)
 }
 

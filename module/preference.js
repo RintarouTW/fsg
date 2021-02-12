@@ -2,7 +2,7 @@
 
 let _visible = false
 
-export function init_preference(draw) {
+export function init_module_preference(draw) {
   const svg = draw.parent()
   const field_width = SVG('#field_pref_width')
   field_width.node.value = svg.attr('width')

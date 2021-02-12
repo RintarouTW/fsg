@@ -16,22 +16,22 @@ import {
 } from './common/define.js'
 import { wait } from "./common/common.js"
 
-import { init_history } from './module/history.js'
-import { init_selection } from './module/selection.js'
-import { init_keybindings } from './module/keybinding.js'
+import { init_module_history } from './module/history.js'
+import { init_module_selection } from './module/selection.js'
+import { init_module_keybinding } from './module/keybinding.js'
 
-import { init_drag } from './module/drag.js'
-import { init_inspector } from './module/inspector.js'
-import { init_axis, buttonClass, opening_animation, showHint } from './module/ui.js'
-import { init_color_picker, enableColorPicker } from './module/color_picker.js'
-import { init_code_editor } from './module/code_editor.js'
-import { init_preference } from './module/preference.js'
+import { init_module_drag } from './module/drag.js'
+import { init_module_inspector } from './module/inspector.js'
+import { init_ui_axis, buttonClass, opening_animation, showHint } from './module/ui.js'
+import { init_module_color_picker, enableColorPicker } from './module/color_picker.js'
+import { init_module_code_editor } from './module/code_editor.js'
+import { init_module_preference } from './module/preference.js'
 
 import { init_module_marker } from './module/marker.js'
 // import { init_filter } from './module/filter.js' // not used yet
 import { init_component_system, deinit_component_system, componentByNo } from './components/component.js'
 import { reconstruct_components } from './module/file.js'
-import { execute_user_script, init_scripts } from './module/user_script.js'
+import { init_module_script, findUserScript, execute_user_script } from './module/script.js'
 import { getCode } from './module/server.js'
 import './lib/svg.panzoom.js'
 
@@ -109,7 +109,7 @@ function newFSG() {
   draw.defs().add(SVG(RUNTIME_DEFAULT_STYLE))
   draw.defs().add(SVG(RUNTIME_STYLE_LINK))
   draw.defs().add(SVG(KATEX_STYLE_LINK))
-  const userScript = init_scripts(draw)
+  init_module_script(draw)
 
   // creat board as background
   draw.rect(viewbox.width, viewbox.height)
@@ -117,17 +117,18 @@ function newFSG() {
     .attr('fill', DEFAULT_TRANSPARENT_COLOR) // fill with transparent color
     .radius(DEFAULT_BOARD_RADIUS)
     .move(-viewbox.width/2, -viewbox.height/2)
-  init_history(draw)
-  init_selection(draw)
+  init_module_history(draw)
+  init_module_selection(draw)
   init_component_system(draw)
-  init_drag(draw)
+  init_module_drag(draw)
 
-  init_inspector(draw)
-  init_keybindings(draw)
-  init_axis(draw)
+  init_module_inspector(draw)
+  init_module_keybinding(draw)
+  init_ui_axis(draw)
 
-  init_code_editor(userScript)
-  init_preference(draw)
+  const userScript = findUserScript(draw)
+  init_module_code_editor(userScript)
+  init_module_preference(draw)
   setSnapshotHandler(draw)
   return draw
 }
@@ -176,20 +177,21 @@ export function loadFSG(content) {
     defs.first().before(SVG(RUNTIME_DEFAULT_STYLE))
   }
 
-  const userScript = init_scripts(draw)
+  init_module_script(draw)
 
-  init_history(draw)
-  init_selection(draw)
+  init_module_history(draw)
+  init_module_selection(draw)
   init_component_system(draw)
-  init_drag(draw)
+  init_module_drag(draw)
 
-  init_keybindings(draw)
+  init_module_keybinding(draw)
   reconstruct_components(draw)
   draw.ready = true
   enableColorPicker()
 
-  init_code_editor(userScript)
-  init_preference(draw)
+  const userScript = findUserScript(draw)
+  init_module_code_editor(userScript)
+  init_module_preference(draw)
 
   setSnapshotHandler(draw)
 
@@ -217,7 +219,7 @@ function init() {
     }
   })
 
-  init_color_picker()
+  init_module_color_picker()
 
   _draw = newFSG() // new file
   console.assert(_draw, 'something wrong failed to get draw')

@@ -10,7 +10,7 @@ import { LaTeX } from '../components/latex.js'
 import { doAction } from './history.js'
 import { RuntimeMenu, BuilderMenu } from './menu.js'
 
-export function init_drag(draw, click_to_add_point = true) {
+export function init_module_drag(draw, click_to_add_point = true) {
 
   // disable default right click menu
   draw.on('contextmenu', evt => evt.preventDefault())

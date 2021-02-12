@@ -89,7 +89,7 @@ function inspect_detach() {
   _inspecting_element = null
 }
 
-export function init_inspector(draw) {
+export function init_module_inspector(draw) {
   init_fields()
   SVG('#inspector').on('inspect-component', evt => {
     if(!draw.ready) return

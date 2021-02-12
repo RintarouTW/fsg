@@ -113,7 +113,7 @@ export function toggle_code_editor() {
   }
 }
 
-export function init_code_editor(userCode) {
+export function init_module_code_editor(userCode) {
   if(!_cmInstance) { // singlton only
     codeEditor()
   } else {

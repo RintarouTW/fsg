@@ -37,7 +37,7 @@ import { editField } from './inspector.js'
 
 let _keydownHandler
 
-export function init_keybindings(draw) {
+export function init_module_keybinding(draw) {
 
   if (_keydownHandler) document.removeEventListener('keydown', _keydownHandler)
   

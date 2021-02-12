@@ -1,7 +1,7 @@
 'use strict'
 
 import { SERVER_ROOT, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT } from '../common/define.js'
-import { execute_user_script } from './user_script.js'
+import { execute_user_script } from './script.js'
 import { getHash, postCode } from './server.js'
 import { saveAsSVG, exportToHTML, svgDocument } from './file.js'
 import { toggle_preference_window } from './preference.js'

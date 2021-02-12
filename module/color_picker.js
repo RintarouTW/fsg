@@ -15,7 +15,7 @@ export function enableColorPicker() {
 }
 
 // init color picker for editor env only.
-export function init_color_picker() {
+export function init_module_color_picker() {
   // Create a new color picker instance
   // https://iro.js.org/guide.html#getting-started
   _colorPicker= new iro.ColorPicker("#colorPicker", {

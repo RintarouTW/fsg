@@ -8,7 +8,7 @@ import { Shape } from '../components/shape.js'
 import { FillableShape } from '../components/fillable.js'
 import { LineShape } from '../components/line.js'
 
-export function init_selection(draw) {
+export function init_module_selection(draw) {
   console.assert(draw, 'draw must exist')
   draw.fsg.selection = {}
   draw.fsg.selection.selections = []

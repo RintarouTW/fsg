@@ -1,6 +1,6 @@
 'use strict'
 
-export function init_history(draw) {
+export function init_module_history(draw) {
   draw.fsg.history = {}
   draw.fsg.history.history = []
   draw.fsg.history.redo_list = []
