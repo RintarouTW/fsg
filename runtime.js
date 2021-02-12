@@ -1,7 +1,7 @@
 'use strict'
 
 import { init_component_system } from './components/component.js'
-import { init_marker } from './module/marker.js'
+import { init_module_marker } from './module/marker.js'
 import { init_drag } from './module/drag.js'
 import { init_history } from './module/history.js'
 import { init_selection } from './module/selection.js'
@@ -12,7 +12,7 @@ import {SERVER_ROOT} from './common/define.js'
 
 function init_modules(draw) {
   draw.fsg = {}
-  init_marker(draw)
+  init_module_marker(draw)
   init_history(draw)
   init_selection(draw)
   init_component_system(draw)

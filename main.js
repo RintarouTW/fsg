@@ -27,7 +27,7 @@ import { init_color_picker, enableColorPicker } from './module/color_picker.js'
 import { init_code_editor } from './module/code_editor.js'
 import { init_preference } from './module/preference.js'
 
-import { init_marker } from './module/marker.js'
+import { init_module_marker } from './module/marker.js'
 // import { init_filter } from './module/filter.js' // not used yet
 import { init_component_system, deinit_component_system, componentByNo } from './components/component.js'
 import { reconstruct_components } from './module/file.js'
@@ -104,7 +104,7 @@ function newFSG() {
   draw.fsg = {} // create fsg context for modules
   draw.fsg.filename = 'fsg.svg'
 
-  init_marker(draw)
+  init_module_marker(draw)
   // put the style before scripts
   draw.defs().add(SVG(RUNTIME_DEFAULT_STYLE))
   draw.defs().add(SVG(RUNTIME_STYLE_LINK))
@@ -166,7 +166,7 @@ export function loadFSG(content) {
   draw.fsg = {} // create fsg context for modules
   draw.fsg.filename = 'fsg.svg'
 
-  init_marker(draw)
+  init_module_marker(draw)
 
   //
   // Fix the old fsg files which doesn't have default style.

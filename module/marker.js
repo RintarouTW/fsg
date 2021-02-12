@@ -6,10 +6,11 @@ import {
   VECTOR_END_MARKER_ARROW_LENGTH 
 } from '../common/define.js'
 
-export function init_marker(draw) {
-  deinit_marker(draw)
+export function init_module_marker(draw) {
+  deinit_module_marker(draw)
   draw.fsg.marker = {}
 
+  // vector start marker as circle
   let vector_start_marker = draw.parent().defs().findOne('.vector-start-marker')
   if(vector_start_marker) {
     draw.fsg.marker.vector_start_marker = vector_start_marker
@@ -22,7 +23,7 @@ export function init_marker(draw) {
     draw.fsg.marker.vector_start_marker = vector_start_marker
   }
 
-  // arrow
+  // vector end marker as arrow
   let vector_end_marker = draw.parent().defs().findOne('.vector-end-marker')
   if (vector_end_marker) {
     draw.fsg.marker.vector_end_marker = vector_end_marker
@@ -41,7 +42,7 @@ export function init_marker(draw) {
   draw.fsg.marker.vector_end_marker = vector_end_marker
 }
 
-export function deinit_marker(draw) {
+function deinit_module_marker(draw) {
   if (draw.fsg.marker?.vector_start_marker) {
     draw.fsg.marker.vector_start_marker.remove()
     draw.fsg.marker.vector_start_marker = null

@@ -9,7 +9,7 @@ import {
 } from './common/define.js'
 
 import { init_selection } from './module/selection.js'
-import { init_marker } from './module/marker.js'
+import { init_module_marker } from './module/marker.js'
 import { init_component_system, deinit_component_system } from './components/component.js'
 import { reconstruct_components, saveAsSVG } from './module/file.js'
 import { init_scripts } from './module/user_script.js'
@@ -60,7 +60,7 @@ export function loadFSG(content) {
   draw.fsg = {} // create fsg context for modules
   draw.fsg.filename = 'fsg.svg'
 
-  init_marker(draw)
+  init_module_marker(draw)
 
   //
   // Fix the old fsg files which doesn't have default style.
