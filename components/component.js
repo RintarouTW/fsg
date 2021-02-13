@@ -98,7 +98,7 @@ export class Component {
   center() {
     return { x: this.element.cx(), y: this.element.cy() }
   }
-  /// order interface
+  /// DOM element order interface
   forward() {
     this.element.forward()
     if (this.element.next()?.hasClass('cover')) this.element.forward() // forward again to skip cover
