@@ -248,9 +248,9 @@ function init() {
     // Chrome download bar would change window.innerHeight and trigger the window resize event,
     // Close the download bar would trigger the resize event too.
     // Don't resize until the outerWidth or outerHeight is changed.
-    if (window.outerWidth == _windowSize.width && window.outerHeight == _windowSize.height) return
-    resized(_draw)
+    if ((window.outerWidth == _windowSize.width) && (window.outerHeight == _windowSize.height)) return
     _windowSize = { width: window.outerWidth, height: window.outerHeight }
+    resized(_draw)
   })
 
   // when mouse up out of drag area.
