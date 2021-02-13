@@ -193,6 +193,16 @@ body {
   width: 32px;
 }
 
+.button {
+  filter: drop-shadow(3px 2px 3px black);
+}
+.button:hover {
+  filter: brightness(130%);
+}
+.button:active {
+  filter: brightness(60%);
+}
+
 #runButton {
   position: absolute;
   top: 10px;

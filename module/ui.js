@@ -13,6 +13,10 @@ export function init_ui_axis(draw) {
 }
 
 export function buttonClass(button, action) {
+  button.on('click', () => {
+    action()
+  })
+  /*
   button.on('mouseover', () => {
     button.addClass('highlight')
   }).on('mouseleave', () => {
@@ -24,7 +28,7 @@ export function buttonClass(button, action) {
     button.removeClass('button-down')
   }).on('click', () => {
     action()
-  })
+  })*/
 }
 
 export function showHint(text) {
