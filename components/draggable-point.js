@@ -44,8 +44,13 @@ export class DraggablePoint extends SelectablePoint {
 
 ///
 /// Point
-/// selectable, draggable
-///
+/// Selectable and Draggable point
+/// @attributes (state): 
+///  - geometry: r, cx, cy
+///  - style: fill, stroke
+///  - relation: component_no
+///  - text: label
+/// 
 
 export class Point extends DraggablePoint {
   constructor({ draw, element }) {
@@ -62,7 +67,7 @@ export function addPoint({ draw, coord, element, component_no }) {
     setStyle(element)
   }
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
-  return new Point({ draw, coord, element, component_no })
+  return new Point({ draw, element })
 }
 
 
@@ -202,5 +207,4 @@ export function addPinPoint({ draw, coord, type, componentRef, element, componen
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
   return new PinPoint({ draw, type, componentRef, element })
 }
-
 

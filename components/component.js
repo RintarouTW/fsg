@@ -48,7 +48,13 @@ function labelOf(draw, no) {
 
 ///
 /// Component
-///
+/// - All states should be stored within element's attributes
+/// that it could be restored via DOM string directly.
+/// - A component may own multiple elements(such as cover, ref points, etc..)
+///   the owned element should have the attribute(of) to indicate it's owned by which component(no)
+///   a component referenced other elements should have component_refs to indicate the elements it referenced.
+///   a component that owned(and managed) other element should be resposible to re-construct those elements.
+/// 
 
 export class Component {
   constructor({draw, element}) {
@@ -112,7 +118,7 @@ export class Component {
   undo() {
     this.remove()
   }
-  /// Attribute Inerface
+  /// Inspectable Attribute Inerface
   getAttributes() {
     return ['id', 'class', 'cx', 'cy', 'text', 'fill', 'stroke']
   }
