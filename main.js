@@ -213,7 +213,6 @@ function init() {
   window.FSG_BUILDER = true // define to prevent runtime being init again by the script within svg file.
 
   window.resizeTo(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT) // default window size
-  _windowSize = { width: DEFAULT_WINDOW_WIDTH, height: DEFAULT_WINDOW_HEIGHT }
 
   // extend SVG.Runner
   SVG.extend(SVG.Runner, {
@@ -251,6 +250,7 @@ function init() {
     // Don't resize until the outerWidth or outerHeight is changed.
     if (window.outerWidth == _windowSize.width && window.outerHeight == _windowSize.height) return
     resized(_draw)
+    _windowSize = { width: window.outerWidth, height: window.outerHeight }
   })
 
   // when mouse up out of drag area.
@@ -259,6 +259,7 @@ function init() {
   })
 
   opening_animation(_draw, () => {
+    _windowSize = { width: window.outerWidth, height: window.outerHeight }
     const params = new URLSearchParams(window.location.search)
     if (params.has('hash')) {
       const hash = params.get('hash')
