@@ -57,8 +57,8 @@ export function addPoint({ draw, coord, element, component_no }) {
   if (!coord) coord = { x: 0, y: 0 }
   if (!element) {
     element = draw.circle(POINT_RADIUS)
-    .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
-    .attr('class', 'point component')
+      .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
+      .attr('class', 'point component')
     setStyle(element)
   }
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
