@@ -273,7 +273,6 @@ export function svgDocument(draw, optional_attributes = {}) {
 }
 
 export function saveAsSVG(draw) {
-  draw.isSaving = true
   var download = document.createElement('a')
   const content = svgDocument(draw)
   download.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content))
@@ -282,9 +281,6 @@ export function saveAsSVG(draw) {
   document.body.appendChild(download)
   download.click()
   document.body.removeChild(download)
-  setTimeout(() => {
-    draw.isSaving = false
-  }, 300)
 }
 
 export function exportToHTML(draw) {

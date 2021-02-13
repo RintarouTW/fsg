@@ -37,6 +37,7 @@ import './lib/svg.panzoom.js'
 
 let _draw = null
 let _content = null
+let _windowSize = {}
 
 function openFile(file) {
   if(!file) return
@@ -198,6 +199,7 @@ export function loadFSG(content) {
   // respect svg's width, make the window to fit to it automatically.
   const width = draw.parent().attr('width') + (window.innerWidth - document.body.clientWidth)
   window.resizeTo(width, window.outerHeight) // use original outerHeight
+  _windowSize = { width: width, height: window.outerHeight }
   return draw
 }
 
@@ -211,6 +213,7 @@ function init() {
   window.FSG_BUILDER = true // define to prevent runtime being init again by the script within svg file.
 
   window.resizeTo(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT) // default window size
+  _windowSize = { width: DEFAULT_WINDOW_WIDTH, height: DEFAULT_WINDOW_HEIGHT }
 
   // extend SVG.Runner
   SVG.extend(SVG.Runner, {
@@ -243,9 +246,11 @@ function init() {
   window.addEventListener('blur', reset_mouse_position)
   window.addEventListener('resize', () => {
     // Bug fix:
-    // chrome downloader would trigger the window resize event,
-    // disable it while downloading.
-    if(!_draw.isSaving) resized(_draw)
+    // Chrome download bar would change window.innerHeight and trigger the window resize event,
+    // Close the download bar would trigger the resize event too.
+    // Don't resize until the outerWidth or outerHeight is changed.
+    if (window.outerWidth == _windowSize.width && window.outerHeight == _windowSize.height) return
+    resized(_draw)
   })
 
   // when mouse up out of drag area.
