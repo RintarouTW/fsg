@@ -16,7 +16,6 @@ import { addEdge, addVector, addAxis } from '../components/line-segment.js'
 import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
 import { addMidPoint, addIntersectPoint } from '../components/point.js'
 import { addPoint, addPinPoint } from '../components/draggable-point.js'
-import { addParallelPoint, addPerpPoint } from '../components/invisible-point.js'
 import { addLaTeX } from '../components/latex.js'
 
 // reconstruct order by component_no
@@ -74,19 +73,11 @@ export function reconstruct_components(draw) {
       return
     }
     if (element.hasClass('parallel-point')) {
-      const refs_attr = element.attr(COMPONENT_REFS_ATTR)
-      if (!refs_attr) return
-      const componentRefs = refs_attr.split(',').map(item => Number(item))
-      addParallelPoint({draw, componentRefs, element})
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      // not used anymore
       return
     }
     if (element.hasClass('perp-point')) {
-      const refs_attr = element.attr(COMPONENT_REFS_ATTR)
-      if (!refs_attr) return
-      const componentRefs = refs_attr.split(',').map(item => Number(item))
-      addPerpPoint({draw, componentRefs, element})
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      // not used anymore
       return
     }
     if (element.hasClass('pin-point')) {
