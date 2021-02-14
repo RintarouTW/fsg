@@ -68,19 +68,15 @@ export function addVector({draw, componentRefs, element, cover, component_no}) {
 }
 
 export class Axis extends LineSegment {
-  constructor({draw, element, cover}) {
+  constructor({draw, element, cover, type}) {
     super({draw, element, cover})
+    this._direction = (type == 'axis-x') ? { x: 1, y: 0} : { x: 0, y: 1 }
   }
   startPoint() {
     return {x: this.element.attr('x1'), y: this.element.attr('y1')}
   }
   direction() {
-    const coord1 = {x: this.element.attr('x1'), y: this.element.attr('y1')}
-    const coord2 = {x: this.element.attr('x2'), y: this.element.attr('y2')}
-    const dx = coord2.x - coord1.x
-    const dy = coord2.y - coord1.y
-    const length = Math.sqrt(dx ** 2 + dy **2)
-    return {x: dx/length , y: dy/length}
+    return this._direction
   }
   setCoord(coord1, coord2) {
     this.element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
@@ -111,7 +107,7 @@ export function addAxis({draw, type, element, cover, component_no}) {
 
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-  return new Axis({draw, element, cover})
+  return new Axis({draw, element, cover, type})
 }
 
 
