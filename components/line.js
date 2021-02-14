@@ -38,9 +38,7 @@ export class LineShape extends Shape {
       this._direction = {x: dx/length , y: dy/length}
   }
   direction() {
-    // TODO: compute only when updated.
-    // if (!this._direction) this.updateDirection()
-    this.updateDirection()
+    if (!this._direction) this.updateDirection()
     return this._direction
   }
   // Appendable Interface
@@ -217,6 +215,7 @@ export class ParallelLine extends LineShape {
     this.watchUpdate(points, () => {
       const [line, point] = points
       const [clip1, clip2] = clippedParallelLine(draw, line, point)
+      if (!clip1 || !clip2) return
       element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
       cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
       element.fire('update')

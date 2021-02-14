@@ -35,7 +35,9 @@ export class Circle extends FillableShape {
 
     const [cp, rp] = points
     this.watchUpdate(points, () => {
-      const r = Math.sqrt((rp.cx() - cp.cx()) ** 2 + (rp.cy() - cp.cy()) ** 2)
+      const coord1 = pointOnScreen({ element: cp })
+      const coord2 = pointOnScreen({ element: rp })
+      const r = Math.sqrt((coord2.x - coord1.x) ** 2 + (coord2.y - coord1.y) ** 2)
       this.radius = r
       element.radius(r)
       element.center(cp.cx(), cp.cy())

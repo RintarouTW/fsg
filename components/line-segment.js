@@ -24,6 +24,7 @@ export class LineSegment extends LineShape {
         const coord2 = pointOnScreen(p2.component)
         element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
         cover.plot(coord1.x, coord1.y, coord2.x, coord2.y)
+        this.updateDirection()
         element.fire('update')
       })
     }
@@ -74,9 +75,6 @@ export class Axis extends LineSegment {
   }
   startPoint() {
     return {x: this.element.attr('x1'), y: this.element.attr('y1')}
-  }
-  direction() {
-    return this._direction
   }
   setCoord(coord1, coord2) {
     this.element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
