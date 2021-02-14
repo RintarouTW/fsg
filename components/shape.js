@@ -17,22 +17,22 @@ function findBottom(draw, points) {
     if ((idx != -1) && (idx < draw.index(bottom))) bottom = item
   })
   // if(draw.index(bottom) < 0)
-    // console.log('something wrong', points)
+  // console.log('something wrong', points)
   return bottom
 }
 
 export function putBehindPoints(draw, points, cover, element) {
-    // The order of the element should only be manipulated when the component constructed in editor.
-    // After that, user can change the order of the component, and that order should be kept even after reconstruction.
-    //
-    // find the most bottom point
-    // FIXME: there's a bug in svgjs. somehow it's possible have an element with index = -1
-    // even it's indeed a child of draw. (weird)
-    const bottom = findBottom(draw, points)
-    if (draw.index(bottom) > 0) {
-      cover.insertBefore(bottom)
-      element.insertBefore(cover)
-    }
+  // The order of the element should only be manipulated when the component constructed in editor.
+  // After that, user can change the order of the component, and that order should be kept even after reconstruction.
+  //
+  // find the most bottom point
+  // FIXME: there's a bug in svgjs. somehow it's possible have an element with index = -1
+  // even it's indeed a child of draw. (weird)
+  const bottom = findBottom(draw, points)
+  if (draw.index(bottom) > 0) {
+    cover.insertBefore(bottom)
+    element.insertBefore(cover)
+  }
 }
 
 ///

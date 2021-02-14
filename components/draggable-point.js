@@ -44,7 +44,7 @@ export class DraggablePoint extends SelectablePoint {
 
 ///
 /// Point
-/// Selectable and Draggable point
+/// Selectable and Draggable point without cover
 /// @attributes (state): 
 ///  - geometry: r, cx, cy
 ///  - style: fill, stroke

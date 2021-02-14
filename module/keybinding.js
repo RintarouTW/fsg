@@ -385,14 +385,10 @@ export function init_module_keybinding(draw) {
           }
           const [ line, point ] = lineAndPoint
           const componentRefs = [line.component_no, point.component_no]
-          const center = point.center()
-          const direction = line.direction()
           if (evt.shiftKey) { // Perp Line
-            const coord = { x: center.x - direction.y * 20, y : center.y + direction.x * 20}
-            doAction(draw, addPerpLine, {draw, coord, componentRefs})
+            doAction(draw, addPerpLine, {draw, componentRefs})
           } else { // Parallel Line
-            const coord = { x: center.x + direction.x * 20, y : center.y + direction.y * 20}
-            doAction(draw, addParallelLine, {draw, coord, componentRefs})
+            doAction(draw, addParallelLine, {draw, componentRefs})
           }
         }
         break

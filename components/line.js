@@ -194,12 +194,17 @@ export class ParallelLine extends Line {
   }
 }
 
-export function addParallelLine({ draw, coord, componentRefs, element, cover, component_no }) {
+export function addParallelLine({ draw, componentRefs, element, cover, component_no }) {
 
   let points = componentRefs.map(no => componentByNo(draw, no).element)
 
   if (!element) {
-    const p1 = points[1] // where points[0] is the line element
+    const [line, point] = points
+    const center = point.component.center()
+    const direction = line.component.direction()
+    const coord = { x: center.x + direction.x * 20, y : center.y + direction.y * 20}
+
+    const p1 = point
     const parallelPoint = addParallelPoint({draw, coord, componentRefs})
     const p2 = parallelPoint.element
     const box = draw.bbox()
@@ -243,12 +248,17 @@ export class PerpLine extends Line {
   }
 }
 
-export function addPerpLine({ draw, coord, componentRefs, element, cover, component_no }) {
+export function addPerpLine({ draw, componentRefs, element, cover, component_no }) {
 
   let points = componentRefs.map(no => componentByNo(draw, no).element)
 
   if (!element) {
-    const p1 = points[1] // where points[0] is the line element
+    const [line, point] = points
+    const center = point.component.center()
+    const direction = line.component.direction()
+    const coord = { x: center.x - direction.y * 20, y : center.y + direction.x * 20}
+
+    const p1 = point
     const parallelPoint = addPerpPoint({draw, coord, componentRefs})
     const p2 = parallelPoint.element
     const box = draw.bbox()
