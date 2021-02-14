@@ -160,12 +160,26 @@ export function reconstruct_components(draw) {
       return
     }
     if (element.hasClass('parallel-line')) {
-      addParallelLine({draw, componentRefs, element, cover}) 
+      // patch for the old files that used parallel-point
+      let refs = componentRefs
+      const [_, no2] = componentRefs
+      const p2 = elementByNo(list, no2) 
+      if (p2.hasClass('parallel-point')) {
+        refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
+      }
+      addParallelLine({draw, componentRefs : refs, element, cover}) 
       console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
     if (element.hasClass('perp-line')) {
-      addPerpLine({draw, componentRefs, element, cover}) 
+      // patch for the old files that used parallel-point
+      let refs = componentRefs
+      const [_, no2] = componentRefs
+      const p2 = elementByNo(list, no2) 
+      if (p2.hasClass('perp-point')) {
+        refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
+      }
+      addPerpLine({draw, componentRefs : refs, element, cover}) 
       console.assert(position == element.position(), 'position of element changed', position, element)
       return
     }
@@ -175,6 +189,12 @@ export function reconstruct_components(draw) {
       return
     }
     console.warn('WARNNING: Fixme - unsupported component..', element)
+  })
+
+  // clean up the outdated elements
+  list.forEach(element => {
+    if (element.hasClass('parallel-point')) element.remove()
+    if (element.hasClass('perp-point')) element.remove()
   })
   return
 }

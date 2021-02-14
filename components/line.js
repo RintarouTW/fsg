@@ -5,7 +5,6 @@ import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { Shape, putBehindPoints } from './shape.js'
 import { currentStrokeColor } from '../module/color_picker.js'
-import { addParallelPoint, addPerpPoint } from './invisible-point.js'
 import { addAppendingPinPoint } from './appending-point.js'
 
 export function setStrokeColor(element) {
@@ -27,19 +26,22 @@ export class LineShape extends Shape {
       coord = pointOnScreen(p.component)
     return coord
   }
-  direction() {
+  updateDirection() {
     const [p1, p2] = this.points
-    // hidden points won't be transformed
-    let coord1 = { x: p1.cx(), y: p1.cy() }
-    let coord2 = { x: p2.cx(), y: p2.cy() }
-    if (p1.component && p2.component) { // element of a component may be transformed
-      coord1 = pointOnScreen(p1.component)
-      coord2 = pointOnScreen(p2.component)
-    }
+    // element of a component may be transformed
+    const coord1 = pointOnScreen(p1.component)
+    const coord2 = pointOnScreen(p2.component)
     const dx = coord2.x - coord1.x
     const dy = coord2.y - coord1.y
     const length = Math.sqrt(dx ** 2 + dy **2)
-    return {x: dx/length , y: dy/length}
+    if (length !== 0)
+      this._direction = {x: dx/length , y: dy/length}
+  }
+  direction() {
+    // TODO: compute only when updated.
+    // if (!this._direction) this.updateDirection()
+    this.updateDirection()
+    return this._direction
   }
   // Appendable Interface
   endAppendMode() {
@@ -79,6 +81,7 @@ export class Line extends LineShape {
       if (!clip1 || !clip2) return
       element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
       cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      this.updateDirection()
       element.fire('update')
     })
   }
@@ -147,6 +150,7 @@ export class Ray extends LineShape {
 
       element.plot(coord1.x, coord1.y, clip.x, clip.y)
       cover.plot(coord1.x, coord1.y, clip.x, clip.y)
+      this.updateDirection()
       element.fire('update')
     })
   }
@@ -176,53 +180,67 @@ export function addRay({draw, componentRefs, element, cover, component_no}) {
 /// remove if points are removed.
 ///
 
-export class ParallelLine extends Line {
-  constructor({draw, points, element, cover}) {
+function clippedParallelLine(draw, line, point) {
+  console.assert(line, 'line must be defined')
+  console.assert(point, 'point must be defined')
+
+  const center = point.component.center()
+  const direction = line.component.direction()
+
+  const p1 = point
+  const p2 = { x: center.x + direction.x * 20, y : center.y + direction.y * 20}
+  const box = draw.bbox()
+  const coord1 = { x: p1.cx(), y: p1.cy() }
+  const coord2 = { x: p2.x, y: p2.y }
+  return clipping(box, coord1, coord2)
+}
+
+export class ParallelLine extends LineShape {
+  constructor({draw, componentRefs, element, cover, component_no}) {
+
+    let points = componentRefs.map(no => componentByNo(draw, no).element)
+
+    if (!element) {
+      const [line, point] = points
+      const [clip1, clip2] = clippedParallelLine(draw, line, point)
+      element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'parallel-line dashed shape component selected')
+      setStrokeColor(element)
+      cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
+      // points = [p1, p2]
+      putBehindPoints(draw, points, cover, element)
+    }
+    if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+
     super({draw, element, cover, points})
 
-    const componentRefs = points.map(point => {
+    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
+    this.watchUpdate(points, () => {
+      const [line, point] = points
+      const [clip1, clip2] = clippedParallelLine(draw, line, point)
+      element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      element.fire('update')
+    })
+    points.forEach(point => {
       // watch point remove event
       point.on('remove', this.remove.bind(this))
-      return point.attr('component_no')
     })
-    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
   }
-  undo() {
-    const parallelPoint = this.points[1]
-    parallelPoint.remove()
-    super.undo()
+  startPoint() {
+    const p = this.points[1]
+    let coord = {x: p.cx(), y: p.cy()}
+    if (p.component)
+      coord = pointOnScreen(p.component)
+    return coord
+  }
+  direction() {
+    const line = this.points[0]
+    return line.component.direction()
   }
 }
 
 export function addParallelLine({ draw, componentRefs, element, cover, component_no }) {
-
-  let points = componentRefs.map(no => componentByNo(draw, no).element)
-
-  if (!element) {
-    const [line, point] = points
-    const center = point.component.center()
-    const direction = line.component.direction()
-    const coord = { x: center.x + direction.x * 20, y : center.y + direction.y * 20}
-
-    const p1 = point
-    const parallelPoint = addParallelPoint({draw, coord, componentRefs})
-    const p2 = parallelPoint.element
-    const box = draw.bbox()
-    console.assert(p1, 'p1 must be defined', points)
-    console.assert(p2, 'p2 must be defined', points)
-
-    const coord1 = { x: p1.cx(), y: p1.cy() }
-    const coord2 = { x: p2.cx(), y: p2.cy() }
-    const [clip1, clip2] = clipping(box, coord1, coord2)
-    element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'parallel-line dashed shape component selected')
-    setStrokeColor(element)
-    cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
-    points = [p1, p2]
-    putBehindPoints(draw, points, cover, element)
-  }
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
-
-  return new ParallelLine({draw, points, element, cover, component_no})
+  return new ParallelLine({draw, componentRefs, element, cover, component_no})
 }
 
 ///
@@ -230,53 +248,69 @@ export function addParallelLine({ draw, componentRefs, element, cover, component
 /// remove if points are removed.
 ///
 
-export class PerpLine extends Line {
-  constructor({draw, points, element, cover}) {
+function clippedPerpLine(draw, line, point) {
+  console.assert(line, 'line must be defined')
+  console.assert(point, 'point must be defined')
+
+  const p1 = pointOnScreen({ element: point })
+  const direction = line.component.direction()
+
+  const p = pointOnScreen({ element: point })
+  const coord1 = { x: p1.x, y: p1.y }
+  const coord2 = {x: p.x - direction.y * 20, y: p.y + direction.x * 20}
+
+  const box = draw.bbox()
+  return clipping(box, coord1, coord2)
+}
+
+export class PerpLine extends LineShape {
+  constructor({draw, componentRefs, element, cover, component_no}) {
+
+    let points = componentRefs.map(no => componentByNo(draw, no).element)
+
+    if (!element) {
+      const [line, point] = points
+      const [clip1, clip2] = clippedPerpLine(draw, line, point)
+      element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'parallel-line dashed shape component selected')
+      setStrokeColor(element)
+      cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
+      // points = [p1, p2]
+      putBehindPoints(draw, points, cover, element)
+    }
+    if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+
     super({draw, element, cover, points})
 
-    const componentRefs = points.map(point => {
+    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
+    this.watchUpdate(points, () => {
+      const [line, point] = points
+      const [clip1, clip2] = clippedPerpLine(draw, line, point)
+      if (!clip1 || !clip2) return
+      element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      element.fire('update')
+    })
+    points.forEach(point => {
       // watch point remove event
       point.on('remove', this.remove.bind(this))
-      return point.attr('component_no')
     })
-    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
   }
-  undo() {
-    const perpPoint = this.points[1]
-    perpPoint.remove()
-    super.undo()
+  startPoint() {
+    const p = this.points[1]
+    let coord = {x: p.cx(), y: p.cy()}
+    if (p.component)
+      coord = pointOnScreen(p.component)
+    return coord
+  }
+  direction() {
+    const line = this.points[0]
+    const direction = line.component.direction()
+    return {x: -direction.y, y: direction.x}
   }
 }
 
 export function addPerpLine({ draw, componentRefs, element, cover, component_no }) {
-
-  let points = componentRefs.map(no => componentByNo(draw, no).element)
-
-  if (!element) {
-    const [line, point] = points
-    const center = point.component.center()
-    const direction = line.component.direction()
-    const coord = { x: center.x - direction.y * 20, y : center.y + direction.x * 20}
-
-    const p1 = point
-    const parallelPoint = addPerpPoint({draw, coord, componentRefs})
-    const p2 = parallelPoint.element
-    const box = draw.bbox()
-    console.assert(p1, 'p1 must be defined', points)
-    console.assert(p2, 'p2 must be defined', points)
-
-    const coord1 = { x: p1.cx(), y: p1.cy() }
-    const coord2 = { x: p2.cx(), y: p2.cy() }
-    const [clip1, clip2] = clipping(box, coord1, coord2)
-    element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'perp-line dashed shape component selected')
-    setStrokeColor(element)
-    cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
-    points = [p1, p2]
-    putBehindPoints(draw, points, cover, element)
-  }
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
-
-  return new PerpLine({draw, points, element, cover, component_no})
+  return new PerpLine({draw, componentRefs, element, cover, component_no})
 }
 
 ///
