@@ -12,6 +12,7 @@ import {
   CLASS_FSG_UI_SELECT_BOX,
   FSG_SELECTED_ATTR,
   FSG_INSPECTING_ATTR,
+  FSG_DRAGGING_ATTR,
 } from '../common/define.js'
 
 import { addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
@@ -227,11 +228,13 @@ function cleanupDirtyElements(draw) {
       element.removeClass('selected').removeClass('inspecting').removeClass('dragging')
   })
 
-  const dirtyAttributes = [`[${FSG_SELECTED_ATTR}]`, `[${FSG_INSPECTING_ATTR}]`]
+  const dirtyAttributes = [`[${FSG_SELECTED_ATTR}]`, `[${FSG_INSPECTING_ATTR}]`, `[${FSG_DRAGGING_ATTR}]`]
   dirtyAttributes.forEach(attr => {
     const dirtyElements = draw.find(attr)
     dirtyElements.forEach(element => {
-      element.attr(FSG_SELECTED_ATTR, null).attr(FSG_INSPECTING_ATTR, null)
+      element.attr(FSG_SELECTED_ATTR, null)
+        .attr(FSG_INSPECTING_ATTR, null)
+        .attr(FSG_DRAGGING_ATTR, null)
     })
   })
 }

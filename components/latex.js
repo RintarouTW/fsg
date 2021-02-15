@@ -1,6 +1,6 @@
 'use strict'
 
-import { DEFAULT_TEXT, OF_ATTR, COMPONENT_NO_ATTR } from '../common/define.js'
+import { DEFAULT_TEXT, OF_ATTR, COMPONENT_NO_ATTR, FSG_DRAGGING_ATTR } from '../common/define.js'
 import { SelectableComponent, componentByNo } from './component.js'
 import { currentStrokeColor } from '../module/color_picker.js'
 
@@ -54,10 +54,10 @@ export class LaTeX extends SelectableComponent {
     }).on('mousemove', () => {
       element.lastEvent = 'mousemove'
     }).on('dragstart', () => {
-      element.addClass('dragging')
+      element.attr(FSG_DRAGGING_ATTR, true)
       draw.dragTarget = element
     }).on('dragend', () => {
-      element.removeClass('dragging')
+      element.attr(FSG_DRAGGING_ATTR, null)
       draw.dragTarget = null
       if (target) {
         const offset = { dx: element.x() - target.cx(), dy: element.y() + target.cy() }

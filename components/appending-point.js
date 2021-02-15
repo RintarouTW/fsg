@@ -1,6 +1,6 @@
 'use strict'
 
-import { POINT_RADIUS } from '../common/define.js'
+import { FSG_DRAGGING_ATTR, POINT_RADIUS } from '../common/define.js'
 import { projectPointOnLine } from '../common/math.js'
 import { componentByNo } from './component.js'
 
@@ -82,7 +82,8 @@ export function addAppendingPinPoint({ draw, componentRef })  {
   console.assert(componentRef, 'componentRef must be defined')
   const element = draw.circle(POINT_RADIUS)
     .move(draw.mousePosition.x - POINT_RADIUS/2, draw.mousePosition.y - POINT_RADIUS/2)
-    .attr('class', 'pin-point dragging')
+    .attr('class', 'pin-point')
+    .attr(FSG_DRAGGING_ATTR, true)
   return new AppendingPinPoint({ draw, componentRef, element })
 }
 

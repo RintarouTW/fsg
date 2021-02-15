@@ -1,6 +1,6 @@
 'use strict'
 
-import { POINT_RADIUS, COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR } from '../common/define.js'
+import { POINT_RADIUS, COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, FSG_DRAGGING_ATTR } from '../common/define.js'
 import { projectPointOnLine } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { SelectablePoint } from './point.js'
@@ -28,10 +28,10 @@ export class DraggablePoint extends SelectablePoint {
       }).on('mousemove', () => {
         element.lastEvent = 'mousemove'
       }).on('dragstart', () => {
-        element.addClass('dragging')
+        element.attr(FSG_DRAGGING_ATTR, true)
         draw.dragTarget = element
       }).on('dragend', () => {
-        element.removeClass('dragging')
+        element.attr(FSG_DRAGGING_ATTR, null)
         draw.dragTarget = null
       }).on('dragmove', () => {
         element.fire('update', { target: this })
@@ -102,11 +102,11 @@ export class PinPoint extends DraggablePoint {
       element.lastEvent = 'mousemove'
     }).on('dragstart', () => {
       // console.log('drag start')
-      element.addClass('dragging')
+      element.attr(FSG_DRAGGING_ATTR, true)
       draw.dragTarget = element
     }).on('dragend', () => {
       // console.log('dragend')
-      element.removeClass('dragging')
+      element.attr(FSG_DRAGGING_ATTR, null)
       this.calcState()
       draw.dragTarget = null
     }).on('dragmove', () => {
