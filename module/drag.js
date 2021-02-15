@@ -1,6 +1,6 @@
 'use strict'
 
-import { CLASS_FSG_UI_SELECT_BOX, FSG_SELECTED_ATTR } from '../common/define.js'
+import { CLASS_FSG_UI_SELECT_BOX, COMPONENT_NO_ATTR, FSG_SELECTED_ATTR } from '../common/define.js'
 import { snapTo } from '../common/common.js'
 
 import { addPoint, PinPoint, addPinPoint } from '../components/draggable-point.js'
@@ -122,7 +122,7 @@ export function init_module_drag(draw, click_to_add_point = true) {
 }
 
 function selectAllInBox(draw, selectBox, isShiftPressed) {
-  const list = draw.find('.component')
+  const list = draw.find(`[${COMPONENT_NO_ATTR}]`)
   list.forEach(element => {
     // skip unselectable points
     if (element.component instanceof InvisiblePoint) return

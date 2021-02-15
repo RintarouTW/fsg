@@ -1,6 +1,6 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, DEFAULT_ANGLE_RADIUS} from '../common/define.js'
+import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, DEFAULT_ANGLE_RADIUS, FSG_FILL_NONE_ATTR} from '../common/define.js'
 import { pointOnScreen } from '../common/math.js'
 
 import { componentByNo } from './component.js'
@@ -9,12 +9,12 @@ import { addAppendingPinPoint } from './appending-point.js'
 import { currentFillColor, currentStrokeColor } from '../module/color_picker.js'
 
 function useCurrentColors(element) {
-    if (window.FSG_BUILDER) { // run in editor
-      const fillColor = currentFillColor()
-      const strokeColor = currentStrokeColor()
-      element.attr('fill', fillColor)
-      element.attr('stroke', strokeColor)
-    }
+  if (window.FSG_BUILDER) { // run in editor
+    const fillColor = currentFillColor()
+    const strokeColor = currentStrokeColor()
+    element.attr('fill', fillColor)
+    element.attr('stroke', strokeColor)
+  }
 }
 
 export class FillableShape extends Shape {
@@ -70,12 +70,8 @@ export function addCircle({draw, componentRefs, element, cover, component_no}) {
   const radius = Math.sqrt((rp.cx() - cp.cx()) ** 2 + (rp.cy() - cp.cy()) ** 2)
   if (!element) {
     element = draw.circle().radius(radius).center(cp.cx(), cp.cy())
-      .attr('class', 'circle dashed shape none')
-      // .attr('filter', 'url(#filter_shadow)')
-      // .attr('filter', 'url(#filter_blur)')
-      // .attr('filter', 'url(#filter_color_matrix)')
-      // .attr('filter', 'url(#filter_shadow)')
-
+      .attr('class', 'circle dashed shape')
+      .attr(FSG_FILL_NONE_ATTR, true)
     useCurrentColors(element)
     cover = draw.circle().radius(radius).center(cp.cx(), cp.cy()).attr('class', 'cover')
     putBehindPoints(draw, points, cover, element)
@@ -111,7 +107,8 @@ export function addPolygon({draw, componentRefs, element, cover, component_no}) 
   const pts = points.map(p => [p.cx(), p.cy()])
   if (!element) {
     element = draw.polygon(pts)
-      .attr('class', 'polygon dashed shape none') 
+      .attr('class', 'polygon dashed shape') 
+      .attr(FSG_FILL_NONE_ATTR, true)
 
     useCurrentColors(element)
     cover = draw.polygon(pts).attr('class', 'cover')
@@ -206,7 +203,9 @@ export function addAngle({ draw, componentRefs, element, cover, component_no }) 
     const [p1, p2, p3] = points
     const arcPath = arcOf(p1, p2, p3, false /* large_arc */)
     // console.log(arcPath)
-    element = draw.path(arcPath).attr('class', 'angle shape none')
+    element = draw.path(arcPath)
+      .attr('class', 'angle shape')
+      .attr(FSG_FILL_NONE_ATTR, true)
     useCurrentColors(element)
     cover = draw.path(arcPath).attr('class', 'cover')
     putBehindPoints(draw, points, cover, element)

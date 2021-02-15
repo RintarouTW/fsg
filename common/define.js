@@ -58,7 +58,7 @@ svg .cover:hover {
   cursor: pointer;
 }
 
-svg .shape.none{
+svg .shape[fsg_fill_none]{
   fill: none;
 }
 
@@ -110,6 +110,7 @@ export const FSG_INSPECTING_ATTR = 'fsg_inspecting'
 export const CLASS_FSG_BOARD = 'fsg-board'
 export const CLASS_FSG_UI_SELECT_BOX = 'fsg-ui-select-box'
 export const DEFAULT_BOARD_RADIUS = 8
+export const FSG_FILL_NONE_ATTR = 'fsg_fill_none'
 
 // component attributes
 export const COMPONENT_NO_ATTR = 'component_no'

@@ -1,9 +1,9 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR } from '../common/define.js'
+import { COMPONENT_NO_ATTR, FSG_FILL_NONE_ATTR } from '../common/define.js'
 import { intersect, intersectLineAndCircle, projectPointOnLine, twoCirclesIntersection } from '../common/math.js'
 // modules
-import { toggleClass } from './style.js'
+import { toggleAttribute, toggleClass } from './style.js'
 import { undo, redo, doAction } from './history.js'
 import { saveAsSVG, exportToHTML, svgDocument } from './file.js'
 import { toggle_code_editor } from './code_editor.js'
@@ -210,8 +210,7 @@ export function init_module_keybinding(draw) {
             showHint('Select one circle or polygon first!')
             return
           }
-          const className = 'none'
-          doAction(draw, toggleClass, {components, className})
+          doAction(draw, toggleAttribute, {components, attributeName : FSG_FILL_NONE_ATTR})
         }
         break
       case 'KeyH':
