@@ -336,8 +336,8 @@ kbd {
 
 .cover {
   stroke: rgba(255,255,255,0) !important;
-  stroke-width: 10 !important;
-  stroke-dasharray: none important;
+  stroke-width: 6 !important;
+  stroke-dasharray: none !important;
   fill: none;
 }
 
