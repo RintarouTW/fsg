@@ -231,7 +231,7 @@ function cleanupDirtyElements(draw) {
   dirtyAttributes.forEach(attr => {
     const dirtyElements = draw.find(attr)
     dirtyElements.forEach(element => {
-      element.attr('fsg_selected', null).attr('fsg_inspecting', null)
+      element.attr(FSG_SELECTED_ATTR, null).attr(FSG_INSPECTING_ATTR, null)
     })
   })
 }
