@@ -40,8 +40,7 @@ function labelOf(draw, no) {
   const labels = draw.find('.label')
   let found = null
   labels.each(item => {
-    if(no == Number(item.attr(OF_ATTR)))
-      found = item
+    if(no == Number(item.attr(OF_ATTR))) found = item
   })
   // console.assert(found, 'label not found')
   return found
@@ -63,9 +62,6 @@ export class Component {
     console.assert(element, 'element is required')
     console.assert(draw === element.parent(), 'element must be the child of draw')
 
-    //
-    // draw.add(element) // don't call add, or it'll change the order of the element
-    //
     this.draw = draw
     this.element = element
     element.component = this
