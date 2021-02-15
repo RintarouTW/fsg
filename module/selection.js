@@ -7,6 +7,7 @@ import { InvisiblePoint } from '../components/invisible-point.js'
 import { Shape } from '../components/shape.js'
 import { FillableShape } from '../components/fillable.js'
 import { LineShape } from '../components/line.js'
+import {COMPONENT_NO_ATTR} from '../common/define.js'
 
 export function init_module_selection(draw) {
   console.assert(draw, 'draw must exist')
@@ -63,7 +64,7 @@ class SelectAllAction {
   constructor(draw) {
     this.draw = draw
 
-    const components = draw.find('.component')
+    const components = draw.find(`[${COMPONENT_NO_ATTR}]`)
     let selections = []
     components.forEach(item => {
       const component = item.component

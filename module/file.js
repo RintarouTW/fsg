@@ -15,6 +15,7 @@ import {
   FSG_DRAGGING_ATTR,
   FSG_HOVER_ATTR,
   FSG_FILL_NONE_ATTR,
+  FSG_HIDDEN_ATTR,
 } from '../common/define.js'
 
 import { addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
@@ -222,7 +223,7 @@ function patchSVGJS(draw) {
 
 // clean up the classes used by editor
 function cleanupDirtyElements(draw) {
-  const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hidden-point, .hover, .component, .none')
+  const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hidden-point, .hover, .component, .none, .hidden')
   dirtyElements.each(element => {
     if (element.hasClass('hidden-point')) 
       element.remove()
@@ -235,6 +236,9 @@ function cleanupDirtyElements(draw) {
 
     if (element.hasClass('none')) {
       element.removeClass('none').attr(FSG_FILL_NONE_ATTR, true)
+    }
+    if (element.hasClass('hidden')) {
+      element.removeClass('hidden').attr(FSG_HIDDEN_ATTR, true)
     }
   })
 

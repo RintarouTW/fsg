@@ -44,7 +44,7 @@ svg .menu_item:hover {
   cursor: pointer;
 }
 
-svg .hidden {
+svg *[fsg_hidden] {
   visibility: hidden;
 }
 
@@ -111,6 +111,7 @@ export const CLASS_FSG_BOARD = 'fsg-board'
 export const CLASS_FSG_UI_SELECT_BOX = 'fsg-ui-select-box'
 export const DEFAULT_BOARD_RADIUS = 8
 export const FSG_FILL_NONE_ATTR = 'fsg_fill_none'
+export const FSG_HIDDEN_ATTR = 'fsg_hidden'
 
 // component attributes
 export const COMPONENT_NO_ATTR = 'component_no'

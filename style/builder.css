@@ -309,7 +309,7 @@ kbd {
   width: 400px;
 }
 
-.hidden {
+*[fsg_hidden] {
   opacity: 0.5 !important;
   visibility: visible !important;
 }

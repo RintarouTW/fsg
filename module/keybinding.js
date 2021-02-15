@@ -1,6 +1,6 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR, FSG_FILL_NONE_ATTR } from '../common/define.js'
+import { COMPONENT_NO_ATTR, FSG_FILL_NONE_ATTR, FSG_HIDDEN_ATTR } from '../common/define.js'
 import { intersect, intersectLineAndCircle, projectPointOnLine, twoCirclesIntersection } from '../common/math.js'
 // modules
 import { toggleAttribute, toggleClass } from './style.js'
@@ -108,8 +108,10 @@ export function init_module_keybinding(draw) {
         break
       case 'KeyA':
         {
-          if (evt.ctrlKey) {
+          if (evt.metaKey) {
             doAction(draw, selectAllSelectableComponents, {draw})
+            evt.preventDefault()
+            evt.stopPropagation()
             return
           } 
           if (evt.shiftKey) {
@@ -220,8 +222,7 @@ export function init_module_keybinding(draw) {
             showHint('Selection one component first')
             return
           }
-          const className = 'hidden'
-          doAction(draw, toggleClass, {components, className})
+          doAction(draw, toggleAttribute, {components, attributeName : FSG_HIDDEN_ATTR})
         }
         break
       case 'KeyI':
