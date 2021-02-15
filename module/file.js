@@ -9,6 +9,7 @@ import {
   RUNTIME_STYLE_LINK,
   KATEX_STYLE_LINK,
   DEFAULT_TRANSPARENT_COLOR,
+  CLASS_FSG_UI_SELECT_BOX,
 } from '../common/define.js'
 
 import { addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
@@ -37,6 +38,16 @@ function elementByNo(components, no) {
   components.forEach(element => {
     if (Number(element.attr(COMPONENT_NO_ATTR)) == (no)) found = element
   })
+  return found
+}
+
+function coverOf(covers, component_no) {
+  let found = null
+  covers.forEach(cover => {
+    // console.log(component_no, cover, cover.attr(OF_ATTR))
+    if (component_no == cover.attr(OF_ATTR) ) found = cover
+  })
+  console.assert(found, 'cover is required', covers, component_no)
   return found
 }
 
@@ -187,17 +198,8 @@ export function reconstruct_components(draw) {
     if (element.hasClass('parallel-point')) element.remove()
     if (element.hasClass('perp-point')) element.remove()
   })
-  return
-}
 
-function coverOf(covers, component_no) {
-  let found = null
-  covers.forEach(cover => {
-    // console.log(component_no, cover, cover.attr(OF_ATTR))
-    if (component_no == cover.attr(OF_ATTR) ) found = cover
-  })
-  console.assert(found, 'cover is required', covers, component_no)
-  return found
+  return
 }
 
 // remove xmlns:svgjs that could be inserted more than once and casue the svg broken. (should be a bug of svgjs.)
@@ -257,6 +259,11 @@ function patchCoverFillColor(draw) {
   covers.forEach(cover => cover.attr('fill', DEFAULT_TRANSPARENT_COLOR))
 }
 
+function patchToNewClass(draw) {
+  // replace old class to new class
+  draw.findOne('.ui-select-box')?.attr('class', CLASS_FSG_UI_SELECT_BOX)
+}
+
 export function svgDocument(draw, optional_attributes = {}) {
   let content = draw.parent().svg() 
 
@@ -277,6 +284,7 @@ export function svgDocument(draw, optional_attributes = {}) {
   patchStyles(tmp)
   patchForeignObjectLaTeX(tmp)
   patchCoverFillColor(tmp)
+  patchToNewClass(tmp)
 
   // &nbsp; is not a defined entity in svg, replace it with &#160;
   const html = tmp.svg()

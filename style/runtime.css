@@ -22,7 +22,7 @@ body {
   font: 1em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
 }
 
-svg .ui-select-box {
+svg .fsg-ui-select-box {
   stroke: var(--ui-select-box-stroke-color) !important;
   stroke-width: 0.5;
   fill: var(--ui-select-box-fill-color) !important;

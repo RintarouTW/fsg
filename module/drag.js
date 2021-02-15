@@ -1,5 +1,6 @@
 'use strict'
 
+import { CLASS_FSG_UI_SELECT_BOX } from '../common/define.js'
 import { snapTo } from '../common/common.js'
 
 import { addPoint, PinPoint, addPinPoint } from '../components/draggable-point.js'
@@ -16,12 +17,11 @@ export function init_module_drag(draw, click_to_add_point = true) {
   draw.on('contextmenu', evt => evt.preventDefault())
 
   let selectBox
-  const found = draw.findOne('.ui-select-box')
+  const found = draw.findOne('.' + CLASS_FSG_UI_SELECT_BOX)
   if (found) { // reuse exist element
-    // console.log('select box found', found)
     selectBox = found
   } else {
-    selectBox = draw.parent().rect(0, 0).attr('class', 'ui-select-box')
+    selectBox = draw.parent().rect(0, 0).attr('class', CLASS_FSG_UI_SELECT_BOX)
     draw.add(selectBox)
   }
 

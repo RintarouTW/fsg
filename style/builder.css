@@ -328,7 +328,7 @@ kbd {
 
 /* selections */
 
-.ui-select-box {
+.fsg-ui-select-box {
   stroke: var(--ui-select-box-stroke-color);
   stroke-width: 0.5;
   fill: var(--ui-select-box-fill-color);

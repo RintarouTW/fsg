@@ -16,7 +16,7 @@ export const RUNTIME_SCRIPT_URL = String.raw`<script href="${SERVER_ROOT}/runtim
 
 /* default styles, functional related, not related to theme */
 export const RUNTIME_DEFAULT_STYLE = String.raw`<style>
-svg .ui-select-box {
+svg .fsg-ui-select-box {
   stroke-width: 0.5;
   fill: none;
 }
@@ -104,6 +104,7 @@ export const DEFAULT_WINDOW_HEIGHT = 910
 
 // Runtime
 export const CLASS_FSG_BOARD = 'fsg-board'
+export const CLASS_FSG_UI_SELECT_BOX = 'fsg-ui-select-box'
 export const DEFAULT_BOARD_RADIUS = 8
 
 // component attributes

@@ -4,7 +4,8 @@ import {
   COMPONENT_NO_ATTR,
   COMPONENT_REFS_ATTR,
   OF_ATTR,
-  DEFAULT_TRANSPARENT_COLOR
+  DEFAULT_TRANSPARENT_COLOR,
+  CLASS_FSG_UI_SELECT_BOX
 } from '../common/define.js'
 
 import { SelectableComponent } from './component.js'
@@ -95,7 +96,7 @@ export class Shape extends SelectableComponent {
     this.cover.backward()
   }
   back() { // override super
-    const selectBox = this.draw.findOne('.ui-select-box')
+    const selectBox = this.draw.findOne('.' + CLASS_FSG_UI_SELECT_BOX)
     selectBox.after(this.cover)
     selectBox.after(this.element)
   }

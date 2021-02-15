@@ -4,7 +4,8 @@ import {
   COMPONENT_NO_ATTR,
   OF_ATTR,
   DEFAULT_LABEL_OFFSET_X,
-  DEFAULT_LABEL_OFFSET_Y
+  DEFAULT_LABEL_OFFSET_Y,
+  CLASS_FSG_UI_SELECT_BOX
 } from '../common/define.js'
 
 export function init_component_system(draw) {
@@ -84,15 +85,12 @@ export class Component {
   }
   watchUpdate(targets, callback) {
     targets.forEach(target => {
-      target.on('update', evt => {
-        callback(evt)
-      })
+      target.on('update', evt => callback(evt) )
     })
   }
   remove() {
     this.removeLabel()
-    this.element.fire('remove')
-    this.element.remove()
+    this.element.fire('remove').remove()
     this.draw.fsg.component.all = this.draw.fsg.component.all.filter(item => item !== this)
   }
   center() {
@@ -108,13 +106,13 @@ export class Component {
     this.element.backward()
   }
   back() {
-    const selectBox = this.draw.findOne('.ui-select-box')
+    const selectBox = this.draw.findOne('.' + CLASS_FSG_UI_SELECT_BOX)
     selectBox.after(this.element)
   }
   front() {
     this.element.front()
   }
-  /// default undo interface, redo is handled by history automatically.
+  /// default undo interface, redo is handled by the history module automatically.
   undo() {
     this.remove()
   }
