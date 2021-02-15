@@ -177,7 +177,7 @@ function genCover(draw, element, position) {
 function genLaTeX(draw, text, position) {
   const element = foreignTex(draw, text).flip('y')
   if (!element) return null
-  element.attr('class', 'latex component')
+  element.attr('class', 'latex')
     .attr('text', text)
     .attr('x', position.x)
     .attr('y', -position.y)

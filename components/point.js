@@ -116,7 +116,7 @@ export function addIntersectPoint({ draw, coord, index, componentRefs, element, 
     console.assert(typeof index !== 'undefined', 'index must be defined')
     element = draw.circle(POINT_RADIUS)
       .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
-      .attr('class', 'intersect-point component')
+      .attr('class', 'intersect-point')
       .attr('index', index)
   } else {
     index = element.attr('index')
@@ -173,7 +173,7 @@ export function addMidPoint({ draw, componentRefs, element, component_no })  {
     const coord = {x: (coord1.x + coord2.x) / 2, y: (coord1.y + coord2.y) /2 }
     element = draw.circle(POINT_RADIUS)
       .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
-      .attr('class', 'mid-point component')
+      .attr('class', 'mid-point')
   }
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
   return new MidPoint({ draw, componentRefs, element })

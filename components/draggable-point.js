@@ -63,7 +63,7 @@ export function addPoint({ draw, coord, element, component_no }) {
   if (!element) {
     element = draw.circle(POINT_RADIUS)
       .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
-      .attr('class', 'point component')
+      .attr('class', 'point')
     setStyle(element)
   }
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
@@ -203,7 +203,7 @@ export class PinPoint extends DraggablePoint {
 export function addPinPoint({ draw, coord, type, componentRef, element, component_no })  {
   if (!element) element = draw.circle(POINT_RADIUS)
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
-    .attr('class', 'pin-point component')
+    .attr('class', 'pin-point')
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
   return new PinPoint({ draw, type, componentRef, element })
 }

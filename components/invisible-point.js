@@ -63,7 +63,7 @@ export class ParallelPoint extends InvisiblePoint {
 export function addParallelPoint({ draw, coord, componentRefs, element, component_no })  {
   if (!element) element = draw.circle(POINT_RADIUS)
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
-    .attr('class', 'parallel-point component')
+    .attr('class', 'parallel-point')
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
   return new ParallelPoint({ draw, componentRefs, element })
 }
@@ -105,7 +105,7 @@ export class PerpPoint extends InvisiblePoint {
 export function addPerpPoint({ draw, coord, componentRefs, element, component_no })  {
   if (!element) element = draw.circle(POINT_RADIUS)
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
-    .attr('class', 'perp-point component')
+    .attr('class', 'perp-point')
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
   return new PerpPoint({ draw, componentRefs, element })
 }

@@ -25,13 +25,13 @@ import { addLaTeX } from '../components/latex.js'
 
 // reconstruct order by component_no
 function findAllComponentElements(draw) {
-  const componentElements = draw.find('.component')
+  const componentElements = draw.find(`[${COMPONENT_NO_ATTR}]`)
   // sort by component_no
   componentElements.sort((a, b) => {
     const no1 = Number(a.attr(COMPONENT_NO_ATTR)) 
-    console.assert(a, "component has no component_no")
+    // console.assert(a, "component has no component_no")
     const no2 = Number(b.attr(COMPONENT_NO_ATTR)) 
-    console.assert(b, "component has no component_no")
+    // console.assert(b, "component has no component_no")
     return no1 - no2
   })
   return componentElements
@@ -221,12 +221,13 @@ function patchSVGJS(draw) {
 
 // clean up the classes used by editor
 function cleanupDirtyElements(draw) {
-  const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hidden-point, .hover')
+  const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hidden-point, .hover, .component')
   dirtyElements.each(element => {
     if (element.hasClass('hidden-point')) 
       element.remove()
     else
-      element.removeClass('selected')
+      element.removeClass('component')
+        .removeClass('selected')
         .removeClass('inspecting')
         .removeClass('dragging')
         .removeClass('hover')

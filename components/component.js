@@ -12,7 +12,7 @@ import {
 
 export function init_component_system(draw) {
   draw.fsg.component = {}
-  const list = draw.find('.component')
+  const list = draw.find(`[${COMPONENT_NO_ATTR}]`)
   let max_component_no = 0
   list.forEach(item => {
     const component_no = Number(item.attr(COMPONENT_NO_ATTR))
