@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="742" height="556.5" viewBox="-371 -278.25 742 556.5" transform="matrix(1,0,0,-1,0,0)" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><defs><style>
-svg .ui-select-box {
+svg .fsg-ui-select-box {
   stroke-width: 0.5;
   fill: none;
 }
@@ -45,10 +45,6 @@ svg .shape.none{
   fill: none;
 }
 
-svg .parallel-point, svg .perp-point{
-  visibility: hidden;
-}
-
 svg .dashed {
   stroke-dasharray: 5 3;
   stroke-width: 1.2;
@@ -79,7 +75,7 @@ svg .latex-container {
   height: max-content;
   position: fixed; /* important for Safari */
 }
-</style><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://rintaroutw.github.io/fsg/style/runtime.css"></link><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"></link><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3 , 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://rintaroutw.github.io/fsg/runtime.min.js" namespace="FSG_RUNTIME"></script><rect width="0" height="0" class="ui-select-box"></rect><script xmlns="https://rintaroutw.github.io/fsg"></script></defs><foreignObject width="742" height="556.5" x="-371" y="-278.25"><div id="board"></div></foreignObject><rect width="0" height="0" class="select-box" x="-13" y="-39.75"></rect><filter id="filter_shadow" x="0%" y="0%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
+</style><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://rintaroutw.github.io/fsg/style/runtime.css"></link><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"></link><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3 , 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://rintaroutw.github.io/fsg/runtime.min.js" namespace="FSG_RUNTIME"></script><rect width="0" height="0" class="fsg-ui-select-box"></rect><script xmlns="https://rintaroutw.github.io/fsg"></script></defs><foreignObject width="742" height="556.5" x="-371" y="-278.25"><div id="board"></div></foreignObject><rect width="0" height="0" class="select-box" x="-13" y="-39.75"></rect><filter id="filter_shadow" x="0%" y="0%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
 	<feDropShadow stdDeviation="5 5" in="merge" dx="0" dy="0" flood-color="#0000ff" flood-opacity="1" x="-50%" y="-50%" width="120%" height="120%" result="dropShadow"></feDropShadow>
 </filter><filter id="filter_blur" x="-10%" y="-10%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
 	<feGaussianBlur stdDeviation="0 10" x="-50%" y="-50%" width="100%" height="100%" in="SourceGraphic" edgeMode="none" result="blur"></feGaussianBlur>
