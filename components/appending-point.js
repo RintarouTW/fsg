@@ -40,9 +40,9 @@ export class AppendingPinPoint {
     this.targetComponent.element.off('update', this.update)
     this.targetComponent.element.off('remove', this.remove)
     this.element.remove()
+    this.draw.dragTarget = null
   }
   done() { // confirmed to add real pin point.
-    console.log('done')
     const draw = this.draw
     const type = this.type
     const coord = { x: this.element.cx(), y: this.element.cy() }
