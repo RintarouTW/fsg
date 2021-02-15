@@ -341,20 +341,20 @@ kbd {
   fill: none;
 }
 
-.hover {
+*[fsg_hover] {
   cursor: pointer;
 }
 
-.shape.hover {
+.shape[fsg_hover] {
   stroke: var(--ui-hover-stroke-color);
 }
 
-.point.hover,
-.pin-point.hover,
-.perp-point.hover,
-.mid-point.hover,
-.intersect-point.hover,
-.parallel-point.hover {
+.point[fsg_hover],
+.pin-point[fsg_hover],
+.perp-point[fsg_hover],
+.mid-point[fsg_hover],
+.intersect-point[fsg_hover],
+.parallel-point[fsg_hover] {
   stroke: var(--ui-hover-stroke-color) !important;
   stroke-width: 1.5 !important;
 }

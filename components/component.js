@@ -6,7 +6,8 @@ import {
   DEFAULT_LABEL_OFFSET_X,
   DEFAULT_LABEL_OFFSET_Y,
   CLASS_FSG_UI_SELECT_BOX,
-  FSG_SELECTED_ATTR
+  FSG_SELECTED_ATTR,
+  FSG_HOVER_ATTR,
 } from '../common/define.js'
 
 export function init_component_system(draw) {
@@ -228,10 +229,10 @@ export class SelectableComponent extends Component {
       // Mouse Hover
       element.on('mouseenter', () => {
         if (!draw.dragTarget && !draw.dragSelectStart) {
-          element.addClass('hover')
+          element.attr(FSG_HOVER_ATTR, true)
         }
       }).on('mouseleave', () => {
-        element.removeClass('hover')
+        element.attr(FSG_HOVER_ATTR, null)
       })
 
       // Selection
@@ -264,6 +265,6 @@ export class SelectableComponent extends Component {
   }
   unselect() {
     this.element.attr(FSG_SELECTED_ATTR, null)
-      .removeClass('hover')
+      .attr(FSG_HOVER_ATTR, null)
   }
 }

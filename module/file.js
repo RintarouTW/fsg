@@ -13,6 +13,7 @@ import {
   FSG_SELECTED_ATTR,
   FSG_INSPECTING_ATTR,
   FSG_DRAGGING_ATTR,
+  FSG_HOVER_ATTR,
 } from '../common/define.js'
 
 import { addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
@@ -220,21 +221,30 @@ function patchSVGJS(draw) {
 
 // clean up the classes used by editor
 function cleanupDirtyElements(draw) {
-  const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hidden-point')
+  const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hidden-point, .hover')
   dirtyElements.each(element => {
     if (element.hasClass('hidden-point')) 
       element.remove()
     else
-      element.removeClass('selected').removeClass('inspecting').removeClass('dragging')
+      element.removeClass('selected')
+        .removeClass('inspecting')
+        .removeClass('dragging')
+        .removeClass('hover')
   })
 
-  const dirtyAttributes = [`[${FSG_SELECTED_ATTR}]`, `[${FSG_INSPECTING_ATTR}]`, `[${FSG_DRAGGING_ATTR}]`]
+  const dirtyAttributes = [
+    `[${FSG_SELECTED_ATTR}]`,
+    `[${FSG_INSPECTING_ATTR}]`,
+    `[${FSG_DRAGGING_ATTR}]`,
+    `[${FSG_HOVER_ATTR}]`,
+  ]
   dirtyAttributes.forEach(attr => {
     const dirtyElements = draw.find(attr)
     dirtyElements.forEach(element => {
       element.attr(FSG_SELECTED_ATTR, null)
         .attr(FSG_INSPECTING_ATTR, null)
         .attr(FSG_DRAGGING_ATTR, null)
+        .attr(FSG_HOVER_ATTR, null)
     })
   })
 }

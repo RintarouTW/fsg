@@ -5,7 +5,8 @@ import {
   COMPONENT_REFS_ATTR,
   OF_ATTR,
   DEFAULT_TRANSPARENT_COLOR,
-  CLASS_FSG_UI_SELECT_BOX
+  CLASS_FSG_UI_SELECT_BOX,
+  FSG_HOVER_ATTR
 } from '../common/define.js'
 
 import { SelectableComponent } from './component.js'
@@ -66,12 +67,12 @@ export class Shape extends SelectableComponent {
     cover.on('mousedown', mousedown)
       .on('mouseenter', () => {
         if (!draw.dragTarget && !draw.dragSelectStart) {
-          element.addClass('hover')
-          cover.addClass('hover')
+          element.attr(FSG_HOVER_ATTR, true)
+          cover.attr(FSG_HOVER_ATTR, true)
         }
       }).on('mouseleave', () => {
-        element.removeClass('hover')
-        cover.removeClass('hover')
+        element.attr(FSG_HOVER_ATTR, null)
+        cover.attr(FSG_HOVER_ATTR, null)
       })
   }
   remove() {
