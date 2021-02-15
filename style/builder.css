@@ -318,11 +318,11 @@ kbd {
   visibility: hidden;
 }
 
-.inspecting {
+*[fsg_inspecting] {
   stroke: var(--ui-inspecting-stroke-color) !important;
 }
 
-.text.selected > :first-child {
+.text[fsg_selected] > :first-child {
   filter: brightness(1.5); 
 }
 
@@ -359,7 +359,7 @@ kbd {
   stroke-width: 1.5 !important;
 }
 
-.shape.selected, .shape.dashed.selected {
+.shape[fsg_selected], .shape.dashed[fsg_selected] {
   stroke: var(--ui-selected-stroke-color);
 }
 
@@ -367,12 +367,12 @@ kbd {
   cursor: pointer !important;
 }
 
-.point.selected {
+.point[fsg_selected] {
   stroke: var(--ui-selected-stroke-color);
   stroke-width: 1;
 }
 
-.mid-point.selected, .intersect-point.selected, .parallel-point.selected, .perp-point.selected, .pin-point.selected {
+.mid-point[fsg_selected], .intersect-point[fsg_selected], .parallel-point[fsg_selected], .perp-point[fsg_selected], .pin-point[fsg_selected] {
   stroke: var(--ui-selected-stroke-color);
   stroke-width: 0.5;
 }

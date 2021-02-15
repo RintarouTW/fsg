@@ -39,7 +39,7 @@ export function addEdge({draw, componentRefs, element, cover, component_no}) {
     const [p1, p2] = points
     const coord1 = { x: p1.cx(), y: p1.cy() }
     const coord2 = { x: p2.cx(), y: p2.cy() }
-    element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'edge dashed shape component selected')
+    element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'edge dashed shape component')
     setStrokeColor(element)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
     putBehindPoints(draw, points, cover, element)
@@ -56,7 +56,7 @@ export function addVector({draw, componentRefs, element, cover, component_no}) {
     const [p1, p2] = points
     const coord1 = { x: p1.cx(), y: p1.cy() }
     const coord2 = { x: p2.cx(), y: p2.cy() }
-    element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'vector dashed shape component selected')
+    element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'vector dashed shape component')
     setStrokeColor(element)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
     putBehindPoints(draw, points, cover, element)
@@ -95,7 +95,7 @@ export function addAxis({draw, type, element, cover, component_no}) {
       coord2 = { x: 0, y: viewbox.height/2 }
     }
     element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y)
-      .attr('class', type + ' dashed shape component selected')
+      .attr('class', type + ' dashed shape component')
       .attr('stroke', DEFAULT_STROKE_COLOR)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
   }

@@ -10,6 +10,8 @@ import {
   KATEX_STYLE_LINK,
   DEFAULT_TRANSPARENT_COLOR,
   CLASS_FSG_UI_SELECT_BOX,
+  FSG_SELECTED_ATTR,
+  FSG_INSPECTING_ATTR,
 } from '../common/define.js'
 
 import { addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
@@ -164,7 +166,7 @@ export function reconstruct_components(draw) {
     if (element.hasClass('parallel-line')) {
       // patch for the old files that used parallel-point
       let refs = componentRefs
-      const [_, no2] = componentRefs
+      const [ , no2] = componentRefs
       const p2 = elementByNo(list, no2) 
       if (p2.hasClass('parallel-point')) {
         refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
@@ -176,7 +178,7 @@ export function reconstruct_components(draw) {
     if (element.hasClass('perp-line')) {
       // patch for the old files that used parallel-point
       let refs = componentRefs
-      const [_, no2] = componentRefs
+      const [ , no2] = componentRefs
       const p2 = elementByNo(list, no2) 
       if (p2.hasClass('perp-point')) {
         refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
@@ -216,13 +218,21 @@ function patchSVGJS(draw) {
 }
 
 // clean up the classes used by editor
-function cleanupDirtyClasses(draw) {
+function cleanupDirtyElements(draw) {
   const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hidden-point')
   dirtyElements.each(element => {
     if (element.hasClass('hidden-point')) 
       element.remove()
     else
       element.removeClass('selected').removeClass('inspecting').removeClass('dragging')
+  })
+
+  const dirtyAttributes = [`[${FSG_SELECTED_ATTR}]`, `[${FSG_INSPECTING_ATTR}]`]
+  dirtyAttributes.forEach(attr => {
+    const dirtyElements = draw.find(attr)
+    dirtyElements.forEach(element => {
+      element.attr('fsg_selected', null).attr('fsg_inspecting', null)
+    })
   })
 }
 
@@ -280,7 +290,7 @@ export function svgDocument(draw, optional_attributes = {}) {
   }
 
   patchSVGJS(tmp)
-  cleanupDirtyClasses(tmp)
+  cleanupDirtyElements(tmp)
   patchStyles(tmp)
   patchForeignObjectLaTeX(tmp)
   patchCoverFillColor(tmp)

@@ -1,6 +1,6 @@
 'use strict'
 
-import { CLASS_FSG_UI_SELECT_BOX } from '../common/define.js'
+import { CLASS_FSG_UI_SELECT_BOX, FSG_SELECTED_ATTR } from '../common/define.js'
 import { snapTo } from '../common/common.js'
 
 import { addPoint, PinPoint, addPinPoint } from '../components/draggable-point.js'
@@ -127,7 +127,7 @@ function selectAllInBox(draw, selectBox, isShiftPressed) {
     // skip unselectable points
     if (element.component instanceof InvisiblePoint) return
     // skip already selected element, so the selections would be in order.
-    if (!isShiftPressed && element.hasClass('selected')) return 
+    if (!isShiftPressed && element.attr(FSG_SELECTED_ATTR)) return 
     const itemBox = element.bbox()
     if ( selectBox.inside(itemBox.x, itemBox.y)  
       && selectBox.inside(itemBox.x + itemBox.width, itemBox.y + itemBox.height)) {

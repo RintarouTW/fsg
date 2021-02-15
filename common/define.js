@@ -101,6 +101,8 @@ export const KATEX_STYLE_LINK = String.raw`<link xmlns="http://www.w3.org/1999/x
 export const SNAP_GRID_INTERVAL = 5.0
 export const DEFAULT_WINDOW_WIDTH = 883
 export const DEFAULT_WINDOW_HEIGHT = 910
+export const FSG_SELECTED_ATTR = 'fsg_selected'
+export const FSG_INSPECTING_ATTR = 'fsg_inspecting'
 
 // Runtime
 export const CLASS_FSG_BOARD = 'fsg-board'

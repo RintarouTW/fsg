@@ -4,7 +4,7 @@
  * singleton per editor instance.
  */
 
-import { DEFAULT_FILL_COLOR, DEFAULT_STROKE_COLOR } from '../common/define.js'
+import { DEFAULT_FILL_COLOR, DEFAULT_STROKE_COLOR, FSG_INSPECTING_ATTR, FSG_SELECTED_ATTR } from '../common/define.js'
 import { attachColorPicker } from './color_picker.js'
 
 const fields = ['id', 'class', 'cx', 'cy', 'text', 'fill', 'stroke']
@@ -26,6 +26,22 @@ export function editField(fieldId) {
 
 let _inspecting_element
 
+function setInspecting(element) {
+  return element?.attr(FSG_INSPECTING_ATTR, true)
+}
+
+function unsetInspecting(element) {
+  return element?.attr(FSG_INSPECTING_ATTR, null)
+}
+
+function setSelected(element) {
+  return element?.attr(FSG_SELECTED_ATTR, true)
+}
+
+function unsetSelected(element) {
+  return element?.attr(FSG_SELECTED_ATTR, null)
+}
+
 function inspect_component(component) {
   if (component == null) {
     inspect_detach() 
@@ -37,16 +53,18 @@ function inspect_component(component) {
 
   // detach previous listeners
   if (_inspecting_element) {
-    _inspecting_element.removeClass('inspecting')
-    _inspecting_element.off('update', update_fields)
-    _inspecting_element.off('dragend', update_fields)
+    // _inspecting_element.removeClass('inspecting')
+    unsetInspecting(_inspecting_element)
+      .off('update', update_fields)
+      .off('dragend', update_fields)
   }
   _inspecting_element = element
   // attach new listeners
   if (element) {
-    element.addClass('inspecting')
+    // element.addClass('inspecting')
+    setInspecting(_inspecting_element)
     element.on('update', update_fields)
-    element.on('dragend', update_fields)
+      .on('dragend', update_fields)
   }
 
   // read the values of the element
@@ -77,7 +95,8 @@ function inspect_component(component) {
 
 function inspect_detach() {
   if (_inspecting_element) {
-    _inspecting_element.removeClass('inspecting')
+    // _inspecting_element.removeClass('inspecting')
+    unsetInspecting(_inspecting_element)
     _inspecting_element.off('update', update_fields)
     _inspecting_element.off('dragend', update_fields)
   }
@@ -99,10 +118,14 @@ export function init_module_inspector(draw) {
     inspect_detach()
   })
   document.addEventListener('colorpicker:change-start', () => {
-    _inspecting_element?.removeClass('inspecting').removeClass('selected')
+    // _inspecting_element?.removeClass('inspecting').removeClass('selected')
+    unsetInspecting(_inspecting_element)
+    unsetSelected(_inspecting_element)
   })
   document.addEventListener('colorpicker:change-end', () => {
-    _inspecting_element?.addClass('selected').addClass('inspecting')
+    // _inspecting_element?.addClass('selected').addClass('inspecting')
+    setSelected(_inspecting_element)
+    setInspecting(_inspecting_element)
   })
 }
 
@@ -123,7 +146,7 @@ function init_fields() {
 
       try {
         // console.log(attribute_name, value)
-        _inspecting_element?.component?.setAttribute(attribute_name,value)
+        _inspecting_element?.component?.setAttribute(attribute_name, value)
       } catch(err) {
         console.log(err)
       }
@@ -135,9 +158,13 @@ function init_fields() {
   const color_fields = SVG('#inspector').find('.field_color')
   color_fields.on('focus', evt => {
     attachColorPicker(evt.target)
-    _inspecting_element?.removeClass('inspecting').removeClass('selected')
+    // _inspecting_element?.removeClass('inspecting').removeClass('selected')
+    unsetInspecting(_inspecting_element)
+    unsetSelected(_inspecting_element)
   }).on('blur', () => {
-    _inspecting_element?.addClass('selected').addClass('inspecting')
+    // _inspecting_element?.addClass('selected').addClass('inspecting')
+    setSelected(_inspecting_element)
+    setInspecting(_inspecting_element)
   }).on('input', evt => { // change backgroundColor once value changed
     evt.target.style.backgroundColor = evt.target.value
   })

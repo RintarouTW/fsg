@@ -70,7 +70,7 @@ export function addCircle({draw, componentRefs, element, cover, component_no}) {
   const radius = Math.sqrt((rp.cx() - cp.cx()) ** 2 + (rp.cy() - cp.cy()) ** 2)
   if (!element) {
     element = draw.circle().radius(radius).center(cp.cx(), cp.cy())
-      .attr('class', 'circle dashed shape component selected none')
+      .attr('class', 'circle dashed shape component none')
       // .attr('filter', 'url(#filter_shadow)')
       // .attr('filter', 'url(#filter_blur)')
       // .attr('filter', 'url(#filter_color_matrix)')
@@ -111,7 +111,7 @@ export function addPolygon({draw, componentRefs, element, cover, component_no}) 
   const pts = points.map(p => [p.cx(), p.cy()])
   if (!element) {
     element = draw.polygon(pts)
-      .attr('class', 'polygon dashed shape component selected none') 
+      .attr('class', 'polygon dashed shape component none') 
 
     useCurrentColors(element)
     cover = draw.polygon(pts).attr('class', 'cover')
@@ -206,7 +206,7 @@ export function addAngle({ draw, componentRefs, element, cover, component_no }) 
     const [p1, p2, p3] = points
     const arcPath = arcOf(p1, p2, p3, false /* large_arc */)
     // console.log(arcPath)
-    element = draw.path(arcPath).attr('class', 'angle shape component selected none')
+    element = draw.path(arcPath).attr('class', 'angle shape component none')
     useCurrentColors(element)
     cover = draw.path(arcPath).attr('class', 'cover')
     putBehindPoints(draw, points, cover, element)

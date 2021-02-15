@@ -5,7 +5,8 @@ import {
   OF_ATTR,
   DEFAULT_LABEL_OFFSET_X,
   DEFAULT_LABEL_OFFSET_Y,
-  CLASS_FSG_UI_SELECT_BOX
+  CLASS_FSG_UI_SELECT_BOX,
+  FSG_SELECTED_ATTR
 } from '../common/define.js'
 
 export function init_component_system(draw) {
@@ -255,14 +256,14 @@ export class SelectableComponent extends Component {
     this.isSelected() ? unselectComponent(this.draw, this) : selectComponent(this.draw, this)
   }
   isSelected() {
-    return this.element.hasClass('selected')
+    return this.element.attr(FSG_SELECTED_ATTR)
   }
   // selection looks only, called by selection module
   select() {
-    this.element.addClass('selected')
+    this.element.attr(FSG_SELECTED_ATTR, true)
   }
   unselect() {
-    this.element.removeClass('selected')
-    this.element.removeClass('hover')
+    this.element.attr(FSG_SELECTED_ATTR, null)
+      .removeClass('hover')
   }
 }
