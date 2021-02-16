@@ -3,12 +3,11 @@
 import { 
   COMPONENT_REFS_ATTR,
   COMPONENT_NO_ATTR,
-  OF_ATTR, SERVER_ROOT,
+  SERVER_ROOT,
   FSG_NAMESPACE,
   RUNTIME_DEFAULT_STYLE,
   RUNTIME_STYLE_LINK,
   KATEX_STYLE_LINK,
-  DEFAULT_TRANSPARENT_COLOR,
   CLASS_FSG_UI_SELECT_BOX,
   FSG_SELECTED_ATTR,
   FSG_INSPECTING_ATTR,
@@ -47,7 +46,7 @@ function elementByNo(components, no) {
   })
   return found
 }
-
+/*
 function coverOf(covers, component_no) {
   let found = null
   covers.forEach(cover => {
@@ -65,17 +64,15 @@ function coverOf(covers, component_no) {
 function checkPosition(position, element) {
   // console.assert(position == element.position(), 'position of element changed', position, element)
 }
+*/
 
 export function reconstruct_components(draw) {
-  // const covers = draw.find('.cover')
   const list = findAllComponentElements(draw)
   list.forEach(element => {
-    // without cover
     // console.log(element.attr(COMPONENT_NO_ATTR), element, element.classes())
-    const position = element.position()
+    // const position = element.position()
     if (element.hasClass('point')) {
       addPoint({draw, element})
-      checkPosition(position, element)
       return
     }
     if (element.hasClass('mid-point')) {
@@ -83,7 +80,6 @@ export function reconstruct_components(draw) {
       if (!refs_attr) return
       const componentRefs = refs_attr.split(',').map(item => Number(item))
       addMidPoint({draw, componentRefs, element})
-      checkPosition(position, element)
       return
     }
     if (element.hasClass('intersect-point')) {
@@ -91,7 +87,6 @@ export function reconstruct_components(draw) {
       if (!refs_attr) return
       const componentRefs = refs_attr.split(',').map(item => Number(item))
       addIntersectPoint({draw, componentRefs, element})
-      checkPosition(position, element)
       return
     }
     if (element.hasClass('parallel-point')) {
@@ -110,69 +105,52 @@ export function reconstruct_components(draw) {
       let type = 'line'
       if (refElement instanceof SVG.Circle) type = 'circle'
       addPinPoint({draw, type, componentRef, element})
-      checkPosition(position, element)
       return
     }
     if (element.hasClass('latex') || element.hasClass('text')) {
       addLaTeX({draw, element})
-      checkPosition(position, element)
       return
     }
     if (element.hasClass('axis-x')) { // axis component has no refs
-      // const cover = coverOf(covers, element.attr(COMPONENT_NO_ATTR))
-      const cover = null
       const type = 'axis-x'
-      addAxis({draw, type, element, cover}) 
-      checkPosition(position, element)
+      addAxis({draw, type, element}) 
       return
     }
     if (element.hasClass('axis-y')) {
-      // const cover = coverOf(covers, element.attr(COMPONENT_NO_ATTR))
-      const cover = null
       const type = 'axis-y'
-      addAxis({draw, type, element, cover}) 
-      checkPosition(position, element)
+      addAxis({draw, type, element}) 
       return
     }
-    // with cover
+    // shapes
     const refs = element.attr(COMPONENT_REFS_ATTR)
     if (!refs) return
     const componentRefs = refs.split(',').map(item => Number(item))
-    // const cover = coverOf(covers, element.attr(COMPONENT_NO_ATTR))
-    const cover = null
     if (element.hasClass('edge')) {
-      addEdge({draw, componentRefs, element, cover}) 
-      checkPosition(position, element)
+      addEdge({draw, componentRefs, element}) 
       return
     }
     if (element.hasClass('vector')) {
-      addVector({draw, componentRefs, element, cover}) 
-      checkPosition(position, element)
+      addVector({draw, componentRefs, element}) 
       return
     }
     if (element.hasClass('line')) {
-      addLine({draw, componentRefs, element, cover}) 
-      checkPosition(position, element)
+      addLine({draw, componentRefs, element}) 
       return
     }
     if (element.hasClass('ray')) {
-      addRay({draw, componentRefs, element, cover}) 
-      checkPosition(position, element)
+      addRay({draw, componentRefs, element}) 
       return
     }
     if (element.hasClass('polygon')) {
-      addPolygon({draw, componentRefs, element, cover}) 
-      checkPosition(position, element)
+      addPolygon({draw, componentRefs, element}) 
       return
     }
     if (element.hasClass('circle')) {
-      addCircle({draw, componentRefs, element, cover}) 
-      checkPosition(position, element)
+      addCircle({draw, componentRefs, element}) 
       return
     }
     if (element.hasClass('angle')) {
-      addAngle({draw, componentRefs, element, cover}) 
-      checkPosition(position, element)
+      addAngle({draw, componentRefs, element}) 
       return
     }
     if (element.hasClass('parallel-line')) {
@@ -183,8 +161,7 @@ export function reconstruct_components(draw) {
       if (p2.hasClass('parallel-point')) {
         refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
       }
-      addParallelLine({draw, componentRefs : refs, element, cover}) 
-      checkPosition(position, element)
+      addParallelLine({draw, componentRefs : refs, element}) 
       return
     }
     if (element.hasClass('perp-line')) {
@@ -195,22 +172,14 @@ export function reconstruct_components(draw) {
       if (p2.hasClass('perp-point')) {
         refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
       }
-      addPerpLine({draw, componentRefs : refs, element, cover}) 
-      checkPosition(position, element)
+      addPerpLine({draw, componentRefs : refs, element}) 
       return
     }
     if (element.hasClass('bisector-line')) {
-      addBisectorLine({draw, componentRefs, element, cover}) 
-      checkPosition(position, element)
+      addBisectorLine({draw, componentRefs, element}) 
       return
     }
     console.warn('WARNNING: Fixme - unsupported component..', element)
-  })
-
-  // clean up the outdated elements
-  list.forEach(element => {
-    if (element.hasClass('parallel-point')) element.remove()
-    if (element.hasClass('perp-point')) element.remove()
   })
 
   return
@@ -229,20 +198,20 @@ function patchSVGJS(draw) {
   })
 }
 
-// clean up the classes used by editor
+// clean up the classes used by editor and remove the outdated elements
 function cleanupDirtyElements(draw) {
-  const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hidden-point, .hover, .component, .none, .hidden, .shape, .cover')
-  dirtyElements.each(element => {
-    if (element.hasClass('hidden-point') || element.hasClass('cover')) {
-      element.remove()
-      return
-    }
 
+  // clean up the outdated elements
+  const outdatedElements = draw.find('.hidden-point, .cover, .parallel-point, .perp-point')
+  outdatedElements.each(element => element.remove())
+
+  const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hover, .component, .none, .hidden, .shape')
+  dirtyElements.each(element => {
     element.removeClass('component')
-        .removeClass('selected')
-        .removeClass('inspecting')
-        .removeClass('dragging')
-        .removeClass('hover')
+      .removeClass('selected')
+      .removeClass('inspecting')
+      .removeClass('dragging')
+      .removeClass('hover')
 
     if (element.hasClass('shape')) {
       element.removeClass('shape').attr(FSG_SHAPE_ATTR, true)
@@ -255,13 +224,14 @@ function cleanupDirtyElements(draw) {
     }
   })
 
+  // clean up the attributes only used by the builder.
   const dirtyAttributes = [
     `[${FSG_SELECTED_ATTR}]`,
     `[${FSG_INSPECTING_ATTR}]`,
     `[${FSG_DRAGGING_ATTR}]`,
     `[${FSG_HOVER_ATTR}]`,
   ]
-  dirtyAttributes.forEach(attr => {
+  dirtyAttributes.each(attr => {
     const dirtyElements = draw.find(attr)
     dirtyElements.forEach(element => {
       element.attr(FSG_SELECTED_ATTR, null)
@@ -300,11 +270,6 @@ function patchForeignObjectLaTeX(draw) {
   })
 }
 
-function patchCoverFillColor(draw) {
-  const covers = draw.find('.cover')
-  covers.forEach(cover => cover.attr('fill', DEFAULT_TRANSPARENT_COLOR))
-}
-
 function patchToNewClass(draw) {
   // replace old class to new class
   draw.findOne('.ui-select-box')?.attr('class', CLASS_FSG_UI_SELECT_BOX)
@@ -329,7 +294,6 @@ export function svgDocument(draw, optional_attributes = {}) {
   cleanupDirtyElements(tmp)
   patchStyles(tmp)
   patchForeignObjectLaTeX(tmp)
-  patchCoverFillColor(tmp)
   patchToNewClass(tmp)
 
   // &nbsp; is not a defined entity in svg, replace it with &#160;
