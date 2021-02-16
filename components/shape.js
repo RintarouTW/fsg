@@ -24,6 +24,7 @@ function findBottom(draw, points) {
 }
 
 export function putBehindPoints(draw, points, cover, element) {
+  if (!cover) return // don't change the order in runtime.
   // The order of the element should only be manipulated when the component constructed in editor.
   // After that, user can change the order of the component, and that order should be kept even after reconstruction.
   //
@@ -45,7 +46,8 @@ export class Shape extends SelectableComponent {
   constructor({draw, element, cover, points }) {
     console.assert(draw, "draw is required")
     console.assert(element, "element is required")
-    console.assert(cover, "cover is required")
+    // console.assert(cover, "cover is required")
+    // cover is optional now, only used in the builder
 
     super({draw, element})
 
@@ -55,55 +57,52 @@ export class Shape extends SelectableComponent {
       this.points = points
     }
 
-    cover.attr(OF_ATTR, this.component_no)
+    cover?.attr(OF_ATTR, this.component_no)
       .attr('fill', DEFAULT_TRANSPARENT_COLOR) // fill with transparent color
     this.cover = cover
 
-    // selectable by mousedown
-    const mousedown = evt => {
+    cover?.on('mousedown', evt => { // selectable by mousedown
       this.toggleSelected()
       evt.stopPropagation()
-    }
-    cover.on('mousedown', mousedown)
-      .on('mouseenter', () => {
-        if (!draw.dragTarget && !draw.dragSelectStart) {
-          element.attr(FSG_HOVER_ATTR, true)
-          cover.attr(FSG_HOVER_ATTR, true)
-        }
-      }).on('mouseleave', () => {
-        element.attr(FSG_HOVER_ATTR, null)
-        cover.attr(FSG_HOVER_ATTR, null)
-      })
+    }).on('mouseenter', () => {
+      if (!draw.dragTarget && !draw.dragSelectStart) {
+        element.attr(FSG_HOVER_ATTR, true)
+        cover.attr(FSG_HOVER_ATTR, true)
+      }
+    }).on('mouseleave', () => {
+      element.attr(FSG_HOVER_ATTR, null)
+      cover.attr(FSG_HOVER_ATTR, null)
+    })
   }
   remove() {
-    this.cover.remove()
+    this.cover?.remove()
     super.remove()
   }
   /// order interface, keep the cover over the element
   forward() { // override super
-    this.cover.forward()
+    this.cover?.forward()
     this.element.forward()
-    if (this.cover.next()?.hasClass('cover')) { // forward twice for the cover of previous component
-      this.cover.forward()
+    if (this.cover?.next()?.hasClass('cover')) { // forward twice for the cover of previous component
+      this.cover?.forward()
       this.element.forward()
     }
   }
   backward() { // override super
     if (this.element.prev()?.hasClass('cover')) { // backward twice for the cover of previous component
       this.element.backward()
-      this.cover.backward()
+      this.cover?.backward()
     }
     this.element.backward()
-    this.cover.backward()
+    this.cover?.backward()
   }
   back() { // override super
     const selectBox = this.draw.findOne('.' + CLASS_FSG_UI_SELECT_BOX)
-    selectBox.after(this.cover)
+    if(this.cover) selectBox.after(this.cover)
     selectBox.after(this.element)
   }
   front() { // override super
     this.element.front()
-    this.cover.front()
+    this.cover?.front()
   }
 }
 

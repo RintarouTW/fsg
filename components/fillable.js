@@ -23,6 +23,16 @@ function useCurrentColors(element) {
   }
 }
 
+function coverForCircleElement(draw, element) {
+  if (window.FSG_BUILDER) {
+    const radius = element.attr('r')
+    const cx = element.attr('cx')
+    const cy = element.attr('cy')
+    return draw.circle().radius(radius).center(cx, cy).attr('class', 'cover')
+  }
+  return null
+}
+
 export class FillableShape extends Shape {
   constructor({draw, element, cover, points}) {
     super({draw, element, cover, points})
@@ -45,10 +55,8 @@ export class Circle extends FillableShape {
       const coord2 = pointOnScreen({ element: rp })
       const r = Math.sqrt((coord2.x - coord1.x) ** 2 + (coord2.y - coord1.y) ** 2)
       this.radius = r
-      element.radius(r)
-      element.center(cp.cx(), cp.cy())
-      cover.radius(r)
-      cover.center(cp.cx(), cp.cy())
+      element.radius(r).center(cp.cx(), cp.cy())
+      cover?.radius(r).center(cp.cx(), cp.cy())
       element.fire('update')
     })
   }
@@ -81,8 +89,10 @@ export function addCircle({draw, componentRefs, element, cover, component_no}) {
       .attr(FSG_SHAPE_ATTR, true)
     useCurrentColors(element)
     cover = draw.circle().radius(radius).center(cp.cx(), cp.cy()).attr('class', 'cover')
-    putBehindPoints(draw, points, cover, element)
   }
+  cover = cover ?? coverForCircleElement(draw, element)
+  putBehindPoints(draw, points, cover, element)
+
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
   return new Circle({draw, radius, points, element, cover, component_no})
@@ -119,9 +129,11 @@ export function addPolygon({draw, componentRefs, element, cover, component_no}) 
       .attr(FSG_SHAPE_ATTR, true)
 
     useCurrentColors(element)
-    cover = draw.polygon(pts).attr('class', 'cover')
-    putBehindPoints(draw, points, cover, element)
   }
+  if (window.FSG_BUILDER) {
+    cover = draw.polygon(pts).attr('class', 'cover')
+  }
+  putBehindPoints(draw, points, cover, element)
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
   return new Polygon({ draw, points, element, cover })
@@ -185,7 +197,7 @@ export class Arc extends FillableShape {
     this.watchUpdate(points, () => {
       const arcPath = arcOf(p1, p2, p3, this.large_arc)
       element.plot(arcPath)
-      cover.plot(arcPath)
+      cover?.plot(arcPath)
       element.fire('update')
     })
 
@@ -216,9 +228,11 @@ export function addAngle({ draw, componentRefs, element, cover, component_no }) 
       .attr(FSG_FILL_NONE_ATTR, true)
       .attr(FSG_SHAPE_ATTR, true)
     useCurrentColors(element)
-    cover = draw.path(arcPath).attr('class', 'cover')
-    putBehindPoints(draw, points, cover, element)
   }
+  if (window.FSG_BUILDER) {
+    cover = draw.path(element.array()).attr('class', 'cover')
+  }
+  putBehindPoints(draw, points, cover, element)
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
   return new Arc({draw, points, element, cover})

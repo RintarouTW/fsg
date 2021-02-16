@@ -61,9 +61,13 @@ function coverOf(covers, component_no) {
 // 
 // check element position after reconstruction, make sure the reconstruction won't change the order of elements
 //
+//
+function checkPosition(position, element) {
+  // console.assert(position == element.position(), 'position of element changed', position, element)
+}
 
 export function reconstruct_components(draw) {
-  const covers = draw.find('.cover')
+  // const covers = draw.find('.cover')
   const list = findAllComponentElements(draw)
   list.forEach(element => {
     // without cover
@@ -71,7 +75,7 @@ export function reconstruct_components(draw) {
     const position = element.position()
     if (element.hasClass('point')) {
       addPoint({draw, element})
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('mid-point')) {
@@ -79,7 +83,7 @@ export function reconstruct_components(draw) {
       if (!refs_attr) return
       const componentRefs = refs_attr.split(',').map(item => Number(item))
       addMidPoint({draw, componentRefs, element})
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('intersect-point')) {
@@ -87,7 +91,7 @@ export function reconstruct_components(draw) {
       if (!refs_attr) return
       const componentRefs = refs_attr.split(',').map(item => Number(item))
       addIntersectPoint({draw, componentRefs, element})
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('parallel-point')) {
@@ -106,66 +110,69 @@ export function reconstruct_components(draw) {
       let type = 'line'
       if (refElement instanceof SVG.Circle) type = 'circle'
       addPinPoint({draw, type, componentRef, element})
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('latex') || element.hasClass('text')) {
       addLaTeX({draw, element})
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('axis-x')) { // axis component has no refs
-      const cover = coverOf(covers, element.attr(COMPONENT_NO_ATTR))
+      // const cover = coverOf(covers, element.attr(COMPONENT_NO_ATTR))
+      const cover = null
       const type = 'axis-x'
       addAxis({draw, type, element, cover}) 
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('axis-y')) {
-      const cover = coverOf(covers, element.attr(COMPONENT_NO_ATTR))
+      // const cover = coverOf(covers, element.attr(COMPONENT_NO_ATTR))
+      const cover = null
       const type = 'axis-y'
       addAxis({draw, type, element, cover}) 
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     // with cover
     const refs = element.attr(COMPONENT_REFS_ATTR)
     if (!refs) return
     const componentRefs = refs.split(',').map(item => Number(item))
-    const cover = coverOf(covers, element.attr(COMPONENT_NO_ATTR))
+    // const cover = coverOf(covers, element.attr(COMPONENT_NO_ATTR))
+    const cover = null
     if (element.hasClass('edge')) {
       addEdge({draw, componentRefs, element, cover}) 
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('vector')) {
       addVector({draw, componentRefs, element, cover}) 
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('line')) {
       addLine({draw, componentRefs, element, cover}) 
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('ray')) {
       addRay({draw, componentRefs, element, cover}) 
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('polygon')) {
       addPolygon({draw, componentRefs, element, cover}) 
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('circle')) {
       addCircle({draw, componentRefs, element, cover}) 
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('angle')) {
       addAngle({draw, componentRefs, element, cover}) 
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('parallel-line')) {
@@ -177,7 +184,7 @@ export function reconstruct_components(draw) {
         refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
       }
       addParallelLine({draw, componentRefs : refs, element, cover}) 
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('perp-line')) {
@@ -189,12 +196,12 @@ export function reconstruct_components(draw) {
         refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
       }
       addPerpLine({draw, componentRefs : refs, element, cover}) 
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     if (element.hasClass('bisector-line')) {
       addBisectorLine({draw, componentRefs, element, cover}) 
-      console.assert(position == element.position(), 'position of element changed', position, element)
+      checkPosition(position, element)
       return
     }
     console.warn('WARNNING: Fixme - unsupported component..', element)
@@ -224,9 +231,9 @@ function patchSVGJS(draw) {
 
 // clean up the classes used by editor
 function cleanupDirtyElements(draw) {
-  const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hidden-point, .hover, .component, .none, .hidden, .shape')
+  const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hidden-point, .hover, .component, .none, .hidden, .shape, .cover')
   dirtyElements.each(element => {
-    if (element.hasClass('hidden-point')) {
+    if (element.hasClass('hidden-point') || element.hasClass('cover')) {
       element.remove()
       return
     }

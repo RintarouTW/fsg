@@ -14,6 +14,15 @@ export function setStrokeColor(element) {
   }
 }
 
+export function coverForLineElement(draw, element) {
+  if (window.FSG_BUILDER) {
+    const coord1 = { x: element.attr('x1'), y: element.attr('y1') }
+    const coord2 = { x: element.attr('x2'), y: element.attr('y2') }
+    return draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
+  }
+  return null
+}
+
 export class LineShape extends Shape {
   constructor({draw, element, cover, points}) {
     super({draw, element, cover, points})
@@ -78,7 +87,7 @@ export class Line extends LineShape {
       const [clip1, clip2] = clipping(box, coord1, coord2)
       if (!clip1 || !clip2) return
       element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      cover?.plot(clip1.x, clip1.y, clip2.x, clip2.y)
       this.updateDirection()
       element.fire('update')
     })
@@ -103,8 +112,10 @@ export function addLine({draw, componentRefs, element, cover, component_no}) {
     setStrokeColor(element)
     // element.attr('filter', 'url(#filter_shadow)')
     cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
-    putBehindPoints(draw, points, cover, element)
   }
+  cover = cover ?? coverForLineElement(draw, element) 
+  putBehindPoints(draw, points, cover, element)
+
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
   return new Line({draw, points, element, cover, component_no})
@@ -149,7 +160,7 @@ export class Ray extends LineShape {
       if (!clip) return
 
       element.plot(coord1.x, coord1.y, clip.x, clip.y)
-      cover.plot(coord1.x, coord1.y, clip.x, clip.y)
+      cover?.plot(coord1.x, coord1.y, clip.x, clip.y)
       this.updateDirection()
       element.fire('update')
     })
@@ -170,8 +181,9 @@ export function addRay({draw, componentRefs, element, cover, component_no}) {
       .attr(FSG_SHAPE_ATTR, true)
     setStrokeColor(element)
     cover = draw.line(coord1.x, coord1.y, clip.x, clip.y).attr('class', 'cover')
-    putBehindPoints(draw, points, cover, element)
   }
+  cover = cover ?? coverForLineElement(draw, element) 
+  putBehindPoints(draw, points, cover, element)
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
   return new Ray({draw, points, element, cover })
@@ -211,8 +223,9 @@ export class ParallelLine extends LineShape {
       setStrokeColor(element)
       cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
       // points = [p1, p2]
-      putBehindPoints(draw, points, cover, element)
     }
+    cover = cover ?? coverForLineElement(draw, element) 
+    putBehindPoints(draw, points, cover, element)
     if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
     super({draw, element, cover, points})
@@ -223,7 +236,7 @@ export class ParallelLine extends LineShape {
       const [clip1, clip2] = clippedParallelLine(draw, line, point)
       if (!clip1 || !clip2) return
       element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      cover?.plot(clip1.x, clip1.y, clip2.x, clip2.y)
       element.fire('update')
     })
     points.forEach(point => {
@@ -282,8 +295,9 @@ export class PerpLine extends LineShape {
       setStrokeColor(element)
       cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
       // points = [p1, p2]
-      putBehindPoints(draw, points, cover, element)
     }
+    cover = cover ?? coverForLineElement(draw, element) 
+    putBehindPoints(draw, points, cover, element)
     if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
     super({draw, element, cover, points})
@@ -294,7 +308,7 @@ export class PerpLine extends LineShape {
       const [clip1, clip2] = clippedPerpLine(draw, line, point)
       if (!clip1 || !clip2) return
       element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      cover?.plot(clip1.x, clip1.y, clip2.x, clip2.y)
       element.fire('update')
     })
     points.forEach(point => {
@@ -340,7 +354,7 @@ export class BisectorLine extends LineShape {
 
       if (!clip1 || !clip2) return
       element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      cover.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+      cover?.plot(clip1.x, clip1.y, clip2.x, clip2.y)
       element.fire('update')
     })
 
@@ -400,8 +414,9 @@ export function addBisectorLine({ draw, componentRefs, element, cover, component
       .attr(FSG_SHAPE_ATTR, true)
     setStrokeColor(element)
     cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
-    putBehindPoints(draw, points, cover, element)
   }
+  cover = cover ?? coverForLineElement(draw, element) 
+  putBehindPoints(draw, points, cover, element)
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
   return new BisectorLine({draw, points, element, cover})

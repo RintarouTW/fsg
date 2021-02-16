@@ -79,7 +79,7 @@ export function projectPointOnLine(point, linePoint, lineDirection) {
 }
 
 export function intersectLineAndCircle(linePoint, lineDirection, circlePoint, circleRadius) {
-  console.assert(circleRadius, 'circleRadius must be defined')
+  console.assert(typeof circleRadius !== 'undefined', 'circleRadius must be defined', circleRadius)
   const projectPoint = projectPointOnLine(circlePoint, linePoint, lineDirection)
   const distanceSquare = (circlePoint.x - projectPoint.x) ** 2 + (circlePoint.y - projectPoint.y) ** 2
   if (distanceSquare > circleRadius ** 2) return null

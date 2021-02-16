@@ -4,7 +4,7 @@ import { COMPONENT_NO_ATTR, DEFAULT_STROKE_COLOR, FSG_SHAPE_ATTR } from '../comm
 import { pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { putBehindPoints } from './shape.js'
-import { LineShape, setStrokeColor } from './line.js'
+import { LineShape, setStrokeColor, coverForLineElement } from './line.js'
 
 ///
 /// LineSegment
@@ -23,7 +23,7 @@ export class LineSegment extends LineShape {
         const coord1 = pointOnScreen(p1.component)
         const coord2 = pointOnScreen(p2.component)
         element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
-        cover.plot(coord1.x, coord1.y, coord2.x, coord2.y)
+        cover?.plot(coord1.x, coord1.y, coord2.x, coord2.y)
         this.updateDirection()
         element.fire('update')
       })
@@ -45,8 +45,10 @@ export function addEdge({draw, componentRefs, element, cover, component_no}) {
 
     setStrokeColor(element)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
-    putBehindPoints(draw, points, cover, element)
   }
+  cover = cover ?? coverForLineElement(draw, element) 
+  putBehindPoints(draw, points, cover, element)
+
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
   return new LineSegment({draw, points, element, cover})
@@ -63,8 +65,10 @@ export function addVector({draw, componentRefs, element, cover, component_no}) {
       .attr(FSG_SHAPE_ATTR, true)
     setStrokeColor(element)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
-    putBehindPoints(draw, points, cover, element)
   }
+  cover = cover ?? coverForLineElement(draw, element) 
+  putBehindPoints(draw, points, cover, element)
+
   element.marker('start', draw.fsg.marker.vector_start_marker)
   element.marker('end', draw.fsg.marker.vector_end_marker)
 
@@ -82,7 +86,7 @@ export class Axis extends LineSegment {
   }
   setCoord(coord1, coord2) {
     this.element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
-    this.cover.plot(coord1.x, coord1.y, coord2.x, coord2.y)
+    this.cover?.plot(coord1.x, coord1.y, coord2.x, coord2.y)
     this.element.fire('update')
   }
 }
@@ -104,6 +108,8 @@ export function addAxis({draw, type, element, cover, component_no}) {
       .attr(FSG_SHAPE_ATTR, true)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
   }
+  cover = cover ?? coverForLineElement(draw, element) 
+
   element.marker('end', draw.fsg.marker.vector_end_marker)
   element.removeClass('dashed')
   element.addClass(type)
