@@ -112,7 +112,7 @@ class Polygon extends FillableShape {
         return [coord.x, coord.y]
       })
       element.plot(pts)
-      cover.plot(pts)
+      cover?.plot(pts)
       element.fire('update')
     })
   }
