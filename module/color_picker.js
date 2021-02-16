@@ -8,6 +8,7 @@ import { DEFAULT_FILL_COLOR, DEFAULT_STROKE_COLOR } from '../common/define.js'
 let _enabled = false
 let _hexInput
 let _colorPicker
+let _colorBeforeChange
 
 export function enableColorPicker() {
   _enabled = true
@@ -50,21 +51,21 @@ export function init_module_color_picker() {
   SVG('#field_fill').node.value = DEFAULT_FILL_COLOR
   SVG('#field_stroke').node.value = DEFAULT_STROKE_COLOR
 
-  _enabled = false // enable until enableColorPicker()
+  _enabled = false // disabled until enableColorPicker()
 }
 
+// console.log('user input changed')
 function onInputChange() {
-  // console.log('user input changed')
   _colorPicker.color.hex8String = _hexInput.value;
 }
 
 function onColorChange(color) {
-    // Show the current color in different formats
-    // Using the selected color: https://iro.js.org/guide.html#selected-color-api
-    console.assert(_hexInput, 'hexInput must be attached first')
-    if (!_enabled) return
-    _hexInput.value = color.hex8String
-    SVG(_hexInput).fire('input')
+  // Show the current color in different formats
+  // Using the selected color: https://iro.js.org/guide.html#selected-color-api
+  console.assert(_hexInput, 'hexInput must be attached first')
+  if (!_enabled) return
+  _hexInput.value = color.hex8String
+  SVG(_hexInput).fire('input')
 }
 
 export function attachColorPicker(hexInput) {
@@ -72,7 +73,6 @@ export function attachColorPicker(hexInput) {
   if (!_enabled) return
 
   // console.assert(hexInput, 'hexInput must exist')
-  // console.log('attach to ', hexInput)
 
   _hexInput = hexInput ?? _hexInput
   _hexInput.addEventListener('change', onInputChange)
@@ -82,17 +82,22 @@ export function attachColorPicker(hexInput) {
   else
     document.querySelector('#colorIndicator').style.right = '260px';
 
-
   _colorPicker.color.hex8String = _hexInput.value
   // console.log(_colorPicker.color.hex8String, _hexInput.value)
 
   // _colorPicker.on(["color:init", "color:change"], onColorChange)
   _colorPicker.on("color:change", onColorChange)
   _colorPicker.on("input:start", () => {
+    _colorBeforeChange = _hexInput.value
     document.dispatchEvent(new CustomEvent('colorpicker:change-start'))
   })
   _colorPicker.on("input:end", () => {
-    document.dispatchEvent(new CustomEvent('colorpicker:change-end'))
+    const colorChangeInfo = {
+      field: _hexInput.getAttribute('id'),
+      oldValue: _colorBeforeChange,
+      newValue: _hexInput.value
+    }
+    document.dispatchEvent(new CustomEvent('colorpicker:change-end', { detail: colorChangeInfo}))
   })
 
 }

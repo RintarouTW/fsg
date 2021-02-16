@@ -211,7 +211,6 @@ function init() {
   }
 
   window.FSG_BUILDER = true // define to prevent runtime being init again by the script within svg file.
-  console.log(window.FSG_BUILDER)
 
   window.resizeTo(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT) // default window size
 

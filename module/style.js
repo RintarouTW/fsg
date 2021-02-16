@@ -85,3 +85,31 @@ export function toggleAttribute({components, attributeName}) {
   return new ToggleAction(components, attributeName, doToggleAttribute)
 }
 
+///
+/// ChangeAttributeAction
+///
+
+class ChangeAction {
+  constructor(components, attributeName, oldValue, newValue) {
+    components.forEach(component => {
+      component.setAttribute(attributeName, newValue)
+      component.element.fire('update')
+      SVG('#field_' + attributeName).fire('change')
+    })
+    this.components = components
+    this.attributeName = attributeName
+    this.oldValue = oldValue
+    this.newValue = newValue
+  }
+  undo() {
+    this.components.forEach(component => {
+      component.setAttribute(this.attributeName, this.oldValue)
+      component.element.fire('update')
+      SVG('#field_' + this.attributeName).fire('change')
+    })
+  }
+}
+
+export function changeStyle({components, attributeName, oldValue, newValue}) {
+  return new ChangeAction(components, attributeName, oldValue, newValue)
+}

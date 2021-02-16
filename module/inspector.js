@@ -4,8 +4,16 @@
  * singleton per editor instance.
  */
 
-import { DEFAULT_FILL_COLOR, DEFAULT_STROKE_COLOR, FSG_INSPECTING_ATTR, FSG_SELECTED_ATTR } from '../common/define.js'
+import {
+  DEFAULT_FILL_COLOR,
+  DEFAULT_STROKE_COLOR,
+  FSG_INSPECTING_ATTR,
+  FSG_SELECTED_ATTR
+} from '../common/define.js'
+
 import { attachColorPicker } from './color_picker.js'
+import { doAction } from './history.js'
+import { changeStyle } from './style.js'
 
 const fields = ['id', 'class', 'cx', 'cy', 'text', 'fill', 'stroke']
 const non_color_fields = ['id', 'class', 'cx', 'cy', 'text']
@@ -53,7 +61,6 @@ function inspect_component(component) {
 
   // detach previous listeners
   if (_inspecting_element) {
-    // _inspecting_element.removeClass('inspecting')
     unsetInspecting(_inspecting_element)
       .off('update', update_fields)
       .off('dragend', update_fields)
@@ -61,7 +68,6 @@ function inspect_component(component) {
   _inspecting_element = element
   // attach new listeners
   if (element) {
-    // element.addClass('inspecting')
     setInspecting(_inspecting_element)
     element.on('update', update_fields)
       .on('dragend', update_fields)
@@ -78,10 +84,6 @@ function inspect_component(component) {
       value = fieldDefaultValue[name]
 
     if (name == 'fill' || name == 'stroke') {
-      /// use component.getAttribute() now, don't access element attributes directly anymore.
-      // value = element.attr(name)
-      // if (value === null)
-      // value = fieldDefaultValue[name]
       field.style.backgroundColor = value
       field.value = value
       SVG(field).fire('change')
@@ -95,7 +97,6 @@ function inspect_component(component) {
 
 function inspect_detach() {
   if (_inspecting_element) {
-    // _inspecting_element.removeClass('inspecting')
     unsetInspecting(_inspecting_element)
     _inspecting_element.off('update', update_fields)
     _inspecting_element.off('dragend', update_fields)
@@ -118,14 +119,17 @@ export function init_module_inspector(draw) {
     inspect_detach()
   })
   document.addEventListener('colorpicker:change-start', () => {
-    // _inspecting_element?.removeClass('inspecting').removeClass('selected')
     unsetInspecting(_inspecting_element)
     unsetSelected(_inspecting_element)
   })
-  document.addEventListener('colorpicker:change-end', () => {
-    // _inspecting_element?.addClass('selected').addClass('inspecting')
+  document.addEventListener('colorpicker:change-end', evt => {
+    if (!_inspecting_element) return
     setSelected(_inspecting_element)
     setInspecting(_inspecting_element)
+    const {field, oldValue, newValue} = evt.detail
+    const attributeName = field.substr(6)
+    const components = [_inspecting_element.component]
+    doAction(draw, changeStyle, {components, attributeName, oldValue, newValue})
   })
 }
 
@@ -158,11 +162,9 @@ function init_fields() {
   const color_fields = SVG('#inspector').find('.field_color')
   color_fields.on('focus', evt => {
     attachColorPicker(evt.target)
-    // _inspecting_element?.removeClass('inspecting').removeClass('selected')
     unsetInspecting(_inspecting_element)
     unsetSelected(_inspecting_element)
   }).on('blur', () => {
-    // _inspecting_element?.addClass('selected').addClass('inspecting')
     setSelected(_inspecting_element)
     setInspecting(_inspecting_element)
   }).on('input', evt => { // change backgroundColor once value changed
