@@ -322,10 +322,6 @@ kbd {
   stroke: var(--ui-inspecting-stroke-color) !important;
 }
 
-.text[fsg_selected] > :first-child {
-  filter: brightness(1.5); 
-}
-
 /* selections */
 
 .fsg-ui-select-box {
@@ -345,7 +341,7 @@ kbd {
   cursor: pointer;
 }
 
-.shape[fsg_hover] {
+*[fsg_shape][fsg_hover] {
   stroke: var(--ui-hover-stroke-color);
 }
 
@@ -359,8 +355,12 @@ kbd {
   stroke-width: 1.5 !important;
 }
 
-.shape[fsg_selected], .shape.dashed[fsg_selected] {
-  stroke: var(--ui-selected-stroke-color);
+*[fsg_dragging] {
+  cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"/></svg>') -8 -8, crosshair !important;
+}
+
+[fsg_selected]:not([fsg_inspecting]) {
+  stroke: var(--ui-selected-stroke-color) !important;
 }
 
 .point {
@@ -368,16 +368,14 @@ kbd {
 }
 
 .point[fsg_selected] {
-  stroke: var(--ui-selected-stroke-color);
   stroke-width: 1;
 }
 
-.mid-point[fsg_selected], .intersect-point[fsg_selected], .parallel-point[fsg_selected], .perp-point[fsg_selected], .pin-point[fsg_selected] {
-  stroke: var(--ui-selected-stroke-color);
+.mid-point[fsg_selected],
+.intersect-point[fsg_selected],
+.parallel-point[fsg_selected],
+.perp-point[fsg_selected],
+.pin-point[fsg_selected] {
   stroke-width: 0.5;
-}
-
-*[fsg_dragging] {
-  cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"/></svg>') -8 -8, crosshair !important;
 }
 

@@ -1,6 +1,6 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR, DEFAULT_STROKE_COLOR } from '../common/define.js'
+import { COMPONENT_NO_ATTR, DEFAULT_STROKE_COLOR, FSG_SHAPE_ATTR } from '../common/define.js'
 import { pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { putBehindPoints } from './shape.js'
@@ -39,7 +39,10 @@ export function addEdge({draw, componentRefs, element, cover, component_no}) {
     const [p1, p2] = points
     const coord1 = { x: p1.cx(), y: p1.cy() }
     const coord2 = { x: p2.cx(), y: p2.cy() }
-    element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'edge dashed shape')
+    element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y)
+      .attr('class', 'edge dashed')
+      .attr(FSG_SHAPE_ATTR, true)
+
     setStrokeColor(element)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
     putBehindPoints(draw, points, cover, element)
@@ -56,7 +59,8 @@ export function addVector({draw, componentRefs, element, cover, component_no}) {
     const [p1, p2] = points
     const coord1 = { x: p1.cx(), y: p1.cy() }
     const coord2 = { x: p2.cx(), y: p2.cy() }
-    element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'vector dashed shape')
+    element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'vector dashed')
+      .attr(FSG_SHAPE_ATTR, true)
     setStrokeColor(element)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
     putBehindPoints(draw, points, cover, element)
@@ -95,8 +99,9 @@ export function addAxis({draw, type, element, cover, component_no}) {
       coord2 = { x: 0, y: viewbox.height/2 }
     }
     element = draw.line(coord1.x, coord1.y, coord2.x, coord2.y)
-      .attr('class', type + ' dashed shape')
+      .attr('class', type + ' dashed')
       .attr('stroke', DEFAULT_STROKE_COLOR)
+      .attr(FSG_SHAPE_ATTR, true)
     cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
   }
   element.marker('end', draw.fsg.marker.vector_end_marker)

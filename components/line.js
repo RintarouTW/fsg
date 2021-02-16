@@ -1,6 +1,6 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR } from '../common/define.js'
+import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, FSG_SHAPE_ATTR } from '../common/define.js'
 import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { Shape, putBehindPoints } from './shape.js'
@@ -97,7 +97,9 @@ export function addLine({draw, componentRefs, element, cover, component_no}) {
     const coord1 = { x: p1.cx(), y: p1.cy() }
     const coord2 = { x: p2.cx(), y: p2.cy() }
     const [clip1, clip2] = clipping(box, coord1, coord2)
-    element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'line dashed shape')
+    element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y)
+      .attr('class', 'line dashed')
+      .attr(FSG_SHAPE_ATTR, true)
     setStrokeColor(element)
     // element.attr('filter', 'url(#filter_shadow)')
     cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
@@ -163,7 +165,9 @@ export function addRay({draw, componentRefs, element, cover, component_no}) {
     const coord2 = { x: p2.cx(), y: p2.cy() }
     const clip = getClipped(draw, coord1, coord2)
     console.assert(clip, 'clip must exist')
-    element = draw.line(coord1.x, coord1.y, clip.x, clip.y).attr('class', 'ray dashed shape')
+    element = draw.line(coord1.x, coord1.y, clip.x, clip.y)
+      .attr('class', 'ray dashed')
+      .attr(FSG_SHAPE_ATTR, true)
     setStrokeColor(element)
     cover = draw.line(coord1.x, coord1.y, clip.x, clip.y).attr('class', 'cover')
     putBehindPoints(draw, points, cover, element)
@@ -201,7 +205,9 @@ export class ParallelLine extends LineShape {
     if (!element) {
       const [line, point] = points
       const [clip1, clip2] = clippedParallelLine(draw, line, point)
-      element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'parallel-line dashed shape')
+      element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y)
+        .attr('class', 'parallel-line dashed')
+        .attr(FSG_SHAPE_ATTR, true)
       setStrokeColor(element)
       cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
       // points = [p1, p2]
@@ -270,7 +276,9 @@ export class PerpLine extends LineShape {
     if (!element) {
       const [line, point] = points
       const [clip1, clip2] = clippedPerpLine(draw, line, point)
-      element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'parallel-line dashed shape')
+      element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y)
+        .attr('class', 'parallel-line dashed')
+        .attr(FSG_SHAPE_ATTR, true)
       setStrokeColor(element)
       cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
       // points = [p1, p2]
@@ -387,7 +395,9 @@ export function addBisectorLine({ draw, componentRefs, element, cover, component
     const coord1 = { x: p2.cx(), y: p2.cy() }
     const coord2 = { x: bp.x, y: bp.y }
     const [clip1, clip2] = clipping(box, coord1, coord2)
-    element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'bisector-line dashed shape')
+    element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y)
+      .attr('class', 'bisector-line dashed')
+      .attr(FSG_SHAPE_ATTR, true)
     setStrokeColor(element)
     cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
     putBehindPoints(draw, points, cover, element)

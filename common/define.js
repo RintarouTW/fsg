@@ -58,7 +58,7 @@ svg .cover:hover {
   cursor: pointer;
 }
 
-svg .shape[fsg_fill_none]{
+svg *[fsg_fill_none]{
   fill: none;
 }
 
@@ -105,6 +105,7 @@ export const FSG_HOVER_ATTR = 'fsg_hover'
 export const FSG_DRAGGING_ATTR = 'fsg_dragging'
 export const FSG_SELECTED_ATTR = 'fsg_selected'
 export const FSG_INSPECTING_ATTR = 'fsg_inspecting'
+export const FSG_SHAPE_ATTR = 'fsg_shape'
 
 // Runtime
 export const CLASS_FSG_BOARD = 'fsg-board'
