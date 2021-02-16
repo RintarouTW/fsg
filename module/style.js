@@ -86,10 +86,10 @@ export function toggleAttribute({components, attributeName}) {
 }
 
 ///
-/// ChangeAttributeAction
+/// ChangeStyleAction
 ///
 
-class ChangeAction {
+class ChangeStyleAction {
   constructor(components, attributeName, oldValue, newValue) {
     components.forEach(component => {
       component.setAttribute(attributeName, newValue)
@@ -111,5 +111,5 @@ class ChangeAction {
 }
 
 export function changeStyle({components, attributeName, oldValue, newValue}) {
-  return new ChangeAction(components, attributeName, oldValue, newValue)
+  return new ChangeStyleAction(components, attributeName, oldValue, newValue)
 }

@@ -5,6 +5,7 @@ import { projectPointOnLine } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { SelectablePoint } from './point.js'
 import { currentStrokeColor } from '../module/color_picker.js'
+import { doAction, changeLocation } from '../module/history.js'
 
 function setStyle(element) {
   const strokeColor = currentStrokeColor()
@@ -19,6 +20,7 @@ export class DraggablePoint extends SelectablePoint {
     if (!override) {
       element.on('mousedown', evt => {
         element.lastEvent = 'mousedown'
+        draw.dragPointStart = draw.point(evt.clientX, evt.clientY)
         element.fire('dragstart', { dragTarget: element})
         evt.stopPropagation()
       }).on('mouseup', () => {
@@ -31,6 +33,11 @@ export class DraggablePoint extends SelectablePoint {
         element.attr(FSG_DRAGGING_ATTR, true)
         draw.dragTarget = element
       }).on('dragend', () => {
+        const components = [element.component]
+        const oldValue = { x: draw.dragPointStart.x, y: draw.dragPointStart.y }
+        const newValue = { x: element.cx(), y: element.cy() }
+        doAction(draw, changeLocation, {components, oldValue, newValue})
+
         element.attr(FSG_DRAGGING_ATTR, null)
         draw.dragTarget = null
       }).on('dragmove', () => {
@@ -92,6 +99,7 @@ export class PinPoint extends DraggablePoint {
     element.on('mousedown', evt => {
       // console.log('mousedown')
       element.lastEvent = 'mousedown'
+      draw.dragPointStart = draw.point(evt.clientX, evt.clientY)
       element.fire('dragstart', { dragTarget: element })
       evt.stopPropagation()
     }).on('mouseup', () => {
@@ -106,6 +114,11 @@ export class PinPoint extends DraggablePoint {
       draw.dragTarget = element
     }).on('dragend', () => {
       // console.log('dragend')
+      const components = [element.component]
+      const oldValue = { x: draw.dragPointStart.x, y: draw.dragPointStart.y }
+      const newValue = { x: element.cx(), y: element.cy() }
+      doAction(draw, changeLocation, {components, oldValue, newValue})
+
       element.attr(FSG_DRAGGING_ATTR, null)
       this.calcState()
       draw.dragTarget = null

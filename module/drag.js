@@ -30,7 +30,7 @@ export function init_module_drag(draw, click_to_add_point = true) {
   draw.dragTarget = null
   draw.dragStart = null
   draw.on('mousedown', evt => {
-    // console.log('draw.mousedown')
+    console.log('draw.mousedown')
     if (draw.menu) { // if menu exist(shown) remove menu
       draw.menu.remove()
       return
@@ -57,8 +57,9 @@ export function init_module_drag(draw, click_to_add_point = true) {
     } else {
       draw.lastEvent = 'mousedown'
     }
-    if (!evt.altKey)
+    if (!evt.altKey) {
       draw.dragStart = draw.point(evt.clientX, evt.clientY)
+    }
     draw.dragTarget = null
   }).on('mouseup_on_document', () => { //
     // console.log('mouseup_on_document')

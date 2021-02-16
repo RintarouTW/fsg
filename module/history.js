@@ -38,3 +38,31 @@ export function doAction(draw, cmd, args) {
   // console.log('history =', history)
 }
 
+///
+/// ChangeLocationAction
+///
+
+class ChangeLocationAction {
+  constructor(components, oldValue, newValue) {
+    components.forEach(component => {
+      component.setAttribute('cx', newValue.x)
+      component.setAttribute('cy', newValue.y)
+      component.element.fire('update')
+    })
+    this.components = components
+    this.oldValue = oldValue
+    this.newValue = newValue
+  }
+  undo() {
+    this.components.forEach(component => {
+      component.setAttribute('cx', this.oldValue.x)
+      component.setAttribute('cy', this.oldValue.y)
+      component.element.fire('update')
+      // SVG('#field_' + this.attributeName).fire('change')
+    })
+  }
+}
+
+export function changeLocation({components, oldValue, newValue}) {
+  return new ChangeLocationAction(components, oldValue, newValue)
+}
