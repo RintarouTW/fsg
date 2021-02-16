@@ -27,7 +27,7 @@ svg .menu_item:hover {
   cursor: pointer;
 }
 
-svg .hidden {
+svg *[fsg_hidden] {
   visibility: hidden;
 }
 
@@ -41,7 +41,7 @@ svg .cover:hover {
   cursor: pointer;
 }
 
-svg .shape.none{
+svg *[fsg_fill_none]{
   fill: none;
 }
 
@@ -81,7 +81,7 @@ svg .latex-container {
 	<feGaussianBlur stdDeviation="0 10" x="-50%" y="-50%" width="100%" height="100%" in="SourceGraphic" edgeMode="none" result="blur"></feGaussianBlur>
 </filter><filter id="filter_color_matrix" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
 	<feColorMatrix type="saturate" values="5" x="-50%" y="-50%" width="100%" height="100%" in="blur" result="colormatrix"></feColorMatrix>
-</filter><line x1="-371" y1="0" x2="371" y2="0" class="axis-x shape component" marker-end="url(#SvgjsMarker1000)" component_no="1"></line><line x1="-371" y1="0" x2="371" y2="0" class="cover line-select-box" of="1" fill="#ffffff00"></line><line x1="0" y1="-278.25" x2="0" y2="278.25" class="axis-y shape component" marker-end="url(#SvgjsMarker1000)" component_no="2"></line><line x1="0" y1="-278.25" x2="0" y2="278.25" class="cover line-select-box" of="2" fill="#ffffff00"></line><circle r="95.524865872714" cx="0" cy="0" class="circle dashed shape component" filter="url(#filter_shadow)" component_no="5" component_refs="3,4"></circle><circle r="95.524865872714" cx="0" cy="0" class="cover line-select-box" of="5" fill="#ffffff00"></circle><polygon points="0,0 66.04394415630283,69.01592164333645 66.04394415630281,0" class="polygon dashed shape component filled" component_no="9" component_refs="3,6,7"></polygon><polygon points="0,0 66.04394415630283,69.01592164333645 66.04394415630281,0" class="cover line-select-box" of="9" fill="#ffffff00"></polygon><circle r="3" cx="0" cy="0" class="point component" component_no="3"></circle><style>
+</filter><line x1="-371" y1="0" x2="371" y2="0" class="axis-x" marker-end="url(#SvgjsMarker1000)" component_no="1" fsg_shape="true"></line><line x1="-371" y1="0" x2="371" y2="0" class="cover line-select-box" of="1" fill="#ffffff00"></line><line x1="0" y1="-278.25" x2="0" y2="278.25" class="axis-y" marker-end="url(#SvgjsMarker1000)" component_no="2" fsg_shape="true"></line><line x1="0" y1="-278.25" x2="0" y2="278.25" class="cover line-select-box" of="2" fill="#ffffff00"></line><circle r="95.524865872714" cx="0" cy="0" class="circle dashed" filter="url(#filter_shadow)" component_no="5" component_refs="3,4" fsg_shape="true"></circle><circle r="95.524865872714" cx="0" cy="0" class="cover line-select-box" of="5" fill="#ffffff00"></circle><polygon points="0,0 66.04394415630283,69.01592164333645 66.04394415630281,0" class="polygon dashed filled" component_no="9" component_refs="3,6,7" fsg_shape="true"></polygon><polygon points="0,0 66.04394415630283,69.01592164333645 66.04394415630281,0" class="cover line-select-box" of="9" fill="#ffffff00"></polygon><circle r="3" cx="0" cy="0" class="point" component_no="3"></circle><style>
 :root {
   --vector-marker-color: #1dd3fd;
   --axis-stroke-color: #1dd3fd;
@@ -154,4 +154,4 @@ svg .latex-container {
 .dashed {
   stroke-dasharray: 3;
 }
-</style><circle r="3" cx="65" cy="-70" class="point component" component_no="4"></circle><circle r="3" cx="66.04394415630283" cy="69.01592164333645" class="pin-point component" component_no="6" component_refs="5"></circle><circle r="3" cx="66.04394415630281" cy="0" class="intersect-point component" component_no="7" component_refs="1,6"></circle></svg>
+</style><circle r="3" cx="65" cy="-70" class="point" component_no="4"></circle><circle r="3" cx="66.04394415630283" cy="69.01592164333645" class="pin-point" component_no="6" component_refs="5"></circle><circle r="3" cx="66.04394415630281" cy="0" class="intersect-point" component_no="7" component_refs="1,6"></circle></svg>
