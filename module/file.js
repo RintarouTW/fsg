@@ -225,10 +225,12 @@ function patchSVGJS(draw) {
 function cleanupDirtyElements(draw) {
   const dirtyElements = draw.find('.selected, .inspecting, .dragging, .hidden-point, .hover, .component, .none, .hidden')
   dirtyElements.each(element => {
-    if (element.hasClass('hidden-point')) 
+    if (element.hasClass('hidden-point')) {
       element.remove()
-    else
-      element.removeClass('component')
+      return
+    }
+
+    element.removeClass('component')
         .removeClass('selected')
         .removeClass('inspecting')
         .removeClass('dragging')
