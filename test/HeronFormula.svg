@@ -10,6 +10,10 @@ H400000v40H845.2724
 s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
 c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
 M834 80h400000v40h-400000z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.419661em;"><span class=""></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.345em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 1.3508em;"><span class=""></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></foreignObject></g><defs><style>
+svg .fsg-board {
+  fill: #151c23;
+}
+
 svg .fsg-ui-select-box {
   stroke-width: 0.5;
   fill: none;
@@ -42,16 +46,6 @@ svg *[fsg_hidden] {
   visibility: hidden;
 }
 
-svg .cover {
-  stroke: rgba(1,0,0,0);
-  stroke-width: 10;
-  fill: none;
-}
-
-svg .cover:hover {
-  cursor: pointer;
-}
-
 svg *[fsg_fill_none]{
   fill: none;
 }
@@ -61,11 +55,40 @@ svg .dashed {
   stroke-width: 1.2;
 }
 
-svg .point, svg .pin-point:hover {
+svg .axis-x,
+svg .axis-y {
+  stroke: #555; 
+  stroke-width: 1.2;
+}
+
+svg .vector-marker-start,
+svg .vector-marker-end {
+  fill: #999;
+}
+
+svg .point {
+  fill: #2f2f2f;
+  stroke: #ff0;
+}
+
+svg .pin-point {
+  fill: #777777aa;
+  stroke: #ff0;
+}
+
+svg .mid-point,
+svg .intersect-point {
+  fill: #777777aa;
+  stroke: #565656aa;
+}
+
+svg .point:hover,
+svg .pin-point:hover {
   cursor: grab;
 }
 
-svg .mid-point, svg .intersect-point:hover {
+svg .mid-point:hover,
+svg .intersect-point:hover {
   cursor: pointer;
 }
 

@@ -83,11 +83,25 @@ export function loadFSG(content) {
 }
 
 function convertFile(file) {
+  console.log(file.name)
   file.text().then(content => {
     _draw = loadFSG(content)
     _draw.fsg.filename = file.name
     saveAsSVG(_draw)
+  }).then(() => {
+    setTimeout(convertOneFileAtATime, 200)
   })
+}
+
+let _files = []
+
+function convertOneFileAtATime() {
+  if (_files.length == 0) return
+  const file = _files.shift()
+  if (file.type == 'image/svg+xml')
+    convertFile(file)
+  else
+    convertOneFileAtATime()
 }
 
 function init() {
@@ -96,12 +110,11 @@ function init() {
     evt.stopPropagation()
   }).on('drop', evt => {
     evt.dataTransfer.files.forEach(file => {
-      console.log(file.name)
-      if (file.type == 'image/svg+xml')
-        convertFile(file)
+      _files.push(file)
     })
     evt.preventDefault()
     evt.stopPropagation()
+    convertOneFileAtATime()
   })
 }
 

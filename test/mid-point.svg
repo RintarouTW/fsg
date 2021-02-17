@@ -1,4 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="-76.5" y="60"></rect><line x1="-175" y1="-35" x2="-15" y2="170" class="edge" stroke="#888888aa" component_no="7" component_refs="5,6" fsg_shape="true"></line><line x1="-175" y1="-35" x2="75" y2="-100" class="edge" stroke="#888888aa" component_no="12" component_refs="5,9" fsg_shape="true"></line><circle r="129.1559135308949" cx="-50" cy="-67.5" class="circle dashed" fill="#ff0f6328" stroke="#888888aa" component_no="14" component_refs="13,5" fsg_shape="true" fsg_fill_none="true"></circle><circle r="130.02403623945844" cx="-95" cy="67.5" class="circle dashed" fill="#ff0f6328" stroke="#888888aa" component_no="15" component_refs="8,5" fsg_shape="true" fsg_fill_none="true"></circle><line x1="-175" y1="-35" x2="30.500000000000014" y2="33.50000000000002" class="edge dashed" stroke="#888888aa" component_no="24" component_refs="5,22" fsg_shape="true"></line><circle r="3" cx="-175" cy="-35" class="point" stroke="#888888aa" component_no="5"></circle><line x1="-15" y1="170" x2="75" y2="-100" class="edge" stroke="#888888aa" component_no="10" component_refs="6,9" fsg_shape="true"></line><circle r="142.30249470757707" cx="30" cy="35" class="circle dashed" fill="#ff0f6328" stroke="#888888aa" component_no="16" component_refs="11,6" fsg_shape="true" fsg_fill_none="true"></circle><line x1="-15" y1="170" x2="-75.05620082427875" y2="-60.98538778568751" class="edge dashed" stroke="#888888aa" component_no="25" component_refs="6,17" fsg_shape="true"></line><circle r="3" cx="-15" cy="170" class="point" stroke="#888888aa" component_no="6"></circle><circle r="3" cx="-95" cy="67.5" class="mid-point" component_no="8" component_refs="5,6"></circle><line x1="75" y1="-100" x2="-111.88724584103512" y2="45.86321626617378" class="edge dashed" stroke="#888888aa" component_no="23" component_refs="9,19" fsg_shape="true"></line><circle r="3" cx="75" cy="-100" class="point" stroke="#888888aa" component_no="9"></circle><circle r="3" cx="30" cy="35" class="mid-point" component_no="11" component_refs="6,9"></circle><circle r="3" cx="-50" cy="-67.5" class="mid-point" component_no="13" component_refs="5,9"></circle><circle r="3" cx="-75.05620082427875" cy="-60.98538778568751" class="intersect-point" index="0" component_no="17" component_refs="16,15"></circle><circle r="3" cx="-111.88724584103512" cy="45.86321626617378" class="intersect-point" index="0" component_no="19" component_refs="14,16"></circle><circle r="3" cx="30.500000000000014" cy="33.50000000000002" class="intersect-point" index="1" component_no="22" component_refs="14,15"></circle><circle r="3" cx="-58.17518248175182" cy="3.94160583941607" class="intersect-point" index="0" component_no="26" component_refs="23,24"></circle></g><defs><style>
+svg .fsg-board {
+  fill: #151c23;
+}
+
 svg .fsg-ui-select-box {
   stroke-width: 0.5;
   fill: none;
@@ -31,16 +35,6 @@ svg *[fsg_hidden] {
   visibility: hidden;
 }
 
-svg .cover {
-  stroke: rgba(1,0,0,0);
-  stroke-width: 10;
-  fill: none;
-}
-
-svg .cover:hover {
-  cursor: pointer;
-}
-
 svg *[fsg_fill_none]{
   fill: none;
 }
@@ -50,11 +44,40 @@ svg .dashed {
   stroke-width: 1.2;
 }
 
-svg .point, svg .pin-point:hover {
+svg .axis-x,
+svg .axis-y {
+  stroke: #555; 
+  stroke-width: 1.2;
+}
+
+svg .vector-marker-start,
+svg .vector-marker-end {
+  fill: #999;
+}
+
+svg .point {
+  fill: #2f2f2f;
+  stroke: #ff0;
+}
+
+svg .pin-point {
+  fill: #777777aa;
+  stroke: #ff0;
+}
+
+svg .mid-point,
+svg .intersect-point {
+  fill: #777777aa;
+  stroke: #565656aa;
+}
+
+svg .point:hover,
+svg .pin-point:hover {
   cursor: grab;
 }
 
-svg .mid-point, svg .intersect-point:hover {
+svg .mid-point:hover,
+svg .intersect-point:hover {
   cursor: pointer;
 }
 

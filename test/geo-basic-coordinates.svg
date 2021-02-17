@@ -1,4 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" rx="8" ry="8" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="185" y="108.125"></rect><line x1="-433.5" y1="0" x2="433.5" y2="0" class="axis-x" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" component_no="1" fsg_shape="true" fsg_hidden="true"></line><line x1="0" y1="-325.125" x2="0" y2="325.125" class="axis-y" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" component_no="2" fsg_shape="true" fsg_hidden="true"></line><line x1="-215" y1="-325.625" x2="-215" y2="325.625" class="perp-line dashed" stroke="#888888aa" component_no="8" component_refs="1,5" fsg_shape="true" fsg_hidden="true"></line><circle r="165" cx="-215" cy="0" class="circle dashed" fill="#ff0f6328" stroke="#888888aa" component_no="18" component_refs="5,11" fsg_shape="true" fsg_fill_none="true" fsg_hidden="true"></circle><circle r="3" cx="-215" cy="0" class="pin-point" component_no="5" component_refs="1"></circle><line x1="220" y1="-325.625" x2="220" y2="325.625" class="perp-line dashed" stroke="#888888aa" component_no="10" component_refs="1,6" fsg_shape="true" fsg_hidden="true"></line><circle r="165" cx="220" cy="0" class="circle dashed" fill="#ff0f6328" stroke="#888888aa" component_no="15" component_refs="6,14" fsg_shape="true" fsg_fill_none="true" fsg_hidden="true"></circle><circle r="3" cx="220" cy="0" class="pin-point" component_no="6" component_refs="1"></circle><line x1="-434" y1="165" x2="435" y2="165" class="perp-line dashed" stroke="#888888aa" component_no="13" component_refs="8,11" fsg_shape="true" fsg_hidden="true"></line><line x1="-215" y1="-165" x2="-215" y2="165" class="vector" stroke="#888888aa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="26" component_refs="20,11" fsg_shape="true"></line><circle r="3" cx="-215" cy="165" class="pin-point" component_no="11" component_refs="8" label="y" fsg_hidden="true"></circle><line x1="220" y1="165" x2="220" y2="-165" class="vector" stroke="#888888aa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="28" component_refs="14,17" fsg_shape="true"></line><circle r="3" cx="220" cy="165" class="intersect-point" index="0" component_no="14" component_refs="13,10" fsg_hidden="true"></circle><circle r="3" cx="220" cy="-165" class="intersect-point" index="1" component_no="17" component_refs="10,15" label="y" fsg_hidden="true"></circle><circle r="3" cx="-215" cy="-165" class="intersect-point" index="1" component_no="20" component_refs="8,18" fsg_hidden="true"></circle><line x1="-380" y1="0" x2="-50" y2="0" class="vector" stroke="#888888aa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="25" component_refs="22,21" fsg_shape="true"></line><circle r="3" cx="-50" cy="0" class="intersect-point" index="0" component_no="21" component_refs="1,18" label="x" fsg_hidden="true"></circle><circle r="3" cx="-380" cy="0" class="intersect-point" index="1" component_no="22" component_refs="1,18" fsg_hidden="true"></circle><line x1="55" y1="0" x2="385" y2="0" class="vector" stroke="#888888aa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="27" component_refs="24,23" fsg_shape="true"></line><circle r="3" cx="385" cy="0" class="intersect-point" index="0" component_no="23" component_refs="1,15" label="x" fsg_hidden="true"></circle><circle r="3" cx="55" cy="0" class="intersect-point" index="1" component_no="24" component_refs="1,15" fsg_hidden="true"></circle><text class="label" offset_x="5" offset_y="5" of="23" transform="matrix(1,0,0,-1,0,0)" x="390" y="-4.796875" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="390" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">x</tspan></text><text class="label" offset_x="5" offset_y="5" of="17" transform="matrix(1,0,0,-1,0,0)" x="225" y="160.203125" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="225" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">y</tspan></text><text class="label" offset_x="5" offset_y="5" of="21" transform="matrix(1,0,0,-1,0,0)" x="-45" y="-4.796875" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-45" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">x</tspan></text><text class="label" offset_x="6.03125" offset_y="-27.140625" of="11" transform="matrix(1,0,0,-1,0,0)" x="-208.96875" y="-201.9375" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-208.96875" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">y</tspan></text></g><defs><style>
+svg .fsg-board {
+  fill: #151c23;
+}
+
 svg .fsg-ui-select-box {
   stroke-width: 0.5;
   fill: none;
@@ -31,16 +35,6 @@ svg *[fsg_hidden] {
   visibility: hidden;
 }
 
-svg .cover {
-  stroke: rgba(1,0,0,0);
-  stroke-width: 10;
-  fill: none;
-}
-
-svg .cover:hover {
-  cursor: pointer;
-}
-
 svg *[fsg_fill_none]{
   fill: none;
 }
@@ -50,11 +44,40 @@ svg .dashed {
   stroke-width: 1.2;
 }
 
-svg .point, svg .pin-point:hover {
+svg .axis-x,
+svg .axis-y {
+  stroke: #555; 
+  stroke-width: 1.2;
+}
+
+svg .vector-marker-start,
+svg .vector-marker-end {
+  fill: #999;
+}
+
+svg .point {
+  fill: #2f2f2f;
+  stroke: #ff0;
+}
+
+svg .pin-point {
+  fill: #777777aa;
+  stroke: #ff0;
+}
+
+svg .mid-point,
+svg .intersect-point {
+  fill: #777777aa;
+  stroke: #565656aa;
+}
+
+svg .point:hover,
+svg .pin-point:hover {
   cursor: grab;
 }
 
-svg .mid-point, svg .intersect-point:hover {
+svg .mid-point:hover,
+svg .intersect-point:hover {
   cursor: pointer;
 }
 

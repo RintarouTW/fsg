@@ -1,4 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" rx="8" ry="8" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="110" y="-131.875"></rect><line x1="-210" y1="140" x2="65" y2="140" class="edge dashed" stroke="#888888aa" component_no="7" component_refs="5,6" fsg_shape="true"></line><line x1="125" y1="-110" x2="-210" y2="140" class="edge dashed" stroke="#888888aa" component_no="13" component_refs="9,5" fsg_shape="true"></line><polygon points="65,140 125,-110 -210,140" class="polygon dashed" fill="#219fff28" stroke="#888888aa" component_no="20" component_refs="6,9,5" fsg_shape="true"></polygon><circle r="3" cx="-210" cy="140" class="point" stroke="#888888aa" component_no="5" fill="#ff008828" label="E"></circle><line x1="65" y1="140" x2="125" y2="-110" class="edge dashed" stroke="#888888aa" component_no="10" component_refs="6,9" fsg_shape="true"></line><circle r="3" cx="65" cy="140" class="point" stroke="#888888aa" component_no="6" label="D"></circle><line x1="95" y1="15" x2="-72.5" y2="140" class="edge dashed" stroke="#888888aa" component_no="17" component_refs="11,8" fsg_shape="true"></line><line x1="-72.5" y1="140" x2="-42.5" y2="15" class="edge dashed" stroke="#888888aa" component_no="18" component_refs="8,15" fsg_shape="true"></line><polygon points="-72.5,140 -42.5,15 95,15" class="polygon dashed" fill="#dda6ff28" stroke="#888888aa" component_no="19" component_refs="8,15,11" fsg_shape="true"></polygon><circle r="3" cx="-72.5" cy="140" class="mid-point" component_no="8" component_refs="5,6" label="A"></circle><circle r="3" cx="125" cy="-110" class="point" stroke="#888888aa" component_no="9" label="F"></circle><line x1="-42.5" y1="15" x2="95" y2="15" class="edge dashed" stroke="#888888aa" component_no="16" component_refs="15,11" fsg_shape="true"></line><circle r="3" cx="95" cy="15" class="mid-point" component_no="11" component_refs="6,9" label="C"></circle><circle r="3" cx="-42.5" cy="15" class="mid-point" component_no="15" component_refs="5,9" label="B"></circle><text class="label" offset_x="-8.5" offset_y="-27.234375" of="8" transform="matrix(1,0,0,-1,0,0)" x="-81" y="-176.578125" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-81" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">A</tspan></text><text class="label" offset_x="3.921875" offset_y="-22" of="6" transform="matrix(1,0,0,-1,0,0)" x="68.921875" y="-171.765625" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="68.921875" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">D</tspan></text><text class="label" offset_x="8.90625" offset_y="7.84375" of="11" transform="matrix(1,0,0,-1,0,0)" x="103.9140625" y="-16.6640625" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="103.9140625" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">C</tspan></text><text class="label" offset_x="-11.125" offset_y="-22.015625" of="5" transform="matrix(1,0,0,-1,0,0)" x="-221.1171875" y="-171.8046875" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-221.1171875" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">E</tspan></text><text class="label" offset_x="5" offset_y="5" of="9" transform="matrix(1,0,0,-1,0,0)" x="130" y="105.203125" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="130" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">F</tspan></text><text class="label" offset_x="-18.578125" offset_y="7.96875" of="15" transform="matrix(1,0,0,-1,0,0)" x="-61.0703125" y="-16.796875" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-61.0703125" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">B</tspan></text></g><defs><style>
+svg .fsg-board {
+  fill: #151c23;
+}
+
 svg .fsg-ui-select-box {
   stroke-width: 0.5;
   fill: none;
@@ -31,16 +35,6 @@ svg *[fsg_hidden] {
   visibility: hidden;
 }
 
-svg .cover {
-  stroke: rgba(1,0,0,0);
-  stroke-width: 10;
-  fill: none;
-}
-
-svg .cover:hover {
-  cursor: pointer;
-}
-
 svg *[fsg_fill_none]{
   fill: none;
 }
@@ -50,11 +44,40 @@ svg .dashed {
   stroke-width: 1.2;
 }
 
-svg .point, svg .pin-point:hover {
+svg .axis-x,
+svg .axis-y {
+  stroke: #555; 
+  stroke-width: 1.2;
+}
+
+svg .vector-marker-start,
+svg .vector-marker-end {
+  fill: #999;
+}
+
+svg .point {
+  fill: #2f2f2f;
+  stroke: #ff0;
+}
+
+svg .pin-point {
+  fill: #777777aa;
+  stroke: #ff0;
+}
+
+svg .mid-point,
+svg .intersect-point {
+  fill: #777777aa;
+  stroke: #565656aa;
+}
+
+svg .point:hover,
+svg .pin-point:hover {
   cursor: grab;
 }
 
-svg .mid-point, svg .intersect-point:hover {
+svg .mid-point:hover,
+svg .intersect-point:hover {
   cursor: pointer;
 }
 
