@@ -1,4 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="104.5" y="95"></rect><line x1="-433.5" y1="0" x2="433.5" y2="0" class="axis-x" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" component_no="1" fsg_shape="true"></line><line x1="0" y1="-325.125" x2="0" y2="325.125" class="axis-y" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" component_no="2" fsg_shape="true"></line><line x1="0" y1="0" x2="90" y2="140" class="vector" stroke="#888888aa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="16" component_refs="4,5" fsg_shape="true"></line><line x1="0" y1="0" x2="42.07825331809441" y2="65.45506071703574" class="vector" stroke="#ffffffaa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="18" component_refs="4,17" fsg_shape="true"></line><line x1="0" y1="0" x2="229.58727858885248" y2="-55.08645552845168" class="vector dashed" stroke="#ffffffaa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" component_no="22" component_refs="4,21" fsg_shape="true"></line><circle r="3" cx="0" cy="0" class="point" stroke="#888888aa" component_no="4" label="A"></circle><circle r="3" cx="90" cy="140" class="point" stroke="#888888aa" component_no="5" label="B = (2, 3)"></circle><text class="label" offset_x="-21" offset_y="12.765625" of="4" transform="matrix(1,0,0,-1,0,0)" x="-21" y="3.421875" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-21" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">A</tspan></text><text class="label" offset_x="5" offset_y="5" of="5" transform="matrix(1,0,0,-1,0,0)" x="95" y="-144.6875" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="95" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">B = (2, 3)</tspan></text><line x1="434" y1="-186.4946335784752" x2="-362.63054112207186" y2="325.625" class="perp-line dashed" stroke="#888888aa" component_no="20" component_refs="18,17" label="2x + 3y = 5" fsg_shape="true"></line><circle r="3" cx="42.07825331809441" cy="65.45506071703574" class="pin-point" component_no="17" component_refs="16" label="C"></circle><text class="label" offset_x="-10.586951483312724" offset_y="-28.31817830655131" of="17" transform="matrix(1,0,0,-1,0,0)" x="31.50263665347552" y="-103.28402234868659" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="31.50263665347552" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">C</tspan></text><circle r="3" cx="229.58727858885248" cy="-55.08645552845168" class="pin-point" component_no="21" component_refs="20" label="D = (x, y)"></circle><text class="label" offset_x="3.8513983312731455" offset_y="-23.588419344870196" of="21" transform="matrix(1,0,0,-1,0,0)" x="233.4490730996182" y="21.820211569585332" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="233.4490730996182" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">D = (x, y)</tspan></text><text class="label" offset_x="-193.21597290039062" offset_y="-142.669189453125" of="20" transform="matrix(1,0,0,-1,0,0)" x="-157.51821899414062" y="-222.024658203125" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-157.51821899414062" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">2x + 3y = 5</tspan></text></g><defs><style>
+svg {
+  cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"></path></svg>') -8 -8, default !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 svg .fsg-board {
   fill: #151c23;
 }
@@ -14,16 +20,12 @@ svg .menu {
 
 svg .menu_title {
   fill: #aaa;
-  user-select: none;
-  -webkit-user-select: none;
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 svg .menu_item {
   font-weight: 300;
   fill: #888;
-  user-select: none;
-  -webkit-user-select: none;
 }
 
 svg .menu_item:hover {
@@ -48,14 +50,12 @@ svg .dashed {
   stroke-width: 1.2;
 }
 
-svg .axis-x,
-svg .axis-y {
+svg .axis-x, svg .axis-y {
   stroke: #555; 
   stroke-width: 1.2;
 }
 
-svg .vector-marker-start,
-svg .vector-marker-end {
+svg .vector-marker-start, svg .vector-marker-end {
   fill: #999;
 }
 
@@ -69,19 +69,16 @@ svg .pin-point {
   stroke: #ff0;
 }
 
-svg .mid-point,
-svg .intersect-point {
+svg .mid-point, svg .intersect-point {
   fill: #777777aa;
   stroke: #565656aa;
 }
 
-svg .point:hover,
-svg .pin-point:hover {
+svg .point:hover, svg .pin-point:hover {
   cursor: grab;
 }
 
-svg .mid-point:hover,
-svg .intersect-point:hover {
+svg .mid-point:hover, svg .intersect-point:hover {
   cursor: pointer;
 }
 
@@ -90,11 +87,7 @@ svg g, svg div, svg foreignObject, svg span {
 }
 
 svg span.base {
- position: relative !important;
-}
-
-svg .latex, svg .label, svg .title {
-  user-select: none;
+  position: relative !important;
 }
 
 svg .latex-container {

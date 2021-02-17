@@ -11,6 +11,12 @@ c-16-25.333-24-45-24-59z"></path></svg></span></span></span></span></span></span
 -7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
 H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
 c-16-25.333-24-45-24-59z"></path></svg></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.19444em;"><span class=""></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 2.63em;"><span class=""></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></foreignObject></g><defs><style>
+svg {
+  cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"></path></svg>') -8 -8, default !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 svg .fsg-board {
   fill: #151c23;
 }
@@ -26,16 +32,12 @@ svg .menu {
 
 svg .menu_title {
   fill: #aaa;
-  user-select: none;
-  -webkit-user-select: none;
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 svg .menu_item {
   font-weight: 300;
   fill: #888;
-  user-select: none;
-  -webkit-user-select: none;
 }
 
 svg .menu_item:hover {
@@ -60,14 +62,12 @@ svg .dashed {
   stroke-width: 1.2;
 }
 
-svg .axis-x,
-svg .axis-y {
+svg .axis-x, svg .axis-y {
   stroke: #555; 
   stroke-width: 1.2;
 }
 
-svg .vector-marker-start,
-svg .vector-marker-end {
+svg .vector-marker-start, svg .vector-marker-end {
   fill: #999;
 }
 
@@ -81,19 +81,16 @@ svg .pin-point {
   stroke: #ff0;
 }
 
-svg .mid-point,
-svg .intersect-point {
+svg .mid-point, svg .intersect-point {
   fill: #777777aa;
   stroke: #565656aa;
 }
 
-svg .point:hover,
-svg .pin-point:hover {
+svg .point:hover, svg .pin-point:hover {
   cursor: grab;
 }
 
-svg .mid-point:hover,
-svg .intersect-point:hover {
+svg .mid-point:hover, svg .intersect-point:hover {
   cursor: pointer;
 }
 
@@ -102,11 +99,7 @@ svg g, svg div, svg foreignObject, svg span {
 }
 
 svg span.base {
- position: relative !important;
-}
-
-svg .latex, svg .label, svg .title {
-  user-select: none;
+  position: relative !important;
 }
 
 svg .latex-container {

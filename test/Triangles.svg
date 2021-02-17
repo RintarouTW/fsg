@@ -1,4 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="-23.5" y="-130"></rect><line x1="-170" y1="125" x2="-295" y2="-65" class="edge" stroke="#888888aa" component_no="7" component_refs="5,6" fsg_shape="true"></line><line x1="-65" y1="-65" x2="-170" y2="125" class="edge" stroke="#888888aa" component_no="10" component_refs="8,5" fsg_shape="true"></line><line x1="-170" y1="125" x2="-170" y2="-65" class="edge dashed" stroke="#888888aa" component_no="14" component_refs="5,13" fsg_shape="true"></line><circle r="3" cx="-170" cy="125" class="point" stroke="#888888aa" component_no="5"></circle><line x1="-295" y1="-65" x2="-65" y2="-65" class="edge" stroke="#888888aa" component_no="9" component_refs="6,8" fsg_shape="true"></line><line x1="-295" y1="-65" x2="-118.80901856763926" y2="32.36870026525199" class="edge dashed" stroke="#888888aa" component_no="12" component_refs="6,11" fsg_shape="true"></line><circle r="3" cx="-295" cy="-65" class="point" stroke="#888888aa" component_no="6"></circle><line x1="-65" y1="-65" x2="-225.521991300145" y2="40.60657322377959" class="edge dashed" stroke="#888888aa" component_no="16" component_refs="8,15" fsg_shape="true"></line><circle r="3" cx="-65" cy="-65" class="point" stroke="#888888aa" component_no="8"></circle><circle r="3" cx="-118.80901856763926" cy="32.36870026525199" class="intersect-point" index="0" component_no="11" component_refs="10,6"></circle><circle r="3" cx="-170" cy="-65" class="intersect-point" index="0" component_no="13" component_refs="9,5"></circle><circle r="3" cx="-225.521991300145" cy="40.60657322377959" class="intersect-point" index="0" component_no="15" component_refs="7,8"></circle><line x1="230" y1="155" x2="15" y2="-60" class="edge" stroke="#888888aa" component_no="19" component_refs="17,18" fsg_shape="true"></line><line x1="145" y1="-60" x2="230" y2="155" class="edge" stroke="#888888aa" component_no="26" component_refs="24,17" fsg_shape="true"></line><line x1="230" y1="155" x2="230" y2="-60" class="edge dashed" stroke="#888888aa" component_no="32" component_refs="17,31" fsg_shape="true"></line><circle r="3" cx="230" cy="155" class="point" stroke="#888888aa" component_no="17"></circle><line x1="15" y1="-60" x2="145" y2="-60" class="edge" stroke="#888888aa" component_no="25" component_refs="18,24" fsg_shape="true"></line><line x1="15" y1="-60" x2="127.42750233863424" y2="-104.44808231992516" class="edge dashed" stroke="#888888aa" component_no="28" component_refs="18,27" fsg_shape="true"></line><circle r="3" cx="15" cy="-60" class="point" stroke="#888888aa" component_no="18"></circle><line x1="145" y1="-60" x2="80.00000000000003" y2="5.000000000000028" class="edge dashed" stroke="#888888aa" component_no="30" component_refs="24,29" fsg_shape="true"></line><line x1="145" y1="-60" x2="230" y2="-60" class="edge dashed" stroke="#888888aa" component_no="33" component_refs="24,31" fsg_shape="true"></line><line x1="145" y1="-60" x2="127.42750233863424" y2="-104.44808231992516" class="edge dashed" stroke="#888888aa" component_no="34" component_refs="24,27" fsg_shape="true"></line><circle r="3" cx="145" cy="-60" class="point" stroke="#888888aa" component_no="24"></circle><circle r="3" cx="127.42750233863424" cy="-104.44808231992516" class="intersect-point" index="0" component_no="27" component_refs="26,18"></circle><circle r="3" cx="80.00000000000003" cy="5.000000000000028" class="intersect-point" index="0" component_no="29" component_refs="19,24"></circle><circle r="3" cx="230" cy="-60" class="intersect-point" index="0" component_no="31" component_refs="25,17"></circle></g><defs><style>
+svg {
+  cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"></path></svg>') -8 -8, default !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 svg .fsg-board {
   fill: #151c23;
 }
@@ -14,16 +20,12 @@ svg .menu {
 
 svg .menu_title {
   fill: #aaa;
-  user-select: none;
-  -webkit-user-select: none;
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 svg .menu_item {
   font-weight: 300;
   fill: #888;
-  user-select: none;
-  -webkit-user-select: none;
 }
 
 svg .menu_item:hover {
@@ -48,14 +50,12 @@ svg .dashed {
   stroke-width: 1.2;
 }
 
-svg .axis-x,
-svg .axis-y {
+svg .axis-x, svg .axis-y {
   stroke: #555; 
   stroke-width: 1.2;
 }
 
-svg .vector-marker-start,
-svg .vector-marker-end {
+svg .vector-marker-start, svg .vector-marker-end {
   fill: #999;
 }
 
@@ -69,19 +69,16 @@ svg .pin-point {
   stroke: #ff0;
 }
 
-svg .mid-point,
-svg .intersect-point {
+svg .mid-point, svg .intersect-point {
   fill: #777777aa;
   stroke: #565656aa;
 }
 
-svg .point:hover,
-svg .pin-point:hover {
+svg .point:hover, svg .pin-point:hover {
   cursor: grab;
 }
 
-svg .mid-point:hover,
-svg .intersect-point:hover {
+svg .mid-point:hover, svg .intersect-point:hover {
   cursor: pointer;
 }
 
@@ -90,11 +87,7 @@ svg g, svg div, svg foreignObject, svg span {
 }
 
 svg span.base {
- position: relative !important;
-}
-
-svg .latex, svg .label, svg .title {
-  user-select: none;
+  position: relative !important;
 }
 
 svg .latex-container {
