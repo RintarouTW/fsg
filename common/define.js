@@ -16,6 +16,10 @@ export const RUNTIME_SCRIPT_URL = String.raw`<script href="${SERVER_ROOT}/runtim
 
 /* default styles, functional related, not related to theme */
 export const RUNTIME_DEFAULT_STYLE = String.raw`<style>
+svg .fsg-board {
+  fill: #151c23;
+}
+
 svg .fsg-ui-select-box {
   stroke-width: 0.5;
   fill: none;
