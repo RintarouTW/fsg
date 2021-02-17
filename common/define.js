@@ -17,13 +17,13 @@ export const RUNTIME_SCRIPT_URL = String.raw`<script href="${SERVER_ROOT}/runtim
 /* default styles, functional related, not related to theme */
 export const RUNTIME_DEFAULT_STYLE = String.raw`<style>
 svg {
-  cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"/></svg>') -8 -8, default !important;
   user-select: none;
   -webkit-user-select: none;
 }
 
 svg .fsg-board {
   fill: #151c23;
+  cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"/></svg>') -8 -8, default;
 }
 
 svg .fsg-ui-select-box {

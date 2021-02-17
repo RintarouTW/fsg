@@ -96,8 +96,6 @@ body {
 }
 
 #editArea {
-  /* background-color: rgba(255,255,255,0); */
-  /* background-color: var(--ui-editarea-background-color); */
   backdrop-filter: blur(9px);
   border-radius: 2px;
   border: 1px solid var(--ui-editarea-border-color);
