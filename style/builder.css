@@ -109,7 +109,7 @@ body {
 
 .fsg-board {
   fill: rgba(255,255,255,0) !important;
-  cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"/></svg>') -8 -8, crosshair !important;
+  cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"/></svg>') -8 -8, default !important;
 }
 
 @keyframes fadeIn {
@@ -356,18 +356,13 @@ svg .cover:hover {
   stroke: var(--ui-hover-stroke-color);
 }
 
-.point[fsg_hover],
-.pin-point[fsg_hover],
-.perp-point[fsg_hover],
-.mid-point[fsg_hover],
-.intersect-point[fsg_hover],
-.parallel-point[fsg_hover] {
+*[fsg_hover]:not([fsg_shape]) {
   stroke: var(--ui-hover-stroke-color) !important;
   stroke-width: 1.5 !important;
 }
 
 *[fsg_dragging] {
-  cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"/></svg>') -8 -8, crosshair !important;
+  cursor: url('data:image/svg+xml;utf8,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.95198 12.6724L0.846468 0.908064L16.5706 7.66667H7.6H7.28118L7.14667 7.95573L4.95198 12.6724Z" fill="black" stroke="white"/></svg>') -8 -8, default !important;
 }
 
 [fsg_selected]:not([fsg_inspecting]) {
