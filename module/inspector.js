@@ -28,11 +28,11 @@ const fieldDefaultValue = {
 }
 
 export function editField(fieldId) {
-  let element = SVG(fieldId)
-  element.node.focus()
+  SVG(fieldId).node.focus()
 }
 
 let _inspecting_element
+let _isColorFieldFocused = false
 
 function setInspecting(element) {
   return element?.attr(FSG_INSPECTING_ATTR, true)
@@ -62,44 +62,38 @@ function inspect_component(component) {
   // detach previous listeners
   if (_inspecting_element) {
     unsetInspecting(_inspecting_element)
-      .off('update', update_fields)
-      .off('dragend', update_fields)
+      .off('update dragend', update_fields)
   }
+
   _inspecting_element = element
+
   // attach new listeners
-  if (element) {
-    setInspecting(_inspecting_element)
-    element.on('update', update_fields)
-      .on('dragend', update_fields)
-  }
+  setInspecting(element)
+  element.on('update dragend', update_fields)
 
   // read the values of the element
   const attributes = component.getAttributes()
-  // console.log(element, attributes)
   attributes.forEach(name => {
     const field = SVG('#field_' + name).node
-    let  value = component.getAttribute(name)
+    let value = component.getAttribute(name)
 
     if (typeof value === 'undefined')
       value = fieldDefaultValue[name]
 
-    if (name == 'fill' || name == 'stroke') {
+    if (name == 'fill' || name == 'stroke')
       field.style.backgroundColor = value
-      field.value = value
-      SVG(field).fire('change')
-    } else {
-      field.value = value
-    }
+
+    field.value = value
+    SVG(field).fire('change')
   })
 
-  update_fields()
+  // update_fields()
 }
 
 function inspect_detach() {
   if (_inspecting_element) {
     unsetInspecting(_inspecting_element)
-    _inspecting_element.off('update', update_fields)
-    _inspecting_element.off('dragend', update_fields)
+    _inspecting_element.off('update dragend', update_fields)
   }
   // set fields back to default values.
   non_color_fields.forEach(name => {
@@ -124,8 +118,10 @@ export function init_module_inspector(draw) {
   })
   document.addEventListener('colorpicker:change-end', evt => {
     if (!_inspecting_element) return
-    setSelected(_inspecting_element)
-    setInspecting(_inspecting_element)
+    if (!_isColorFieldFocused) {
+      setSelected(_inspecting_element)
+      setInspecting(_inspecting_element)
+    }
     const {field, oldValue, newValue} = evt.detail
     const attributeName = field.substr(6)
     const components = [_inspecting_element.component]
@@ -135,25 +131,26 @@ export function init_module_inspector(draw) {
 
 function init_fields() {
 
-  _inspecting_element?.off('update', update_fields)
-    .off('dragend', update_fields)
+  _inspecting_element?.off('update dragend', update_fields)
+  // .off('dragend', update_fields)
   _inspecting_element = null
 
   fields.forEach(name => {
     const field = SVG('#field_' + name)
-    if (!field) return
+    console.assert(field, `#field_${name} not found`)
 
-    field.on('input', evt => {
+    field.on('input', evt => { // when user edit the field, apply to the inspecting element.
+
       const attribute_name = evt.target.id.substr(6)
       let value = evt.target.value
       if (value == '') value = null
 
-      try {
-        // console.log(attribute_name, value)
+      try { // console.log(attribute_name, value)
         _inspecting_element?.component?.setAttribute(attribute_name, value)
       } catch(err) {
         console.log(err)
       }
+
     }).on('keydown', evt => {
       if (evt.code == 'Enter') field.node.blur()
     })
@@ -164,9 +161,11 @@ function init_fields() {
     attachColorPicker(evt.target)
     unsetInspecting(_inspecting_element)
     unsetSelected(_inspecting_element)
+    _isColorFieldFocused = true
   }).on('blur', () => {
     setSelected(_inspecting_element)
     setInspecting(_inspecting_element)
+    _isColorFieldFocused = false
   }).on('input', evt => { // change backgroundColor once value changed
     evt.target.style.backgroundColor = evt.target.value
   })
@@ -180,12 +179,7 @@ function update_fields() {
   attributes.forEach(name => {
     const field = SVG('#field_' + name).node
     let value = component.getAttribute(name)
-    if (value === '' || (typeof(value) == 'undefined')) {
-      value = null
-      field.value = value
-    } else {
-      field.value = String(value)
-    }
+    field.value = (value === '' || (typeof(value) == 'undefined')) ? null : String(value)
   })
 }
 
