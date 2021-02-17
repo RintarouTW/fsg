@@ -39,6 +39,10 @@ svg *[fsg_fill_none]{
   fill: none;
 }
 
+svg *[fsg_shape]:hover {
+  stroke: #fff;
+}
+
 svg .dashed {
   stroke-dasharray: 5 3;
   stroke-width: 1.2;
