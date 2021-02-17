@@ -30,10 +30,8 @@ function findAllComponentElements(draw) {
   const componentElements = draw.find(`[${COMPONENT_NO_ATTR}]`)
   // sort by component_no
   componentElements.sort((a, b) => {
-    const no1 = Number(a.attr(COMPONENT_NO_ATTR)) 
-    // console.assert(a, "component has no component_no")
-    const no2 = Number(b.attr(COMPONENT_NO_ATTR)) 
-    // console.assert(b, "component has no component_no")
+    const no1 = Number(a.attr(COMPONENT_NO_ATTR)) //; console.assert(a, "component has no component_no")
+    const no2 = Number(b.attr(COMPONENT_NO_ATTR)) //; console.assert(b, "component has no component_no")
     return no1 - no2
   })
   return componentElements
@@ -46,25 +44,6 @@ function elementByNo(components, no) {
   })
   return found
 }
-/*
-function coverOf(covers, component_no) {
-  let found = null
-  covers.forEach(cover => {
-    // console.log(component_no, cover, cover.attr(OF_ATTR))
-    if (component_no == cover.attr(OF_ATTR) ) found = cover
-  })
-  console.assert(found, 'cover is required', covers, component_no)
-  return found
-}
-
-// 
-// check element position after reconstruction, make sure the reconstruction won't change the order of elements
-//
-//
-function checkPosition(position, element) {
-  // console.assert(position == element.position(), 'position of element changed', position, element)
-}
-*/
 
 export function reconstruct_components(draw) {
   const list = findAllComponentElements(draw)
@@ -231,7 +210,7 @@ function cleanupDirtyElements(draw) {
     `[${FSG_DRAGGING_ATTR}]`,
     `[${FSG_HOVER_ATTR}]`,
   ]
-  dirtyAttributes.each(attr => {
+  dirtyAttributes.forEach(attr => {
     const dirtyElements = draw.find(attr)
     dirtyElements.forEach(element => {
       element.attr(FSG_SELECTED_ATTR, null)
