@@ -89,7 +89,7 @@ function convertFile(file) {
     _draw.fsg.filename = file.name
     saveAsSVG(_draw)
   }).then(() => {
-    setTimeout(convertOneFileAtATime, 200)
+    setTimeout(convertOneFileAtATime, 100) // a little delay for the next file
   })
 }
 
