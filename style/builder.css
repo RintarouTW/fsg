@@ -330,11 +330,15 @@ kbd {
   fill: var(--ui-select-box-fill-color);
 }
 
-.cover {
+svg .cover {
   stroke: rgba(255,255,255,0) !important;
   stroke-width: 6 !important;
   stroke-dasharray: none !important;
   fill: none;
+}
+
+svg .cover:hover {
+  cursor: pointer;
 }
 
 *[fsg_hover] {

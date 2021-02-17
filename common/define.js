@@ -52,16 +52,6 @@ svg *[fsg_hidden] {
   visibility: hidden;
 }
 
-svg .cover {
-  stroke: rgba(1,0,0,0);
-  stroke-width: 10;
-  fill: none;
-}
-
-svg .cover:hover {
-  cursor: pointer;
-}
-
 svg *[fsg_fill_none]{
   fill: none;
 }
@@ -71,11 +61,40 @@ svg .dashed {
   stroke-width: 1.2;
 }
 
-svg .point, svg .pin-point:hover {
+svg .axis-x,
+svg .axis-y {
+  stroke: #555; 
+  stroke-width: 1.2;
+}
+
+svg .vector-marker-start,
+svg .vector-marker-end {
+  fill: #999;
+}
+
+svg .point {
+  fill: #2f2f2f;
+  stroke: #ff0;
+}
+
+svg .pin-point {
+  fill: #777777aa;
+  stroke: #ff0;
+}
+
+svg .mid-point,
+svg .intersect-point {
+  fill: #777777aa;
+  stroke: #565656aa;
+}
+
+svg .point:hover,
+svg .pin-point:hover {
   cursor: grab;
 }
 
-svg .mid-point, svg .intersect-point:hover {
+svg .mid-point:hover,
+svg .intersect-point:hover {
   cursor: pointer;
 }
 
