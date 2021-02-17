@@ -193,6 +193,13 @@ body {
   width: 32px;
 }
 
+#github {
+  position: absolute;
+  top: 50px;
+  right: 5px;
+  width: 32px;
+}
+
 .button {
   filter: drop-shadow(3px 2px 3px black);
 }
