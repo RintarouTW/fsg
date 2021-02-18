@@ -67,11 +67,9 @@ export class Shape extends SelectableComponent {
     }).on('mouseenter', () => {
       if (!draw.dragTarget && !draw.dragSelectStart) {
         element.attr(FSG_HOVER_ATTR, true)
-        cover.attr(FSG_HOVER_ATTR, true)
       }
     }).on('mouseleave', () => {
       element.attr(FSG_HOVER_ATTR, null)
-      cover.attr(FSG_HOVER_ATTR, null)
     })
   }
   remove() {
