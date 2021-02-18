@@ -13,6 +13,7 @@ import { addPoint } from '../components/draggable-point.js'
 import { LineShape, addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
 import { addEdge, addVector } from '../components/line-segment.js'
 import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
+import { addArrowedAngle } from '../components/measure.js'
 import { addLaTeX } from '../components/latex.js'
 import { 
   unselectAllSelections,
@@ -295,6 +296,17 @@ export function init_module_keybinding(draw) {
         break
       case 'KeyM':
         {
+          if (evt.shiftKey) {
+            points = getSelectedPointElements(draw)
+            if (!points || points.length < 3) {
+              showHint('Select 3 points first!')
+              return
+            }
+            points = [points[0], points[1], points[2]] // use only the last 3 points
+            componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+            doAction(draw, addArrowedAngle, {draw, componentRefs})
+            return
+          }
           if (!points) {
             showHint('Select 2 points first!')
             return

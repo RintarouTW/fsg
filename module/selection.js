@@ -2,12 +2,13 @@
 
 import { SelectableComponent } from '../components/component.js'
 import { Circle, Arc } from '../components/fillable.js'
+import { ArrowedArc } from '../components/measure.js'
 import { SelectablePoint } from '../components/point.js'
 import { InvisiblePoint } from '../components/invisible-point.js'
 import { Shape } from '../components/shape.js'
 import { FillableShape } from '../components/fillable.js'
 import { LineShape } from '../components/line.js'
-import {COMPONENT_NO_ATTR} from '../common/define.js'
+import { COMPONENT_NO_ATTR } from '../common/define.js'
 
 export function init_module_selection(draw) {
   console.assert(draw, 'draw must exist')
@@ -258,7 +259,7 @@ export function getLastSelectedAngleComponents(draw) {
   const selections = draw.fsg.selection.selections
   let angles = []
   selections.forEach(item => {
-    if (item instanceof Arc) angles.push(item) 
+    if (item instanceof Arc || item instanceof ArrowedArc ) angles.push(item) 
   })
   return angles
 }

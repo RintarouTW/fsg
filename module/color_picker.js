@@ -109,3 +109,13 @@ export function currentFillColor() {
 export function currentStrokeColor() {
   return SVG('#field_stroke').node.value
 }
+
+export function useCurrentColors(element) {
+  if (window.FSG_BUILDER) { // run in editor
+    const fillColor = currentFillColor()
+    const strokeColor = currentStrokeColor()
+    element.attr('fill', fillColor)
+    element.attr('stroke', strokeColor)
+  }
+}
+

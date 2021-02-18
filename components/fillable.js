@@ -12,16 +12,7 @@ import { pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { Shape, putBehindPoints } from './shape.js'
 import { addAppendingPinPoint } from './appending-point.js'
-import { currentFillColor, currentStrokeColor } from '../module/color_picker.js'
-
-function useCurrentColors(element) {
-  if (window.FSG_BUILDER) { // run in editor
-    const fillColor = currentFillColor()
-    const strokeColor = currentStrokeColor()
-    element.attr('fill', fillColor)
-    element.attr('stroke', strokeColor)
-  }
-}
+import { useCurrentColors } from '../module/color_picker.js'
 
 function coverForCircleElement(draw, element) {
   if (window.FSG_BUILDER) {
@@ -143,7 +134,7 @@ export function addPolygon({draw, componentRefs, element, cover, component_no}) 
 /// Arc
 ///
 
-function arcOf(p1, p2, p3, large_arc = false) {
+function arcPathOf(p1, p2, p3, large_arc = false) {
   // console.assert(p1, 'p1 must be defined')
   // console.assert(p2, 'p2 must be defined')
   // console.assert(p3, 'p3 must be defined')
@@ -195,7 +186,7 @@ export class Arc extends FillableShape {
       this.large_arc = (large_arc == 'true') ? true : false
     const [p1, p2, p3] = points
     this.watchUpdate(points, () => {
-      const arcPath = arcOf(p1, p2, p3, this.large_arc)
+      const arcPath = arcPathOf(p1, p2, p3, this.large_arc)
       element.plot(arcPath)
       cover?.plot(arcPath)
       element.fire('update')
@@ -221,7 +212,7 @@ export function addAngle({ draw, componentRefs, element, cover, component_no }) 
 
   if (!element) {
     const [p1, p2, p3] = points
-    const arcPath = arcOf(p1, p2, p3, false /* large_arc */)
+    const arcPath = arcPathOf(p1, p2, p3, false /* large_arc */)
     // console.log(arcPath)
     element = draw.path(arcPath)
       .attr('class', 'angle')
