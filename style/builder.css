@@ -1,6 +1,6 @@
-/* ui */
+/* Builder UI Theme */
 :root {
-  --ui-background-color: #171717 !important;
+  --ui-background-color: #232425 !important;
 
   --ui-editarea-background-color: #121212 !important;
   --ui-editarea-border-color: #333 !important;
