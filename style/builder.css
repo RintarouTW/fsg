@@ -26,8 +26,8 @@
 
 /* override for testing */
 .dashed {
-  stroke-dasharray: 5 3 !important;
-  stroke-width: 1 !important;
+  stroke-dasharray: 3 !important;
+  stroke-width: 1.2 !important;
 }
 
 .menu {
