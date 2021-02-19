@@ -23,11 +23,12 @@ Create animatable, customizable style, re-editable and light weight interactive 
 https://rintaroutw.github.io/fsg
 ![](./images/screenshot0.png)
 
-### Screenshots
-![](./images/screenshot1.png)
-![](./images/screenshot2.png)
-
 ### Examples Live Demo 
+
+<img src="test/dot-product-geo0.svg"/>
+<img src="test/dot-product-geo1.svg"/>
+<img src="test/determinant-2.svg"/>
+<img src="test/determinant.svg"/>
 
 https://rintaroutw.github.io/fsg/example.html
 
