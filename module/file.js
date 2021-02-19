@@ -24,6 +24,7 @@ import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
 import { addMidPoint, addIntersectPoint } from '../components/point.js'
 import { addPoint, addPinPoint } from '../components/draggable-point.js'
 import { addLaTeX } from '../components/latex.js'
+import { addArrowedAngle } from '../components/measure.js'
 
 // reconstruct order by component_no
 function findAllComponentElements(draw) {
@@ -130,6 +131,10 @@ export function reconstruct_components(draw) {
     }
     if (element.hasClass('angle')) {
       addAngle({draw, componentRefs, element}) 
+      return
+    }
+    if (element.hasClass('angle-marker')) {
+      addArrowedAngle({draw, componentRefs, element}) 
       return
     }
     if (element.hasClass('parallel-line')) {

@@ -121,7 +121,7 @@ export function addArrowedAngle({ draw, componentRefs, element, cover, component
     const [p1, p2, p3] = points
     const arcPath = arrowedArcPathOf(p1, p2, p3, false /* large_arc */)
     element = draw.path(arcPath)
-      .attr('class', 'angle')
+      .attr('class', 'angle-marker')
       .attr(FSG_FILL_NONE_ATTR, true)
       .attr(FSG_SHAPE_ATTR, true)
     useCurrentColors(element)
