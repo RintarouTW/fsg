@@ -4,6 +4,8 @@ import {
   COMPONENT_NO_ATTR,
   COMPONENT_REFS_ATTR,
   DEFAULT_ANGLE_RADIUS,
+  DEFAULT_LABEL_OFFSET_X,
+  DEFAULT_LABEL_OFFSET_Y,
   FSG_FILL_NONE_ATTR,
   FSG_SHAPE_ATTR,
 } from '../common/define.js'
@@ -69,6 +71,36 @@ export class ArrowedArc extends Shape {
       return point.attr('component_no')
     })
     element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
+  }
+  center() {
+    const [p1, p2, p3] = this.points
+    const radius = DEFAULT_ANGLE_RADIUS * 4
+
+    let v1 = { x: p1.cx() - p2.cx(), y: p1.cy() - p2.cy() }
+    const v1Len = Math.sqrt(v1.x ** 2 + v1.y **2)
+    v1 = { x: v1.x / v1Len * radius, y: v1.y / v1Len * radius}
+
+    let v2 = { x: p3.cx() - p2.cx(), y: p3.cy() - p2.cy() }
+    const v2Len = Math.sqrt(v2.x ** 2 + v2.y **2)
+    v2 = { x: v2.x / v2Len * radius, y: v2.y / v2Len * radius }
+
+    const dir = { x: v2.y - v1.y, y: -(v2.x - v1.x) }
+    const len = Math.sqrt(dir.x ** 2 + dir.y ** 2)
+    if(len == 0) return { x: p1.cx(), y: p1.cy() }
+
+    const det = v1.x * v2.y - v1.y * v2.x
+    console.log(v1, v2, det)
+    const ratio = radius / len
+    if (!this.large_arc && (det < 0)) {
+      return {
+        x: p2.cx() - dir.x * ratio - DEFAULT_LABEL_OFFSET_X - 4,
+        y: p2.cy() - dir.y * ratio + DEFAULT_LABEL_OFFSET_Y + 8
+      }
+    }
+    return { 
+      x: p2.cx() + dir.x * ratio - DEFAULT_LABEL_OFFSET_X - 4,
+      y: p2.cy() + dir.y * ratio + DEFAULT_LABEL_OFFSET_Y + 8
+    }
   }
   toggleMode() {
     this.large_arc = !this.large_arc

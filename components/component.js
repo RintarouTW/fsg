@@ -153,7 +153,9 @@ export class Component {
     // search for label of this component if exists
     let label = labelOf(draw, this.component_no)
     if (!label)  {
-      const position = { x: target.cx() + DEFAULT_LABEL_OFFSET_X, y: -target.cy() + DEFAULT_LABEL_OFFSET_Y}
+      // const position = { x: target.cx() + DEFAULT_LABEL_OFFSET_X, y: -target.cy() + DEFAULT_LABEL_OFFSET_Y}
+      const targetCenter = this.center()
+      const position = { x: targetCenter.x + DEFAULT_LABEL_OFFSET_X, y: -targetCenter.y + DEFAULT_LABEL_OFFSET_Y}
       label = draw.text(text)
         .attr('class', 'label')
         .attr('offset_x', DEFAULT_LABEL_OFFSET_X)
@@ -177,14 +179,17 @@ export class Component {
       draw.dragTarget = label
     }).on('dragend', () => {
       draw.dragTarget = null
-      const offset = { dx: label.x() - target.cx(), dy: label.y() + target.cy() }
+      const targetCenter = this.center()
+      const offset = { dx: label.x() - targetCenter.x, dy: label.y() + targetCenter.y }
       label.attr('offset_x', offset.dx).attr('offset_y', offset.dy)
     })
 
     this.watchUpdate([target], () => {
       const offsetX = label.attr('offset_x')
       const offsetY = label.attr('offset_y')
-      const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }
+      const targetCenter = this.center()
+      const position = { x: targetCenter.x + offsetX, y: -targetCenter.y + offsetY}
+      // const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }
       label.move(position.x, position.y)
     })
 
