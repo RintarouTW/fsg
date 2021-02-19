@@ -86,7 +86,11 @@ export class ArrowedArc extends Shape {
 
     const dir = { x: v2.y - v1.y, y: -(v2.x - v1.x) }
     const len = Math.sqrt(dir.x ** 2 + dir.y ** 2)
-    if(len == 0) return { x: p1.cx(), y: p1.cy() }
+
+    if(len == 0) return {
+      x: p2.cx() + v1.x - DEFAULT_LABEL_OFFSET_X - 4,
+      y: p2.cy() + v1.y + DEFAULT_LABEL_OFFSET_Y + 8
+    }
 
     const det = v1.x * v2.y - v1.y * v2.x
     console.log(v1, v2, det)
