@@ -21,9 +21,6 @@ import { useCurrentColors } from '../module/color_picker.js'
 ///
 
 function arrowedArcPathOf(p1, p2, p3, large_arc = false) {
-  // console.assert(p1, 'p1 must be defined')
-  // console.assert(p2, 'p2 must be defined')
-  // console.assert(p3, 'p3 must be defined')
   const radius = DEFAULT_ANGLE_RADIUS * 3
   p2 = { x: p2.cx(), y: p2.cy() }
   const dx1 = p1.cx() - p2.x
@@ -94,7 +91,6 @@ export class ArrowedArc extends Shape {
     }
 
     const det = v1.x * v2.y - v1.y * v2.x
-    console.log(v1, v2, det)
     const ratio = radius / len
     if (!this.large_arc && (det < 0)) {
       return {
@@ -138,10 +134,15 @@ export function addArrowedAngle({ draw, componentRefs, element, cover, component
   return new ArrowedArc({draw, points, element, cover})
 }
 
+///
+/// LengthMarker
+///
+
 // p1, p2 : element
 function normalVec(p1, p2) {
   const vec = { x: p2.cx() - p1.cx(), y: p2.cy() - p1.cy() }
   const len = Math.sqrt(vec.x ** 2 + vec.y **2)
+  if (len == 0) return { x: 0, y: 0 }
   return { x: -vec.y / len, y: vec.x / len } // normalized
 }
 
@@ -152,6 +153,7 @@ function stretchVec(vec, length) {
 
 function lengthPathOf(p1, p2, distance) {
   const normal = normalVec(p1, p2)
+  if (normal.x == 0 && normal.y == 0) return ''
   const width = DEFAULT_LENGTH_MARKER_WIDTH
   const offset = stretchVec(normal, distance)
   const widthOffset = stretchVec(normal, width)
@@ -175,7 +177,7 @@ export class LengthMarker extends Shape {
     this.watchUpdate(points, () => {
       const distance = (!this.mark_on_right) ? DEFAULT_LENGTH_MARKER_DISTANCE : -DEFAULT_LENGTH_MARKER_DISTANCE
       const path = lengthPathOf(p1, p2, distance)
-      element.plot(path)
+        element.plot(path)
       cover?.plot(path)
       element.fire('update')
     })

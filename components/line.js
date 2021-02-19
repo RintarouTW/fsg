@@ -4,15 +4,8 @@ import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, FSG_SHAPE_ATTR } from '../commo
 import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { Shape, putBehindPoints } from './shape.js'
-import { currentStrokeColor } from '../module/color_picker.js'
+import { setStrokeColor } from '../module/color_picker.js'
 import { addAppendingPinPoint } from './appending-point.js'
-
-export function setStrokeColor(element) {
-  if (window.FSG_BUILDER) {
-    const strokeColor = currentStrokeColor()
-    element.attr('stroke', strokeColor)
-  }
-}
 
 export function coverForLineElement(draw, element) {
   if (window.FSG_BUILDER) {
@@ -294,7 +287,6 @@ export class PerpLine extends LineShape {
         .attr(FSG_SHAPE_ATTR, true)
       setStrokeColor(element)
       cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
-      // points = [p1, p2]
     }
     cover = cover ?? coverForLineElement(draw, element) 
     putBehindPoints(draw, points, cover, element)
@@ -421,5 +413,4 @@ export function addBisectorLine({ draw, componentRefs, element, cover, component
 
   return new BisectorLine({draw, points, element, cover})
 }
-
 

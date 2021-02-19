@@ -4,7 +4,8 @@ import { COMPONENT_NO_ATTR, DEFAULT_STROKE_COLOR, FSG_SHAPE_ATTR } from '../comm
 import { pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { putBehindPoints } from './shape.js'
-import { LineShape, setStrokeColor, coverForLineElement } from './line.js'
+import { LineShape, coverForLineElement } from './line.js'
+import { setStrokeColor } from '../module/color_picker.js'
 
 ///
 /// LineSegment
@@ -118,5 +119,4 @@ export function addAxis({draw, type, element, cover, component_no}) {
 
   return new Axis({draw, element, cover, type})
 }
-
 

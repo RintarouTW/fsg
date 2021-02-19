@@ -18,16 +18,12 @@ function findBottom(draw, points) {
     // console.log(idx, item)
     if ((idx != -1) && (idx < draw.index(bottom))) bottom = item
   })
-  // if(draw.index(bottom) < 0)
-  // console.log('something wrong', points)
+  // if(draw.index(bottom) < 0) console.log('something wrong', points)
   return bottom
 }
 
 export function putBehindPoints(draw, points, cover, element) {
-  if (!cover) return // don't change the order in runtime.
-  // The order of the element should only be manipulated when the component constructed in editor.
-  // After that, user can change the order of the component, and that order should be kept even after reconstruction.
-  //
+  if (!cover) return
   // find the most bottom point
   // FIXME: there's a bug in svgjs. somehow it's possible have an element with index = -1
   // even it's indeed a child of draw. (weird)
@@ -46,7 +42,6 @@ export class Shape extends SelectableComponent {
   constructor({draw, element, cover, points }) {
     console.assert(draw, "draw is required")
     console.assert(element, "element is required")
-    // console.assert(cover, "cover is required")
     // cover is optional now, only used in the builder
 
     super({draw, element})

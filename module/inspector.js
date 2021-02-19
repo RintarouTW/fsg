@@ -1,8 +1,8 @@
 'use strict'
 
-/*
- * singleton per editor instance.
- */
+///
+/// Inspector is a singleton module per builder instance.
+///
 
 import {
   DEFAULT_FILL_COLOR,
@@ -182,5 +182,4 @@ function update_fields() {
     field.value = (value === '' || (typeof(value) == 'undefined')) ? null : String(value)
   })
 }
-
 

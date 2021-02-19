@@ -85,7 +85,6 @@ export function attachColorPicker(hexInput) {
   _colorPicker.color.hex8String = _hexInput.value
   // console.log(_colorPicker.color.hex8String, _hexInput.value)
 
-  // _colorPicker.on(["color:init", "color:change"], onColorChange)
   _colorPicker.on("color:change", onColorChange)
   _colorPicker.on("input:start", () => {
     _colorBeforeChange = _hexInput.value
@@ -115,6 +114,13 @@ export function useCurrentColors(element) {
     const fillColor = currentFillColor()
     const strokeColor = currentStrokeColor()
     element.attr('fill', fillColor)
+    element.attr('stroke', strokeColor)
+  }
+}
+
+export function setStrokeColor(element) {
+  if (window.FSG_BUILDER) {
+    const strokeColor = currentStrokeColor()
     element.attr('stroke', strokeColor)
   }
 }

@@ -173,6 +173,11 @@ export function reconstruct_components(draw) {
   return
 }
 
+
+///
+/// Patches for backward compatibility
+///
+
 // remove xmlns:svgjs that could be inserted more than once and casue the svg broken. (should be a bug of svgjs.)
 // katex and mathjax both use svgjs too.
 function patchSVGJS(draw) {

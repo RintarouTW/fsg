@@ -5,41 +5,41 @@ import { loadCSS, loadScript } from '../common/common.js'
 
 if (!DEV_TESTING) {
 
-  /* Core, Theme, addons */
+  // Core, Theme, addons
   loadCSS("https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css")
   loadCSS("https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/tomorrow-night-bright.min.css")
   loadScript("https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js")
   loadScript("https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/display/placeholder.min.js")
 
-  /* Languages */
+  // Languages
   loadScript("https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/javascript/javascript.min.js")
   loadScript("https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/display/autorefresh.min.js")
 
-  /* Keymaps */
+  // Keymaps
   loadScript("https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/keymap/vim.min.js")
 
 } else {
 
-  /* Core, Theme, addons */
+  // Core, Theme, addons
   loadCSS(`lib/codemirror/codemirror.min.css`)
   loadCSS(`lib/codemirror/tomorrow-night-bright.min.css`)
   loadScript(`lib/codemirror/codemirror.min.js`)
   loadScript(`lib/codemirror/placeholder.min.js`)
 
-  /* Languages */
+  // Languages
   loadScript(`lib/codemirror/javascript.min.js`)
   loadScript(`lib/codemirror/autorefresh.min.js`)
 
-  /* Keymaps */
+  // Keymaps
   loadScript(`lib/codemirror/vim.min.js`)
 }
 
-var _cmInstance /* code mirror editor */
+var _cmInstance // code mirror editor 
 var _window
 
-/*
- * Controller
- */
+//
+// Controller
+//
 
 function codeEditor() {
 
