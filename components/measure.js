@@ -4,6 +4,8 @@ import {
   COMPONENT_NO_ATTR,
   COMPONENT_REFS_ATTR,
   DEFAULT_ANGLE_RADIUS,
+  DEFAULT_LENGTH_MARKER_WIDTH,
+  DEFAULT_LENGTH_MARKER_DISTANCE,
   DEFAULT_LABEL_OFFSET_X,
   DEFAULT_LABEL_OFFSET_Y,
   FSG_FILL_NONE_ATTR,
@@ -65,8 +67,7 @@ export class ArrowedArc extends Shape {
       element.fire('update')
     })
 
-    const componentRefs = points.map(point => {
-      // watch point remove event
+    const componentRefs = points.map(point => { // watch point remove event
       point.on('remove', this.remove.bind(this))
       return point.attr('component_no')
     })
@@ -135,5 +136,96 @@ export function addArrowedAngle({ draw, componentRefs, element, cover, component
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
   return new ArrowedArc({draw, points, element, cover})
+}
+
+// p1, p2 : element
+function normalVec(p1, p2) {
+  const vec = { x: p2.cx() - p1.cx(), y: p2.cy() - p1.cy() }
+  const len = Math.sqrt(vec.x ** 2 + vec.y **2)
+  return { x: -vec.y / len, y: vec.x / len } // normalized
+}
+
+// length could be negative
+function stretchVec(vec, length) {
+  return { x: vec.x * length, y: vec.y * length }
+}
+
+function lengthPathOf(p1, p2, distance) {
+  const normal = normalVec(p1, p2)
+  const width = DEFAULT_LENGTH_MARKER_WIDTH
+  const offset = stretchVec(normal, distance)
+  const widthOffset = stretchVec(normal, width)
+
+  p1 = { x: p1.cx() + offset.x, y: p1.cy() + offset.y }
+  p2 = { x: p2.cx() + offset.x, y: p2.cy() + offset.y }
+  const w1 = { x : p1.x + widthOffset.x, y: p1.y + widthOffset.y }
+  const w2 = { x : p1.x - widthOffset.x, y: p1.y - widthOffset.y }
+  const w3 = { x : p2.x + widthOffset.x, y: p2.y + widthOffset.y }
+  const w4 = { x : p2.x - widthOffset.x, y: p2.y - widthOffset.y }
+  return String.raw`M ${w1.x} ${w1.y} L ${w2.x} ${w2.y}
+  M ${w3.x} ${w3.y} L ${w4.x} ${w4.y}
+  M ${p1.x} ${p1.y} L ${p2.x} ${p2.y}`
+}
+
+export class LengthMarker extends Shape {
+  constructor({draw, points, element, cover}) {
+    super({draw, element, cover, points})
+
+    const [p1, p2] = points
+    this.watchUpdate(points, () => {
+      const distance = (!this.mark_on_right) ? DEFAULT_LENGTH_MARKER_DISTANCE : -DEFAULT_LENGTH_MARKER_DISTANCE
+      const path = lengthPathOf(p1, p2, distance)
+      element.plot(path)
+      cover?.plot(path)
+      element.fire('update')
+    })
+
+    const componentRefs = points.map(point => { // watch point remove event
+      point.on('remove', this.remove.bind(this))
+      return point.attr('component_no')
+    })
+    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
+    this.mark_on_right = false
+  }
+  center() {
+    const distance = (!this.mark_on_right) 
+      ?  (DEFAULT_LENGTH_MARKER_DISTANCE + 10)
+      : -(DEFAULT_LENGTH_MARKER_DISTANCE + 10)
+    const [p1, p2] = this.points
+    const vec = normalVec(p1, p2)
+    return {
+      x: (p1.cx() + p2.cx()) / 2 + vec.x * distance - DEFAULT_LABEL_OFFSET_X - 4,
+      y: (p1.cy() + p2.cy()) / 2 + vec.y * distance + DEFAULT_LABEL_OFFSET_Y + 8
+    }
+  }
+  toggleMode() {
+    console.log('toggleMode')
+    this.mark_on_right = !this.mark_on_right
+    this.element.attr('mark_on_right', (this.mark_on_right) ? 'true' : 'false')
+    this.points[0].fire('update')
+  }
+}
+
+export function addLengthMarker({ draw, componentRefs, element, cover, component_no }) {
+
+  let points = componentRefs.map(no => componentByNo(draw, no).element)
+
+  if (!element) {
+    const [p1, p2] = points
+    const path = lengthPathOf(p1, p2, DEFAULT_LENGTH_MARKER_DISTANCE)
+    element = draw.path(path)
+      .attr('class', 'length-marker')
+      .attr(FSG_FILL_NONE_ATTR, true)
+      .attr(FSG_SHAPE_ATTR, true)
+    useCurrentColors(element)
+  }
+  if (window.FSG_BUILDER) {
+    cover = draw.path(element.array()).attr('class', 'cover')
+  }
+
+  putBehindPoints(draw, points, cover, element)
+  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+
+  return new LengthMarker({draw, points, element, cover})
 }
 

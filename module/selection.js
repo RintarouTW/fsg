@@ -2,7 +2,7 @@
 
 import { SelectableComponent } from '../components/component.js'
 import { Circle, Arc } from '../components/fillable.js'
-import { ArrowedArc } from '../components/measure.js'
+import { ArrowedArc, LengthMarker } from '../components/measure.js'
 import { SelectablePoint } from '../components/point.js'
 import { InvisiblePoint } from '../components/invisible-point.js'
 import { Shape } from '../components/shape.js'
@@ -259,7 +259,9 @@ export function getLastSelectedAngleComponents(draw) {
   const selections = draw.fsg.selection.selections
   let angles = []
   selections.forEach(item => {
-    if (item instanceof Arc || item instanceof ArrowedArc ) angles.push(item) 
+    if (item instanceof Arc ||
+      item instanceof ArrowedArc ||
+      item instanceof LengthMarker) angles.push(item) 
   })
   return angles
 }

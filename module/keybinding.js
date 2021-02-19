@@ -13,7 +13,7 @@ import { addPoint } from '../components/draggable-point.js'
 import { LineShape, addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
 import { addEdge, addVector } from '../components/line-segment.js'
 import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
-import { addArrowedAngle } from '../components/measure.js'
+import { addArrowedAngle, addLengthMarker } from '../components/measure.js'
 import { addLaTeX } from '../components/latex.js'
 import { 
   unselectAllSelections,
@@ -176,16 +176,16 @@ export function init_module_keybinding(draw) {
         }
         break
       case 'KeyE':
-        if (evt.metaKey) {
+        if (evt.metaKey) { // export to html
           exportToHTML(draw)
           evt.preventDefault()
           evt.stopPropagation()
-        } else if (evt.ctrlKey) {
+        } else if (evt.ctrlKey) { // execute user script
           evt.preventDefault()
           evt.stopPropagation()
           SVG('#runButton').node.click()
         } else {
-          if (evt.shiftKey) { // close with edge
+          if (evt.shiftKey) { // close with edge (last to first)
             points = getSelectedPointElements(draw)
             if (!points || points.length < 3) {
               console.log(points.length)
@@ -296,10 +296,15 @@ export function init_module_keybinding(draw) {
         break
       case 'KeyM':
         {
-          if (evt.shiftKey) {
+          if (evt.shiftKey) { // measure
             points = getSelectedPointElements(draw)
-            if (!points || points.length < 3) {
-              showHint('Select 3 points first!')
+            if (!points || points.length == 1) { // measure length between 2 points
+              showHint('Select 2 points first!')
+              return
+            }
+            if (points.length == 2) {
+              componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+              doAction(draw, addLengthMarker, {draw, componentRefs})
               return
             }
             points = [points[0], points[1], points[2]] // use only the last 3 points

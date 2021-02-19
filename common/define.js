@@ -143,6 +143,12 @@ export const VECTOR_START_MARKER_RADIUS = 3
 export const VECTOR_END_MARKER_ARROW_WIDTH = 6
 export const VECTOR_END_MARKER_ARROW_LENGTH = 10
 
+export const DEFAULT_LENGTH_MARKER_DISTANCE = 20
+export const DEFAULT_LENGTH_MARKER_WIDTH = 7
+
+// Angle
+export const DEFAULT_ANGLE_RADIUS = 15
+
 // point
 export const POINT_RADIUS = 6
 
@@ -155,9 +161,6 @@ export const DEFAULT_LABEL_OFFSET_Y = 5
 export const DEFAULT_FILL_COLOR = '#ff0f6328'
 export const DEFAULT_STROKE_COLOR = '#888888aa'
 export const DEFAULT_TRANSPARENT_COLOR = '#ffffff00'
-
-// Angle
-export const DEFAULT_ANGLE_RADIUS = 15
 
 /// Tests
 export const test_user_script = String.raw`console.log('execute user script')
