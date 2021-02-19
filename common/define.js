@@ -9,7 +9,9 @@ export const FSG_NAMESPACE = 'https://rintaroutw.github.io/fsg'
 export const FSG_RUNTIME_NAMESPACE = 'FSG_RUNTIME'
 export const SVGJS_SCRIPT_NAMESPACE = 'SVGJS_SCRIPT'
 
-export const SVGJS_SCRIPT_URL = String.raw`<script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" />`
+export const SVGJS_SCRIPT_URL = (DEV_TESTING)
+  ? String.raw`<script href="${SERVER_ROOT}/lib/svg.min.js" />`
+  : String.raw`<script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" />`
 export const RUNTIME_SCRIPT_URL = String.raw`<script href="${SERVER_ROOT}/runtime.min.js" />`
 // export const KATEX_SCRIPT_URL = String.raw`<script href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"/>`
 // export const KATEX_AUTO_SCRIPT_URL = String.raw`<script href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"/>`
@@ -114,7 +116,9 @@ svg .latex-container {
 </style>`
 
 export const RUNTIME_STYLE_LINK = String.raw`<link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="${SERVER_ROOT}/style/runtime.css"/>`
-export const KATEX_STYLE_LINK = String.raw`<link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"/>`
+export const KATEX_STYLE_LINK = (DEV_TESTING) 
+? String.raw`<link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="${SERVER_ROOT}/lib/katex/katex.min.css"/>`
+: String.raw`<link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"/>`
 
 // Editor
 export const SNAP_GRID_INTERVAL = 5.0

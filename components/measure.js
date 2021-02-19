@@ -199,7 +199,6 @@ export class LengthMarker extends Shape {
     }
   }
   toggleMode() {
-    console.log('toggleMode')
     this.mark_on_right = !this.mark_on_right
     this.element.attr('mark_on_right', (this.mark_on_right) ? 'true' : 'false')
     this.points[0].fire('update')
