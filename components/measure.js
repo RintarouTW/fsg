@@ -110,7 +110,7 @@ export class ArrowedArc extends Shape {
   }
 }
 
-export function addArrowedAngle({ draw, componentRefs, element, cover, component_no }) {
+export function addAngleMarker({ draw, componentRefs, element, cover, component_no }) {
 
   let points = componentRefs.map(no => componentByNo(draw, no).element)
 
