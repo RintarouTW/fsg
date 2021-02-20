@@ -283,7 +283,7 @@ export class PerpLine extends LineShape {
       const [line, point] = points
       const [clip1, clip2] = clippedPerpLine(draw, line, point)
       element = draw.line(clip1.x, clip1.y, clip2.x, clip2.y)
-        .attr('class', 'parallel-line dashed')
+        .attr('class', 'perp-line dashed')
         .attr(FSG_SHAPE_ATTR, true)
       setStrokeColor(element)
       cover = draw.line(clip1.x, clip1.y, clip2.x, clip2.y).attr('class', 'cover')
