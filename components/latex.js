@@ -45,6 +45,7 @@ export class LaTeX extends SelectableComponent {
     // selectable and draggable
     element.on('mousedown', evt => {
       element.lastEvent = 'mousedown'
+      draw.dragPointStart = { x: element.cx(), y: element.cy() }
       element.fire('dragstart', { dragTarget: element })
       evt.stopPropagation()
     }).on('mouseup', () => {
@@ -55,6 +56,7 @@ export class LaTeX extends SelectableComponent {
       element.lastEvent = 'mousemove'
     }).on('dragstart', () => {
       element.attr(FSG_DRAGGING_ATTR, true)
+      element.orgValue = {x: element.cx(), y: element.cy()}
       draw.dragTarget = element
     }).on('dragend', () => {
       element.attr(FSG_DRAGGING_ATTR, null)

@@ -19,7 +19,7 @@ import {
   unselectAllSelections,
   removeAllSelections,
   getSelectedShapes,
-  getSelectedPointElements,
+  getSelectedSelectablePointElements,
   getLast2SelectedPointElements,
   getSelectedFillableShapes,
   numberOfSelections,
@@ -116,7 +116,7 @@ export function init_module_keybinding(draw) {
             return
           } 
           if (evt.shiftKey) {
-            points = getSelectedPointElements(draw)
+            points = getSelectedSelectablePointElements(draw)
             if (!points || points.length < 3) {
               showHint('Select 3 points first!')
               return
@@ -137,7 +137,7 @@ export function init_module_keybinding(draw) {
         break
       case 'KeyB':
         {
-          points = getSelectedPointElements(draw)
+          points = getSelectedSelectablePointElements(draw)
           if (!points || points.length < 3) {
             showHint('Select 3 points first!')
             return
@@ -186,7 +186,7 @@ export function init_module_keybinding(draw) {
           SVG('#runButton').node.click()
         } else {
           if (evt.shiftKey) { // close with edge (last to first)
-            points = getSelectedPointElements(draw)
+            points = getSelectedSelectablePointElements(draw)
             if (!points || points.length < 3) {
               console.log(points.length)
               showHint('At least 3 points to close the shape')
@@ -297,7 +297,7 @@ export function init_module_keybinding(draw) {
       case 'KeyM':
         {
           if (evt.shiftKey) { // measure
-            points = getSelectedPointElements(draw)
+            points = getSelectedSelectablePointElements(draw)
             if (!points || points.length == 1) { // measure length between 2 points
               showHint('Select 2 points first!')
               return
@@ -321,7 +321,7 @@ export function init_module_keybinding(draw) {
         break
       case 'KeyP':
         {
-          points = getSelectedPointElements(draw)
+          points = getSelectedSelectablePointElements(draw)
           if (!points || points.length < 3) {
             showHint('Select at least 3 points first!')
             return

@@ -20,8 +20,9 @@ export class DraggablePoint extends SelectablePoint {
     if (!override) {
       element.on('mousedown', evt => {
         element.lastEvent = 'mousedown'
-        draw.dragPointStart = draw.point(evt.clientX, evt.clientY)
-        element.fire('dragstart', { dragTarget: element})
+        // draw.dragPointStart = draw.point(evt.clientX, evt.clientY)
+        draw.dragPointStart = { x: element.cx(), y: element.cy() }
+        element.fire('dragstart', { dragTarget: element, shiftKey: evt.shiftKey })
         evt.stopPropagation()
       }).on('mouseup', () => {
         if (element.lastEvent == 'mousedown') this.toggleSelected()
@@ -29,17 +30,42 @@ export class DraggablePoint extends SelectablePoint {
         element.fire('dragend')
       }).on('mousemove', () => {
         element.lastEvent = 'mousemove'
-      }).on('dragstart', () => {
+      }).on('dragstart', evt => {
+        if (element.component instanceof Point && evt.detail.shiftKey) {
+          const points = getSelectedPointElements(draw)          
+          points.forEach(point => {
+            point.attr(FSG_DRAGGING_ATTR, true)
+            point.orgValue = {x: point.cx(), y: point.cy()}
+          })
+          draw.dragPoints = points
+          draw.dragTarget = element
+          return
+        }
         element.attr(FSG_DRAGGING_ATTR, true)
+        element.orgValue = {x: element.cx(), y: element.cy()}
         draw.dragTarget = element
       }).on('dragend', () => {
-        const components = [element.component]
-        const oldValue = { x: draw.dragPointStart.x, y: draw.dragPointStart.y }
-        const newValue = { x: element.cx(), y: element.cy() }
-        doAction(draw, changeLocation, {components, oldValue, newValue})
+        if (draw.dragPoints) {
+          const components = []
+          const oldValues = []
+          const newValues = []
+          draw.dragPoints.map(point => {
+            components.push(point.component)
+            oldValues.push(point.orgValue)
+            newValues.push({ x: point.cx(), y: point.cy() })
+            point.attr(FSG_DRAGGING_ATTR, null)
+          }) 
+          doAction(draw, changeLocation, {components, oldValues, newValues})
+        } else {
+          const components = [element.component]
+          const oldValues = [{ x: draw.dragPointStart.x, y: draw.dragPointStart.y }]
+          const newValues = [{ x: element.cx(), y: element.cy() }]
+          doAction(draw, changeLocation, {components, oldValues, newValues})
+        }
 
         element.attr(FSG_DRAGGING_ATTR, null)
         draw.dragTarget = null
+        draw.dragPoints = null
       }).on('dragmove', () => {
         element.fire('update', { target: this })
       })

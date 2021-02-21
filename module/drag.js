@@ -11,6 +11,17 @@ import { LaTeX } from '../components/latex.js'
 import { doAction } from './history.js'
 import { RuntimeMenu, BuilderMenu } from './menu.js'
 
+function moveElementByOffset(element, offset) {
+  // only update if changed (better performance)
+  if (offset.x == 0 && offset.y == 0) return
+  const coord = { x: element.orgValue.x + offset.x, y: element.orgValue.y + offset.y } 
+  if (element.type == 'text' || element.component instanceof LaTeX)
+    element.center(coord.x, -coord.y)
+  else
+    element.center(coord.x, coord.y)
+  element.fire('dragmove')
+}
+
 export function init_module_drag(draw, click_to_add_point = true) {
 
   // disable default right click menu
@@ -28,9 +39,9 @@ export function init_module_drag(draw, click_to_add_point = true) {
   // The Drag and Drop System
   draw.selectBox = selectBox
   draw.dragTarget = null
-  draw.dragStart = null
+  draw.dragSelectStart = null
   draw.on('mousedown', evt => {
-    console.log('draw.mousedown')
+    // console.log('draw.mousedown')
     if (draw.menu) { // if menu exist(shown) remove menu
       draw.menu.remove()
       return
@@ -49,17 +60,18 @@ export function init_module_drag(draw, click_to_add_point = true) {
     }
     if (evt.button != 0) return // skip other buttons
 
-    // drag handling
+    // drag handling for AppendingPinPoint
     if (draw.dragTarget && (draw.dragTarget.component instanceof AppendingPinPoint)) {
       const pointInfo = draw.dragTarget.component.done()
       doAction(draw, addPinPoint, pointInfo)
       // don't set lastEvent to 'mousedown', so it won't add new point on the next mouse up.
-    } else {
-      draw.lastEvent = 'mousedown'
+      draw.dragTarget = null
+      return
     }
-    if (!evt.altKey) {
-      draw.dragStart = draw.point(evt.clientX, evt.clientY)
+    if (!evt.altKey) { // remember the dragging selection start coord
+      draw.dragSelectStart = draw.point(evt.clientX, evt.clientY)
     }
+    draw.lastEvent = 'mousedown'
     draw.dragTarget = null
   }).on('mouseup_on_document', () => { //
     // console.log('mouseup_on_document')
@@ -68,8 +80,8 @@ export function init_module_drag(draw, click_to_add_point = true) {
       draw.dragTarget.fire('dragend')
       draw.dragTarget = null
     }
-    if (draw.dragStart) {
-      draw.dragStart = null
+    if (draw.dragSelectStart) {
+      draw.dragSelectStart = null
       selectBox.size(0, 0)
     }
   }).on('mouseup', evt => {
@@ -79,7 +91,7 @@ export function init_module_drag(draw, click_to_add_point = true) {
       draw.dragTarget.fire('dragend')
       draw.dragTarget = null
     }
-    draw.dragStart = null
+    draw.dragSelectStart = null
     selectBox.size(0, 0)
     if (draw.lastEvent != 'mousedown') return
     draw.lastEvent = 'mouseup'
@@ -93,29 +105,32 @@ export function init_module_drag(draw, click_to_add_point = true) {
     draw.lastEvent = 'mousemove'
     const mousePosition = draw.point(evt.clientX, evt.clientY)
     draw.mousePosition = snapTo(mousePosition)
-    const dragTarget = draw.dragTarget
+    let dragTarget = draw.dragTarget
     if (dragTarget) {
       if ((dragTarget.component instanceof AppendingPinPoint) ||
         (dragTarget.component instanceof PinPoint)) {
         dragTarget.component.update()
       } else {
-        const org = { x: dragTarget.cx(), y: dragTarget.cy()}
-        const coord = mousePosition
-        // only update if changed (better performance)
-        if ((coord.x != org.x) || (coord.y != org.y)) {
-          if (dragTarget.type == 'text' || dragTarget.component instanceof LaTeX)
-            dragTarget.center(coord.x, -coord.y)
-          else
-            dragTarget.center(coord.x, coord.y)
-          dragTarget.fire('dragmove')
+        const offset = {
+          x: mousePosition.x - draw.dragPointStart.x,
+          y: mousePosition.y - draw.dragPointStart.y,
         }
+        if (draw.dragPoints) {
+          const points = draw.dragPoints
+          points.forEach(point => {
+            moveElementByOffset(point, offset)
+          })
+          return
+        }
+        moveElementByOffset(dragTarget, offset)
       }
+      return
     }
-    if (draw.dragStart) {
-      let width = Math.abs(mousePosition.x - draw.dragStart.x)
-      let height = Math.abs(mousePosition.y - draw.dragStart.y)
-      let cx = (mousePosition.x + draw.dragStart.x) / 2
-      let cy = (mousePosition.y + draw.dragStart.y) / 2
+    if (draw.dragSelectStart) {
+      let width = Math.abs(mousePosition.x - draw.dragSelectStart.x)
+      let height = Math.abs(mousePosition.y - draw.dragSelectStart.y)
+      let cx = (mousePosition.x + draw.dragSelectStart.x) / 2
+      let cy = (mousePosition.y + draw.dragSelectStart.y) / 2
       selectBox.size(width, height).center(cx, cy)
       selectAllInBox(draw, selectBox, evt.shiftKey)
     }

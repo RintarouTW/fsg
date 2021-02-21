@@ -4,6 +4,7 @@ import { SelectableComponent } from '../components/component.js'
 import { Circle, Arc } from '../components/fillable.js'
 import { ArrowedArc, LengthMarker } from '../components/measure.js'
 import { SelectablePoint } from '../components/point.js'
+import { Point } from '../components/draggable-point.js'
 import { InvisiblePoint } from '../components/invisible-point.js'
 import { Shape } from '../components/shape.js'
 import { FillableShape } from '../components/fillable.js'
@@ -16,6 +17,7 @@ export function init_module_selection(draw) {
   draw.fsg.selection.selections = []
   window.selectComponent = selectComponent
   window.unselectComponent = unselectComponent
+  window.getSelectedPointElements = getSelectedPointElements
 }
 
 const inspector = SVG('#inspector')
@@ -208,18 +210,28 @@ export function lastSelectedComponent(draw) {
 
 export function getLast2SelectedPointElements(draw) {
   console.assert(draw, 'draw must exist')
-  let points = getSelectedPointElements(draw)
+  let points = getSelectedSelectablePointElements(draw)
   let l = points.length
   if(l < 2) return null
   return [ points[ l - 2 ], points[ l - 1 ] ]
 }
 
-export function getSelectedPointElements(draw) {
+export function getSelectedSelectablePointElements(draw) {
   console.assert(draw, 'draw must exist')
   const selections = draw.fsg.selection.selections
   let points = []
   selections.forEach(item => {
     if (item instanceof SelectablePoint) points.push(item.element) 
+  })
+  return points
+}
+
+function getSelectedPointElements(draw) {
+  console.assert(draw, 'draw must exist')
+  const selections = draw.fsg.selection.selections
+  let points = []
+  selections.forEach(item => {
+    if (item instanceof Point) points.push(item.element) 
   })
   return points
 }

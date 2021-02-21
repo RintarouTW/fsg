@@ -43,26 +43,31 @@ export function doAction(draw, cmd, args) {
 ///
 
 class ChangeLocationAction {
-  constructor(components, oldValue, newValue) {
-    components.forEach(component => {
+  constructor(components, oldValues, newValues) {
+    for (let i = 0; i < components.length; i++) {
+      const component = components[i]
+      const newValue = newValues[i]
       component.setAttribute('cx', newValue.x)
       component.setAttribute('cy', newValue.y)
       component.element.fire('update')
-    })
+    }
     this.components = components
-    this.oldValue = oldValue
-    this.newValue = newValue
+    this.oldValues = oldValues
+    this.newValues = newValues
   }
   undo() {
-    this.components.forEach(component => {
-      component.setAttribute('cx', this.oldValue.x)
-      component.setAttribute('cy', this.oldValue.y)
+    const components = this.components
+    const oldValues = this.oldValues
+    for (let i = 0; i < components.length; i++) {
+      const component = components[i]
+      const oldValue = oldValues[i]
+      component.setAttribute('cx', oldValue.x)
+      component.setAttribute('cy', oldValue.y)
       component.element.fire('update')
-      // SVG('#field_' + this.attributeName).fire('change')
-    })
+    }
   }
 }
 
-export function changeLocation({components, oldValue, newValue}) {
-  return new ChangeLocationAction(components, oldValue, newValue)
+export function changeLocation({components, oldValues, newValues}) {
+  return new ChangeLocationAction(components, oldValues, newValues)
 }
