@@ -25,7 +25,6 @@ export function redo(draw) {
   const history = draw.fsg.history
   let action = history.redo_list.pop()
   if (!action) return
-  console.log(action)
   action.redo()
   // console.log('redo redo_list = ', redo_list)
 }
@@ -35,7 +34,6 @@ export function doAction(draw, cmd, args) {
   const action = cmd(args)
   action.redo = () => {
     if(action.component_no) args.component_no = action.component_no
-    console.log(cmd, action.component_no)
     doAction(draw, cmd, args)
   }
   history.history.push(action)

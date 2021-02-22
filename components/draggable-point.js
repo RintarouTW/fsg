@@ -61,9 +61,9 @@ export class DraggablePoint extends SelectablePoint {
           const oldValues = [{ x: draw.dragPointStart.x, y: draw.dragPointStart.y }]
           const newValues = [{ x: element.cx(), y: element.cy() }]
           doAction(draw, changeLocation, {draw, components, oldValues, newValues})
+          element.attr(FSG_DRAGGING_ATTR, null)
         }
 
-        element.attr(FSG_DRAGGING_ATTR, null)
         draw.dragTarget = null
         draw.dragPoints = null
       }).on('dragmove', () => {

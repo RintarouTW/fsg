@@ -11,9 +11,11 @@ import {
   FSG_SELECTED_ATTR
 } from '../common/define.js'
 
-import { attachColorPicker } from './color_picker.js'
+import { componentByNo } from '../components/component.js'
+import { getSelectedComponents } from './selection.js'
 import { doAction } from './history.js'
 import { changeStyle } from './style.js'
+import { attachColorPicker } from './color_picker.js'
 
 const fields = ['id', 'class', 'cx', 'cy', 'text', 'fill', 'stroke']
 const non_color_fields = ['id', 'class', 'cx', 'cy', 'text']
@@ -102,34 +104,83 @@ function inspect_detach() {
   _inspecting_element = null
 }
 
+// in order to see original color of elements, 
+// we need to make them unselected first.
+function unsetAllSelected(draw) {
+  const components = getSelectedComponents(draw)
+  draw.selectedComponents = components.map(component => {
+    const element = component.element
+    unsetSelected(element)
+    return component.component_no
+  })
+}
+
+//
+// after the color changes done, we should reset them back to the selected state.
+//
+function resetToSelected(draw) {
+  draw.selectedComponents?.forEach(componentNo => {
+    const component = componentByNo(draw, componentNo)
+    const element = component.element
+    setSelected(element)
+  })
+  draw.selectedComponents = null
+}
+
 export function init_module_inspector(draw) {
-  init_fields()
+  init_fields(draw)
   SVG('#inspector').on('inspect-component', evt => {
     if(!draw.ready) return
     inspect_component(evt.detail.component)
   }).on('inspect-detach', () => {
     inspect_detach()
   })
-  document.addEventListener('colorpicker:change-start', () => {
+
+  document.addEventListener('colorpicker:change-start', evt => {
+    if (draw.targetComponents) return
+    if (!draw.selectedComponents) unsetAllSelected(draw)
+
+    const {field} = evt.detail
+    const attributeName = field.substr(6)
+
+    if (draw.shiftKey) {
+      draw.targetComponents = draw.selectedComponents
+    } else {
+      draw.targetComponents = [_inspecting_element.component.component_no]
+    }
+    draw.targetComponents.forEach(componentNo => {
+      const component = componentByNo(draw, componentNo)
+      const element = component.element
+      element.orgValue = component.getAttribute(attributeName)
+    })
     unsetInspecting(_inspecting_element)
-    unsetSelected(_inspecting_element)
   })
+
   document.addEventListener('colorpicker:change-end', evt => {
     if (!_inspecting_element) return
-    if (!_isColorFieldFocused) {
-      setSelected(_inspecting_element)
+    if (!draw.targetComponents) return // FIXME: temp workaround, somehow change-end was triggered twice. 
+
+    const {field, newValue} = evt.detail
+    const attributeName = field.substr(6)
+    const oldValues = []
+    const components = draw.targetComponents
+    components.forEach(componentNo => {
+      const component = componentByNo(draw, componentNo)
+      const element = component.element
+      oldValues.push(element.orgValue)
+      element.orgValue = null
+    })
+    doAction(draw, changeStyle, {draw, components, attributeName, oldValues, newValue})
+
+    if (!_isColorFieldFocused) { // set the origianl selected components back to selected state
+      resetToSelected(draw)
       setInspecting(_inspecting_element)
     }
-    const {field, oldValue, newValue} = evt.detail
-    const attributeName = field.substr(6)
-    const components = [_inspecting_element.component.component_no]
-    const oldValues = [oldValue]
-    const newValues = [newValue]
-    doAction(draw, changeStyle, {draw, components, attributeName, oldValues, newValues})
+    draw.targetComponents = null
   })
 }
 
-function init_fields() {
+function init_fields(draw) {
 
   _inspecting_element?.off('update dragend', update_fields)
   _inspecting_element = null
@@ -145,6 +196,13 @@ function init_fields() {
       if (value == '') value = null
 
       try { // console.log(attribute_name, value)
+        if (draw.targetComponents) {
+          draw.targetComponents.forEach(componentNo => {
+            const component = componentByNo(draw, componentNo)
+            component.setAttribute(attributeName, value)
+          })
+          return
+        }
         _inspecting_element?.component?.setAttribute(attributeName, value)
       } catch(err) {
         console.log(err)
@@ -152,17 +210,20 @@ function init_fields() {
 
     }).on('keydown', evt => {
       if (evt.code == 'Enter') field.node.blur()
+      draw.shiftKey = evt.shiftKey
+    }).on('keyup', evt => {
+      draw.shiftKey = evt.shiftKey
     })
   })
 
   const color_fields = SVG('#inspector').find('.field_color')
   color_fields.on('focus', evt => {
     attachColorPicker(evt.target)
+    unsetAllSelected(draw)
     unsetInspecting(_inspecting_element)
-    unsetSelected(_inspecting_element)
     _isColorFieldFocused = true
   }).on('blur', () => {
-    setSelected(_inspecting_element)
+    resetToSelected(draw)
     setInspecting(_inspecting_element)
     _isColorFieldFocused = false
   }).on('input', evt => { // change backgroundColor once value changed

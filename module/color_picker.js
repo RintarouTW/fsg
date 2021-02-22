@@ -88,7 +88,10 @@ export function attachColorPicker(hexInput) {
   _colorPicker.on("color:change", onColorChange)
   _colorPicker.on("input:start", () => {
     _colorBeforeChange = _hexInput.value
-    document.dispatchEvent(new CustomEvent('colorpicker:change-start'))
+    const colorChangeInfo = {
+      field: _hexInput.getAttribute('id')
+    }
+    document.dispatchEvent(new CustomEvent('colorpicker:change-start', { detail: colorChangeInfo }))
   })
   _colorPicker.on("input:end", () => {
     const colorChangeInfo = {
@@ -96,7 +99,7 @@ export function attachColorPicker(hexInput) {
       oldValue: _colorBeforeChange,
       newValue: _hexInput.value
     }
-    document.dispatchEvent(new CustomEvent('colorpicker:change-end', { detail: colorChangeInfo}))
+    document.dispatchEvent(new CustomEvent('colorpicker:change-end', { detail: colorChangeInfo }))
   })
 
 }

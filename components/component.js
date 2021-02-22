@@ -82,6 +82,7 @@ export class Component {
     if (labelText) this.addLabel(draw, labelText)
 
     if (componentRefs) {
+      console.assert(componentRefs instanceof Array, 'componentRefs must be array')
       element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
       // watch components
       const refComponents = componentRefs.map(no => componentByNo(draw, no))

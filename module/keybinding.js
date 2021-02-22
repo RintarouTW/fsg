@@ -36,11 +36,17 @@ import { showHint } from './ui.js'
 import { toggle_preference_window } from './preference.js'
 import { editField } from './inspector.js'
 
-let _keydownHandler
+let _keydownHandler, _keyupHandler
 
 export function init_module_keybinding(draw) {
 
+  if (_keyupHandler) document.removeEventListener('keyup', _keyupHandler)
   if (_keydownHandler) document.removeEventListener('keydown', _keydownHandler)
+
+  _keyupHandler = evt => {
+    draw.shiftKey = evt.shiftKey
+  }
+  document.addEventListener('keyup', _keyupHandler)
   
   _keydownHandler = evt => {
     console.log(evt.code)
@@ -48,6 +54,8 @@ export function init_module_keybinding(draw) {
     if (typeof window.FSG_BUILDER !== 'undefined' && evt.target != document.body) return
     // if (evt.metaKey) return
     if (!draw.ready) return // ready to action after the opening animation
+
+    draw.shiftKey = evt.shiftKey
 
     let points = getLast2SelectedPointElements(draw)
     let componentRefs

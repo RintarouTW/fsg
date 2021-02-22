@@ -50,10 +50,9 @@ export function toggleAttribute({draw, components, attributeName}) {
 ///
 
 class ChangeStyleAction {
-  constructor(draw, components, attributeName, oldValues, newValues) {
+  constructor(draw, components, attributeName, oldValues, newValue) {
     for (let i = 0; i < components.length; i++) {
       const component = componentByNo(draw, components[i])
-      const newValue = newValues[i]
       component.setAttribute(attributeName, newValue)
       component.element.fire('update')
       SVG('#field_' + attributeName).fire('change')
@@ -62,7 +61,6 @@ class ChangeStyleAction {
     this.components = components
     this.attributeName = attributeName
     this.oldValues = oldValues
-    this.newValues = newValues
   }
   undo() {
     const components = this.components
@@ -78,6 +76,6 @@ class ChangeStyleAction {
   }
 }
 
-export function changeStyle({draw, components, attributeName, oldValues, newValues}) {
-  return new ChangeStyleAction(draw, components, attributeName, oldValues, newValues)
+export function changeStyle({draw, components, attributeName, oldValues, newValue}) {
+  return new ChangeStyleAction(draw, components, attributeName, oldValues, newValue)
 }
