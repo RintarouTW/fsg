@@ -79,7 +79,7 @@ Using `<fsg src='foo.svg'>` custom tag, the runtime would load all of them for y
 ```
 
 Loaded as a static image, it won't be interactive since the runtime won't be loaded by the browser.
-The demo screenshots listed above are exactly use this way, convinient for thumbnails without other image capture/conversion.
+The demo screenshots listed above are exactly this way, it's convinient when u need thumbnails/screenshots without image capture/conversion. Just let the browser generate them for you at the runtime.
 
 ### Embedding in .html
 
@@ -122,7 +122,6 @@ The demo screenshots listed above are exactly use this way, convinient for thumb
 
 ## Why?
 
-I enjoyed Geogebra for a long time, but it's too heavy and slow when embedding multiple instances in a single page.
-The runtime of Geogebra is not designed for the web, that makes your work hard to be reused in the web pages.
-At the same time, it's kind of too complex for people who is not major in Math.
-So I decided to build this builder that I can create the geometry I want in just one minute.
+I enjoyed Geogebra for a long time, but it's too heavy and slow for the web. The runtime of Geogebra is not designed for the web, that makes your work hard to be reused in the web pages. At the same time, it's kind of too complex for people who are not major in Math. No way to customize the styles and hard to animate the geometry.
+
+So I decided to build this builder that I can create the geometry I want in minutes.
