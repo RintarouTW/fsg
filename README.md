@@ -34,6 +34,57 @@ https://rintaroutw.github.io/fsg/example.html
 
 More examples are in `test` folder.
 
+## Different ways to show SVG
+
+### Standalone SVG
+
+Using browser to open .svg directly, the svg would load the runtime automatically.
+
+### Load multiple .svg files in a page at the same time.
+
+Using `<fsg src='foo.svg'>` custom tag, the runtime would load all of them for you.
+
+```
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+  <title>Fast SVG Geometry</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+  <link rel="stylesheet" type="text/css" href="https://rintaroutw.github.io/fsg/style/runtime.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+  <script defer type="module" src="https://rintaroutw.github.io/fsg/runtime.min.js"></script>
+</head>
+<body>
+  <center>
+  <fsg title="example 1" src="test/dot-product-geo0.svg"></fsg>
+  <fsg title="example 2" src="test/dot-product-geo1.svg"></fsg>
+  <fsg title="example 3" src="test/determinant-2.svg"></fsg>
+  <fsg title="example 4" src="test/dot-product-coordinate-2.svg"></fsg>
+  <fsg title="example 5" src="test/Projection.svg"></fsg>
+  <fsg title="example 6" src="test/law-of-sines.svg"></fsg>
+  <fsg title="example 7" src="test/law-of-cosines.svg"></fsg>
+  <fsg title="example 8" src="test/9pointsCircle.svg"></fsg>
+  <fsg title="example 9" src="test/HeronFormula.svg"></fsg>
+  <fsg title="example 10" src="test/Trapezoid.svg"></fsg>
+  <fsg title="example 11" src="test/dot-product.svg"></fsg>
+  </center>
+</body>
+</html>
+```
+
+###  Loaded as a static image
+
+```
+<img src='foo.svg'>
+```
+
+Loaded as a static image, it won't be interactive since the runtime won't be loaded by the browser.
+The demo screenshots listed above are exactly use this way, convinient for thumbnails without other image capture/conversion.
+
+### Embedding in .html
+
+`Export to HTML` would generate the .html, and the svg was embedded in it.
+
 ## Code Structure
 
 - common/ : shared definition and helpers.

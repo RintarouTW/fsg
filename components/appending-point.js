@@ -5,7 +5,7 @@ import { projectPointOnLine } from '../common/math.js'
 import { componentByNo } from './component.js'
 
 ///
-/// AppendingPinPoint
+/// AppendingPinPoint is not a component
 /// pin on the target component.
 /// location relative to the target component.
 /// auto removed when target component is removed.
@@ -19,10 +19,8 @@ export class AppendingPinPoint {
 
     // works like being dragged
     draw.dragTarget = element
+    element.on('dragmove', () => element.fire('update', { target: this }) )
 
-    element.on('dragmove', () => {
-      element.fire('update', { target: this })
-    })
     // watch the target component
     const targetComponent = componentByNo(draw, componentRef)
     console.assert(targetComponent, 'cant find target compoenent', componentRef)
@@ -30,17 +28,8 @@ export class AppendingPinPoint {
     targetComponent.element.on('remove', this.remove.bind(this))
     this.draw = draw
     this.targetComponent = targetComponent
-    if (targetComponent.element.hasClass('circle'))
-      this.type = 'circle'
-    else
-      this.type = 'line'
+    this.type = (targetComponent.element.hasClass('circle')) ? 'circle' : 'line'
     this.update()
-  }
-  remove() {
-    this.targetComponent.element.off('update', this.update)
-    this.targetComponent.element.off('remove', this.remove)
-    this.element.remove()
-    this.draw.dragTarget = null
   }
   done() { // confirmed to add real pin point.
     const draw = this.draw
@@ -50,6 +39,12 @@ export class AppendingPinPoint {
     this.remove()
     this.targetComponent.endAppendMode()
     return {draw, coord, type, componentRefs}
+  }
+  remove() {
+    this.targetComponent.element.off('update', this.update)
+    this.targetComponent.element.off('remove', this.remove)
+    this.element.remove()
+    this.draw.dragTarget = null
   }
   update() {
     // appending mode:
