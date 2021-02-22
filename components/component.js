@@ -94,13 +94,8 @@ export class Component {
 
     draw.fsg.component.all.push(this)
   }
-  watchUpdate(targets, callback) {
-    targets.forEach(target => {
-      target.on('update', evt => callback(evt) )
-    })
-  }
   update() {
-    // do nothing by default
+    // do nothing by default, subclass should override this.
   }
   remove() {
     this.refComponents?.forEach(target => {
@@ -174,7 +169,6 @@ export class Component {
     // search for label of this component if exists
     let label = labelOf(draw, this.component_no)
     if (!label)  {
-      // const position = { x: target.cx() + DEFAULT_LABEL_OFFSET_X, y: -target.cy() + DEFAULT_LABEL_OFFSET_Y}
       const targetCenter = this.center()
       const position = { x: targetCenter.x + DEFAULT_LABEL_OFFSET_X, y: -targetCenter.y + DEFAULT_LABEL_OFFSET_Y}
       label = draw.text(text)
@@ -205,7 +199,7 @@ export class Component {
       label.attr('offset_x', offset.dx).attr('offset_y', offset.dy)
     })
 
-    this.watchUpdate([target], () => {
+    target.on('update', () => {
       const offsetX = label.attr('offset_x')
       const offsetY = label.attr('offset_y')
       const targetCenter = this.center()
