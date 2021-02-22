@@ -87,7 +87,6 @@ function inspect_component(component) {
     SVG(field).fire('change')
   })
 
-  // update_fields()
 }
 
 function inspect_detach() {
@@ -107,7 +106,6 @@ export function init_module_inspector(draw) {
   init_fields()
   SVG('#inspector').on('inspect-component', evt => {
     if(!draw.ready) return
-    // console.log('inspect-component')
     inspect_component(evt.detail.component)
   }).on('inspect-detach', () => {
     inspect_detach()
@@ -124,15 +122,16 @@ export function init_module_inspector(draw) {
     }
     const {field, oldValue, newValue} = evt.detail
     const attributeName = field.substr(6)
-    const components = [_inspecting_element.component]
-    doAction(draw, changeStyle, {components, attributeName, oldValue, newValue})
+    const components = [_inspecting_element.component.component_no]
+    const oldValues = [oldValue]
+    const newValues = [newValue]
+    doAction(draw, changeStyle, {draw, components, attributeName, oldValues, newValues})
   })
 }
 
 function init_fields() {
 
   _inspecting_element?.off('update dragend', update_fields)
-  // .off('dragend', update_fields)
   _inspecting_element = null
 
   fields.forEach(name => {
@@ -141,12 +140,12 @@ function init_fields() {
 
     field.on('input', evt => { // when user edit the field, apply to the inspecting element.
 
-      const attribute_name = evt.target.id.substr(6)
+      const attributeName = evt.target.id.substr(6)
       let value = evt.target.value
       if (value == '') value = null
 
       try { // console.log(attribute_name, value)
-        _inspecting_element?.component?.setAttribute(attribute_name, value)
+        _inspecting_element?.component?.setAttribute(attributeName, value)
       } catch(err) {
         console.log(err)
       }
@@ -173,7 +172,6 @@ function init_fields() {
 }
 
 function update_fields() {
-  // console.log('update_fields')
   const component = _inspecting_element.component
   const attributes = component.getAttributes()
   attributes.forEach(name => {

@@ -1,5 +1,7 @@
 'use strict'
 
+import { componentByNo } from '../components/component.js'
+
 export function init_module_history(draw) {
   draw.fsg.history = {}
   draw.fsg.history.history = []
@@ -23,6 +25,7 @@ export function redo(draw) {
   const history = draw.fsg.history
   let action = history.redo_list.pop()
   if (!action) return
+  console.log(action)
   action.redo()
   // console.log('redo redo_list = ', redo_list)
 }
@@ -32,6 +35,7 @@ export function doAction(draw, cmd, args) {
   const action = cmd(args)
   action.redo = () => {
     if(action.component_no) args.component_no = action.component_no
+    console.log(cmd, action.component_no)
     doAction(draw, cmd, args)
   }
   history.history.push(action)
@@ -43,14 +47,15 @@ export function doAction(draw, cmd, args) {
 ///
 
 class ChangeLocationAction {
-  constructor(components, oldValues, newValues) {
+  constructor(draw, components, oldValues, newValues) {
     for (let i = 0; i < components.length; i++) {
-      const component = components[i]
+      const component = componentByNo(draw, components[i])
       const newValue = newValues[i]
       component.setAttribute('cx', newValue.x)
       component.setAttribute('cy', newValue.y)
       component.element.fire('update')
     }
+    this.draw = draw
     this.components = components
     this.oldValues = oldValues
     this.newValues = newValues
@@ -59,7 +64,7 @@ class ChangeLocationAction {
     const components = this.components
     const oldValues = this.oldValues
     for (let i = 0; i < components.length; i++) {
-      const component = components[i]
+      const component = componentByNo(this.draw, components[i])
       const oldValue = oldValues[i]
       component.setAttribute('cx', oldValue.x)
       component.setAttribute('cy', oldValue.y)
@@ -68,6 +73,6 @@ class ChangeLocationAction {
   }
 }
 
-export function changeLocation({components, oldValues, newValues}) {
-  return new ChangeLocationAction(components, oldValues, newValues)
+export function changeLocation({draw, components, oldValues, newValues}) {
+  return new ChangeLocationAction(draw, components, oldValues, newValues)
 }

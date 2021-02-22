@@ -12,11 +12,10 @@ export const SVGJS_SCRIPT_NAMESPACE = 'SVGJS_SCRIPT'
 export const SVGJS_SCRIPT_URL = (DEV_TESTING)
   ? String.raw`<script href="${SERVER_ROOT}/lib/svg.min.js" />`
   : String.raw`<script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" />`
-export const RUNTIME_SCRIPT_URL = String.raw`<script href="${SERVER_ROOT}/runtime.min.js" />`
-// export const KATEX_SCRIPT_URL = String.raw`<script href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"/>`
-// export const KATEX_AUTO_SCRIPT_URL = String.raw`<script href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"/>`
 
-/* default styles, functional related, not related to theme */
+export const RUNTIME_SCRIPT_URL = String.raw`<script href="${SERVER_ROOT}/runtime.min.js" />`
+
+// default styles, functional related, not related to theme
 export const RUNTIME_DEFAULT_STYLE = String.raw`<style>
 svg {
   user-select: none;

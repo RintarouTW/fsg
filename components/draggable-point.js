@@ -50,17 +50,17 @@ export class DraggablePoint extends SelectablePoint {
           const oldValues = []
           const newValues = []
           draw.dragPoints.map(point => {
-            components.push(point.component)
+            components.push(point.component.component_no)
             oldValues.push(point.orgValue)
             newValues.push({ x: point.cx(), y: point.cy() })
             point.attr(FSG_DRAGGING_ATTR, null)
           }) 
-          doAction(draw, changeLocation, {components, oldValues, newValues})
+          doAction(draw, changeLocation, {draw, components, oldValues, newValues})
         } else {
-          const components = [element.component]
+          const components = [element.component.component_no]
           const oldValues = [{ x: draw.dragPointStart.x, y: draw.dragPointStart.y }]
           const newValues = [{ x: element.cx(), y: element.cy() }]
-          doAction(draw, changeLocation, {components, oldValues, newValues})
+          doAction(draw, changeLocation, {draw, components, oldValues, newValues})
         }
 
         element.attr(FSG_DRAGGING_ATTR, null)
@@ -138,10 +138,10 @@ export class PinPoint extends DraggablePoint {
       draw.dragTarget = element
     }).on('dragend', () => {
       // console.log('dragend')
-      const components = [element.component]
+      const components = [element.component.component_no]
       const oldValues = [{ x: draw.dragPointStart.x, y: draw.dragPointStart.y }]
       const newValues = [{ x: element.cx(), y: element.cy() }]
-      doAction(draw, changeLocation, {components, oldValues, newValues})
+      doAction(draw, changeLocation, {draw, components, oldValues, newValues})
 
       element.attr(FSG_DRAGGING_ATTR, null)
       this.calcState()

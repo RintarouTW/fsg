@@ -1,5 +1,7 @@
 'use strict'
 
+import { componentByNo } from '../components/component.js'
+
 ///
 /// Styles
 ///
@@ -41,26 +43,34 @@ export function toggleAttribute({components, attributeName}) {
 ///
 
 class ChangeStyleAction {
-  constructor(components, attributeName, oldValue, newValue) {
-    components.forEach(component => {
+  constructor(draw, components, attributeName, oldValues, newValues) {
+    for (let i = 0; i < components.length; i++) {
+      const component = componentByNo(draw, components[i])
+      const newValue = newValues[i]
       component.setAttribute(attributeName, newValue)
       component.element.fire('update')
       SVG('#field_' + attributeName).fire('change')
-    })
+    }
+    this.draw = draw
     this.components = components
     this.attributeName = attributeName
-    this.oldValue = oldValue
-    this.newValue = newValue
+    this.oldValues = oldValues
+    this.newValues = newValues
   }
   undo() {
-    this.components.forEach(component => {
-      component.setAttribute(this.attributeName, this.oldValue)
+    const components = this.components
+    const oldValues = this.oldValues
+    const attributeName = this.attributeName
+    for (let i = 0; i < components.length; i++) {
+      const component = componentByNo(this.draw, components[i])
+      const oldValue = oldValues[i]
+      component.setAttribute(attributeName, oldValue)
       component.element.fire('update')
-      SVG('#field_' + this.attributeName).fire('change')
-    })
+      SVG('#field_' + attributeName).fire('change')
+    }
   }
 }
 
-export function changeStyle({components, attributeName, oldValue, newValue}) {
-  return new ChangeStyleAction(components, attributeName, oldValue, newValue)
+export function changeStyle({draw, components, attributeName, oldValues, newValues}) {
+  return new ChangeStyleAction(draw, components, attributeName, oldValues, newValues)
 }
