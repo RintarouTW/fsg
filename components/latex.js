@@ -206,7 +206,7 @@ export function addLaTeX({draw, element, text, unselect, componentRefs}) {
     }
   } else {
     const of = element.attr(OF_ATTR)
-    if (of) componentRefs = of
+    if (of) componentRefs = [of]
   }
   const component = new LaTeX({draw, element, componentRefs})
   if(unselect) unselectComponent(draw, component)
