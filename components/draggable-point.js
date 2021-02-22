@@ -1,6 +1,6 @@
 'use strict'
 
-import { POINT_RADIUS, COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, FSG_DRAGGING_ATTR } from '../common/define.js'
+import { POINT_RADIUS, COMPONENT_NO_ATTR, FSG_DRAGGING_ATTR } from '../common/define.js'
 import { projectPointOnLine } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { SelectablePoint } from './point.js'
@@ -16,7 +16,7 @@ function setStyle(element) {
 /// DraggablePoint
 ///
 export class DraggablePoint extends SelectablePoint {
-  constructor({draw, element, override}) {
+  constructor({draw, element, componentRefs, override}) {
     if (!override) {
       element.on('mousedown', evt => {
         element.lastEvent = 'mousedown'
@@ -71,7 +71,7 @@ export class DraggablePoint extends SelectablePoint {
       })
       override = true
     }
-    super({draw, element, override})
+    super({draw, element, componentRefs, override})
   }
 }
 
@@ -113,13 +113,11 @@ export function addPoint({ draw, coord, element, component_no }) {
 ///
 
 export class PinPoint extends DraggablePoint {
-  constructor({ draw, type, componentRef, element }) {
+  constructor({ draw, type, componentRefs, element }) {
     const override = true
-    super({ draw, element, override})
+    super({ draw, element, componentRefs, override})
 
     this.type = type
-
-    element.attr(COMPONENT_REFS_ATTR, componentRef)
 
     // override for better performance
     element.on('mousedown', evt => {
@@ -141,9 +139,9 @@ export class PinPoint extends DraggablePoint {
     }).on('dragend', () => {
       // console.log('dragend')
       const components = [element.component]
-      const oldValue = { x: draw.dragPointStart.x, y: draw.dragPointStart.y }
-      const newValue = { x: element.cx(), y: element.cy() }
-      doAction(draw, changeLocation, {components, oldValue, newValue})
+      const oldValues = [{ x: draw.dragPointStart.x, y: draw.dragPointStart.y }]
+      const newValues = [{ x: element.cx(), y: element.cy() }]
+      doAction(draw, changeLocation, {components, oldValues, newValues})
 
       element.attr(FSG_DRAGGING_ATTR, null)
       this.calcState()
@@ -154,15 +152,8 @@ export class PinPoint extends DraggablePoint {
     })
 
     // watch components
-    const targetComponent = componentByNo(draw, componentRef)
-    targetComponent.element.on('update', this.update.bind(this))
-    targetComponent.element.on('remove', this.remove.bind(this))
-    this.targetComponent = targetComponent
+    this.targetComponent = componentByNo(draw, componentRefs[0])
     this.calcState()
-  }
-  remove() {
-    this.targetComponent.element.off('update', this.update)
-    super.remove()
   }
   calcState() {
     const element = this.element
@@ -239,11 +230,11 @@ export class PinPoint extends DraggablePoint {
 //
 // ref components: lines, circle, polygon
 //
-export function addPinPoint({ draw, coord, type, componentRef, element, component_no })  {
+export function addPinPoint({ draw, coord, type, componentRefs, element, component_no })  {
   if (!element) element = draw.circle(POINT_RADIUS)
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
     .attr('class', 'pin-point')
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
-  return new PinPoint({ draw, type, componentRef, element })
+  return new PinPoint({ draw, type, componentRefs, element })
 }
 

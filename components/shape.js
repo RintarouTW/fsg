@@ -39,22 +39,18 @@ export function putBehindPoints(draw, points, cover, element) {
 ///
 
 export class Shape extends SelectableComponent {
-  constructor({draw, element, cover, points }) {
+  constructor({ draw, element, componentRefs, cover, points }) {
     console.assert(draw, "draw is required")
     console.assert(element, "element is required")
     // cover is optional now, only used in the builder
 
-    super({draw, element})
+    super({draw, element, componentRefs})
 
-    if (points) {
-      const point_refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
-      element.attr(COMPONENT_REFS_ATTR, point_refs.join(','))
-      this.points = points
-    }
+    this.points = points
+    this.cover = cover
 
     cover?.attr(OF_ATTR, this.component_no)
       .attr('fill', DEFAULT_TRANSPARENT_COLOR) // fill with transparent color
-    this.cover = cover
 
     cover?.on('mousedown', evt => { // selectable by mousedown
       this.toggleSelected()

@@ -78,13 +78,14 @@ export function reconstruct_components(draw) {
       return
     }
     if (element.hasClass('pin-point')) {
-      const componentRef = element.attr(COMPONENT_REFS_ATTR)
-      if (!componentRef) return
-      const refElement = elementByNo(list, componentRef)
+      const refs_attr = element.attr(COMPONENT_REFS_ATTR)
+      if (!refs_attr) return
+      const componentRefs = [refs_attr] 
+      const refElement = elementByNo(list, componentRefs[0])
       console.assert(refElement, 'failed to locate the refereneced element')
       let type = 'line'
       if (refElement instanceof SVG.Circle) type = 'circle'
-      addPinPoint({draw, type, componentRef, element})
+      addPinPoint({draw, type, componentRefs, element})
       return
     }
     if (element.hasClass('latex') || element.hasClass('text')) {

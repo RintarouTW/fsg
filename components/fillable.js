@@ -2,7 +2,6 @@
 
 import { 
   COMPONENT_NO_ATTR,
-  COMPONENT_REFS_ATTR,
   DEFAULT_ANGLE_RADIUS,
   FSG_FILL_NONE_ATTR,
   FSG_SHAPE_ATTR,
@@ -25,8 +24,8 @@ function coverForCircleElement(draw, element) {
 }
 
 export class FillableShape extends Shape {
-  constructor({draw, element, cover, points}) {
-    super({draw, element, cover, points})
+  constructor({draw, componentRefs, element, cover, points}) {
+    super({draw, componentRefs, element, cover, points})
   }
 }
 
@@ -35,21 +34,19 @@ export class FillableShape extends Shape {
 ///
 
 export class Circle extends FillableShape {
-  constructor({ draw, radius, points, element, cover }) {
-    super({ draw, element, cover, points })
-
+  constructor({ draw, componentRefs, radius, points, element, cover }) {
+    super({ draw, componentRefs, element, cover, points })
     this.radius = radius
-
-    const [cp, rp] = points
-    this.watchUpdate(points, () => {
-      const coord1 = pointOnScreen({ element: cp })
-      const coord2 = pointOnScreen({ element: rp })
-      const r = Math.sqrt((coord2.x - coord1.x) ** 2 + (coord2.y - coord1.y) ** 2)
-      this.radius = r
-      element.radius(r).center(cp.cx(), cp.cy())
-      cover?.radius(r).center(cp.cx(), cp.cy())
-      element.fire('update')
-    })
+  }
+  update() {
+    const [cp, rp] = this.points
+    const coord1 = pointOnScreen({ element: cp })
+    const coord2 = pointOnScreen({ element: rp })
+    const r = Math.sqrt((coord2.x - coord1.x) ** 2 + (coord2.y - coord1.y) ** 2)
+    this.radius = r
+    this.element.radius(r).center(cp.cx(), cp.cy())
+    this.cover?.radius(r).center(cp.cx(), cp.cy())
+    this.element.fire('update')
   }
   // Implement the Appendable Interface
   endAppendMode() {
@@ -86,7 +83,7 @@ export function addCircle({draw, componentRefs, element, cover, component_no}) {
 
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-  return new Circle({draw, radius, points, element, cover, component_no})
+  return new Circle({draw, componentRefs, radius, points, element, cover, component_no})
 }
 
 ///
@@ -94,18 +91,16 @@ export function addCircle({draw, componentRefs, element, cover, component_no}) {
 ///
 
 class Polygon extends FillableShape {
-  constructor({ draw, points, element, cover }) {
-    super({ draw, element, cover, points })
-
-    this.watchUpdate(points, () => {
-      let pts = points.map(p => {
-        const coord = pointOnScreen(p.component)
-        return [coord.x, coord.y]
-      })
-      element.plot(pts)
-      cover?.plot(pts)
-      element.fire('update')
+  constructor({ draw, componentRefs, points, element, cover }) {
+    super({ draw, componentRefs, element, cover, points })
+  }
+  update() {
+    let pts = this.points.map(p => {
+      const coord = pointOnScreen(p.component)
+      return [coord.x, coord.y]
     })
+    this.cover?.plot(pts)
+    this.element.plot(pts).fire('update')
   }
 }
 
@@ -127,7 +122,7 @@ export function addPolygon({draw, componentRefs, element, cover, component_no}) 
   putBehindPoints(draw, points, cover, element)
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-  return new Polygon({ draw, points, element, cover })
+  return new Polygon({ draw, componentRefs, points, element, cover })
 }
 
 ///
@@ -176,28 +171,20 @@ function arcPathOf(p1, p2, p3, large_arc = false) {
 }
 
 export class Arc extends FillableShape {
-  constructor({draw, points, element, cover}) {
-    super({draw, element, cover, points})
+  constructor({draw, componentRefs, points, element, cover}) {
+    super({draw, componentRefs, element, cover, points})
 
     const large_arc = element.attr('large_arc')
     if (typeof large_arc === 'undefined')
       this.large_arc = false
     else
       this.large_arc = (large_arc == 'true') ? true : false
-    const [p1, p2, p3] = points
-    this.watchUpdate(points, () => {
-      const arcPath = arcPathOf(p1, p2, p3, this.large_arc)
-      element.plot(arcPath)
-      cover?.plot(arcPath)
-      element.fire('update')
-    })
-
-    const componentRefs = points.map(point => {
-      // watch point remove event
-      point.on('remove', this.remove.bind(this))
-      return point.attr('component_no')
-    })
-    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
+  }
+  update() {
+    const [p1, p2, p3] = this.points
+    const arcPath = arcPathOf(p1, p2, p3, this.large_arc)
+    this.cover?.plot(arcPath)
+    this.element.plot(arcPath).fire('update')
   }
   toggleMode() {
     this.large_arc = !this.large_arc
@@ -226,6 +213,6 @@ export function addAngle({ draw, componentRefs, element, cover, component_no }) 
   putBehindPoints(draw, points, cover, element)
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-  return new Arc({draw, points, element, cover})
+  return new Arc({draw, componentRefs, points, element, cover})
 }
 

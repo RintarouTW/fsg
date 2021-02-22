@@ -374,8 +374,8 @@ export function init_module_keybinding(draw) {
               showHint('Select the target component first!')
               return
             }
-            const componentRef = target.component_no
-            doAction(draw, addLaTeX, {draw, componentRef})
+            const componentRefs = [target.component_no]
+            doAction(draw, addLaTeX, {draw, componentRefs})
           } else if (!evt.altKey) { // add LaTeX
             doAction(draw, addLaTeX, {draw})
           }

@@ -2,7 +2,6 @@
 
 import { 
   COMPONENT_NO_ATTR,
-  COMPONENT_REFS_ATTR,
   DEFAULT_ANGLE_RADIUS,
   DEFAULT_LENGTH_MARKER_WIDTH,
   DEFAULT_LENGTH_MARKER_DISTANCE,
@@ -48,27 +47,21 @@ function arrowedArcPathOf(p1, p2, p3, large_arc = false) {
 }
 
 export class ArrowedArc extends Shape {
-  constructor({draw, points, element, cover}) {
-    super({draw, element, cover, points})
+  constructor({draw, componentRefs, points, element, cover}) {
+    super({draw, componentRefs, element, cover, points})
 
     const large_arc = element.attr('large_arc')
     if (typeof large_arc === 'undefined')
       this.large_arc = false
     else
       this.large_arc = (large_arc == 'true') ? true : false
-    const [p1, p2, p3] = points
-    this.watchUpdate(points, () => {
-      const arcPath = arrowedArcPathOf(p1, p2, p3, this.large_arc)
-      element.plot(arcPath)
-      cover?.plot(arcPath)
-      element.fire('update')
-    })
 
-    const componentRefs = points.map(point => { // watch point remove event
-      point.on('remove', this.remove.bind(this))
-      return point.attr('component_no')
-    })
-    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
+  }
+  update() {
+    const [p1, p2, p3] = this.points
+    const arcPath = arrowedArcPathOf(p1, p2, p3, this.large_arc)
+    this.cover?.plot(arcPath)
+    this.element.plot(arcPath).fire('update')
   }
   center() {
     const [p1, p2, p3] = this.points
@@ -131,7 +124,7 @@ export function addAngleMarker({ draw, componentRefs, element, cover, component_
   putBehindPoints(draw, points, cover, element)
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-  return new ArrowedArc({draw, points, element, cover})
+  return new ArrowedArc({draw, componentRefs, points, element, cover})
 }
 
 ///
@@ -170,24 +163,17 @@ function lengthPathOf(p1, p2, distance) {
 }
 
 export class LengthMarker extends Shape {
-  constructor({draw, points, element, cover}) {
-    super({draw, element, cover, points})
+  constructor({draw, componentRefs, points, element, cover}) {
+    super({draw, componentRefs, element, cover, points})
 
-    const [p1, p2] = points
-    this.watchUpdate(points, () => {
-      const distance = (!this.mark_on_right) ? DEFAULT_LENGTH_MARKER_DISTANCE : -DEFAULT_LENGTH_MARKER_DISTANCE
-      const path = lengthPathOf(p1, p2, distance)
-        element.plot(path)
-      cover?.plot(path)
-      element.fire('update')
-    })
-
-    const componentRefs = points.map(point => { // watch point remove event
-      point.on('remove', this.remove.bind(this))
-      return point.attr('component_no')
-    })
-    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
-    this.mark_on_right = false
+   this.mark_on_right = false
+  }
+  update() {
+    const [p1, p2] = this.points
+    const distance = (!this.mark_on_right) ? DEFAULT_LENGTH_MARKER_DISTANCE : -DEFAULT_LENGTH_MARKER_DISTANCE
+    const path = lengthPathOf(p1, p2, distance)
+    this.cover?.plot(path)
+    this.element.plot(path).fire('update')
   }
   center() {
     const distance = (!this.mark_on_right) 
@@ -227,6 +213,6 @@ export function addLengthMarker({ draw, componentRefs, element, cover, component
   putBehindPoints(draw, points, cover, element)
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-  return new LengthMarker({draw, points, element, cover})
+  return new LengthMarker({draw, componentRefs, points, element, cover})
 }
 

@@ -12,23 +12,17 @@ import { setStrokeColor } from '../module/color_picker.js'
 ///
 
 export class LineSegment extends LineShape {
-  constructor({draw, points, element, cover}) {
-
-    super({draw, element, cover, points})
-
-    if(!points) {
-      unselectComponent(draw, this) 
-    } else {
-      const [p1, p2] = points
-      this.watchUpdate(points, () => {
-        const coord1 = pointOnScreen(p1.component)
-        const coord2 = pointOnScreen(p2.component)
-        element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
-        cover?.plot(coord1.x, coord1.y, coord2.x, coord2.y)
-        this.updateDirection()
-        element.fire('update')
-      })
-    }
+  constructor({draw, componentRefs, element, cover, points}) {
+    super({draw, element, componentRefs, cover, points})
+  }
+  update() {
+    const [p1, p2] = this.points
+    const coord1 = pointOnScreen(p1.component)
+    const coord2 = pointOnScreen(p2.component)
+    this.element.plot(coord1.x, coord1.y, coord2.x, coord2.y)
+    this.cover?.plot(coord1.x, coord1.y, coord2.x, coord2.y)
+    this.updateDirection()
+    this.element.fire('update')
   }
 }
 
@@ -52,7 +46,7 @@ export function addEdge({draw, componentRefs, element, cover, component_no}) {
 
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-  return new LineSegment({draw, points, element, cover})
+  return new LineSegment({draw, componentRefs, element, cover, points})
 }
 
 export function addVector({draw, componentRefs, element, cover, component_no}) {
@@ -71,10 +65,10 @@ export function addVector({draw, componentRefs, element, cover, component_no}) {
   putBehindPoints(draw, points, cover, element)
 
   element.marker('start', draw.fsg.marker.vector_start_marker)
-  element.marker('end', draw.fsg.marker.vector_end_marker)
+    .marker('end', draw.fsg.marker.vector_end_marker)
 
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
-  return new LineSegment({draw, points, element, cover})
+  return new LineSegment({draw, componentRefs, points, element, cover})
 }
 
 export class Axis extends LineSegment {
@@ -112,8 +106,8 @@ export function addAxis({draw, type, element, cover, component_no}) {
   cover = cover ?? coverForLineElement(draw, element) 
 
   element.marker('end', draw.fsg.marker.vector_end_marker)
-  element.removeClass('dashed')
-  element.addClass(type)
+    .removeClass('dashed')
+    .addClass(type)
 
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 

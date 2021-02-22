@@ -1,6 +1,6 @@
 'use strict'
 
-import { POINT_RADIUS, COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR } from '../common/define.js'
+import { POINT_RADIUS, COMPONENT_NO_ATTR } from '../common/define.js'
 import { intersect, projectPointOnLine, intersectLineAndCircle, twoCirclesIntersection, pointOnScreen } from '../common/math.js'
 import { SelectableComponent, componentByNo } from './component.js'
 import { LineShape } from './line.js'
@@ -9,7 +9,7 @@ import { LineShape } from './line.js'
 // override could prevent event handler explosion for better performance..
 //
 export class SelectablePoint extends SelectableComponent {
-  constructor({draw, element, override}) {
+  constructor({draw, element, componentRefs, override}) {
     if (!override) {
       element.on('mousedown', evt => {
         element.lastEvent = 'mousedown'
@@ -19,7 +19,7 @@ export class SelectablePoint extends SelectableComponent {
         element.lastEvent = 'mouseup'
       })
     }
-    super({draw, element})
+    super({draw, element, componentRefs})
   }
   getAttributes() {
     return ['id', 'class', 'cx', 'cy', 'text']
@@ -30,29 +30,13 @@ export class SelectablePoint extends SelectableComponent {
 /// IntersectPoint
 /// Non-moveable, location decided by the target components: 
 /// [line, selectable point], [line, line], [line, circle], [circle, circle]
-/// removed when target components were removed.
 ///
 
 export class IntersectPoint extends SelectablePoint {
   constructor({ draw, index, componentRefs, element }) {
-    super({ draw, element })
+    super({ draw, element, componentRefs })
     this.index = index
     console.assert(typeof index !== 'undefined', 'index should be defined')
-    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
-
-    // watch components
-    const refComponents = componentRefs.map(no => componentByNo(draw, no))
-    this.refComponents = refComponents
-    refComponents.forEach(target => {
-      target.element.on('update', this.update.bind(this))
-      target.element.on('remove', this.remove.bind(this))
-    })
-  }
-  remove() {
-    this.refComponents.forEach(target => {
-      target.element.off('update', this.update)
-    })
-    super.remove()
   }
   update() {
     // console.log('update', this.element)
@@ -131,23 +115,8 @@ export function addIntersectPoint({ draw, coord, index, componentRefs, element, 
 ///
 export class MidPoint extends SelectablePoint {
   constructor({ draw, componentRefs, element }) {
-    super({ draw, element })
+    super({ draw, element, componentRefs })
 
-    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
-
-    // watch components
-    const refComponents = componentRefs.map(no => componentByNo(draw, no))
-    this.refComponents = refComponents
-    refComponents.forEach(target => {
-      target.element.on('update', this.update.bind(this))
-      target.element.on('remove', this.remove.bind(this))
-    })
-  }
-  remove() {
-    this.refComponents.forEach(target => {
-      target.element.off('update', this.update)
-    })
-    super.remove()
   }
   update() {
     // console.log('update', this.element)

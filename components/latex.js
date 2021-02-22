@@ -13,32 +13,27 @@ function useCurrentColors(element) {
 
 ///
 /// LaTeX 
-/// (optional) componentRef is the target component no that this latex relative to.
+/// (optional) componentRefs[0] is the target component no that this latex relative to.
 ///
 export class LaTeX extends SelectableComponent {
-  constructor({draw, element, componentRef}) {
-    super({draw, element})
+  constructor({draw, element, componentRefs}) {
+    super({draw, element, componentRefs})
     { // patch old diagrams(.text) to new class(.latex)
-      element.removeClass('text')
-      element.addClass('latex')
+      element.removeClass('text').addClass('latex')
     }
 
-    if (componentRef) 
-      this.watchTarget(draw, componentRef)
+    if (componentRefs) 
+      this.target = componentByNo(draw, componentRefs[0])?.element
 
     this.makeDraggable(draw, element)
   }
-  watchTarget(draw, componentRef) {
-    const target = componentByNo(draw, componentRef)?.element
-    if(!target) return
-    this.target = target
-    this.watchUpdate([this.target], () => {
-      const offsetX = this.element.attr('offset_x')
-      const offsetY = this.element.attr('offset_y')
-      const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }
-      this.element.move(position.x, position.y)
-      this.element.fire('update')
-    })
+  update() {
+    const target = this.target
+    const offsetX = this.element.attr('offset_x')
+    const offsetY = this.element.attr('offset_y')
+    const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }
+    this.element.move(position.x, position.y)
+    this.element.fire('update')
   }
   makeDraggable(draw, element) {
     const target = this.target
@@ -188,31 +183,31 @@ function genLaTeX(draw, text, position) {
   return element
 }
 
-export function addLaTeX({draw, element, text, unselect, componentRef}) {
+export function addLaTeX({draw, element, text, unselect, componentRefs}) {
   if (!element) {
     /*
      * <g label=''>
      *   <foreignObject></foreignObject>
      * </g>
      */
-    if (!componentRef) {
+    if (!componentRefs) {
       const position = draw.mousePosition
       text = text ?? DEFAULT_TEXT
       element = genLaTeX(draw, text, position)
       useCurrentColors(element)
     } else {
-      let position = componentByNo(draw, componentRef).center()
+      let position = componentByNo(draw, componentRefs[0]).center()
       text = text ?? DEFAULT_TEXT
       element = genLaTeX(draw, text, position)
       element.attr('offset_x', 0)
         .attr('offset_y', 0)
-        .attr(OF_ATTR, componentRef)
+        .attr(OF_ATTR, componentRefs[0])
       useCurrentColors(element)
     }
   } else {
-    componentRef = element.attr(OF_ATTR)
+    componentRefs = [element.attr(OF_ATTR)]
   }
-  const component = new LaTeX({draw, element, componentRef})
+  const component = new LaTeX({draw, element, componentRefs})
   if(unselect) unselectComponent(draw, component)
   return component
 }

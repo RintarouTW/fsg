@@ -2,6 +2,7 @@
 
 import { 
   COMPONENT_NO_ATTR,
+  COMPONENT_REFS_ATTR,
   OF_ATTR,
   DEFAULT_LABEL_OFFSET_X,
   DEFAULT_LABEL_OFFSET_Y,
@@ -56,10 +57,11 @@ function labelOf(draw, no) {
 ///   the owned element should have the attribute(of) to indicate it's owned by which component(no)
 ///   a component referenced other elements should have component_refs to indicate the elements it referenced.
 ///   a component that owned(and managed) other element should be resposible to re-construct those elements.
+/// - removed when referenced components were removed.
 /// 
 
 export class Component {
-  constructor({draw, element}) {
+  constructor({draw, element, componentRefs}) {
     console.assert(draw, 'draw is required')
     console.assert(element, 'element is required')
     console.assert(draw === element.parent(), 'element must be the child of draw')
@@ -79,6 +81,17 @@ export class Component {
     const labelText = element.attr('label')
     if (labelText) this.addLabel(draw, labelText)
 
+    if (componentRefs) {
+      element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
+      // watch components
+      const refComponents = componentRefs.map(no => componentByNo(draw, no))
+      this.refComponents = refComponents
+      refComponents.forEach(target => {
+        target.element.on('update', this.update.bind(this))
+        target.element.on('remove', this.remove.bind(this))
+      })
+    }
+
     draw.fsg.component.all.push(this)
   }
   watchUpdate(targets, callback) {
@@ -86,7 +99,15 @@ export class Component {
       target.on('update', evt => callback(evt) )
     })
   }
+  update() {
+    // do nothing by default
+  }
   remove() {
+    this.refComponents?.forEach(target => {
+      target.element.off('remove', this.remove)
+      target.element.off('update', this.update)
+    })
+
     this.removeLabel()
     this.element.fire('remove').remove()
     this.draw.fsg.component.all = this.draw.fsg.component.all.filter(item => item !== this)
@@ -228,8 +249,8 @@ export class Component {
 // keeps the event handlers simple would be good for performance.
 //
 export class SelectableComponent extends Component {
-  constructor({draw, element, override}) {
-    super({draw, element})
+  constructor({draw, element, componentRefs, override}) {
+    super({draw, element, componentRefs})
 
     if (!override) {
       // Mouse Hover

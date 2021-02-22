@@ -1,6 +1,6 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR, FSG_SHAPE_ATTR } from '../common/define.js'
+import { COMPONENT_NO_ATTR, FSG_SHAPE_ATTR } from '../common/define.js'
 import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { Shape, putBehindPoints } from './shape.js'
@@ -17,8 +17,8 @@ export function coverForLineElement(draw, element) {
 }
 
 export class LineShape extends Shape {
-  constructor({draw, element, cover, points}) {
-    super({draw, element, cover, points})
+  constructor({draw, element, componentRefs, cover, points}) {
+    super({draw, element, componentRefs, cover, points})
     this.isAppending = null
   }
   startPoint() {
@@ -68,22 +68,21 @@ export class LineShape extends Shape {
 ///
 
 export class Line extends LineShape {
-  constructor({draw, points, element, cover}) {
-    super({draw, element, cover, points})
-
-    const [p1, p2] = points
-    this.watchUpdate(points, () => {
-      const box = draw.bbox()
-      const coord1 = pointOnScreen(p1.component)
-      const coord2 = pointOnScreen(p2.component)
-      // console.log(box, coord1, coord2)
-      const [clip1, clip2] = clipping(box, coord1, coord2)
-      if (!clip1 || !clip2) return
-      element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      cover?.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      this.updateDirection()
-      element.fire('update')
-    })
+  constructor({draw, element, componentRefs, points, cover}) {
+    super({draw, element, componentRefs, cover, points})
+  }
+  update() {
+    const [p1, p2] = this.points
+    const box = this.draw.bbox()
+    const coord1 = pointOnScreen(p1.component)
+    const coord2 = pointOnScreen(p2.component)
+    // console.log(box, coord1, coord2)
+    const [clip1, clip2] = clipping(box, coord1, coord2)
+    if (!clip1 || !clip2) return
+    this.element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+    this.cover?.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+    this.updateDirection()
+    this.element.fire('update')
   }
 }
 
@@ -111,7 +110,7 @@ export function addLine({draw, componentRefs, element, cover, component_no}) {
 
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-  return new Line({draw, points, element, cover, component_no})
+  return new Line({draw, element, componentRefs, points, cover, component_no})
 }
 
 ///
@@ -142,25 +141,24 @@ function getClipped(draw, p1, p2) {
 }
 
 export class Ray extends LineShape {
-  constructor({ draw, points, element, cover }) {
-    super({draw, element, cover, points})
+  constructor({ draw, element, componentRefs, points, cover }) {
+    super({draw, element, componentRefs, cover, points})
+  }
+  update() {
+    const [p1, p2] = this.points
+    const coord1 = pointOnScreen(p1.component)
+    const coord2 = pointOnScreen(p2.component)
+    const clip = getClipped(this.draw, coord1, coord2)
+    if (!clip) return
 
-    const [p1, p2] = points
-    this.watchUpdate(points, () => {
-      const coord1 = pointOnScreen(p1.component)
-      const coord2 = pointOnScreen(p2.component)
-      const clip = getClipped(draw, coord1, coord2)
-      if (!clip) return
-
-      element.plot(coord1.x, coord1.y, clip.x, clip.y)
-      cover?.plot(coord1.x, coord1.y, clip.x, clip.y)
-      this.updateDirection()
-      element.fire('update')
-    })
+    this.element.plot(coord1.x, coord1.y, clip.x, clip.y)
+    this.cover?.plot(coord1.x, coord1.y, clip.x, clip.y)
+    this.updateDirection()
+    this.element.fire('update')
   }
 }
 
-export function addRay({draw, componentRefs, element, cover, component_no}) {
+export function addRay({draw, element, componentRefs, cover, component_no}) {
 
   const points = componentRefs.map(no => componentByNo(draw, no).element)
   if (!element) {
@@ -179,7 +177,7 @@ export function addRay({draw, componentRefs, element, cover, component_no}) {
   putBehindPoints(draw, points, cover, element)
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-  return new Ray({draw, points, element, cover })
+  return new Ray({draw, element, componentRefs, cover, points })
 }
 
 ///
@@ -203,10 +201,9 @@ function clippedParallelLine(draw, line, point) {
 }
 
 export class ParallelLine extends LineShape {
-  constructor({draw, componentRefs, element, cover, component_no}) {
+  constructor({draw, element, componentRefs, cover, component_no}) {
 
     let points = componentRefs.map(no => componentByNo(draw, no).element)
-
     if (!element) {
       const [line, point] = points
       const [clip1, clip2] = clippedParallelLine(draw, line, point)
@@ -221,21 +218,15 @@ export class ParallelLine extends LineShape {
     putBehindPoints(draw, points, cover, element)
     if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-    super({draw, element, cover, points})
-
-    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
-    this.watchUpdate(points, () => {
-      const [line, point] = points
-      const [clip1, clip2] = clippedParallelLine(draw, line, point)
-      if (!clip1 || !clip2) return
-      element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      cover?.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      element.fire('update')
-    })
-    points.forEach(point => {
-      // watch point remove event
-      point.on('remove', this.remove.bind(this))
-    })
+    super({draw, element, componentRefs, cover, points})
+  }
+  update() {
+    const [line, point] = this.points
+    const [clip1, clip2] = clippedParallelLine(this.draw, line, point)
+    if (!clip1 || !clip2) return
+    this.element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+    this.cover?.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+    this.element.fire('update')
   }
   startPoint() {
     const p = this.points[1]
@@ -250,8 +241,8 @@ export class ParallelLine extends LineShape {
   }
 }
 
-export function addParallelLine({ draw, componentRefs, element, cover, component_no }) {
-  return new ParallelLine({draw, componentRefs, element, cover, component_no})
+export function addParallelLine({ draw, element, componentRefs, cover, component_no }) {
+  return new ParallelLine({draw, element, componentRefs, cover, component_no})
 }
 
 ///
@@ -275,7 +266,7 @@ function clippedPerpLine(draw, line, point) {
 }
 
 export class PerpLine extends LineShape {
-  constructor({draw, componentRefs, element, cover, component_no}) {
+  constructor({draw, element, componentRefs, cover, component_no}) {
 
     let points = componentRefs.map(no => componentByNo(draw, no).element)
 
@@ -292,21 +283,15 @@ export class PerpLine extends LineShape {
     putBehindPoints(draw, points, cover, element)
     if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-    super({draw, element, cover, points})
-
-    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
-    this.watchUpdate(points, () => {
-      const [line, point] = points
-      const [clip1, clip2] = clippedPerpLine(draw, line, point)
-      if (!clip1 || !clip2) return
-      element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      cover?.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      element.fire('update')
-    })
-    points.forEach(point => {
-      // watch point remove event
-      point.on('remove', this.remove.bind(this))
-    })
+    super({draw, element, componentRefs, cover, points})
+  }
+  update() {
+    const [line, point] = this.points
+    const [clip1, clip2] = clippedPerpLine(this.draw, line, point)
+    if (!clip1 || !clip2) return
+    this.element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+    this.cover?.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+    this.element.fire('update')
   }
   startPoint() {
     const p = this.points[1]
@@ -322,8 +307,8 @@ export class PerpLine extends LineShape {
   }
 }
 
-export function addPerpLine({ draw, componentRefs, element, cover, component_no }) {
-  return new PerpLine({draw, componentRefs, element, cover, component_no})
+export function addPerpLine({ draw, element, componentRefs, cover, component_no }) {
+  return new PerpLine({draw, element, componentRefs, cover, component_no})
 }
 
 ///
@@ -332,30 +317,22 @@ export function addPerpLine({ draw, componentRefs, element, cover, component_no 
 ///
 
 export class BisectorLine extends LineShape {
-  constructor({draw, points, element, cover}) {
-    super({draw, element, cover, points})
+  constructor({draw, element, componentRefs, cover, points }) {
+    super({draw, element, componentRefs, cover, points})
+  }
+  update() {
+    const [p1, p2, p3] = this.points
+    const box = this.draw.bbox()
+    const bp = coordOfBisectorPoint(p1, p2, p3)
+    const coord1 = { x: p2.cx(), y: p2.cy() }
+    const coord2 = { x: bp.x, y: bp.y }
+    const [clip1, clip2] = clipping(box, coord1, coord2)
+    // console.log(box, coord1, coord2)
 
-    const [p1, p2, p3] = points
-    this.watchUpdate(points, () => {
-      const box = draw.bbox()
-      const bp = coordOfBisectorPoint(p1, p2, p3)
-      const coord1 = { x: p2.cx(), y: p2.cy() }
-      const coord2 = { x: bp.x, y: bp.y }
-      const [clip1, clip2] = clipping(box, coord1, coord2)
-      // console.log(box, coord1, coord2)
-
-      if (!clip1 || !clip2) return
-      element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      cover?.plot(clip1.x, clip1.y, clip2.x, clip2.y)
-      element.fire('update')
-    })
-
-    const componentRefs = points.map(point => {
-      // watch point remove event
-      point.on('remove', this.remove.bind(this))
-      return point.attr(COMPONENT_NO_ATTR)
-    })
-    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
+    if (!clip1 || !clip2) return
+    this.element.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+    this.cover?.plot(clip1.x, clip1.y, clip2.x, clip2.y)
+    this.element.fire('update')
   }
   startPoint() {
     const p = this.points[1]
@@ -390,7 +367,7 @@ function coordOfBisectorPoint(p1, p2, p3) {
   return { x: p2.cx() + (v1.x + v2.x) / 2, y: p2.cy() + (v1.y + v2.y) /2 }
 }
 
-export function addBisectorLine({ draw, componentRefs, element, cover, component_no }) {
+export function addBisectorLine({ draw, element, componentRefs, cover, component_no }) {
 
   let points = componentRefs.map(no => componentByNo(draw, no).element)
 
@@ -411,6 +388,6 @@ export function addBisectorLine({ draw, componentRefs, element, cover, component
   putBehindPoints(draw, points, cover, element)
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
 
-  return new BisectorLine({draw, points, element, cover})
+  return new BisectorLine({draw, element, componentRefs, cover, points})
 }
 

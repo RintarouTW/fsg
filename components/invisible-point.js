@@ -1,15 +1,15 @@
 'use strict'
 
-import { POINT_RADIUS, COMPONENT_NO_ATTR, COMPONENT_REFS_ATTR } from '../common/define.js'
+import { POINT_RADIUS, COMPONENT_NO_ATTR } from '../common/define.js'
 import { pointOnScreen } from '../common/math.js'
-import { Component, componentByNo } from './component.js'
+import { Component } from './component.js'
 
 ///
 /// InvisiblePoint
 /// 
 export class InvisiblePoint extends Component {
-  constructor({ draw, element }) {
-    super({draw, element})
+  constructor({ draw, element, componentRefs }) {
+    super({draw, element, componentRefs})
   }
   select() {
     // do nothing.
@@ -31,24 +31,8 @@ export class InvisiblePoint extends Component {
 /// removed after the ref components are removed.
 ///
 export class ParallelPoint extends InvisiblePoint {
-  constructor({ draw, componentRefs, element }) {
-    super({ draw, element })
-
-    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
-
-    // watch components
-    const refComponents = componentRefs.map(no => componentByNo(draw, no))
-    this.refComponents = refComponents
-    refComponents.forEach(target => {
-      target.element.on('update', this.update.bind(this))
-      target.element.on('remove', this.remove.bind(this))
-    })
-  }
-  remove() {
-    this.refComponents.forEach(target => {
-      target.element.off('update', this.update)
-    })
-    super.remove()
+  constructor({ draw, element, componentRefs }) {
+    super({ draw, element, componentRefs })
   }
   update() {
     const [line, point] = this.refComponents
@@ -65,7 +49,7 @@ export function addParallelPoint({ draw, coord, componentRefs, element, componen
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
     .attr('class', 'parallel-point')
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
-  return new ParallelPoint({ draw, componentRefs, element })
+  return new ParallelPoint({ draw, element, componentRefs })
 }
 
 ///
@@ -73,24 +57,8 @@ export function addParallelPoint({ draw, coord, componentRefs, element, componen
 /// removed after the ref components are removed.
 ///
 export class PerpPoint extends InvisiblePoint {
-  constructor({ draw, componentRefs, element }) {
-    super({ draw, element })
-
-    element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
-
-    // watch components
-    const refComponents = componentRefs.map(no => componentByNo(draw, no))
-    this.refComponents = refComponents
-    refComponents.forEach(target => {
-      target.element.on('update', this.update.bind(this))
-      target.element.on('remove', this.remove.bind(this))
-    })
-  }
-  remove() {
-    this.refComponents.forEach(target => {
-      target.element.off('update', this.update)
-    })
-    super.remove()
+  constructor({ draw, element, componentRefs }) {
+    super({ draw, element, componentRefs })
   }
   update() {
     const [line, point] = this.refComponents
@@ -107,7 +75,6 @@ export function addPerpPoint({ draw, coord, componentRefs, element, component_no
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
     .attr('class', 'perp-point')
   if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
-  return new PerpPoint({ draw, componentRefs, element })
+  return new PerpPoint({ draw, element, componentRefs })
 }
-
 
