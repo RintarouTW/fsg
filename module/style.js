@@ -19,23 +19,30 @@ function doToggleAttribute(element, attributeName) {
 }
 
 class ToggleAction {
-  constructor(components, targetName, action) {
-    components.forEach(item => action(item.element, targetName))
+  constructor(draw, components, targetName, action) {
+    components.forEach(no => {
+      const component = componentByNo(draw, no)
+      action(component.element, targetName)
+    })
+    this.draw = draw
     this.components = components
     this.targetName = targetName
     this.action = action
   }
   undo() {
-    this.components.forEach(item => this.action(item.element, this.targetName))
+    this.components.forEach(no => {
+      const component = componentByNo(this.draw, no)
+      this.action(component.element, this.targetName)
+    })
   }
 }
 
-export function toggleClass({components, className}) {
-  return new ToggleAction(components, className, doToggleClass)
+export function toggleClass({draw, components, className}) {
+  return new ToggleAction(draw, components, className, doToggleClass)
 }
 
-export function toggleAttribute({components, attributeName}) {
-  return new ToggleAction(components, attributeName, doToggleAttribute)
+export function toggleAttribute({draw, components, attributeName}) {
+  return new ToggleAction(draw, components, attributeName, doToggleAttribute)
 }
 
 ///

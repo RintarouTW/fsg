@@ -208,22 +208,24 @@ export function init_module_keybinding(draw) {
         break
       case 'KeyF':
         {
-          const components = getSelectedFillableShapes(draw)
+          let components = getSelectedFillableShapes(draw)
           if (components.length == 0) {
             showHint('Select one circle or polygon first!')
             return
           }
-          doAction(draw, toggleAttribute, {components, attributeName : FSG_FILL_NONE_ATTR})
+          components = components.map(component => component.component_no)
+          doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_FILL_NONE_ATTR})
         }
         break
       case 'KeyH':
         {
-          const components = getSelectedComponents(draw)
+          let components = getSelectedComponents(draw)
           if (components.length == 0) {
             showHint('Selection one component first')
             return
           }
-          doAction(draw, toggleAttribute, {components, attributeName : FSG_HIDDEN_ATTR})
+          components = components.map(component => component.component_no)
+          doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_HIDDEN_ATTR})
         }
         break
       case 'KeyI':
@@ -357,13 +359,14 @@ export function init_module_keybinding(draw) {
           evt.preventDefault()
           evt.stopPropagation()
         } else {
-          const components = getSelectedShapes(draw)
+          let components = getSelectedShapes(draw)
           if (components.length == 0) {
             showHint('Select one component first!')
             return
           }
+          components = components.map(component => component.component_no)
           const className = 'dashed'
-          doAction(draw, toggleClass, {components, className})
+          doAction(draw, toggleClass, {draw, components, className})
         }
         break
       case 'KeyT': // text
