@@ -9,7 +9,7 @@ import { LineShape } from './line.js'
 // override could prevent event handler explosion for better performance..
 //
 export class SelectablePoint extends SelectableComponent {
-  constructor({draw, element, componentRefs, override}) {
+  constructor({draw, element, refs, override}) {
     if (!override) {
       element.on('mousedown', evt => {
         element.lastEvent = 'mousedown'
@@ -19,7 +19,7 @@ export class SelectablePoint extends SelectableComponent {
         element.lastEvent = 'mouseup'
       })
     }
-    super({draw, element, componentRefs})
+    super({draw, element, refs})
   }
   getAttributes() {
     return ['id', 'class', 'cx', 'cy', 'text']
@@ -33,8 +33,8 @@ export class SelectablePoint extends SelectableComponent {
 ///
 
 export class IntersectPoint extends SelectablePoint {
-  constructor({ draw, index, componentRefs, element }) {
-    super({ draw, element, componentRefs })
+  constructor({ draw, index, refs, element }) {
+    super({ draw, element, refs })
     this.index = index
     console.assert(typeof index !== 'undefined', 'index should be defined')
   }
@@ -94,7 +94,7 @@ export class IntersectPoint extends SelectablePoint {
   }
 }
 
-export function addIntersectPoint({ draw, coord, index, componentRefs, element, no })  {
+export function addIntersectPoint({ draw, coord, index, refs, element, no })  {
   if (!coord) coord = {x: 0, y: 0}
   if (!element) {
     console.assert(typeof index !== 'undefined', 'index must be defined')
@@ -107,15 +107,15 @@ export function addIntersectPoint({ draw, coord, index, componentRefs, element, 
     console.assert(typeof index !== 'undefined', 'index must be defined')
   }
   if (no) element.attr(COMPONENT_NO_ATTR, no)
-  return new IntersectPoint({ draw, index, componentRefs, element })
+  return new IntersectPoint({ draw, index, refs, element })
 }
 
 ///
 /// MidPoint
 ///
 export class MidPoint extends SelectablePoint {
-  constructor({ draw, componentRefs, element }) {
-    super({ draw, element, componentRefs })
+  constructor({ draw, refs, element }) {
+    super({ draw, element, refs })
 
   }
   update() {
@@ -133,8 +133,8 @@ export class MidPoint extends SelectablePoint {
   }
 }
 
-export function addMidPoint({ draw, componentRefs, element, no })  {
-  const points = componentRefs.map(no => componentByNo(draw, no).element)
+export function addMidPoint({ draw, refs, element, no })  {
+  const points = refs.map(no => componentByNo(draw, no).element)
   if (!element) {
     const [p1, p2] = points
     const coord1 = {x: p1.cx(), y: p1.cy() }
@@ -145,7 +145,7 @@ export function addMidPoint({ draw, componentRefs, element, no })  {
       .attr('class', 'mid-point')
   }
   if (no) element.attr(COMPONENT_NO_ATTR, no)
-  return new MidPoint({ draw, componentRefs, element })
+  return new MidPoint({ draw, refs, element })
 }
 
 

@@ -58,8 +58,8 @@ export function init_module_keybinding(draw) {
     draw.shiftKey = evt.shiftKey
 
     let points = getLast2SelectedPointElements(draw)
-    let componentRefs
-    if (points) componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+    let refs
+    if (points) refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
     switch(evt.code) {
       case 'F1':
         toggle_code_editor()
@@ -130,8 +130,8 @@ export function init_module_keybinding(draw) {
               return
             }
             points = [points[0], points[1], points[2]] // use only the last 3 points
-            componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
-            doAction(draw, addAngle, {draw, componentRefs})
+            refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+            doAction(draw, addAngle, {draw, refs})
             return
           }
           const component = getLastSelectedAppendableComponent(draw)
@@ -151,8 +151,8 @@ export function init_module_keybinding(draw) {
             return
           }
           points = [points[0], points[1], points[2]] // use only the last 3 points
-          componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
-          doAction(draw, addBisectorLine, {draw, componentRefs})
+          refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+          doAction(draw, addBisectorLine, {draw, refs})
           return
         }
       case 'KeyC':
@@ -171,7 +171,7 @@ export function init_module_keybinding(draw) {
             showHint('Select 2 points first!')
             return
           }
-          doAction(draw, addCircle, {draw, componentRefs})
+          doAction(draw, addCircle, {draw, refs})
         }
         break
       case 'KeyD':
@@ -200,18 +200,18 @@ export function init_module_keybinding(draw) {
               showHint('At least 3 points to close the shape')
               return
             }
-            componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
-            const firstRef = componentRefs[0]
-            const lastRef = componentRefs[points.length - 1]
-            componentRefs = [lastRef, firstRef]
-            doAction(draw, addEdge, {draw, componentRefs})
+            refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+            const firstRef = refs[0]
+            const lastRef = refs[points.length - 1]
+            refs = [lastRef, firstRef]
+            doAction(draw, addEdge, {draw, refs})
             return
           }
           if (!points) {
             showHint('Select 2 points first!')
             return
           }
-          doAction(draw, addEdge, {draw, componentRefs})
+          doAction(draw, addEdge, {draw, refs})
         }
         break
       case 'KeyF':
@@ -253,44 +253,44 @@ export function init_module_keybinding(draw) {
               const [l1, l2] = intersectableComponents
               const coord = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
               // console.log(coord, l1.direction(), l2, l2.direction())
-              const componentRefs = [l1.no, l2.no]
+              const refs = [l1.no, l2.no]
               const index = 0
-              doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
+              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
             } else { // line + circle
               const [line, circle] = intersectableComponents
               const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-              const componentRefs = [line.no, circle.no]
+              const refs = [line.no, circle.no]
               let coord = intersectPoints[0]
               let index = 0
-              doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
+              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
               coord = intersectPoints[1]
               index = 1
-              doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
+              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
             }
           } else { // circle + line
             if (intersectableComponents[1] instanceof LineShape) {
               const [circle, line] = intersectableComponents
               const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-              const componentRefs = [line.no, circle.no]
+              const refs = [line.no, circle.no]
               let coord = intersectPoints[0]
               let index = 0
-              doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
+              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
               coord = intersectPoints[1]
               index = 1
-              doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
+              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
             } else { // two circles
               const [circle1, circle2] = intersectableComponents
               const c1 = { a: circle1.center().x, b: circle1.center().y, r: circle1.radius }
               const c2 = { a: circle2.center().x, b: circle2.center().y, r: circle2.radius }
               const intersectPoints = twoCirclesIntersection(c1, c2)
               if (!intersectPoints) return
-              const componentRefs = [circle1.no, circle2.no]
+              const refs = [circle1.no, circle2.no]
               let coord = intersectPoints[0]
               let index = 0
-              doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
+              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
               coord = intersectPoints[1]
               index = 1
-              doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
+              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
             }
           }
         }
@@ -301,7 +301,7 @@ export function init_module_keybinding(draw) {
             showHint('Select 2 points first!')
             return
           }
-          doAction(draw, addLine, {draw, componentRefs})
+          doAction(draw, addLine, {draw, refs})
         }
         break
       case 'KeyM':
@@ -313,20 +313,20 @@ export function init_module_keybinding(draw) {
               return
             }
             if (points.length == 2) {
-              componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
-              doAction(draw, addLengthMarker, {draw, componentRefs})
+              refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+              doAction(draw, addLengthMarker, {draw, refs})
               return
             }
             points = [points[0], points[1], points[2]] // use only the last 3 points
-            componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
-            doAction(draw, addAngleMarker, {draw, componentRefs})
+            refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+            doAction(draw, addAngleMarker, {draw, refs})
             return
           }
           if (!points) {
             showHint('Select 2 points first!')
             return
           }
-          doAction(draw, addMidPoint, {draw, componentRefs})
+          doAction(draw, addMidPoint, {draw, refs})
         }
         break
       case 'KeyP':
@@ -336,8 +336,8 @@ export function init_module_keybinding(draw) {
             showHint('Select at least 3 points first!')
             return
           }
-          componentRefs = points.map(p => p.attr(COMPONENT_NO_ATTR))
-          doAction(draw, addPolygon, {draw, componentRefs})
+          refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+          doAction(draw, addPolygon, {draw, refs})
         }
         break
       case 'KeyO':
@@ -357,7 +357,7 @@ export function init_module_keybinding(draw) {
             SVG('#reloadButton').node.click()
           } else if(!evt.metaKey) { // prevent cmd+r
             if (!points) return
-            doAction(draw, addRay, {draw, componentRefs})
+            doAction(draw, addRay, {draw, refs})
           }
         }
         break
@@ -385,8 +385,8 @@ export function init_module_keybinding(draw) {
               showHint('Select the target component first!')
               return
             }
-            const componentRefs = [target.no]
-            doAction(draw, addLaTeX, {draw, componentRefs})
+            const refs = [target.no]
+            doAction(draw, addLaTeX, {draw, refs})
           } else if (!evt.altKey) { // add LaTeX
             doAction(draw, addLaTeX, {draw})
           }
@@ -400,7 +400,7 @@ export function init_module_keybinding(draw) {
             showHint('Select 2 points first!')
             return
           }
-          doAction(draw, addVector, {draw, componentRefs})
+          doAction(draw, addVector, {draw, refs})
         }
         break
       case 'Equal':
@@ -412,11 +412,11 @@ export function init_module_keybinding(draw) {
             return
           }
           const [ line, point ] = lineAndPoint
-          const componentRefs = [line.no, point.no]
+          const refs = [line.no, point.no]
           if (evt.shiftKey) { // Perp Line
-            doAction(draw, addPerpLine, {draw, componentRefs})
+            doAction(draw, addPerpLine, {draw, refs})
           } else { // Parallel Line
-            doAction(draw, addParallelLine, {draw, componentRefs})
+            doAction(draw, addParallelLine, {draw, refs})
           }
         }
         break
@@ -430,9 +430,9 @@ export function init_module_keybinding(draw) {
           }
           const [ line, point ] = lineAndPoint
           const coord = projectPointOnLine(point.center(), line.startPoint(), line.direction())
-          const componentRefs = [line.no, point.no]
+          const refs = [line.no, point.no]
           const index = 0
-          doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
+          doAction(draw, addIntersectPoint, {draw, coord, index, refs})
         }
         break
       case 'KeyU':

@@ -13,17 +13,17 @@ function useCurrentColors(element) {
 
 ///
 /// LaTeX 
-/// (optional) componentRefs[0] is the target component no that this latex relative to.
+/// (optional) refs[0] is the target component no that this latex relative to.
 ///
 export class LaTeX extends SelectableComponent {
-  constructor({draw, element, componentRefs}) {
-    super({draw, element, componentRefs})
+  constructor({draw, element, refs}) {
+    super({draw, element, refs})
     { // patch old diagrams(.text) to new class(.latex)
       element.removeClass('text').addClass('latex')
     }
 
-    if (componentRefs) 
-      this.target = componentByNo(draw, componentRefs[0])?.element
+    if (refs) 
+      this.target = componentByNo(draw, refs[0])?.element
 
     this.makeDraggable(draw, element)
   }
@@ -183,32 +183,32 @@ function genLaTeX(draw, text, position) {
   return element
 }
 
-export function addLaTeX({draw, element, text, unselect, componentRefs}) {
+export function addLaTeX({draw, element, text, unselect, refs}) {
   if (!element) {
     /*
      * <g label=''>
      *   <foreignObject></foreignObject>
      * </g>
      */
-    if (!componentRefs) {
+    if (!refs) {
       const position = draw.mousePosition
       text = text ?? DEFAULT_TEXT
       element = genLaTeX(draw, text, position)
       useCurrentColors(element)
     } else {
-      let position = componentByNo(draw, componentRefs[0]).center()
+      let position = componentByNo(draw, refs[0]).center()
       text = text ?? DEFAULT_TEXT
       element = genLaTeX(draw, text, position)
       element.attr('offset_x', 0)
         .attr('offset_y', 0)
-        .attr(OF_ATTR, componentRefs[0])
+        .attr(OF_ATTR, refs[0])
       useCurrentColors(element)
     }
   } else {
     const of = element.attr(OF_ATTR)
-    if (of) componentRefs = [of]
+    if (of) refs = [of]
   }
-  const component = new LaTeX({draw, element, componentRefs})
+  const component = new LaTeX({draw, element, refs})
   if(unselect) unselectComponent(draw, component)
   return component
 }

@@ -8,8 +8,8 @@ import { Component } from './component.js'
 /// InvisiblePoint
 /// 
 export class InvisiblePoint extends Component {
-  constructor({ draw, element, componentRefs }) {
-    super({draw, element, componentRefs})
+  constructor({ draw, element, refs }) {
+    super({draw, element, refs})
   }
   select() {
     // do nothing.
@@ -31,8 +31,8 @@ export class InvisiblePoint extends Component {
 /// removed after the ref components are removed.
 ///
 export class ParallelPoint extends InvisiblePoint {
-  constructor({ draw, element, componentRefs }) {
-    super({ draw, element, componentRefs })
+  constructor({ draw, element, refs }) {
+    super({ draw, element, refs })
   }
   update() {
     const [line, point] = this.refComponents
@@ -44,12 +44,12 @@ export class ParallelPoint extends InvisiblePoint {
   }
 }
 
-export function addParallelPoint({ draw, coord, componentRefs, element, no })  {
+export function addParallelPoint({ draw, coord, refs, element, no })  {
   if (!element) element = draw.circle(POINT_RADIUS)
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
     .attr('class', 'parallel-point')
   if (no) element.attr(COMPONENT_NO_ATTR, no)
-  return new ParallelPoint({ draw, element, componentRefs })
+  return new ParallelPoint({ draw, element, refs })
 }
 
 ///
@@ -57,8 +57,8 @@ export function addParallelPoint({ draw, coord, componentRefs, element, no })  {
 /// removed after the ref components are removed.
 ///
 export class PerpPoint extends InvisiblePoint {
-  constructor({ draw, element, componentRefs }) {
-    super({ draw, element, componentRefs })
+  constructor({ draw, element, refs }) {
+    super({ draw, element, refs })
   }
   update() {
     const [line, point] = this.refComponents
@@ -70,11 +70,11 @@ export class PerpPoint extends InvisiblePoint {
   }
 }
 
-export function addPerpPoint({ draw, coord, componentRefs, element, no })  {
+export function addPerpPoint({ draw, coord, refs, element, no })  {
   if (!element) element = draw.circle(POINT_RADIUS)
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
     .attr('class', 'perp-point')
   if (no) element.attr(COMPONENT_NO_ATTR, no)
-  return new PerpPoint({ draw, element, componentRefs })
+  return new PerpPoint({ draw, element, refs })
 }
 

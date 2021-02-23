@@ -61,7 +61,7 @@ function labelOf(draw, no) {
 /// 
 
 export class Component {
-  constructor({draw, element, componentRefs}) {
+  constructor({draw, element, refs}) {
     console.assert(draw, 'draw is required')
     console.assert(element, 'element is required')
     console.assert(draw === element.parent(), 'element must be the child of draw')
@@ -83,10 +83,10 @@ export class Component {
     if (labelText) this.addLabel(draw, labelText)
 
     // Watch referenced components
-    if (componentRefs) {
-      console.assert(componentRefs instanceof Array, 'componentRefs must be array')
-      element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
-      this.refComponents = componentRefs.map(no => componentByNo(draw, no))
+    if (refs) {
+      console.assert(refs instanceof Array, 'refs must be array')
+      element.attr(COMPONENT_REFS_ATTR, refs.join(','))
+      this.refComponents = refs.map(no => componentByNo(draw, no))
       this.refComponents.forEach(target => {
         target.element.on('update', this.update.bind(this))
         target.element.on('remove', this.remove.bind(this))
@@ -244,8 +244,8 @@ export class Component {
 // keeps the event handlers simple would be good for performance.
 //
 export class SelectableComponent extends Component {
-  constructor({draw, element, componentRefs, override}) {
-    super({draw, element, componentRefs})
+  constructor({draw, element, refs, override}) {
+    super({draw, element, refs})
 
     if (!override) {
       // Mouse Hover

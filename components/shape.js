@@ -39,12 +39,12 @@ export function putBehindPoints(draw, points, cover, element) {
 ///
 
 export class Shape extends SelectableComponent {
-  constructor({ draw, element, componentRefs, cover, points }) {
+  constructor({ draw, element, refs, cover, points }) {
     console.assert(draw, "draw is required")
     console.assert(element, "element is required")
     // cover is optional now, only used in the builder
 
-    super({draw, element, componentRefs})
+    super({draw, element, refs})
 
     this.points = points
     this.cover = cover

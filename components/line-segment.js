@@ -12,8 +12,8 @@ import { setStrokeColor } from '../module/color_picker.js'
 ///
 
 export class LineSegment extends LineShape {
-  constructor({draw, componentRefs, element, cover, points}) {
-    super({draw, element, componentRefs, cover, points})
+  constructor({draw, refs, element, cover, points}) {
+    super({draw, element, refs, cover, points})
   }
   update() {
     const [p1, p2] = this.points
@@ -26,9 +26,9 @@ export class LineSegment extends LineShape {
   }
 }
 
-export function addEdge({draw, componentRefs, element, cover, no}) {
+export function addEdge({draw, refs, element, cover, no}) {
 
-  const points = componentRefs.map(compNo => componentByNo(draw, compNo).element)
+  const points = refs.map(compNo => componentByNo(draw, compNo).element)
 
   if (!element) {
     const [p1, p2] = points
@@ -46,12 +46,12 @@ export function addEdge({draw, componentRefs, element, cover, no}) {
 
   if (no) element.attr(COMPONENT_NO_ATTR, no)
 
-  return new LineSegment({draw, componentRefs, element, cover, points})
+  return new LineSegment({draw, refs, element, cover, points})
 }
 
-export function addVector({draw, componentRefs, element, cover, no}) {
+export function addVector({draw, refs, element, cover, no}) {
 
-  const points = componentRefs.map(compNo => componentByNo(draw, compNo).element)
+  const points = refs.map(compNo => componentByNo(draw, compNo).element)
   if (!element) {
     const [p1, p2] = points
     const coord1 = { x: p1.cx(), y: p1.cy() }
@@ -68,7 +68,7 @@ export function addVector({draw, componentRefs, element, cover, no}) {
     .marker('end', draw.fsg.marker.vector_end_marker)
 
   if (no) element.attr(COMPONENT_NO_ATTR, no)
-  return new LineSegment({draw, componentRefs, points, element, cover})
+  return new LineSegment({draw, refs, points, element, cover})
 }
 
 export class Axis extends LineSegment {

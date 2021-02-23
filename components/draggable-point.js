@@ -16,7 +16,7 @@ function setStyle(element) {
 /// DraggablePoint
 ///
 export class DraggablePoint extends SelectablePoint {
-  constructor({draw, element, componentRefs, override}) {
+  constructor({draw, element, refs, override}) {
     if (!override) {
       element.on('mousedown', evt => {
         element.lastEvent = 'mousedown'
@@ -71,7 +71,7 @@ export class DraggablePoint extends SelectablePoint {
       })
       override = true
     }
-    super({draw, element, componentRefs, override})
+    super({draw, element, refs, override})
   }
 }
 
@@ -113,9 +113,9 @@ export function addPoint({ draw, coord, element, no }) {
 ///
 
 export class PinPoint extends DraggablePoint {
-  constructor({ draw, type, componentRefs, element }) {
+  constructor({ draw, type, refs, element }) {
     const override = true
-    super({ draw, element, componentRefs, override})
+    super({ draw, element, refs, override})
 
     this.type = type
 
@@ -152,7 +152,7 @@ export class PinPoint extends DraggablePoint {
     })
 
     // watch components
-    this.targetComponent = componentByNo(draw, componentRefs[0])
+    this.targetComponent = componentByNo(draw, refs[0])
     this.calcState()
   }
   calcState() {
@@ -230,11 +230,11 @@ export class PinPoint extends DraggablePoint {
 //
 // ref components: lines, circle, polygon
 //
-export function addPinPoint({ draw, coord, type, componentRefs, element, no })  {
+export function addPinPoint({ draw, coord, type, refs, element, no })  {
   if (!element) element = draw.circle(POINT_RADIUS)
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
     .attr('class', 'pin-point')
   if (no) element.attr(COMPONENT_NO_ATTR, no)
-  return new PinPoint({ draw, type, componentRefs, element })
+  return new PinPoint({ draw, type, refs, element })
 }
 

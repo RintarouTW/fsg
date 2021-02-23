@@ -17,8 +17,8 @@ export function coverForLineElement(draw, element) {
 }
 
 export class LineShape extends Shape {
-  constructor({draw, element, componentRefs, cover, points}) {
-    super({draw, element, componentRefs, cover, points})
+  constructor({draw, element, refs, cover, points}) {
+    super({draw, element, refs, cover, points})
     this.isAppending = null
   }
   startPoint() {
@@ -68,8 +68,8 @@ export class LineShape extends Shape {
 ///
 
 export class Line extends LineShape {
-  constructor({draw, element, componentRefs, points, cover}) {
-    super({draw, element, componentRefs, cover, points})
+  constructor({draw, element, refs, points, cover}) {
+    super({draw, element, refs, cover, points})
   }
   update() {
     const [p1, p2] = this.points
@@ -86,9 +86,9 @@ export class Line extends LineShape {
   }
 }
 
-export function addLine({draw, componentRefs, element, cover, no}) {
+export function addLine({draw, refs, element, cover, no}) {
 
-  const points = componentRefs.map(compNo => componentByNo(draw, compNo).element)
+  const points = refs.map(compNo => componentByNo(draw, compNo).element)
   if (!element) {
     const box = draw.bbox()
     const [p1, p2] = points
@@ -110,7 +110,7 @@ export function addLine({draw, componentRefs, element, cover, no}) {
 
   if (no) element.attr(COMPONENT_NO_ATTR, no)
 
-  return new Line({ draw, element, componentRefs, points, cover })
+  return new Line({ draw, element, refs, points, cover })
 }
 
 ///
@@ -141,8 +141,8 @@ function getClipped(draw, p1, p2) {
 }
 
 export class Ray extends LineShape {
-  constructor({ draw, element, componentRefs, points, cover }) {
-    super({draw, element, componentRefs, cover, points})
+  constructor({ draw, element, refs, points, cover }) {
+    super({draw, element, refs, cover, points})
   }
   update() {
     const [p1, p2] = this.points
@@ -158,9 +158,9 @@ export class Ray extends LineShape {
   }
 }
 
-export function addRay({draw, element, componentRefs, cover, no}) {
+export function addRay({draw, element, refs, cover, no}) {
 
-  const points = componentRefs.map(compNo => componentByNo(draw, compNo).element)
+  const points = refs.map(compNo => componentByNo(draw, compNo).element)
   if (!element) {
     const [p1, p2] = points
     const coord1 = { x: p1.cx(), y: p1.cy() }
@@ -177,7 +177,7 @@ export function addRay({draw, element, componentRefs, cover, no}) {
   putBehindPoints(draw, points, cover, element)
   if (no) element.attr(COMPONENT_NO_ATTR, no)
 
-  return new Ray({draw, element, componentRefs, cover, points })
+  return new Ray({draw, element, refs, cover, points })
 }
 
 ///
@@ -201,9 +201,9 @@ function clippedParallelLine(draw, line, point) {
 }
 
 export class ParallelLine extends LineShape {
-  constructor({draw, element, componentRefs, cover, no}) {
+  constructor({draw, element, refs, cover, no}) {
 
-    let points = componentRefs.map(compNo => componentByNo(draw, compNo).element)
+    let points = refs.map(compNo => componentByNo(draw, compNo).element)
     if (!element) {
       const [line, point] = points
       const [clip1, clip2] = clippedParallelLine(draw, line, point)
@@ -218,7 +218,7 @@ export class ParallelLine extends LineShape {
     putBehindPoints(draw, points, cover, element)
     if (no) element.attr(COMPONENT_NO_ATTR, no)
 
-    super({draw, element, componentRefs, cover, points})
+    super({draw, element, refs, cover, points})
   }
   update() {
     const [line, point] = this.points
@@ -241,8 +241,8 @@ export class ParallelLine extends LineShape {
   }
 }
 
-export function addParallelLine({ draw, element, componentRefs, cover, no }) {
-  return new ParallelLine({draw, element, componentRefs, cover, no})
+export function addParallelLine({ draw, element, refs, cover, no }) {
+  return new ParallelLine({draw, element, refs, cover, no})
 }
 
 ///
@@ -266,9 +266,9 @@ function clippedPerpLine(draw, line, point) {
 }
 
 export class PerpLine extends LineShape {
-  constructor({draw, element, componentRefs, cover, no}) {
+  constructor({draw, element, refs, cover, no}) {
 
-    let points = componentRefs.map(compNo => componentByNo(draw, compNo).element)
+    let points = refs.map(compNo => componentByNo(draw, compNo).element)
 
     if (!element) {
       const [line, point] = points
@@ -283,7 +283,7 @@ export class PerpLine extends LineShape {
     putBehindPoints(draw, points, cover, element)
     if (no) element.attr(COMPONENT_NO_ATTR, no)
 
-    super({draw, element, componentRefs, cover, points})
+    super({draw, element, refs, cover, points})
   }
   update() {
     const [line, point] = this.points
@@ -307,8 +307,8 @@ export class PerpLine extends LineShape {
   }
 }
 
-export function addPerpLine({ draw, element, componentRefs, cover, no }) {
-  return new PerpLine({draw, element, componentRefs, cover, no})
+export function addPerpLine({ draw, element, refs, cover, no }) {
+  return new PerpLine({draw, element, refs, cover, no})
 }
 
 ///
@@ -317,8 +317,8 @@ export function addPerpLine({ draw, element, componentRefs, cover, no }) {
 ///
 
 export class BisectorLine extends LineShape {
-  constructor({draw, element, componentRefs, cover, points }) {
-    super({draw, element, componentRefs, cover, points})
+  constructor({draw, element, refs, cover, points }) {
+    super({draw, element, refs, cover, points})
   }
   update() {
     const [p1, p2, p3] = this.points
@@ -367,9 +367,9 @@ function coordOfBisectorPoint(p1, p2, p3) {
   return { x: p2.cx() + (v1.x + v2.x) / 2, y: p2.cy() + (v1.y + v2.y) /2 }
 }
 
-export function addBisectorLine({ draw, element, componentRefs, cover, no }) {
+export function addBisectorLine({ draw, element, refs, cover, no }) {
 
-  let points = componentRefs.map(compNo => componentByNo(draw, compNo).element)
+  let points = refs.map(compNo => componentByNo(draw, compNo).element)
 
   if (!element) {
     const [p1, p2, p3] = points
@@ -388,6 +388,6 @@ export function addBisectorLine({ draw, element, componentRefs, cover, no }) {
   putBehindPoints(draw, points, cover, element)
   if (no) element.attr(COMPONENT_NO_ATTR, no)
 
-  return new BisectorLine({draw, element, componentRefs, cover, points})
+  return new BisectorLine({draw, element, refs, cover, points})
 }
 

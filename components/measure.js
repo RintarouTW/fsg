@@ -47,8 +47,8 @@ function arrowedArcPathOf(p1, p2, p3, large_arc = false) {
 }
 
 export class ArrowedArc extends Shape {
-  constructor({draw, componentRefs, points, element, cover}) {
-    super({draw, componentRefs, element, cover, points})
+  constructor({draw, refs, points, element, cover}) {
+    super({draw, refs, element, cover, points})
 
     const large_arc = element.attr('large_arc')
     if (typeof large_arc === 'undefined')
@@ -103,9 +103,9 @@ export class ArrowedArc extends Shape {
   }
 }
 
-export function addAngleMarker({ draw, componentRefs, element, cover, no }) {
+export function addAngleMarker({ draw, refs, element, cover, no }) {
 
-  let points = componentRefs.map(no => componentByNo(draw, no).element)
+  let points = refs.map(no => componentByNo(draw, no).element)
 
   if (!element) {
     const [p1, p2, p3] = points
@@ -124,7 +124,7 @@ export function addAngleMarker({ draw, componentRefs, element, cover, no }) {
   putBehindPoints(draw, points, cover, element)
   if (no) element.attr(COMPONENT_NO_ATTR, no)
 
-  return new ArrowedArc({draw, componentRefs, points, element, cover})
+  return new ArrowedArc({draw, refs, points, element, cover})
 }
 
 ///
@@ -163,8 +163,8 @@ function lengthPathOf(p1, p2, distance) {
 }
 
 export class LengthMarker extends Shape {
-  constructor({draw, componentRefs, points, element, cover}) {
-    super({draw, componentRefs, element, cover, points})
+  constructor({draw, refs, points, element, cover}) {
+    super({draw, refs, element, cover, points})
 
    this.mark_on_right = false
   }
@@ -193,9 +193,9 @@ export class LengthMarker extends Shape {
   }
 }
 
-export function addLengthMarker({ draw, componentRefs, element, cover, no }) {
+export function addLengthMarker({ draw, refs, element, cover, no }) {
 
-  let points = componentRefs.map(no => componentByNo(draw, no).element)
+  let points = refs.map(no => componentByNo(draw, no).element)
 
   if (!element) {
     const [p1, p2] = points
@@ -213,6 +213,6 @@ export function addLengthMarker({ draw, componentRefs, element, cover, no }) {
   putBehindPoints(draw, points, cover, element)
   if (no) element.attr(COMPONENT_NO_ATTR, no)
 
-  return new LengthMarker({draw, componentRefs, points, element, cover})
+  return new LengthMarker({draw, refs, points, element, cover})
 }
 

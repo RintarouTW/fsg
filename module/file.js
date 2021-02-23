@@ -55,17 +55,17 @@ export function reconstruct_components(draw) {
       return
     }
     if (element.hasClass('mid-point')) {
-      const refs_attr = element.attr(COMPONENT_REFS_ATTR)
-      if (!refs_attr) return
-      const componentRefs = refs_attr.split(',').map(item => Number(item))
-      addMidPoint({draw, componentRefs, element})
+      const attr_refs = element.attr(COMPONENT_REFS_ATTR)
+      if (!attr_refs) return
+      const refs = attr_refs.split(',').map(item => Number(item))
+      addMidPoint({draw, refs, element})
       return
     }
     if (element.hasClass('intersect-point')) {
-      const refs_attr = element.attr(COMPONENT_REFS_ATTR)
-      if (!refs_attr) return
-      const componentRefs = refs_attr.split(',').map(item => Number(item))
-      addIntersectPoint({draw, componentRefs, element})
+      const attr_refs = element.attr(COMPONENT_REFS_ATTR)
+      if (!attr_refs) return
+      const refs = attr_refs.split(',').map(item => Number(item))
+      addIntersectPoint({draw, refs, element})
       return
     }
     if (element.hasClass('parallel-point')) {
@@ -77,14 +77,14 @@ export function reconstruct_components(draw) {
       return
     }
     if (element.hasClass('pin-point')) {
-      const refs_attr = element.attr(COMPONENT_REFS_ATTR)
-      if (!refs_attr) return
-      const componentRefs = [refs_attr] 
-      const refElement = elementByNo(list, componentRefs[0])
+      const attr_refs = element.attr(COMPONENT_REFS_ATTR)
+      if (!attr_refs) return
+      const refs = [attr_refs] 
+      const refElement = elementByNo(list, refs[0])
       console.assert(refElement, 'failed to locate the refereneced element')
       let type = 'line'
       if (refElement instanceof SVG.Circle) type = 'circle'
-      addPinPoint({draw, type, componentRefs, element})
+      addPinPoint({draw, type, refs, element})
       return
     }
     if (element.hasClass('latex') || element.hasClass('text')) {
@@ -102,69 +102,69 @@ export function reconstruct_components(draw) {
       return
     }
     // shapes
-    const refs = element.attr(COMPONENT_REFS_ATTR)
-    if (!refs) return
-    const componentRefs = refs.split(',').map(item => Number(item))
+    const attr_refs = element.attr(COMPONENT_REFS_ATTR)
+    if (!attr_refs) return
+    const refs = attr_refs.split(',').map(item => Number(item))
     if (element.hasClass('edge')) {
-      addEdge({draw, componentRefs, element}) 
+      addEdge({draw, refs, element}) 
       return
     }
     if (element.hasClass('vector')) {
-      addVector({draw, componentRefs, element}) 
+      addVector({draw, refs, element}) 
       return
     }
     if (element.hasClass('line')) {
-      addLine({draw, componentRefs, element}) 
+      addLine({draw, refs, element}) 
       return
     }
     if (element.hasClass('ray')) {
-      addRay({draw, componentRefs, element}) 
+      addRay({draw, refs, element}) 
       return
     }
     if (element.hasClass('polygon')) {
-      addPolygon({draw, componentRefs, element}) 
+      addPolygon({draw, refs, element}) 
       return
     }
     if (element.hasClass('circle')) {
-      addCircle({draw, componentRefs, element}) 
+      addCircle({draw, refs, element}) 
       return
     }
     if (element.hasClass('angle')) {
-      addAngle({draw, componentRefs, element}) 
+      addAngle({draw, refs, element}) 
       return
     }
     if (element.hasClass('angle-marker')) {
-      addAngleMarker({draw, componentRefs, element}) 
+      addAngleMarker({draw, refs, element}) 
       return
     }
     if (element.hasClass('length-marker')) {
-      addLengthMarker({draw, componentRefs, element}) 
+      addLengthMarker({draw, refs, element}) 
       return
     }
     if (element.hasClass('parallel-line')) {
       // patch for the old files that used parallel-point
-      let refs = componentRefs
-      const [ , no2] = componentRefs
+      let patch_refs = refs
+      const [ , no2] = refs
       const p2 = elementByNo(list, no2) 
       if (p2.hasClass('parallel-point')) {
-        refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
+        patch_refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
       }
-      addParallelLine({draw, componentRefs : refs, element}) 
+      addParallelLine({draw, refs : patch_refs, element}) 
       return
     }
     if (element.hasClass('perp-line')) {
       // patch for the old files that used parallel-point
-      let refs = componentRefs
-      const [ , no2] = componentRefs
+      let patch_refs = refs
+      const [ , no2] = refs
       const p2 = elementByNo(list, no2) 
       if (p2.hasClass('perp-point')) {
-        refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
+        patch_refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
       }
-      addPerpLine({draw, componentRefs : refs, element}) 
+      addPerpLine({draw, refs : patch_refs, element}) 
       return
     }
     if (element.hasClass('bisector-line')) {
-      addBisectorLine({draw, componentRefs, element}) 
+      addBisectorLine({draw, refs, element}) 
       return
     }
     console.warn('WARNNING: Fixme - unsupported component..', element)
