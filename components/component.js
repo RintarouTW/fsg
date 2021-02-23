@@ -41,23 +41,18 @@ export function componentByNo(draw, no) {
 
 function labelOf(draw, no) {
   const labels = draw.find('.label')
-  let found = null
-  labels.each(item => {
-    if(no == Number(item.attr(OF_ATTR))) found = item
-  })
-  // console.assert(found, 'label not found')
-  return found
+  return labels.toArray().find(item => no == Number(item.attr(OF_ATTR)) )
 }
 
 ///
 /// Component
-/// - All states should be stored within element's attributes
-/// that it could be restored via DOM string directly.
+/// - All states should be stored within element's attributes, 
+///   so it could be restored via DOM string directly.
 /// - A component may own multiple elements(such as cover, ref points, etc..)
-///   the owned element should have the attribute(of) to indicate it's owned by which component(no)
-///   a component referenced other elements should have component_refs to indicate the elements it referenced.
-///   a component that owned(and managed) other element should be resposible to re-construct those elements.
-/// - removed when referenced components were removed.
+///   the owned elements should have the attribute(of) to indicate it's owned by which component(no)
+/// - A component referenced other components should have refs to indicate the compoents it referenced.
+/// - A component that owned other elements should be resposible to re-construct those elements.
+/// - A component should be removed when referenced components/owned elements were removed.
 /// 
 
 export class Component {
@@ -136,8 +131,7 @@ export class Component {
     return ['id', 'class', 'cx', 'cy', 'text', 'fill', 'stroke']
   }
   getAttribute(attributeName) {
-    if (attributeName == 'text')
-      return this.getText()
+    if (attributeName == 'text') return this.getText()
     return this.element.attr(attributeName)
   }
   setAttribute(attributeName, value) {
@@ -149,7 +143,7 @@ export class Component {
     }
     this.element.attr(attributeName, value)
   }
-  /// label interface
+  /// Label(text) interface
   setText(text) {
     if (!text || text.length == 0) {
       this.removeLabel()
