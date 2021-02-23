@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" rx="8" ry="8" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="-100" y="-191.875"></rect><line x1="145" y1="-609.7405395507812" x2="145" y2="653.0487670898438" class="perp-line dashed" fsg_shape="true" stroke="#888888aa" fsg-no="9" fsg-refs="8,7" fsg_hidden="true"></line><line x1="-180" y1="-609.7405395507812" x2="-180" y2="653.0487670898438" class="perp-line dashed" fsg_shape="true" stroke="#888888aa" fsg-no="14" fsg-refs="8,6" fsg_hidden="true"></line><line x1="-750.146484375" y1="50.21192431435858" x2="660" y2="50.21192431435858" class="perp-line dashed" fsg_shape="true" stroke="#888888aa" fsg-no="27" fsg-refs="24,25" fsg_hidden="true"></line><line x1="-46" y1="-609.7405395507812" x2="-46" y2="653.0487670898438" class="perp-line dashed" fsg_shape="true" stroke="#888888aa" fsg-no="24" fsg-refs="8,18" fsg_hidden="true"></line><line x1="-180" y1="-150" x2="145" y2="-150" class="edge" fsg_shape="true" stroke="#888888aa" fsg-no="8" fsg-refs="6,7"></line><circle r="325" cx="-180" cy="-150" class="circle dashed" fsg_fill_none="true" fsg_shape="true" fill="#ff0f6328" stroke="#888888aa" fsg-no="10" fsg-refs="6,7" fsg_hidden="true"></circle><circle r="325" cx="145" cy="-150" class="circle dashed" fsg_fill_none="true" fsg_shape="true" fill="#ff0f6328" stroke="#888888aa" fsg-no="11" fsg-refs="7,6" fsg_hidden="true"></circle><polygon points="145,-150 145,175 -180,175 -180,-150" class="polygon" fsg_fill_none="true" fsg_shape="true" fill="#ff0f6328" stroke="#888888aa" fsg-no="37" fsg-refs="7,12,15,6"></polygon><circle r="3" cx="-180" cy="-150" class="point" stroke="#888888aa" fsg-no="6" id="p1"></circle><circle r="191.21192431435858" cx="-46" cy="-141" class="circle dashed" fsg_fill_none="true" fsg_shape="true" fill="#ff0f6328" stroke="#888888aa" fsg-no="23" fsg-refs="18,7" fsg_hidden="true"></circle><circle r="3" cx="145" cy="-150" class="point" stroke="#888888aa" fsg-no="7" id="p2"></circle><line x1="-180" y1="175" x2="145" y2="175" class="edge" fsg_shape="true" stroke="#888888aa" fsg-no="17" fsg-refs="15,12"></line><circle r="191" cx="145" cy="175" class="circle dashed" fsg_fill_none="true" fsg_shape="true" fill="#ff0f6328" stroke="#888888aa" fsg-no="32" fsg-refs="12,31" fsg_hidden="true"></circle><circle r="3" cx="145" cy="175" class="intersect-point" index="0" fsg-no="12" fsg-refs="9,11"></circle><circle r="3" cx="145" cy="-475" class="intersect-point" index="1" fsg-no="13" fsg-refs="9,11"></circle><circle r="3" cx="-180" cy="175" class="intersect-point" index="0" fsg-no="15" fsg-refs="14,10"></circle><circle r="3" cx="-180" cy="-475" class="intersect-point" index="1" fsg-no="16" fsg-refs="14,10"></circle><line x1="-133.03000245731118" y1="-609.7405395507812" x2="101.4292499157039" y2="653.0487670898438" class="line dashed" fsg_shape="true" stroke="#888888aa" fsg-no="21" fsg-refs="18,19" fsg_hidden="true"></line><line x1="-180" y1="50.21192431435858" x2="-46" y2="-141" class="edge" fsg_shape="true" stroke="#888888aa" fsg-no="29" fsg-refs="28,18"></line><line x1="145" y1="-16" x2="-46" y2="-141" class="edge" fsg_shape="true" stroke="#888888aa" fsg-no="36" fsg-refs="34,18"></line><circle r="3" cx="-46" cy="-141" class="pin-point" fsg-no="18" fsg-refs="8" id="p"></circle><circle r="3" cx="-17.5" cy="12.5" class="mid-point" fsg-no="19" fsg-refs="15,7" fsg_hidden="true"></circle><line x1="-180" y1="50.21192431435858" x2="12.671009771986967" y2="175" class="edge" fsg_shape="true" stroke="#888888aa" fsg-no="30" fsg-refs="28,22"></line><line x1="145" y1="-16" x2="12.671009771986967" y2="175" class="edge" fsg_shape="true" stroke="#888888aa" fsg-no="35" fsg-refs="34,22"></line><circle r="3" cx="12.671009771986967" cy="175" class="intersect-point" index="0" fsg-no="22" fsg-refs="21,17"></circle><circle r="3" cx="-46" cy="50.21192431435858" class="intersect-point" index="0" fsg-no="25" fsg-refs="24,23" fsg_hidden="true"></circle><circle r="3" cx="-46" cy="-332.2119243143586" class="intersect-point" index="1" fsg-no="26" fsg-refs="24,23"></circle><circle r="3" cx="-180" cy="50.21192431435858" class="intersect-point" index="0" fsg-no="28" fsg-refs="27,14"></circle><circle r="3" cx="-46" cy="175" class="intersect-point" index="0" fsg-no="31" fsg-refs="24,17" fsg_hidden="true"></circle><circle r="3" cx="145" cy="366" class="intersect-point" index="0" fsg-no="33" fsg-refs="9,32"></circle><circle r="3" cx="145" cy="-16" class="intersect-point" index="1" fsg-no="34" fsg-refs="9,32"></circle></g><defs><style>
+svg {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+svg .fsg-board {
+  fill: #151c23;
+}
+
+svg .fsg-ui-select-box {
+  stroke-width: 0.5;
+  fill: none;
+}
+
+svg .menu {
+  font: 0.9em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
+}
+
+svg .menu_title {
+  fill: #aaa;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+svg .menu_item {
+  font-weight: 300;
+  fill: #888;
+}
+
+svg .menu_item:hover {
+  fill: #fff;
+  cursor: pointer;
+}
+
+svg *[fsg_hidden] {
+  visibility: hidden;
+}
+
+svg *[fsg_fill_none]{
+  fill: none;
+}
+
+svg *[fsg_shape]:hover {
+  stroke: #fff;
+}
+
+svg .dashed {
+  stroke-dasharray: 3;
+  stroke-width: 1.2;
+}
+
+svg .axis-x, svg .axis-y {
+  stroke: #555; 
+  stroke-width: 1.2;
+}
+
+svg .vector-marker-start, svg .vector-marker-end {
+  fill: #999;
+}
+
+svg .point {
+  fill: #2f2f2f;
+  stroke: #ff0;
+}
+
+svg .pin-point {
+  fill: #777777aa;
+  stroke: #ff0;
+}
+
+svg .mid-point, svg .intersect-point {
+  fill: #777777aa;
+  stroke: #565656aa;
+}
+
+svg .point:hover, svg .pin-point:hover {
+  cursor: grab;
+}
+
+svg .mid-point:hover, svg .intersect-point:hover {
+  cursor: pointer;
+}
+
+svg g, svg div, svg foreignObject, svg span {
+  position: relative;
+}
+
+svg span.base {
+  position: relative !important;
+}
+
+svg .latex-container {
+  width: max-content;
+  height: max-content;
+  position: fixed; /* important for Safari */
+}
+
+svg .latex,
+svg .label {
+  color: #999;
+  fill: #999;
+  font-family: 'KaTeX_Math', 'Times New Roman', Times, serif;
+}
+</style><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://rintaroutw.github.io/fsg/style/runtime.css"></link><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"></link><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3, 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://rintaroutw.github.io/fsg/runtime.min.js" namespace="FSG_RUNTIME"></script><script xmlns="https://rintaroutw.github.io/fsg">const p = SVG('#p')
+const p1 = SVG('#p1')
+const p2 = SVG('#p2')
+const org = {x: p.cx(), y: p.cy()}
+
+p.animate(1000).move(p1.cx(), p1.cy()).update().after(() =&gt; {
+ p.animate(3000).move(p2.cx(), p2.cy()).update().after(() =&gt; {
+   p.animate(2000).move(org.x, org.y).update()
+ })
+})</script></defs></svg>
