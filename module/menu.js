@@ -51,7 +51,7 @@ class Menu {
     const bg = menu.rect(MENU_WIDTH, 50).flip('y')  // background
       .stroke({ color: MENU_BORDER_COLOR, width: 0.3})
       .fill(MENU_BACKGROUND_COLOR)
-    menu.text(title).flip('y')
+    menu.text(`${title} (${draw.fsg.filename})`).flip('y')
       .attr('class', 'menu_title')
       .move(MENU_PADDING_LEFT, MENU_PADDING_TOP)
     this.numItems = 0

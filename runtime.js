@@ -91,12 +91,14 @@ function init() {
   if (document.contentType.includes('html')) { // loaded by html
     // search for custom tag <fsg>
     SVG.find('fsg')?.forEach(fsg => {
-      fetchSrc(fsg.attr('src')).then(content => {
+      const src = fsg.attr('src')
+      fetchSrc(src).then(content => {
         if (!content) return
         const svg = SVG(content)
         const draw = svg.first()
         draw._content = svg.svg()
         init_modules(draw)
+        draw.fsg.filename = src.split('/').pop()
         draw.ready = true
         fsg.add(svg)
         const title = fsg.attr('title')
@@ -111,6 +113,7 @@ function init() {
   const draw = svg.first()
   draw._content = svg.svg() // remember the original content
   init_modules(draw)
+  draw.fsg.filename = window.location.pathname.split('/').pop()
   draw.ready = true
   // get title specified by the user in iframe
   const title = window.frameElement?.getAttribute('title')
