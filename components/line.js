@@ -1,6 +1,6 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR, FSG_SHAPE_ATTR } from '../common/define.js'
+import { NO_ATTR, FSG_SHAPE_ATTR } from '../common/define.js'
 import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { Shape, putBehindPoints } from './shape.js'
@@ -108,7 +108,7 @@ export function addLine({draw, refs, element, cover, no}) {
   cover = cover ?? coverForLineElement(draw, element) 
   putBehindPoints(draw, points, cover, element)
 
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
 
   return new Line({ draw, element, refs, points, cover })
 }
@@ -175,7 +175,7 @@ export function addRay({draw, element, refs, cover, no}) {
   }
   cover = cover ?? coverForLineElement(draw, element) 
   putBehindPoints(draw, points, cover, element)
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
 
   return new Ray({draw, element, refs, cover, points })
 }
@@ -216,7 +216,7 @@ export class ParallelLine extends LineShape {
     }
     cover = cover ?? coverForLineElement(draw, element) 
     putBehindPoints(draw, points, cover, element)
-    if (no) element.attr(COMPONENT_NO_ATTR, no)
+    if (no) element.attr(NO_ATTR, no)
 
     super({draw, element, refs, cover, points})
   }
@@ -281,7 +281,7 @@ export class PerpLine extends LineShape {
     }
     cover = cover ?? coverForLineElement(draw, element) 
     putBehindPoints(draw, points, cover, element)
-    if (no) element.attr(COMPONENT_NO_ATTR, no)
+    if (no) element.attr(NO_ATTR, no)
 
     super({draw, element, refs, cover, points})
   }
@@ -386,7 +386,7 @@ export function addBisectorLine({ draw, element, refs, cover, no }) {
   }
   cover = cover ?? coverForLineElement(draw, element) 
   putBehindPoints(draw, points, cover, element)
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
 
   return new BisectorLine({draw, element, refs, cover, points})
 }

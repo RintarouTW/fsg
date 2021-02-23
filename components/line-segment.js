@@ -1,6 +1,6 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR, DEFAULT_STROKE_COLOR, FSG_SHAPE_ATTR } from '../common/define.js'
+import { NO_ATTR, DEFAULT_STROKE_COLOR, FSG_SHAPE_ATTR } from '../common/define.js'
 import { pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { putBehindPoints } from './shape.js'
@@ -44,7 +44,7 @@ export function addEdge({draw, refs, element, cover, no}) {
   cover = cover ?? coverForLineElement(draw, element) 
   putBehindPoints(draw, points, cover, element)
 
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
 
   return new LineSegment({draw, refs, element, cover, points})
 }
@@ -67,7 +67,7 @@ export function addVector({draw, refs, element, cover, no}) {
   element.marker('start', draw.fsg.marker.vector_start_marker)
     .marker('end', draw.fsg.marker.vector_end_marker)
 
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
   return new LineSegment({draw, refs, points, element, cover})
 }
 
@@ -109,7 +109,7 @@ export function addAxis({draw, type, element, cover, no}) {
     .removeClass('dashed')
     .addClass(type)
 
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
 
   return new Axis({draw, element, cover, type})
 }

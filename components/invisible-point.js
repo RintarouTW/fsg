@@ -1,6 +1,6 @@
 'use strict'
 
-import { POINT_RADIUS, COMPONENT_NO_ATTR } from '../common/define.js'
+import { POINT_RADIUS, NO_ATTR } from '../common/define.js'
 import { pointOnScreen } from '../common/math.js'
 import { Component } from './component.js'
 
@@ -48,7 +48,7 @@ export function addParallelPoint({ draw, coord, refs, element, no })  {
   if (!element) element = draw.circle(POINT_RADIUS)
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
     .attr('class', 'parallel-point')
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
   return new ParallelPoint({ draw, element, refs })
 }
 
@@ -74,7 +74,7 @@ export function addPerpPoint({ draw, coord, refs, element, no })  {
   if (!element) element = draw.circle(POINT_RADIUS)
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
     .attr('class', 'perp-point')
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
   return new PerpPoint({ draw, element, refs })
 }
 

@@ -1,6 +1,6 @@
 'use strict'
 
-import { POINT_RADIUS, COMPONENT_NO_ATTR } from '../common/define.js'
+import { POINT_RADIUS, NO_ATTR } from '../common/define.js'
 import { intersect, projectPointOnLine, intersectLineAndCircle, twoCirclesIntersection, pointOnScreen } from '../common/math.js'
 import { SelectableComponent, componentByNo } from './component.js'
 import { LineShape } from './line.js'
@@ -106,7 +106,7 @@ export function addIntersectPoint({ draw, coord, index, refs, element, no })  {
     index = element.attr('index')
     console.assert(typeof index !== 'undefined', 'index must be defined')
   }
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
   return new IntersectPoint({ draw, index, refs, element })
 }
 
@@ -144,7 +144,7 @@ export function addMidPoint({ draw, refs, element, no })  {
       .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
       .attr('class', 'mid-point')
   }
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
   return new MidPoint({ draw, refs, element })
 }
 

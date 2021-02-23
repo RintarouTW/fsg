@@ -1,7 +1,7 @@
 'use strict'
 
 import { 
-  COMPONENT_NO_ATTR,
+  NO_ATTR,
   DEFAULT_ANGLE_RADIUS,
   DEFAULT_LENGTH_MARKER_WIDTH,
   DEFAULT_LENGTH_MARKER_DISTANCE,
@@ -122,7 +122,7 @@ export function addAngleMarker({ draw, refs, element, cover, no }) {
   element.marker('end', draw.fsg.marker.vector_end_marker)
 
   putBehindPoints(draw, points, cover, element)
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
 
   return new ArrowedArc({draw, refs, points, element, cover})
 }
@@ -211,7 +211,7 @@ export function addLengthMarker({ draw, refs, element, cover, no }) {
   }
 
   putBehindPoints(draw, points, cover, element)
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
 
   return new LengthMarker({draw, refs, points, element, cover})
 }

@@ -1,6 +1,6 @@
 'use strict'
 
-import { DEFAULT_TEXT, OF_ATTR, COMPONENT_NO_ATTR, FSG_DRAGGING_ATTR } from '../common/define.js'
+import { DEFAULT_TEXT, OF_ATTR, NO_ATTR, FSG_DRAGGING_ATTR } from '../common/define.js'
 import { SelectableComponent, componentByNo } from './component.js'
 import { currentStrokeColor } from '../module/color_picker.js'
 
@@ -83,7 +83,7 @@ export class LaTeX extends SelectableComponent {
 
     newElement.attr('offset_x', offset.x)
       .attr('offset_y', offset.y)
-      .attr(COMPONENT_NO_ATTR, this.no)
+      .attr(NO_ATTR, this.no)
 
     if (componetRef) newElement.attr(OF_ATTR, componetRef)
     newElement.component = this

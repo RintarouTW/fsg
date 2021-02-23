@@ -1,6 +1,6 @@
 'use strict'
 
-import { COMPONENT_NO_ATTR, FSG_FILL_NONE_ATTR, FSG_HIDDEN_ATTR } from '../common/define.js'
+import { NO_ATTR, FSG_FILL_NONE_ATTR, FSG_HIDDEN_ATTR } from '../common/define.js'
 import { intersect, intersectLineAndCircle, projectPointOnLine, twoCirclesIntersection } from '../common/math.js'
 // modules
 import { toggleAttribute, toggleClass } from './style.js'
@@ -59,7 +59,7 @@ export function init_module_keybinding(draw) {
 
     let points = getLast2SelectedPointElements(draw)
     let refs
-    if (points) refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+    if (points) refs = points.map(p => p.attr(NO_ATTR))
     switch(evt.code) {
       case 'F1':
         toggle_code_editor()
@@ -130,7 +130,7 @@ export function init_module_keybinding(draw) {
               return
             }
             points = [points[0], points[1], points[2]] // use only the last 3 points
-            refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+            refs = points.map(p => p.attr(NO_ATTR))
             doAction(draw, addAngle, {draw, refs})
             return
           }
@@ -151,7 +151,7 @@ export function init_module_keybinding(draw) {
             return
           }
           points = [points[0], points[1], points[2]] // use only the last 3 points
-          refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+          refs = points.map(p => p.attr(NO_ATTR))
           doAction(draw, addBisectorLine, {draw, refs})
           return
         }
@@ -200,7 +200,7 @@ export function init_module_keybinding(draw) {
               showHint('At least 3 points to close the shape')
               return
             }
-            refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+            refs = points.map(p => p.attr(NO_ATTR))
             const firstRef = refs[0]
             const lastRef = refs[points.length - 1]
             refs = [lastRef, firstRef]
@@ -313,12 +313,12 @@ export function init_module_keybinding(draw) {
               return
             }
             if (points.length == 2) {
-              refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+              refs = points.map(p => p.attr(NO_ATTR))
               doAction(draw, addLengthMarker, {draw, refs})
               return
             }
             points = [points[0], points[1], points[2]] // use only the last 3 points
-            refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+            refs = points.map(p => p.attr(NO_ATTR))
             doAction(draw, addAngleMarker, {draw, refs})
             return
           }
@@ -336,7 +336,7 @@ export function init_module_keybinding(draw) {
             showHint('Select at least 3 points first!')
             return
           }
-          refs = points.map(p => p.attr(COMPONENT_NO_ATTR))
+          refs = points.map(p => p.attr(NO_ATTR))
           doAction(draw, addPolygon, {draw, refs})
         }
         break

@@ -1,7 +1,7 @@
 'use strict'
 
 import { 
-  COMPONENT_NO_ATTR,
+  NO_ATTR,
   DEFAULT_ANGLE_RADIUS,
   FSG_FILL_NONE_ATTR,
   FSG_SHAPE_ATTR,
@@ -81,7 +81,7 @@ export function addCircle({draw, refs, element, cover, no}) {
   cover = cover ?? coverForCircleElement(draw, element)
   putBehindPoints(draw, points, cover, element)
 
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
 
   return new Circle({ draw, refs, radius, points, element, cover })
 }
@@ -120,7 +120,7 @@ export function addPolygon({draw, refs, element, cover, no}) {
     cover = draw.polygon(pts).attr('class', 'cover')
   }
   putBehindPoints(draw, points, cover, element)
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
 
   return new Polygon({ draw, refs, points, element, cover })
 }
@@ -211,7 +211,7 @@ export function addAngle({ draw, refs, element, cover, no }) {
     cover = draw.path(element.array()).attr('class', 'cover')
   }
   putBehindPoints(draw, points, cover, element)
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
 
   return new Arc({draw, refs, points, element, cover})
 }

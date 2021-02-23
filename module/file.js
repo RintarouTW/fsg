@@ -1,8 +1,8 @@
 'use strict'
 
 import { 
-  COMPONENT_REFS_ATTR,
-  COMPONENT_NO_ATTR,
+  REFS_ATTR,
+  NO_ATTR,
   SERVER_ROOT,
   FSG_NAMESPACE,
   RUNTIME_DEFAULT_STYLE,
@@ -28,38 +28,38 @@ import { addAngleMarker, addLengthMarker } from '../components/measure.js'
 
 // reconstruct order by component.no
 function findAllComponentElements(draw) {
-  const componentElements = draw.find(`[${COMPONENT_NO_ATTR}]`)
+  const componentElements = draw.find(`[${NO_ATTR}]`)
   // sort by component.no
   componentElements.sort((a, b) => {
-    const no1 = Number(a.attr(COMPONENT_NO_ATTR)) //; console.assert(a, "component has no component.no")
-    const no2 = Number(b.attr(COMPONENT_NO_ATTR)) //; console.assert(b, "component has no component.no")
+    const no1 = Number(a.attr(NO_ATTR)) //; console.assert(a, "component has no component.no")
+    const no2 = Number(b.attr(NO_ATTR)) //; console.assert(b, "component has no component.no")
     return no1 - no2
   })
   return componentElements
 }
 
 function elementByNo(list, no) {
-  return list.toArray().find(element => Number(element.attr(COMPONENT_NO_ATTR)) == Number(no) )
+  return list.toArray().find(element => Number(element.attr(NO_ATTR)) == Number(no) )
 }
 
 export function reconstruct_components(draw) {
   const list = findAllComponentElements(draw)
   list.forEach(element => {
-    // console.log(element.attr(COMPONENT_NO_ATTR), element, element.classes())
+    // console.log(element.attr(NO_ATTR), element, element.classes())
     // const position = element.position()
     if (element.hasClass('point')) {
       addPoint({draw, element})
       return
     }
     if (element.hasClass('mid-point')) {
-      const attr_refs = element.attr(COMPONENT_REFS_ATTR)
+      const attr_refs = element.attr(REFS_ATTR)
       if (!attr_refs) return
       const refs = attr_refs.split(',').map(item => Number(item))
       addMidPoint({draw, refs, element})
       return
     }
     if (element.hasClass('intersect-point')) {
-      const attr_refs = element.attr(COMPONENT_REFS_ATTR)
+      const attr_refs = element.attr(REFS_ATTR)
       if (!attr_refs) return
       const refs = attr_refs.split(',').map(item => Number(item))
       addIntersectPoint({draw, refs, element})
@@ -74,7 +74,7 @@ export function reconstruct_components(draw) {
       return
     }
     if (element.hasClass('pin-point')) {
-      const attr_refs = element.attr(COMPONENT_REFS_ATTR)
+      const attr_refs = element.attr(REFS_ATTR)
       if (!attr_refs) return
       const refs = [attr_refs] 
       const refElement = elementByNo(list, refs[0])
@@ -99,7 +99,7 @@ export function reconstruct_components(draw) {
       return
     }
     // shapes
-    const attr_refs = element.attr(COMPONENT_REFS_ATTR)
+    const attr_refs = element.attr(REFS_ATTR)
     if (!attr_refs) return
     const refs = attr_refs.split(',').map(item => Number(item))
     if (element.hasClass('edge')) {
@@ -144,7 +144,7 @@ export function reconstruct_components(draw) {
       const [ , no2] = refs
       const p2 = elementByNo(list, no2) 
       if (p2.hasClass('parallel-point')) {
-        patch_refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
+        patch_refs = p2.attr(REFS_ATTR).split(',')
       }
       addParallelLine({draw, refs : patch_refs, element}) 
       return
@@ -155,7 +155,7 @@ export function reconstruct_components(draw) {
       const [ , no2] = refs
       const p2 = elementByNo(list, no2) 
       if (p2.hasClass('perp-point')) {
-        patch_refs = p2.attr(COMPONENT_REFS_ATTR).split(',')
+        patch_refs = p2.attr(REFS_ATTR).split(',')
       }
       addPerpLine({draw, refs : patch_refs, element}) 
       return

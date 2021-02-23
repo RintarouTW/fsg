@@ -144,8 +144,8 @@ export const FSG_FILL_NONE_ATTR = 'fsg_fill_none'
 export const FSG_HIDDEN_ATTR = 'fsg_hidden'
 
 // component attributes
-export const COMPONENT_NO_ATTR = 'component_no'
-export const COMPONENT_REFS_ATTR = 'component_refs'
+export const NO_ATTR = 'component_no'
+export const REFS_ATTR = 'component_refs'
 export const OF_ATTR = 'of'
 
 // marker

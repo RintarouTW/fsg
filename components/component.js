@@ -1,8 +1,8 @@
 'use strict'
 
 import { 
-  COMPONENT_NO_ATTR,
-  COMPONENT_REFS_ATTR,
+  NO_ATTR,
+  REFS_ATTR,
   OF_ATTR,
   DEFAULT_LABEL_OFFSET_X,
   DEFAULT_LABEL_OFFSET_Y,
@@ -13,10 +13,10 @@ import {
 
 export function init_component_system(draw) {
   draw.fsg.component = {}
-  const list = draw.find(`[${COMPONENT_NO_ATTR}]`)
+  const list = draw.find(`[${NO_ATTR}]`)
   let max_no = 0
   list.forEach(item => {
-    const no = Number(item.attr(COMPONENT_NO_ATTR))
+    const no = Number(item.attr(NO_ATTR))
     if (no > max_no) max_no = no
     // console.log(item)
   })
@@ -65,11 +65,11 @@ export class Component {
     this.element = element
     element.component = this
     // component no
-    let no = element.attr(COMPONENT_NO_ATTR)
+    let no = element.attr(NO_ATTR)
     if(typeof no === 'undefined') {
       draw.fsg.component.max_no++
       no = draw.fsg.component.max_no
-      element.attr(COMPONENT_NO_ATTR, no)
+      element.attr(NO_ATTR, no)
     }
     this.no = Number(no) 
 
@@ -80,7 +80,7 @@ export class Component {
     // Watch referenced components
     if (refs) {
       console.assert(refs instanceof Array, 'refs must be array')
-      element.attr(COMPONENT_REFS_ATTR, refs.join(','))
+      element.attr(REFS_ATTR, refs.join(','))
       this.refComponents = refs.map(no => componentByNo(draw, no))
       this.refComponents.forEach(target => {
         target.element.on('update', this.update.bind(this))
@@ -170,7 +170,7 @@ export class Component {
         .attr('class', 'label')
         .attr('offset_x', DEFAULT_LABEL_OFFSET_X)
         .attr('offset_y', DEFAULT_LABEL_OFFSET_Y)
-        .attr(OF_ATTR, target.attr(COMPONENT_NO_ATTR))
+        .attr(OF_ATTR, target.attr(NO_ATTR))
         .flip('y')
         .move(position.x, position.y)
       draw.add(label)

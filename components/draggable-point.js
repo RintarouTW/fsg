@@ -1,6 +1,6 @@
 'use strict'
 
-import { POINT_RADIUS, COMPONENT_NO_ATTR, FSG_DRAGGING_ATTR } from '../common/define.js'
+import { POINT_RADIUS, NO_ATTR, FSG_DRAGGING_ATTR } from '../common/define.js'
 import { projectPointOnLine } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { SelectablePoint } from './point.js'
@@ -99,7 +99,7 @@ export function addPoint({ draw, coord, element, no }) {
       .attr('class', 'point')
     setStyle(element)
   }
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
   return new Point({ draw, element })
 }
 
@@ -234,7 +234,7 @@ export function addPinPoint({ draw, coord, type, refs, element, no })  {
   if (!element) element = draw.circle(POINT_RADIUS)
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
     .attr('class', 'pin-point')
-  if (no) element.attr(COMPONENT_NO_ATTR, no)
+  if (no) element.attr(NO_ATTR, no)
   return new PinPoint({ draw, type, refs, element })
 }
 
