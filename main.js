@@ -217,7 +217,7 @@ function init() {
   // extend SVG.Runner
   SVG.extend(SVG.Runner, {
     update: function() {
-      this.during( () => this.element().fire('update') )
+      return this.during( () => this.element().fire('update') )
     }
   })
 
