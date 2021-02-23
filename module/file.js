@@ -3,6 +3,7 @@
 import { 
   REFS_ATTR,
   NO_ATTR,
+  OF_ATTR,
   SERVER_ROOT,
   FSG_NAMESPACE,
   RUNTIME_DEFAULT_STYLE,
@@ -265,6 +266,21 @@ function patchToNewClass(draw) {
   draw.findOne('.ui-select-box')?.attr('class', CLASS_FSG_UI_SELECT_BOX)
 }
 
+function patchToNewAttributes(draw) {
+  draw.find('[component_no]').each(element => {
+    const no = element.attr('component_no')
+    element.attr('component_no', null).attr(NO_ATTR, no)
+  })
+  draw.find('[component_refs]').each(element => {
+    const refs = element.attr('component_refs')
+    element.attr('component_refs', null).attr(REFS_ATTR, refs)
+  })
+  draw.find('[of]').each(element => {
+    const refs = element.attr('of')
+    element.attr('of', null).attr(OF_ATTR, refs)
+  })
+}
+
 export function svgDocument(draw, optional_attributes = {}) {
   let content = draw.parent().svg() 
 
@@ -285,6 +301,7 @@ export function svgDocument(draw, optional_attributes = {}) {
   patchStyles(tmp)
   patchForeignObjectLaTeX(tmp)
   patchToNewClass(tmp)
+  patchToNewAttributes(tmp)
 
   // &nbsp; is not a defined entity in svg, replace it with &#160;
   const html = tmp.svg()
