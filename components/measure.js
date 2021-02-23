@@ -103,7 +103,7 @@ export class ArrowedArc extends Shape {
   }
 }
 
-export function addAngleMarker({ draw, componentRefs, element, cover, component_no }) {
+export function addAngleMarker({ draw, componentRefs, element, cover, no }) {
 
   let points = componentRefs.map(no => componentByNo(draw, no).element)
 
@@ -122,7 +122,7 @@ export function addAngleMarker({ draw, componentRefs, element, cover, component_
   element.marker('end', draw.fsg.marker.vector_end_marker)
 
   putBehindPoints(draw, points, cover, element)
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  if (no) element.attr(COMPONENT_NO_ATTR, no)
 
   return new ArrowedArc({draw, componentRefs, points, element, cover})
 }
@@ -193,7 +193,7 @@ export class LengthMarker extends Shape {
   }
 }
 
-export function addLengthMarker({ draw, componentRefs, element, cover, component_no }) {
+export function addLengthMarker({ draw, componentRefs, element, cover, no }) {
 
   let points = componentRefs.map(no => componentByNo(draw, no).element)
 
@@ -211,7 +211,7 @@ export function addLengthMarker({ draw, componentRefs, element, cover, component
   }
 
   putBehindPoints(draw, points, cover, element)
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  if (no) element.attr(COMPONENT_NO_ATTR, no)
 
   return new LengthMarker({draw, componentRefs, points, element, cover})
 }

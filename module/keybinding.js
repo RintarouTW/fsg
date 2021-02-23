@@ -221,7 +221,7 @@ export function init_module_keybinding(draw) {
             showHint('Select one circle or polygon first!')
             return
           }
-          components = components.map(component => component.component_no)
+          components = components.map(component => component.no)
           doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_FILL_NONE_ATTR})
         }
         break
@@ -232,7 +232,7 @@ export function init_module_keybinding(draw) {
             showHint('Selection one component first')
             return
           }
-          components = components.map(component => component.component_no)
+          components = components.map(component => component.no)
           doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_HIDDEN_ATTR})
         }
         break
@@ -253,13 +253,13 @@ export function init_module_keybinding(draw) {
               const [l1, l2] = intersectableComponents
               const coord = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
               // console.log(coord, l1.direction(), l2, l2.direction())
-              const componentRefs = [l1.component_no, l2.component_no]
+              const componentRefs = [l1.no, l2.no]
               const index = 0
               doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
             } else { // line + circle
               const [line, circle] = intersectableComponents
               const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-              const componentRefs = [line.component_no, circle.component_no]
+              const componentRefs = [line.no, circle.no]
               let coord = intersectPoints[0]
               let index = 0
               doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
@@ -271,7 +271,7 @@ export function init_module_keybinding(draw) {
             if (intersectableComponents[1] instanceof LineShape) {
               const [circle, line] = intersectableComponents
               const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-              const componentRefs = [line.component_no, circle.component_no]
+              const componentRefs = [line.no, circle.no]
               let coord = intersectPoints[0]
               let index = 0
               doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
@@ -284,7 +284,7 @@ export function init_module_keybinding(draw) {
               const c2 = { a: circle2.center().x, b: circle2.center().y, r: circle2.radius }
               const intersectPoints = twoCirclesIntersection(c1, c2)
               if (!intersectPoints) return
-              const componentRefs = [circle1.component_no, circle2.component_no]
+              const componentRefs = [circle1.no, circle2.no]
               let coord = intersectPoints[0]
               let index = 0
               doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
@@ -372,7 +372,7 @@ export function init_module_keybinding(draw) {
             showHint('Select one component first!')
             return
           }
-          components = components.map(component => component.component_no)
+          components = components.map(component => component.no)
           const className = 'dashed'
           doAction(draw, toggleClass, {draw, components, className})
         }
@@ -385,7 +385,7 @@ export function init_module_keybinding(draw) {
               showHint('Select the target component first!')
               return
             }
-            const componentRefs = [target.component_no]
+            const componentRefs = [target.no]
             doAction(draw, addLaTeX, {draw, componentRefs})
           } else if (!evt.altKey) { // add LaTeX
             doAction(draw, addLaTeX, {draw})
@@ -412,7 +412,7 @@ export function init_module_keybinding(draw) {
             return
           }
           const [ line, point ] = lineAndPoint
-          const componentRefs = [line.component_no, point.component_no]
+          const componentRefs = [line.no, point.no]
           if (evt.shiftKey) { // Perp Line
             doAction(draw, addPerpLine, {draw, componentRefs})
           } else { // Parallel Line
@@ -430,7 +430,7 @@ export function init_module_keybinding(draw) {
           }
           const [ line, point ] = lineAndPoint
           const coord = projectPointOnLine(point.center(), line.startPoint(), line.direction())
-          const componentRefs = [line.component_no, point.component_no]
+          const componentRefs = [line.no, point.no]
           const index = 0
           doAction(draw, addIntersectPoint, {draw, coord, index, componentRefs})
         }

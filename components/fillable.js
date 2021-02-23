@@ -57,7 +57,7 @@ export class Circle extends FillableShape {
   }
   toggleAppendMode(draw) {
     if (!this.isAppending) {
-      const componentRef = this.component_no
+      const componentRef = this.no
       this.isAppending = addAppendingPinPoint({draw, componentRef})
       return
     }
@@ -65,9 +65,9 @@ export class Circle extends FillableShape {
   }
 }
 
-export function addCircle({draw, componentRefs, element, cover, component_no}) {
+export function addCircle({draw, componentRefs, element, cover, no}) {
 
-  const points = componentRefs.map(no => componentByNo(draw, no).element)
+  const points = componentRefs.map(compNo => componentByNo(draw, compNo).element)
   const [cp, rp] = points
   const radius = Math.sqrt((rp.cx() - cp.cx()) ** 2 + (rp.cy() - cp.cy()) ** 2)
   if (!element) {
@@ -81,9 +81,9 @@ export function addCircle({draw, componentRefs, element, cover, component_no}) {
   cover = cover ?? coverForCircleElement(draw, element)
   putBehindPoints(draw, points, cover, element)
 
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  if (no) element.attr(COMPONENT_NO_ATTR, no)
 
-  return new Circle({draw, componentRefs, radius, points, element, cover, component_no})
+  return new Circle({ draw, componentRefs, radius, points, element, cover })
 }
 
 ///
@@ -104,9 +104,9 @@ class Polygon extends FillableShape {
   }
 }
 
-export function addPolygon({draw, componentRefs, element, cover, component_no}) {
+export function addPolygon({draw, componentRefs, element, cover, no}) {
 
-  const points = componentRefs.map(no => componentByNo(draw, no).element)
+  const points = componentRefs.map(compNo => componentByNo(draw, compNo).element)
   const pts = points.map(p => [p.cx(), p.cy()])
   if (!element) {
     element = draw.polygon(pts)
@@ -120,7 +120,7 @@ export function addPolygon({draw, componentRefs, element, cover, component_no}) 
     cover = draw.polygon(pts).attr('class', 'cover')
   }
   putBehindPoints(draw, points, cover, element)
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  if (no) element.attr(COMPONENT_NO_ATTR, no)
 
   return new Polygon({ draw, componentRefs, points, element, cover })
 }
@@ -193,9 +193,9 @@ export class Arc extends FillableShape {
   }
 }
 
-export function addAngle({ draw, componentRefs, element, cover, component_no }) {
+export function addAngle({ draw, componentRefs, element, cover, no }) {
 
-  let points = componentRefs.map(no => componentByNo(draw, no).element)
+  let points = componentRefs.map(compNo => componentByNo(draw, compNo).element)
 
   if (!element) {
     const [p1, p2, p3] = points
@@ -211,7 +211,7 @@ export function addAngle({ draw, componentRefs, element, cover, component_no }) 
     cover = draw.path(element.array()).attr('class', 'cover')
   }
   putBehindPoints(draw, points, cover, element)
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  if (no) element.attr(COMPONENT_NO_ATTR, no)
 
   return new Arc({draw, componentRefs, points, element, cover})
 }

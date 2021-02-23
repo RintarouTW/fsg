@@ -131,9 +131,9 @@ class DeleteAllSelectionsAction {
     this.content = draw.parent().svg()
     this.draw = draw
     this.selections = []
-    draw.fsg.selection.selections.forEach( item => {
-      this.selections.push(item.component_no)
-      item.remove() 
+    draw.fsg.selection.selections.forEach(component => {
+      this.selections.push(component.no)
+      component.remove() 
     })
     draw.fsg.selection.selections = []
   }

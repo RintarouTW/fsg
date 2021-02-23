@@ -35,7 +35,7 @@ export class AppendingPinPoint {
     const draw = this.draw
     const type = this.type
     const coord = { x: this.element.cx(), y: this.element.cy() }
-    const componentRefs = [this.targetComponent.component_no]
+    const componentRefs = [this.targetComponent.no]
     this.remove()
     this.targetComponent.endAppendMode()
     return {draw, coord, type, componentRefs}

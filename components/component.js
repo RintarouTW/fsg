@@ -14,15 +14,15 @@ import {
 export function init_component_system(draw) {
   draw.fsg.component = {}
   const list = draw.find(`[${COMPONENT_NO_ATTR}]`)
-  let max_component_no = 0
+  let max_no = 0
   list.forEach(item => {
-    const component_no = Number(item.attr(COMPONENT_NO_ATTR))
-    if (component_no > max_component_no) max_component_no = component_no
+    const no = Number(item.attr(COMPONENT_NO_ATTR))
+    if (no > max_no) max_no = no
     // console.log(item)
   })
-  draw.fsg.component.max_component_no = max_component_no
+  draw.fsg.component.max_no = max_no
   draw.fsg.component.all = []
-  // console.log(max_component_no)
+  // console.log(max_no)
 }
 
 export function deinit_component_system(draw) {
@@ -34,7 +34,7 @@ export function deinit_component_system(draw) {
 }
 
 export function componentByNo(draw, no) {
-  const found = draw.fsg.component.all.find(item => item.component_no == Number(no))
+  const found = draw.fsg.component.all.find(item => item.no == Number(no))
   console.assert(found, 'component not found', no)
   return found
 }
@@ -69,25 +69,25 @@ export class Component {
     this.draw = draw
     this.element = element
     element.component = this
-    let component_no = element.attr(COMPONENT_NO_ATTR)
-    if(typeof component_no === 'undefined') {
-      draw.fsg.component.max_component_no++
-      component_no = draw.fsg.component.max_component_no
-      element.attr(COMPONENT_NO_ATTR, component_no)
+    // component no
+    let no = element.attr(COMPONENT_NO_ATTR)
+    if(typeof no === 'undefined') {
+      draw.fsg.component.max_no++
+      no = draw.fsg.component.max_no
+      element.attr(COMPONENT_NO_ATTR, no)
     }
-    this.component_no = Number(component_no) 
+    this.no = Number(no) 
 
     // Label
     const labelText = element.attr('label')
     if (labelText) this.addLabel(draw, labelText)
 
+    // Watch referenced components
     if (componentRefs) {
       console.assert(componentRefs instanceof Array, 'componentRefs must be array')
       element.attr(COMPONENT_REFS_ATTR, componentRefs.join(','))
-      // watch components
-      const refComponents = componentRefs.map(no => componentByNo(draw, no))
-      this.refComponents = refComponents
-      refComponents.forEach(target => {
+      this.refComponents = componentRefs.map(no => componentByNo(draw, no))
+      this.refComponents.forEach(target => {
         target.element.on('update', this.update.bind(this))
         target.element.on('remove', this.remove.bind(this))
       })
@@ -168,7 +168,7 @@ export class Component {
     const target = this.element
 
     // search for label of this component if exists
-    let label = labelOf(draw, this.component_no)
+    let label = labelOf(draw, this.no)
     if (!label)  {
       const targetCenter = this.center()
       const position = { x: targetCenter.x + DEFAULT_LABEL_OFFSET_X, y: -targetCenter.y + DEFAULT_LABEL_OFFSET_Y}

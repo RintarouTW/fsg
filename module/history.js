@@ -33,7 +33,7 @@ export function doAction(draw, cmd, args) {
   const history = draw.fsg.history
   const action = cmd(args)
   action.redo = () => {
-    if(action.component_no) args.component_no = action.component_no
+    if(action.no) args.no = action.no
     doAction(draw, cmd, args)
   }
   history.history.push(action)

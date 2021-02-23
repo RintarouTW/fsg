@@ -26,9 +26,9 @@ export class LineSegment extends LineShape {
   }
 }
 
-export function addEdge({draw, componentRefs, element, cover, component_no}) {
+export function addEdge({draw, componentRefs, element, cover, no}) {
 
-  const points = componentRefs.map(no => componentByNo(draw, no).element)
+  const points = componentRefs.map(compNo => componentByNo(draw, compNo).element)
 
   if (!element) {
     const [p1, p2] = points
@@ -44,14 +44,14 @@ export function addEdge({draw, componentRefs, element, cover, component_no}) {
   cover = cover ?? coverForLineElement(draw, element) 
   putBehindPoints(draw, points, cover, element)
 
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  if (no) element.attr(COMPONENT_NO_ATTR, no)
 
   return new LineSegment({draw, componentRefs, element, cover, points})
 }
 
-export function addVector({draw, componentRefs, element, cover, component_no}) {
+export function addVector({draw, componentRefs, element, cover, no}) {
 
-  const points = componentRefs.map(no => componentByNo(draw, no).element)
+  const points = componentRefs.map(compNo => componentByNo(draw, compNo).element)
   if (!element) {
     const [p1, p2] = points
     const coord1 = { x: p1.cx(), y: p1.cy() }
@@ -67,7 +67,7 @@ export function addVector({draw, componentRefs, element, cover, component_no}) {
   element.marker('start', draw.fsg.marker.vector_start_marker)
     .marker('end', draw.fsg.marker.vector_end_marker)
 
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  if (no) element.attr(COMPONENT_NO_ATTR, no)
   return new LineSegment({draw, componentRefs, points, element, cover})
 }
 
@@ -86,7 +86,7 @@ export class Axis extends LineSegment {
   }
 }
 
-export function addAxis({draw, type, element, cover, component_no}) {
+export function addAxis({draw, type, element, cover, no}) {
   if (!element) {
     const viewbox = draw.parent().viewbox()
     let coord1, coord2
@@ -109,7 +109,7 @@ export function addAxis({draw, type, element, cover, component_no}) {
     .removeClass('dashed')
     .addClass(type)
 
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  if (no) element.attr(COMPONENT_NO_ATTR, no)
 
   return new Axis({draw, element, cover, type})
 }

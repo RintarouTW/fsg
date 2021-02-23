@@ -94,7 +94,7 @@ export class IntersectPoint extends SelectablePoint {
   }
 }
 
-export function addIntersectPoint({ draw, coord, index, componentRefs, element, component_no })  {
+export function addIntersectPoint({ draw, coord, index, componentRefs, element, no })  {
   if (!coord) coord = {x: 0, y: 0}
   if (!element) {
     console.assert(typeof index !== 'undefined', 'index must be defined')
@@ -106,7 +106,7 @@ export function addIntersectPoint({ draw, coord, index, componentRefs, element, 
     index = element.attr('index')
     console.assert(typeof index !== 'undefined', 'index must be defined')
   }
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  if (no) element.attr(COMPONENT_NO_ATTR, no)
   return new IntersectPoint({ draw, index, componentRefs, element })
 }
 
@@ -133,7 +133,7 @@ export class MidPoint extends SelectablePoint {
   }
 }
 
-export function addMidPoint({ draw, componentRefs, element, component_no })  {
+export function addMidPoint({ draw, componentRefs, element, no })  {
   const points = componentRefs.map(no => componentByNo(draw, no).element)
   if (!element) {
     const [p1, p2] = points
@@ -144,7 +144,7 @@ export function addMidPoint({ draw, componentRefs, element, component_no })  {
       .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
       .attr('class', 'mid-point')
   }
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  if (no) element.attr(COMPONENT_NO_ATTR, no)
   return new MidPoint({ draw, componentRefs, element })
 }
 

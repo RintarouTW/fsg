@@ -111,7 +111,7 @@ function unsetAllSelected(draw) {
   draw.selectedComponents = components.map(component => {
     const element = component.element
     unsetSelected(element)
-    return component.component_no
+    return component.no
   })
 }
 
@@ -146,7 +146,7 @@ export function init_module_inspector(draw) {
     if (draw.shiftKey) {
       draw.targetComponents = draw.selectedComponents
     } else {
-      draw.targetComponents = [_inspecting_element.component.component_no]
+      draw.targetComponents = [_inspecting_element.component.no]
     }
     draw.targetComponents.forEach(componentNo => {
       const component = componentByNo(draw, componentNo)

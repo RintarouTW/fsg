@@ -81,8 +81,8 @@ function setSnapshotHandler(draw) {
   draw.on('loadSnapshot', evt => {
     _draw = loadFSG(evt.detail.content)
     _draw.ready = true
-    evt.detail.selections.forEach( component_no => {
-      selectComponent(_draw, componentByNo(_draw, component_no))
+    evt.detail.selections.forEach(no => {
+      selectComponent(_draw, componentByNo(_draw, no))
     })
   })
 }

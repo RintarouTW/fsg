@@ -50,14 +50,14 @@ export class DraggablePoint extends SelectablePoint {
           const oldValues = []
           const newValues = []
           draw.dragPoints.map(point => {
-            components.push(point.component.component_no)
+            components.push(point.component.no)
             oldValues.push(point.orgValue)
             newValues.push({ x: point.cx(), y: point.cy() })
             point.attr(FSG_DRAGGING_ATTR, null)
           }) 
           doAction(draw, changeLocation, {draw, components, oldValues, newValues})
         } else {
-          const components = [element.component.component_no]
+          const components = [element.component.no]
           const oldValues = [{ x: draw.dragPointStart.x, y: draw.dragPointStart.y }]
           const newValues = [{ x: element.cx(), y: element.cy() }]
           doAction(draw, changeLocation, {draw, components, oldValues, newValues})
@@ -81,7 +81,7 @@ export class DraggablePoint extends SelectablePoint {
 /// @attributes (state): 
 ///  - geometry: r, cx, cy
 ///  - style: fill, stroke
-///  - relation: component_no
+///  - relation: no
 ///  - text: label
 /// 
 
@@ -91,7 +91,7 @@ export class Point extends DraggablePoint {
   }
 }
 
-export function addPoint({ draw, coord, element, component_no }) {
+export function addPoint({ draw, coord, element, no }) {
   if (!coord) coord = { x: 0, y: 0 }
   if (!element) {
     element = draw.circle(POINT_RADIUS)
@@ -99,7 +99,7 @@ export function addPoint({ draw, coord, element, component_no }) {
       .attr('class', 'point')
     setStyle(element)
   }
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  if (no) element.attr(COMPONENT_NO_ATTR, no)
   return new Point({ draw, element })
 }
 
@@ -138,7 +138,7 @@ export class PinPoint extends DraggablePoint {
       draw.dragTarget = element
     }).on('dragend', () => {
       // console.log('dragend')
-      const components = [element.component.component_no]
+      const components = [element.component.no]
       const oldValues = [{ x: draw.dragPointStart.x, y: draw.dragPointStart.y }]
       const newValues = [{ x: element.cx(), y: element.cy() }]
       doAction(draw, changeLocation, {draw, components, oldValues, newValues})
@@ -230,11 +230,11 @@ export class PinPoint extends DraggablePoint {
 //
 // ref components: lines, circle, polygon
 //
-export function addPinPoint({ draw, coord, type, componentRefs, element, component_no })  {
+export function addPinPoint({ draw, coord, type, componentRefs, element, no })  {
   if (!element) element = draw.circle(POINT_RADIUS)
     .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
     .attr('class', 'pin-point')
-  if (component_no) element.attr(COMPONENT_NO_ATTR, component_no)
+  if (no) element.attr(COMPONENT_NO_ATTR, no)
   return new PinPoint({ draw, type, componentRefs, element })
 }
 

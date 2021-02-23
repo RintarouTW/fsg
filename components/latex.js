@@ -83,7 +83,7 @@ export class LaTeX extends SelectableComponent {
 
     newElement.attr('offset_x', offset.x)
       .attr('offset_y', offset.y)
-      .attr(COMPONENT_NO_ATTR, this.component_no)
+      .attr(COMPONENT_NO_ATTR, this.no)
 
     if (componetRef) newElement.attr(OF_ATTR, componetRef)
     newElement.component = this

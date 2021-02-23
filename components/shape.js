@@ -49,7 +49,7 @@ export class Shape extends SelectableComponent {
     this.points = points
     this.cover = cover
 
-    cover?.attr(OF_ATTR, this.component_no)
+    cover?.attr(OF_ATTR, this.no)
       .attr('fill', DEFAULT_TRANSPARENT_COLOR) // fill with transparent color
 
     cover?.on('mousedown', evt => { // selectable by mousedown

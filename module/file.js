@@ -26,24 +26,23 @@ import { addPoint, addPinPoint } from '../components/draggable-point.js'
 import { addLaTeX } from '../components/latex.js'
 import { addAngleMarker, addLengthMarker } from '../components/measure.js'
 
-// reconstruct order by component_no
+// reconstruct order by component.no
 function findAllComponentElements(draw) {
   const componentElements = draw.find(`[${COMPONENT_NO_ATTR}]`)
-  // sort by component_no
+  // sort by component.no
   componentElements.sort((a, b) => {
-    const no1 = Number(a.attr(COMPONENT_NO_ATTR)) //; console.assert(a, "component has no component_no")
-    const no2 = Number(b.attr(COMPONENT_NO_ATTR)) //; console.assert(b, "component has no component_no")
+    const no1 = Number(a.attr(COMPONENT_NO_ATTR)) //; console.assert(a, "component has no component.no")
+    const no2 = Number(b.attr(COMPONENT_NO_ATTR)) //; console.assert(b, "component has no component.no")
     return no1 - no2
   })
   return componentElements
 }
 
 function elementByNo(components, no) {
-  let found
   components.forEach(element => {
-    if (Number(element.attr(COMPONENT_NO_ATTR)) == (no)) found = element
+    if (Number(element.attr(COMPONENT_NO_ATTR)) == Number(no)) return element
   })
-  return found
+  return null
 }
 
 export function reconstruct_components(draw) {
