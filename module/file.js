@@ -38,11 +38,8 @@ function findAllComponentElements(draw) {
   return componentElements
 }
 
-function elementByNo(components, no) {
-  components.forEach(element => {
-    if (Number(element.attr(COMPONENT_NO_ATTR)) == Number(no)) return element
-  })
-  return null
+function elementByNo(list, no) {
+  return list.toArray().find(element => Number(element.attr(COMPONENT_NO_ATTR)) == Number(no) )
 }
 
 export function reconstruct_components(draw) {
