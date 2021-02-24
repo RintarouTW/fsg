@@ -9,7 +9,7 @@ import { showHint } from './ui.js'
 
 // so far, menu is only working in runtime, not the editor.
 
-const MENU_WIDTH = 130
+const MENU_WIDTH = 180
 const MENU_PADDING_LEFT = 10 
 const MENU_PADDING_TOP = 5
 const MENU_PADDING_BOTTOM = 5
@@ -51,7 +51,7 @@ class Menu {
     const bg = menu.rect(MENU_WIDTH, 50).flip('y')  // background
       .stroke({ color: MENU_BORDER_COLOR, width: 0.3})
       .fill(MENU_BACKGROUND_COLOR)
-    menu.text(`${title} (${draw.fsg.filename})`).flip('y')
+    menu.text(title).flip('y')
       .attr('class', 'menu_title')
       .move(MENU_PADDING_LEFT, MENU_PADDING_TOP)
     this.numItems = 0
@@ -102,6 +102,7 @@ export class RuntimeMenu extends Menu {
     
     this.addMenuItem('Play', () => execute_user_script(draw) )
     this.addMenuItem('Reload', () => location.reload() )
+    this.addMenuItem(draw.fsg.filename, () => {} )
   }
 }
 
