@@ -102,7 +102,7 @@ export class RuntimeMenu extends Menu {
     
     this.addMenuItem('Play', () => execute_user_script(draw) )
     this.addMenuItem('Reload', () => location.reload() )
-    this.addMenuItem(draw.fsg.filename, () => {} )
+    if (draw.fsg.filename) this.addMenuItem(draw.fsg.filename, () => {} )
   }
 }
 
