@@ -72,7 +72,9 @@ Using `<fsg src='foo.svg'>` custom tag, the runtime would load all of them for y
 </html>
 ```
 
-###  Loaded as a static image
+`title` is optional, if it's specified, the runtime would show it at the bottom.
+
+### Loaded as a static image
 
 ```
 <img src='foo.svg'>
@@ -80,6 +82,18 @@ Using `<fsg src='foo.svg'>` custom tag, the runtime would load all of them for y
 
 Loaded as a static image, it won't be interactive since the runtime won't be loaded by the browser.
 The demo screenshots listed above are exactly this way, it's convinient when u need thumbnails/screenshots without image capture/conversion. Just let the browser generate them for you at the runtime.
+
+### Load with `<iframe>`
+
+
+```
+<iframe src='foo.svg' title='hello world'></iframe>
+```
+
+For the case you want to use `<iframe>` in your .html or other documentation website.
+It's also supported and it would work just like custome `<fsg>` tag.
+
+`title` is optional, if it's specified, the runtime would show it at the bottom.
 
 ### Embedding in .html
 
