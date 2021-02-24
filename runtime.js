@@ -81,6 +81,12 @@ function init() {
 
   window.FSG_RUNTIME = true // runtime should only be loaded once.
 
+  // extend SVG.Element to support anime()
+  SVG.extend(SVG.Element, {
+    anime: function(...args) {
+      return this.animate(args).during( () => this.element().fire('update') )
+    }
+  })
   // extend SVG.Runner
   SVG.extend(SVG.Runner, {
     update: function() {
