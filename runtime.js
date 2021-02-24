@@ -68,6 +68,24 @@ function showPlayButton(draw) {
     .on('mouseleave', () => runButton.attr('filter', null) )
 }
 
+function loadFSG(fsg) {
+  const src = fsg.attr('src')
+  fetchSrc(src).then(content => {
+    if (!content) return
+    fsg.clear()
+    const svg = SVG(content)
+    const draw = svg.first()
+    draw._content = svg.svg()
+    init_modules(draw)
+    draw.fsg.filename = src.split('/').pop()
+    draw.ready = true
+    fsg.add(svg)
+    const title = fsg.attr('title')
+    if (title) drawTitle(draw, title)
+    if (contain_user_script(draw)) showPlayButton(draw)
+  })
+}
+
 function init() {
   // runtime for html/svg, different envs.
   // html -> exported html
@@ -95,23 +113,10 @@ function init() {
   })
 
   if (document.contentType.includes('html')) { // loaded by html
+    // for reload
+    document.addEventListener('load-fsg', evt => loadFSG(evt.detail) )
     // search for custom tag <fsg>
-    SVG.find('fsg')?.forEach(fsg => {
-      const src = fsg.attr('src')
-      fetchSrc(src).then(content => {
-        if (!content) return
-        const svg = SVG(content)
-        const draw = svg.first()
-        draw._content = svg.svg()
-        init_modules(draw)
-        draw.fsg.filename = src.split('/').pop()
-        draw.ready = true
-        fsg.add(svg)
-        const title = fsg.attr('title')
-        if (title) drawTitle(draw, title)
-        if (contain_user_script(draw)) showPlayButton(draw)
-      })
-    })
+    SVG.find('fsg')?.forEach(fsg => loadFSG(fsg))
     return
   }
   // loaded by standalone svg
