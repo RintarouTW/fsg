@@ -102,12 +102,13 @@ export class RuntimeMenu extends Menu {
     
     this.addMenuItem('Play', () => execute_user_script(draw) )
     this.addMenuItem('Reload', () => {
-      if (draw.fsg.filename) {
-        const fsg = draw.parent().parent()
+      const fsg = draw.parent().parent()
+      if (fsg && fsg.attr('src')) {
         document.dispatchEvent(new CustomEvent('load-fsg', { detail: fsg }))
         return
       } 
-      location.reload() 
+      // fsg would be null for standalone svg
+      location.reload()
     })
     if (draw.fsg.filename) this.addMenuItem(draw.fsg.filename, () => {} )
   }
