@@ -138,6 +138,7 @@ export class PinPoint extends DraggablePoint {
       draw.dragTarget = element
     }).on('dragend', () => {
       // console.log('dragend')
+      console.assert(draw.dragPointStart, 'FIXME: dragend without dragPointStart')
       const components = [element.component.no]
       const oldValues = [{ x: draw.dragPointStart.x, y: draw.dragPointStart.y }]
       const newValues = [{ x: element.cx(), y: element.cy() }]

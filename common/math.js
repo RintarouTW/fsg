@@ -3,6 +3,15 @@
 const tolerance_error = 0.0001
 
 /// helper functions
+
+export function distanceOfPoints(p1, p2) {
+  return Math.sqrt((p2.cx() - p1.cx()) ** 2 + (p2.cy() - p1.cy()) ** 2)
+}
+
+export function distanceOfCoords(c1, c2) {
+  return Math.sqrt((c2.x - c1.x) ** 2 + (c2.y - c1.y) ** 2)
+}
+
 /// box : { x, y, width, height }
 /// point : { x, y }
 export function inside(box, point) {

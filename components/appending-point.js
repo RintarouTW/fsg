@@ -1,7 +1,7 @@
 'use strict'
 
 import { FSG_DRAGGING_ATTR, POINT_RADIUS } from '../common/define.js'
-import { projectPointOnLine } from '../common/math.js'
+import { distanceOfCoords, projectPointOnLine } from '../common/math.js'
 import { componentByNo } from './component.js'
 
 ///
@@ -82,3 +82,51 @@ export function addAppendingPinPoint({ draw, componentRef })  {
   return new AppendingPinPoint({ draw, componentRef, element })
 }
 
+///
+/// AppendingIntersectPoint
+///
+export class AppendingIntersectPoint {
+  constructor({ draw, element, intersectPoints, refs, index}) {
+
+    this.element = element
+    element.component = this
+
+    // works like being dragged
+    draw.dragTarget = element
+    element.on('dragmove', () => element.fire('update', { target: this }) )
+
+    this.draw = draw
+    this.intersectPoints = intersectPoints
+    this.refs = refs
+    this.index = index
+    this.update()
+  }
+  done() { // confirmed to add real pin point.
+    const coord = this.intersectPoints[this.index]
+    this.remove()
+    return {draw : this.draw, coord, index: this.index, refs : this.refs}
+  }
+  remove() {
+    this.element.remove()
+    this.draw.dragTarget = null
+  }
+  update() {
+    const distance0 = distanceOfCoords(this.draw.mousePosition, this.intersectPoints[0])
+    const distance1 = distanceOfCoords(this.draw.mousePosition, this.intersectPoints[1])
+    const index = (distance0 < distance1) ? 0 : 1
+    const coord = this.intersectPoints[index]
+    this.element.center(coord.x, coord.y)
+    this.index = index
+  }
+}
+
+export function addAppendingIntersectPoint({ draw, intersectPoints, refs }) {
+  const distance0 = distanceOfCoords(draw.mousePosition, intersectPoints[0])
+  const distance1 = distanceOfCoords(draw.mousePosition, intersectPoints[1])
+  const index = (distance0 < distance1) ? 0 : 1
+  const coord = intersectPoints[index]
+  const element = draw.circle(POINT_RADIUS)
+    .center(coord.x, coord.y)
+    .attr('class', 'pin-point')
+  return new AppendingIntersectPoint({ draw, element, intersectPoints, refs, index })
+}

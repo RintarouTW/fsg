@@ -126,12 +126,12 @@ It's also supported and it would work just like custome `<fsg>` tag.
 
 ### Local Development Dependency
 
-- live-server for local web server
-  - https.conf.js (need local CA with `mkcert`) : development server to support HTTPS
-- https://localhost:8080/dev.html to load manifest.webmanifest.dev(PWA) and main.js (as module)
-- `npm install -g rollup` to install rollup
-- `npm install -g @rollup/plugin-strip` to install the strip plugin for rollup
-- `npm install -g terser` to install the terser that mangle and compress the rolluped code to .min.js.
+- `npm install -g live-server` to install `live-server` for local web dev server
+  - `https.conf.js` (require local CA with `mkcert`) : web server to support HTTPS
+- `https://localhost:8080/dev.html` to load `manifest.webmanifest.dev`(PWA) and `main.js` (as module)
+- `npm install -g rollup` to install `rollup`
+- `npm install -g @rollup/plugin-strip` to install the `strip` plugin for rollup
+- `npm install -g terser` to install the `terser` that mangle and compress the rolluped code to `main.min.js` and `runtime.min.js`.
 - modify `DEV_TESTING` to `true` in `common/define.js` to make the generated .svg and .html to load local `runtime.min.js`. BEWARE! it won't load `runtime.js` directly since script in SVG doesn't support modules yet, so we need to run `rollup.sh` to update the runtime.min.js everytime you updated `runtime.js`.
 
 ## Why?

@@ -5,11 +5,12 @@ import { snapTo } from '../common/common.js'
 
 import { addPoint, PinPoint, addPinPoint } from '../components/draggable-point.js'
 import { InvisiblePoint } from '../components/invisible-point.js'
-import { AppendingPinPoint } from '../components/appending-point.js'
+import { AppendingIntersectPoint, AppendingPinPoint } from '../components/appending-point.js'
 import { LaTeX } from '../components/latex.js'
 
 import { doAction } from './history.js'
 import { RuntimeMenu, BuilderMenu } from './menu.js'
+import { addIntersectPoint } from '../components/point.js'
 
 function moveElementByOffset(element, offset) {
   // only update if changed (better performance)
@@ -41,7 +42,7 @@ export function init_module_drag(draw, click_to_add_point = true) {
   draw.dragTarget = null
   draw.dragSelectStart = null
   draw.on('mousedown', evt => {
-    // console.log('draw.mousedown')
+    console.log('draw.mousedown')
     if (draw.menu) { // if menu exist(shown) remove menu
       draw.menu.remove()
       return
@@ -59,14 +60,17 @@ export function init_module_drag(draw, click_to_add_point = true) {
     }
     if (evt.button != 0) return // skip other buttons
 
-    // drag handling for AppendingPinPoint
-    if (draw.dragTarget && (draw.dragTarget.component instanceof AppendingPinPoint)) {
+    // drag handling for AppendingPinPoint and AppendingIntersectPoint
+    if (draw.dragTarget) {
+      const action = (draw.dragTarget.component instanceof AppendingPinPoint)
+        ? addPinPoint : addIntersectPoint
       const pointInfo = draw.dragTarget.component.done()
-      doAction(draw, addPinPoint, pointInfo)
+      doAction(draw, action, pointInfo)
       // don't set lastEvent to 'mousedown', so it won't add new point on the next mouse up.
       draw.dragTarget = null
       return
     }
+
     if (!evt.altKey) { // remember the dragging selection start coord
       draw.dragSelectStart = draw.point(evt.clientX, evt.clientY)
     }
@@ -107,6 +111,7 @@ export function init_module_drag(draw, click_to_add_point = true) {
     let dragTarget = draw.dragTarget
     if (dragTarget) {
       if ((dragTarget.component instanceof AppendingPinPoint) ||
+        (dragTarget.component instanceof AppendingIntersectPoint) ||
         (dragTarget.component instanceof PinPoint)) {
         dragTarget.component.update()
       } else {

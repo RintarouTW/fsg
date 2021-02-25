@@ -35,8 +35,10 @@ import {
 import { showHint } from './ui.js'
 import { toggle_preference_window } from './preference.js'
 import { editField } from './inspector.js'
+import {addAppendingIntersectPoint, AppendingIntersectPoint, AppendingPinPoint} from '../components/appending-point.js'
 
 let _keydownHandler, _keyupHandler
+let _appendingIntersectPoint
 
 function hasComponent(component) {
   if (!component && showHint('Select one component first!')) return false
@@ -53,13 +55,17 @@ function has3Points(points) {
   return true
 }
 
-function doAddIntersectPoints(draw, intersectPoints, refs) {
+function chooseIntersectPoint(draw, intersectPoints, refs) {
+  // enter point choose mode
+  _appendingIntersectPoint = addAppendingIntersectPoint({draw, intersectPoints, refs})
+  /*
   let coord = intersectPoints[0]
   let index = 0
   doAction(draw, addIntersectPoint, {draw, coord, index, refs})
   coord = intersectPoints[1]
   index = 1
   doAction(draw, addIntersectPoint, {draw, coord, index, refs})
+  */
 }
 
 function doIntersectPoints(draw, intersectableComponents) {
@@ -72,14 +78,14 @@ function doIntersectPoints(draw, intersectableComponents) {
     } else { // line + circle
       const [line, circle] = intersectableComponents
       const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-      doAddIntersectPoints(draw, intersectPoints, [line.no, circle.no])
+      chooseIntersectPoint(draw, intersectPoints, [line.no, circle.no])
     }
     return
   } 
   if (intersectableComponents[1] instanceof LineShape) { // circle + line
     const [circle, line] = intersectableComponents
     const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-    doAddIntersectPoints(draw, intersectPoints, [line.no, circle.no])
+    chooseIntersectPoint(draw, intersectPoints, [line.no, circle.no])
     return
   } 
   // two circles
@@ -88,7 +94,7 @@ function doIntersectPoints(draw, intersectableComponents) {
   const c2 = { a: circle2.center().x, b: circle2.center().y, r: circle2.radius }
   const intersectPoints = twoCirclesIntersection(c1, c2)
   if (!intersectPoints) return
-  doAddIntersectPoints(draw, intersectPoints, [circle1.no, circle2.no])
+  chooseIntersectPoint(draw, intersectPoints, [circle1.no, circle2.no])
 }
 
 export function init_module_keybinding(draw) {
@@ -103,12 +109,25 @@ export function init_module_keybinding(draw) {
 
   _keydownHandler = evt => {
     console.log(evt.code)
+    draw.shiftKey = evt.shiftKey
 
     if (typeof window.FSG_BUILDER !== 'undefined' && evt.target != document.body) return
-    // if (evt.metaKey) return
+
     if (!draw.ready) return // ready to action after the opening animation
 
-    draw.shiftKey = evt.shiftKey
+    if (draw.dragTarget && evt.code == 'Escape') { // escape from special modes
+      if (draw.dragTarget.component instanceof AppendingPinPoint) { // leave appending mode
+        const component = getLastSelectedAppendableComponent(draw)
+        if(component) component.endAppendMode(draw)
+        return
+      }
+      if (_appendingIntersectPoint) { // leave point choose mode.
+        draw.dragTarget = null
+        _appendingIntersectPoint.remove()
+        _appendingIntersectPoint = null
+      }
+      return
+    }
 
     let points = getLast2SelectedPointElements(draw)
     let refs
@@ -144,13 +163,6 @@ export function init_module_keybinding(draw) {
           const component = lastSelectedComponent(draw)
           if (!hasComponent(component)) return
           (evt.shiftKey) ? component.front() : component.forward()
-        }
-        break
-      case 'Escape': // esc : end appending mode
-        {
-          const component = getLastSelectedAppendableComponent(draw)
-          if(!component && showHint('Select one line or circle first!')) return
-          component.endAppendMode(draw)
         }
         break
       case 'KeyA':
