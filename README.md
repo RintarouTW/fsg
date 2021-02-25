@@ -21,6 +21,7 @@ Create animatable, customizable style, re-editable and light weight interactive 
 ### Builder
 
 https://rintaroutw.github.io/fsg
+
 ![](./images/screenshot0.png)
 
 ### Examples Live Demo 
@@ -32,7 +33,7 @@ https://rintaroutw.github.io/fsg
 
 https://rintaroutw.github.io/fsg/example.html
 
-More examples are in `test` folder.
+There're over 60 examples are in `test` folder.
 
 ## Different ways to show SVG
 
@@ -84,7 +85,6 @@ Loaded as a static image, it won't be interactive since the runtime won't be loa
 The demo screenshots listed above are exactly this way, it's convinient when u need thumbnails/screenshots without image capture/conversion. Just let the browser generate them for you at the runtime.
 
 ### Load with `<iframe>`
-
 
 ```
 <iframe src='foo.svg' title='hello world'></iframe>
