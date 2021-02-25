@@ -53,6 +53,44 @@ function has3Points(points) {
   return true
 }
 
+function doAddIntersectPoints(draw, intersectPoints, refs) {
+  let coord = intersectPoints[0]
+  let index = 0
+  doAction(draw, addIntersectPoint, {draw, coord, index, refs})
+  coord = intersectPoints[1]
+  index = 1
+  doAction(draw, addIntersectPoint, {draw, coord, index, refs})
+}
+
+function doIntersectPoints(draw, intersectableComponents) {
+  if (intersectableComponents[0] instanceof LineShape) {
+    if (intersectableComponents[1] instanceof LineShape) { // intersect two lines
+      const [l1, l2] = intersectableComponents
+      const coord = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
+      // console.log(coord, l1.direction(), l2, l2.direction())
+      doAction(draw, addIntersectPoint, {draw, coord, index : 0, refs : [l1.no, l2.no]})
+    } else { // line + circle
+      const [line, circle] = intersectableComponents
+      const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
+      doAddIntersectPoints(draw, intersectPoints, [line.no, circle.no])
+    }
+    return
+  } 
+  if (intersectableComponents[1] instanceof LineShape) { // circle + line
+    const [circle, line] = intersectableComponents
+    const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
+    doAddIntersectPoints(draw, intersectPoints, [line.no, circle.no])
+    return
+  } 
+  // two circles
+  const [circle1, circle2] = intersectableComponents
+  const c1 = { a: circle1.center().x, b: circle1.center().y, r: circle1.radius }
+  const c2 = { a: circle2.center().x, b: circle2.center().y, r: circle2.radius }
+  const intersectPoints = twoCirclesIntersection(c1, c2)
+  if (!intersectPoints) return
+  doAddIntersectPoints(draw, intersectPoints, [circle1.no, circle2.no])
+}
+
 export function init_module_keybinding(draw) {
 
   if (_keyupHandler) document.removeEventListener('keyup', _keyupHandler)
@@ -232,52 +270,7 @@ export function init_module_keybinding(draw) {
           showHint('Select 2 intersectable components(line or circle) first')
           return
         }
-        if (intersectableComponents[0] instanceof LineShape) {
-          if (intersectableComponents[1] instanceof LineShape) { // intersect two lines
-            const [l1, l2] = intersectableComponents
-            const coord = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
-            // console.log(coord, l1.direction(), l2, l2.direction())
-            const refs = [l1.no, l2.no]
-            const index = 0
-            doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-          } else { // line + circle
-            const [line, circle] = intersectableComponents
-            const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-            const refs = [line.no, circle.no]
-            let coord = intersectPoints[0]
-            let index = 0
-            doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-            coord = intersectPoints[1]
-            index = 1
-            doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-          }
-          return
-        } 
-        // circle + line
-        if (intersectableComponents[1] instanceof LineShape) {
-          const [circle, line] = intersectableComponents
-          const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-          const refs = [line.no, circle.no]
-          let coord = intersectPoints[0]
-          let index = 0
-          doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-          coord = intersectPoints[1]
-          index = 1
-          doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-        } else { // two circles
-          const [circle1, circle2] = intersectableComponents
-          const c1 = { a: circle1.center().x, b: circle1.center().y, r: circle1.radius }
-          const c2 = { a: circle2.center().x, b: circle2.center().y, r: circle2.radius }
-          const intersectPoints = twoCirclesIntersection(c1, c2)
-          if (!intersectPoints) return
-          const refs = [circle1.no, circle2.no]
-          let coord = intersectPoints[0]
-          let index = 0
-          doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-          coord = intersectPoints[1]
-          index = 1
-          doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-        }
+        doIntersectPoints(draw, intersectableComponents)
         break
       case 'KeyL':
         { // l : add line

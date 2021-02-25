@@ -47,7 +47,6 @@ export function init_module_drag(draw, click_to_add_point = true) {
       return
     }
     // right click for menu
-    // if (/*window.FSG_RUNTIME &&*/ evt.button == 2) {
     if (evt.button == 2) {
       if (window.FSG_RUNTIME) {
         new RuntimeMenu(draw, draw.point(evt.clientX, evt.clientY))
