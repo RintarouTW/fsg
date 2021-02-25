@@ -38,6 +38,21 @@ import { editField } from './inspector.js'
 
 let _keydownHandler, _keyupHandler
 
+function hasComponent(component) {
+  if (!component && showHint('Select one component first!')) return false
+  return true
+}
+
+function has2Points(points) {
+  if (!points && showHint('Select 2 points first!')) return false
+  return true
+}
+
+function has3Points(points) {
+  if ((!points || points.length < 3) && showHint('Select 3 points first!')) return false
+  return true
+}
+
 export function init_module_keybinding(draw) {
 
   if (_keyupHandler) document.removeEventListener('keyup', _keyupHandler)
@@ -47,7 +62,7 @@ export function init_module_keybinding(draw) {
     draw.shiftKey = evt.shiftKey
   }
   document.addEventListener('keyup', _keyupHandler)
-  
+
   _keydownHandler = evt => {
     console.log(evt.code)
 
@@ -62,287 +77,244 @@ export function init_module_keybinding(draw) {
     if (points) refs = points.map(p => p.attr(NO_ATTR))
     switch(evt.code) {
       case 'F1':
-        toggle_code_editor()
+        toggle_code_editor() // F1: toggle code editor
         break
       case 'Comma':
-        {
-          if(evt.metaKey) {
-            toggle_preference_window(draw)
-          }
-        }
+        if(evt.metaKey) toggle_preference_window(draw) // cmd + , : toggle preference
         break
-      case 'Tab':
+      case 'Tab': // tab: toggle angle's large arc mode
         {
-          const components = getLastSelectedAngleComponents(draw)
-          components.forEach(angle => {
-            angle.toggleMode()
-          })
           evt.preventDefault()
           evt.stopPropagation()
+          const components = getLastSelectedAngleComponents(draw)
+          if (!component && showHint('Select angle first!')) return
+          components.forEach(angle => angle.toggleMode() )
         }
         break
-      case 'Backspace':
+      case 'Backspace': // backspace : delete all selected
         doAction(draw, removeAllSelections, { draw })
         break
-      case 'BracketLeft':
+      case 'BracketLeft': // [ : backward, shift + [ : back
         {
           const component = lastSelectedComponent(draw)
-          if (!component) {
-            showHint('Select one component first!')
-            return
-          }
+          if (!hasComponent(component)) return
           (evt.shiftKey) ? component.back() : component.backward()
         }
         break
-      case 'BracketRight':
+      case 'BracketRight': // ] : forward, shift + ] : front
         {
           const component = lastSelectedComponent(draw)
-          if (!component) {
-            showHint('Select one component first!')
-            return
-          }
+          if (!hasComponent(component)) return
           (evt.shiftKey) ? component.front() : component.forward()
         }
         break
-      case 'Escape':
+      case 'Escape': // esc : end appending mode
         {
           const component = getLastSelectedAppendableComponent(draw)
-          // console.log(component)
-          if(!component) {
-            showHint('Select one line or circle first!')
-            return
-          }
+          if(!component && showHint('Select one line or circle first!')) return
           component.endAppendMode(draw)
         }
         break
       case 'KeyA':
         {
-          if (evt.metaKey) {
+          if (evt.metaKey) { // cmd + a : select all
             doAction(draw, selectAllSelectableComponents, {draw})
             evt.preventDefault()
             evt.stopPropagation()
             return
           } 
-          if (evt.shiftKey) {
+          if (evt.shiftKey) { // shift + a : add angle
             points = getSelectedSelectablePointElements(draw)
-            if (!points || points.length < 3) {
-              showHint('Select 3 points first!')
-              return
-            }
+            if (!has3Points(points)) return
             points = [points[0], points[1], points[2]] // use only the last 3 points
             refs = points.map(p => p.attr(NO_ATTR))
             doAction(draw, addAngle, {draw, refs})
             return
           }
           const component = getLastSelectedAppendableComponent(draw)
-          if(component) {
+          if(component) { // a : appending pin point
             component.toggleAppendMode(draw)
-          } else {
-            const coord = draw.mousePosition
-            doAction(draw, addPoint, {draw, coord})
+            return
           }
+          // a : add point
+          const coord = draw.mousePosition
+          doAction(draw, addPoint, {draw, coord})
         }
         break
       case 'KeyB':
-        {
+        { // b : Bisector Line
           points = getSelectedSelectablePointElements(draw)
-          if (!points || points.length < 3) {
-            showHint('Select 3 points first!')
-            return
-          }
+          if (!has3Points(points)) return
           points = [points[0], points[1], points[2]] // use only the last 3 points
           refs = points.map(p => p.attr(NO_ATTR))
           doAction(draw, addBisectorLine, {draw, refs})
-          return
         }
+        break
       case 'KeyC':
-        if (evt.altKey) {
-          editField('#field_class')
-          evt.preventDefault()
-          return
-        } else if (evt.metaKey) { // copy to clipboard
-          const content = svgDocument(draw) 
-          navigator.clipboard.writeText(content).then(() => {
-            showHint('Copied!')
-          })
-          return 
-        } else {
-          if (!points) {
-            showHint('Select 2 points first!')
+        {
+          if (evt.altKey) { // alt + c : edit class
+            editField('#field_class')
+            evt.preventDefault()
             return
+          } 
+          if (evt.metaKey) { // cmd + c : copy to clipboard
+            const content = svgDocument(draw) 
+            navigator.clipboard.writeText(content).then(() => showHint('Copied!') )
+            return 
           }
+          // c : add circle
+          if (!has2Points(points)) return
           doAction(draw, addCircle, {draw, refs})
         }
         break
       case 'KeyD':
         {
-          if (evt.shiftKey) {
-            if (numberOfSelections(draw) > 0) doAction(draw, unselectAllSelections, draw)
-          } else {
-            if (numberOfSelections(draw) > 0) doAction(draw, deselectLastSelection, draw)
+          if (numberOfSelections(draw) > 0) {
+            (evt.shiftKey) 
+              ? doAction(draw, unselectAllSelections, draw) // shift + d : unselect all
+              : doAction(draw, deselectLastSelection, draw) // d : unselect the last one
           }
         }
         break
       case 'KeyE':
-        if (evt.metaKey) { // export to html
-          exportToHTML(draw)
+        if (evt.metaKey) { // cmd + e : export to html
           evt.preventDefault()
           evt.stopPropagation()
-        } else if (evt.ctrlKey) { // execute user script
+          exportToHTML(draw)
+          return
+        }
+        if (evt.ctrlKey) { // ctrl + e : execute user script
           evt.preventDefault()
           evt.stopPropagation()
           SVG('#runButton').node.click()
-        } else {
-          if (evt.shiftKey) { // close with edge (last to first)
-            points = getSelectedSelectablePointElements(draw)
-            if (!points || points.length < 3) {
-              console.log(points.length)
-              showHint('At least 3 points to close the shape')
-              return
-            }
-            refs = points.map(p => p.attr(NO_ATTR))
-            const firstRef = refs[0]
-            const lastRef = refs[points.length - 1]
-            refs = [lastRef, firstRef]
-            doAction(draw, addEdge, {draw, refs})
-            return
-          }
-          if (!points) {
-            showHint('Select 2 points first!')
-            return
-          }
-          doAction(draw, addEdge, {draw, refs})
+          return
         }
+        if (evt.shiftKey) { // shift + e : close with edge (last to first)
+          points = getSelectedSelectablePointElements(draw)
+          if ((!points || points.length < 3) && showHint('At least 3 points to close the shape')) return
+          refs = points.map(p => p.attr(NO_ATTR))
+          const firstRef = refs[0]
+          const lastRef = refs[points.length - 1]
+          refs = [lastRef, firstRef]
+          doAction(draw, addEdge, {draw, refs})
+          return
+        }
+        // e : add edge
+        if (!has2Points(points)) return
+        doAction(draw, addEdge, {draw, refs})
         break
       case 'KeyF':
-        {
+        { // f: toggle fill of all fillable selections
           let components = getSelectedFillableShapes(draw)
-          if (components.length == 0) {
-            showHint('Select one circle or polygon first!')
-            return
-          }
+          if (!components[0] && showHint('Select one circle or polygon first!')) return
           components = components.map(component => component.no)
           doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_FILL_NONE_ATTR})
         }
         break
       case 'KeyH':
-        {
+        { // h : hide all selections
           let components = getSelectedComponents(draw)
-          if (components.length == 0) {
-            showHint('Selection one component first')
-            return
-          }
+          if (!hasComponent(components[0])) return
           components = components.map(component => component.no)
           doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_HIDDEN_ATTR})
         }
         break
       case 'KeyI':
         if (evt.metaKey) return
-        if (evt.altKey) {
+        if (evt.altKey) { // alt + i : edit id
           editField('#field_id')
           evt.preventDefault()
           return
-        } else { 
-          const intersectableComponents = getLast2SelectedIntersectableComponents(draw)
-          if (!intersectableComponents) {
-            showHint('Select 2 intersectable components(line or circle) first')
-            return
+        } 
+        // Intersect point(s)
+        const intersectableComponents = getLast2SelectedIntersectableComponents(draw)
+        if (!intersectableComponents) {
+          showHint('Select 2 intersectable components(line or circle) first')
+          return
+        }
+        if (intersectableComponents[0] instanceof LineShape) {
+          if (intersectableComponents[1] instanceof LineShape) { // intersect two lines
+            const [l1, l2] = intersectableComponents
+            const coord = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
+            // console.log(coord, l1.direction(), l2, l2.direction())
+            const refs = [l1.no, l2.no]
+            const index = 0
+            doAction(draw, addIntersectPoint, {draw, coord, index, refs})
+          } else { // line + circle
+            const [line, circle] = intersectableComponents
+            const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
+            const refs = [line.no, circle.no]
+            let coord = intersectPoints[0]
+            let index = 0
+            doAction(draw, addIntersectPoint, {draw, coord, index, refs})
+            coord = intersectPoints[1]
+            index = 1
+            doAction(draw, addIntersectPoint, {draw, coord, index, refs})
           }
-          if (intersectableComponents[0] instanceof LineShape) {
-            if (intersectableComponents[1] instanceof LineShape) { // intersect two lines
-              const [l1, l2] = intersectableComponents
-              const coord = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
-              // console.log(coord, l1.direction(), l2, l2.direction())
-              const refs = [l1.no, l2.no]
-              const index = 0
-              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-            } else { // line + circle
-              const [line, circle] = intersectableComponents
-              const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-              const refs = [line.no, circle.no]
-              let coord = intersectPoints[0]
-              let index = 0
-              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-              coord = intersectPoints[1]
-              index = 1
-              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-            }
-          } else { // circle + line
-            if (intersectableComponents[1] instanceof LineShape) {
-              const [circle, line] = intersectableComponents
-              const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-              const refs = [line.no, circle.no]
-              let coord = intersectPoints[0]
-              let index = 0
-              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-              coord = intersectPoints[1]
-              index = 1
-              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-            } else { // two circles
-              const [circle1, circle2] = intersectableComponents
-              const c1 = { a: circle1.center().x, b: circle1.center().y, r: circle1.radius }
-              const c2 = { a: circle2.center().x, b: circle2.center().y, r: circle2.radius }
-              const intersectPoints = twoCirclesIntersection(c1, c2)
-              if (!intersectPoints) return
-              const refs = [circle1.no, circle2.no]
-              let coord = intersectPoints[0]
-              let index = 0
-              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-              coord = intersectPoints[1]
-              index = 1
-              doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-            }
-          }
+          return
+        } 
+        // circle + line
+        if (intersectableComponents[1] instanceof LineShape) {
+          const [circle, line] = intersectableComponents
+          const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
+          const refs = [line.no, circle.no]
+          let coord = intersectPoints[0]
+          let index = 0
+          doAction(draw, addIntersectPoint, {draw, coord, index, refs})
+          coord = intersectPoints[1]
+          index = 1
+          doAction(draw, addIntersectPoint, {draw, coord, index, refs})
+        } else { // two circles
+          const [circle1, circle2] = intersectableComponents
+          const c1 = { a: circle1.center().x, b: circle1.center().y, r: circle1.radius }
+          const c2 = { a: circle2.center().x, b: circle2.center().y, r: circle2.radius }
+          const intersectPoints = twoCirclesIntersection(c1, c2)
+          if (!intersectPoints) return
+          const refs = [circle1.no, circle2.no]
+          let coord = intersectPoints[0]
+          let index = 0
+          doAction(draw, addIntersectPoint, {draw, coord, index, refs})
+          coord = intersectPoints[1]
+          index = 1
+          doAction(draw, addIntersectPoint, {draw, coord, index, refs})
         }
         break
       case 'KeyL':
-        {
-          if (!points) {
-            showHint('Select 2 points first!')
-            return
-          }
-          doAction(draw, addLine, {draw, refs})
+        { // l : add line
+          if (has2Points(points)) doAction(draw, addLine, {draw, refs})
         }
         break
       case 'KeyM':
         {
-          if (evt.shiftKey) { // measure
+          if (evt.shiftKey) { // shift + m : measure
             points = getSelectedSelectablePointElements(draw)
-            if (!points || points.length == 1) { // measure length between 2 points
-              showHint('Select 2 points first!')
-              return
-            }
-            if (points.length == 2) {
+            if (!has2Points(points)) return
+            if (points.length == 2) { // measure length between 2 points
               refs = points.map(p => p.attr(NO_ATTR))
               doAction(draw, addLengthMarker, {draw, refs})
               return
             }
+            // measure angle of 3 points
             points = [points[0], points[1], points[2]] // use only the last 3 points
             refs = points.map(p => p.attr(NO_ATTR))
             doAction(draw, addAngleMarker, {draw, refs})
             return
           }
-          if (!points) {
-            showHint('Select 2 points first!')
-            return
-          }
-          doAction(draw, addMidPoint, {draw, refs})
+          if (!has2Points(points)) return
+          doAction(draw, addMidPoint, {draw, refs}) // add mid point between 2 points
         }
         break
       case 'KeyP':
-        {
+        { // p : add polygon
           points = getSelectedSelectablePointElements(draw)
-          if (!points || points.length < 3) {
-            showHint('Select at least 3 points first!')
-            return
-          }
+          if (!has3Points(points)) return
           refs = points.map(p => p.attr(NO_ATTR))
           doAction(draw, addPolygon, {draw, refs})
         }
         break
       case 'KeyO':
         {
-          if (evt.metaKey) { // open file
+          if (evt.metaKey) { // cmd + o : open file
             const file = SVG('#file')
             file.node.value = '' // reset or the same file won't be opened. bug fixed: issue #3
             file.node.click()
@@ -353,33 +325,31 @@ export function init_module_keybinding(draw) {
         break
       case 'KeyR':
         {
-          if (evt.ctrlKey) { // reload
+          if (evt.ctrlKey) { // ctrl + r : reload content
             SVG('#reloadButton').node.click()
-          } else if(!evt.metaKey) { // prevent cmd+r
-            if (!points) return
-            doAction(draw, addRay, {draw, refs})
+          } else if(!evt.metaKey) { // prevent cmd + r
+            if (!has2Points(points)) return
+            doAction(draw, addRay, {draw, refs}) // r : add ray
           }
         }
         break
       case 'KeyS':
-        if (evt.metaKey) {
+        if (evt.metaKey) { // cmd + s : save as svg
           saveAsSVG(draw)
           evt.preventDefault()
           evt.stopPropagation()
-        } else {
-          let components = getSelectedShapes(draw)
-          if (components.length == 0) {
-            showHint('Select one component first!')
-            return
-          }
-          components = components.map(component => component.no)
-          const className = 'dashed'
-          doAction(draw, toggleClass, {draw, components, className})
+          return
         }
+        // s : toggle solid / dashed stroke
+        let components = getSelectedShapes(draw)
+        if (!hasComponent(components[0])) return
+        components = components.map(component => component.no)
+        const className = 'dashed'
+        doAction(draw, toggleClass, {draw, components, className})
         break
       case 'KeyT': // text
         {
-          if (evt.shiftKey) { // append LaTeX
+          if (evt.shiftKey) { // shift + t: append LaTeX
             const target = lastSelectedComponent(draw)
             if (!target) {
               showHint('Select the target component first!')
@@ -387,7 +357,7 @@ export function init_module_keybinding(draw) {
             }
             const refs = [target.no]
             doAction(draw, addLaTeX, {draw, refs})
-          } else if (!evt.altKey) { // add LaTeX
+          } else if (!evt.altKey) { // t: add LaTeX
             doAction(draw, addLaTeX, {draw})
           }
           editField('#field_text')
@@ -395,16 +365,12 @@ export function init_module_keybinding(draw) {
         }
         break
       case 'KeyV':
-        {
-          if (!points) {
-            showHint('Select 2 points first!')
-            return
-          }
-          doAction(draw, addVector, {draw, refs})
+        { // v : add vector
+          if (has2Points(points)) doAction(draw, addVector, {draw, refs})
         }
         break
       case 'Equal':
-        {
+        { 
           const lineAndPoint = getLastSelectedLineBaseAndPointComponent(draw)
           // console.log(lineAndPoint)
           if (!lineAndPoint) {
@@ -413,16 +379,16 @@ export function init_module_keybinding(draw) {
           }
           const [ line, point ] = lineAndPoint
           const refs = [line.no, point.no]
-          if (evt.shiftKey) { // Perp Line
+          if (evt.shiftKey) { // shift + = (+): Perp Line
             doAction(draw, addPerpLine, {draw, refs})
-          } else { // Parallel Line
+          } else { // = : Parallel Line
             doAction(draw, addParallelLine, {draw, refs})
           }
         }
         break
       case 'KeyX':
         {
-          // Project point on line
+          // x: Project point on line
           const lineAndPoint = getLastSelectedLineBaseAndPointComponent(draw)
           if (!lineAndPoint) {
             showHint('Select one line/edge/vector and one point first')
@@ -437,8 +403,8 @@ export function init_module_keybinding(draw) {
         break
       case 'KeyU':
       case 'KeyZ':
-        if (evt.shiftKey) redo(draw)
-        else undo(draw)
+        if (evt.shiftKey) redo(draw) // shift + u/z : redo
+        else undo(draw) // u/z : undo
         break
     }
   }

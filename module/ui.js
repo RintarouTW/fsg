@@ -39,6 +39,7 @@ export function showHint(text) {
   setTimeout(() => {
     hintBox.classList.add('fadeInOut')
   }, 100)
+  return true
 }
 
 export function opening_animation(draw, callback) {
