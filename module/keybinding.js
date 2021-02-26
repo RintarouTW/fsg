@@ -57,7 +57,7 @@ function has3Points(points) {
 
 function chooseIntersectPoint(draw, intersectPoints, refs) {
   // enter point choose mode
-  _appendingIntersectPoint = addAppendingIntersectPoint({draw, intersectPoints, refs})
+  addAppendingIntersectPoint({draw, intersectPoints, refs})
 }
 
 function doIntersectPoints(draw, intersectableComponents) {
@@ -107,16 +107,13 @@ export function init_module_keybinding(draw) {
 
     if (!draw.ready) return // ready to action after the opening animation
 
-    if (draw.dragTarget && evt.code == 'Escape') { // escape from special modes
-      if (draw.dragTarget.component instanceof AppendingPinPoint) { // leave appending mode
-        const component = getLastSelectedAppendableComponent(draw)
-        if(component) component.endAppendMode(draw)
+    if (draw.appendingPoint) {
+      if (evt.code == 'Escape') { // escape from special modes
+        const component = draw.appendingPoint.component
+        if (component instanceof AppendingPinPoint) 
+          component.targetComponent.endAppendMode(draw) // target component end appending mode
+        component.remove()
         return
-      }
-      if (_appendingIntersectPoint) { // leave point choose mode.
-        draw.dragTarget = null
-        _appendingIntersectPoint.remove()
-        _appendingIntersectPoint = null
       }
       return
     }
