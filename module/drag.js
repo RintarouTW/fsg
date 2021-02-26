@@ -66,7 +66,7 @@ export function init_module_drag(draw, click_to_add_point = true) {
       const pointInfo = component.done()
       doAction(draw, action, pointInfo)
       // don't set lastEvent to 'mousedown', so it won't add new point on the next mouse up.
-      draw.dragTarget = null
+      draw.appendingPoint = null
       return
     }
 
