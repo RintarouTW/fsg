@@ -58,14 +58,6 @@ function has3Points(points) {
 function chooseIntersectPoint(draw, intersectPoints, refs) {
   // enter point choose mode
   _appendingIntersectPoint = addAppendingIntersectPoint({draw, intersectPoints, refs})
-  /*
-  let coord = intersectPoints[0]
-  let index = 0
-  doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-  coord = intersectPoints[1]
-  index = 1
-  doAction(draw, addIntersectPoint, {draw, coord, index, refs})
-  */
 }
 
 function doIntersectPoints(draw, intersectableComponents) {
