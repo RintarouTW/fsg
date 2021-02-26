@@ -51,7 +51,7 @@ Using `<fsg src='foo.svg'>` custom tag, the runtime would load all of them for y
 <head>
   <title>Fast SVG Geometry</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-  <link rel="stylesheet" type="text/css" href="https://rintaroutw.github.io/fsg/style/runtime.css">
+  <link rel="stylesheet" href="https://rintaroutw.github.io/fsg/style/runtime.css">
   <script defer src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
   <script defer type="module" src="https://rintaroutw.github.io/fsg/runtime.min.js"></script>
 </head>

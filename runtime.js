@@ -102,7 +102,7 @@ function init() {
   // extend SVG.Element to support anime()
   SVG.extend(SVG.Element, {
     anime: function(...args) {
-      return this.animate(args).during( () => this.fire('update') )
+      return this.animate(...args).during( () => this.fire('update') )
     }
   })
   // extend SVG.Runner
