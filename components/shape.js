@@ -57,7 +57,7 @@ export class Shape extends SelectableComponent {
       this.toggleSelected()
       evt.stopPropagation()
     }).on('mouseenter', () => {
-      if (!draw.dragTarget && !draw.selectBoxStart) {
+      if (!draw.dragTarget && !draw.selectStart) {
         element.attr(FSG_HOVER_ATTR, true)
       }
     }).on('mouseleave', () => {

@@ -39,8 +39,8 @@ export function init_module_drag(draw, click_to_add_point = true) {
 
   // The Drag and Drop System
   draw.selectBox = selectBox
+  draw.selectStart = null
   draw.dragTarget = null
-  draw.selectBoxStart = null
   draw.on('mousedown', evt => {
     // console.log('draw.mousedown')
     if (draw.menu) { // if menu exist(shown) remove menu
@@ -56,13 +56,14 @@ export function init_module_drag(draw, click_to_add_point = true) {
       }
       return
     }
+
     if (evt.button != 0) return // skip other buttons
 
-    // drag handling for AppendingPinPoint and AppendingIntersectPoint
-    if (draw.dragTarget) {
-      const action = (draw.dragTarget.component instanceof AppendingPinPoint)
-        ? addPinPoint : addIntersectPoint
-      const pointInfo = draw.dragTarget.component.done()
+    // appending mode end for AppendingPinPoint and AppendingIntersectPoint
+    if (draw.appendingPoint) {
+      const component = draw.appendingPoint.component
+      const action = (component instanceof AppendingPinPoint) ? addPinPoint : addIntersectPoint
+      const pointInfo = component.done()
       doAction(draw, action, pointInfo)
       // don't set lastEvent to 'mousedown', so it won't add new point on the next mouse up.
       draw.dragTarget = null
@@ -70,28 +71,26 @@ export function init_module_drag(draw, click_to_add_point = true) {
     }
 
     if (!evt.altKey) { // remember the dragging selection start coord
-      draw.selectBoxStart = draw.point(evt.clientX, evt.clientY)
+      draw.selectStart = draw.point(evt.clientX, evt.clientY)
     }
     draw.lastEvent = 'mousedown'
     draw.dragTarget = null
   }).on('mouseup_on_document', () => { //
     // console.log('mouseup_on_document')
-    if (draw.dragTarget) {
-      // console.log('dragend')
+    if (draw.dragTarget) { // console.log('dragend')
       draw.dragTarget.fire('dragend')
       draw.dragTarget = null
     }
-    if (draw.selectBoxStart) {
-      draw.selectBoxStart = null
+    if (draw.selectStart) {
+      draw.selectStart = null
       selectBox.size(0, 0)
     }
-  }).on('mouseup', evt => {
-    // console.log('draw.mouseup')
+  }).on('mouseup', evt => { // console.log('draw.mouseup')
     if (draw.dragTarget) {
       draw.dragTarget.fire('dragend')
       draw.dragTarget = null
     }
-    draw.selectBoxStart = null
+    draw.selectStart = null
     selectBox.size(0, 0)
     if (draw.lastEvent != 'mousedown') return
     draw.lastEvent = 'mouseup'
@@ -103,35 +102,41 @@ export function init_module_drag(draw, click_to_add_point = true) {
     }
   }).on('mousemove', evt => {
     draw.lastEvent = 'mousemove'
-    const mousePosition = draw.point(evt.clientX, evt.clientY)
-    draw.mousePosition = snapTo(mousePosition)
-    let dragTarget = draw.dragTarget
-    if (dragTarget) {
-      if ((dragTarget.component instanceof AppendingPinPoint) ||
-        (dragTarget.component instanceof AppendingIntersectPoint) ||
-        (dragTarget.component instanceof PinPoint)) {
-        dragTarget.component.update()
-      } else {
-        const offset = {
-          x: mousePosition.x - draw.dragPointStart.x,
-          y: mousePosition.y - draw.dragPointStart.y,
-        }
-        if (draw.dragPoints) {
-          const points = draw.dragPoints
-          points.forEach(point => {
-            moveElementByOffset(point, offset)
-          })
-          return
-        }
-        moveElementByOffset(dragTarget, offset)
-      }
+
+    const mousePosition = snapTo(draw.point(evt.clientX, evt.clientY))
+    draw.mousePosition = mousePosition
+
+    if (draw.appendingPoint) {
+      draw.appendingPoint.component.update()
       return
     }
-    if (draw.selectBoxStart) {
-      let width = Math.abs(mousePosition.x - draw.selectBoxStart.x)
-      let height = Math.abs(mousePosition.y - draw.selectBoxStart.y)
-      let cx = (mousePosition.x + draw.selectBoxStart.x) / 2
-      let cy = (mousePosition.y + draw.selectBoxStart.y) / 2
+
+    const dragTarget = draw.dragTarget
+    if (dragTarget) {
+      const component = dragTarget.component
+      if (component instanceof PinPoint) {
+        component.update()
+        return
+      }
+      const offset = {
+        x: mousePosition.x - draw.dragStart.x,
+        y: mousePosition.y - draw.dragStart.y,
+      }
+      if (draw.dragPoints) {
+        const points = draw.dragPoints
+        points.forEach(point => {
+          moveElementByOffset(point, offset)
+        })
+        return
+      }
+      moveElementByOffset(dragTarget, offset)
+      return
+    }
+    if (draw.selectStart) {
+      let width = Math.abs(mousePosition.x - draw.selectStart.x)
+      let height = Math.abs(mousePosition.y - draw.selectStart.y)
+      let cx = (mousePosition.x + draw.selectStart.x) / 2
+      let cy = (mousePosition.y + draw.selectStart.y) / 2
       selectBox.size(width, height).center(cx, cy)
       selectAllInBox(draw, selectBox, evt.shiftKey)
     }

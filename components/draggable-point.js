@@ -1,16 +1,12 @@
 'use strict'
 
 import { POINT_RADIUS, NO_ATTR, FSG_DRAGGING_ATTR } from '../common/define.js'
+import { isRightButton } from '../common/common.js'
 import { projectPointOnLine } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { SelectablePoint } from './point.js'
-import { currentStrokeColor } from '../module/color_picker.js'
+import { setStrokeColor } from '../module/color_picker.js'
 import { doAction, changeLocation } from '../module/history.js'
-
-function setStyle(element) {
-  const strokeColor = currentStrokeColor()
-  element.attr('stroke', strokeColor)
-}
 
 ///
 /// DraggablePoint
@@ -21,8 +17,8 @@ export class DraggablePoint extends SelectablePoint {
       element.on('mousedown', evt => {
         if (isRightButton(evt)) return // reserved for menu(do nothing so far)
         element.lastEvent = 'mousedown'
-        // draw.dragPointStart = draw.point(evt.clientX, evt.clientY)
-        draw.dragPointStart = { x: element.cx(), y: element.cy() }
+        // draw.dragStart = draw.point(evt.clientX, evt.clientY)
+        draw.dragStart = { x: element.cx(), y: element.cy() }
         element.fire('dragstart', { dragTarget: element, shiftKey: evt.shiftKey })
         evt.stopPropagation()
       }).on('mouseup', evt => {
@@ -60,7 +56,7 @@ export class DraggablePoint extends SelectablePoint {
           doAction(draw, changeLocation, {draw, components, oldValues, newValues})
         } else {
           const components = [element.component.no]
-          const oldValues = [{ x: draw.dragPointStart.x, y: draw.dragPointStart.y }]
+          const oldValues = [{ x: draw.dragStart.x, y: draw.dragStart.y }]
           const newValues = [{ x: element.cx(), y: element.cy() }]
           doAction(draw, changeLocation, {draw, components, oldValues, newValues})
           element.attr(FSG_DRAGGING_ATTR, null)
@@ -99,7 +95,7 @@ export function addPoint({ draw, coord, element, no }) {
     element = draw.circle(POINT_RADIUS)
       .move(coord.x - POINT_RADIUS/2, coord.y - POINT_RADIUS/2)
       .attr('class', 'point')
-    setStyle(element)
+    setStrokeColor(element)
   }
   if (no) element.attr(NO_ATTR, no)
   return new Point({ draw, element })
@@ -126,7 +122,7 @@ export class PinPoint extends DraggablePoint {
       if (isRightButton(evt)) return // reserved for menu(do nothing so far)
       // console.log('mousedown')
       element.lastEvent = 'mousedown'
-      draw.dragPointStart = draw.point(evt.clientX, evt.clientY)
+      draw.dragStart = draw.point(evt.clientX, evt.clientY)
       element.fire('dragstart', { dragTarget: element })
       evt.stopPropagation()
     }).on('mouseup', evt => {
@@ -142,9 +138,9 @@ export class PinPoint extends DraggablePoint {
       draw.dragTarget = element
     }).on('dragend', () => {
       // console.log('dragend')
-      console.assert(draw.dragPointStart, 'FIXME: dragend without dragPointStart')
+      console.assert(draw.dragStart, 'FIXME: dragend without dragStart')
       const components = [element.component.no]
-      const oldValues = [{ x: draw.dragPointStart.x, y: draw.dragPointStart.y }]
+      const oldValues = [{ x: draw.dragStart.x, y: draw.dragStart.y }]
       const newValues = [{ x: element.cx(), y: element.cy() }]
       doAction(draw, changeLocation, {draw, components, oldValues, newValues})
 

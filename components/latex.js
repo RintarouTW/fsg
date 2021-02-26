@@ -42,7 +42,7 @@ export class LaTeX extends SelectableComponent {
     element.on('mousedown', evt => {
       if (isRightButton(evt)) return // reserved for menu(do nothing so far)
       element.lastEvent = 'mousedown'
-      draw.dragPointStart = { x: element.cx(), y: element.cy() }
+      draw.dragStart = { x: element.cx(), y: element.cy() }
       element.fire('dragstart', { dragTarget: element })
       evt.stopPropagation()
     }).on('mouseup', evt => {

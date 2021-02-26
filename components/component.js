@@ -248,7 +248,7 @@ export class SelectableComponent extends Component {
     if (!override) {
       // Mouse Hover
       element.on('mouseenter', () => {
-        if (!draw.dragTarget && !draw.selectBoxStart) {
+        if (!draw.dragTarget && !draw.selectStart) {
           element.attr(FSG_HOVER_ATTR, true)
         }
       }).on('mouseleave', () => {

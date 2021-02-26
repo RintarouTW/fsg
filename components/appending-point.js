@@ -18,8 +18,8 @@ export class AppendingPinPoint {
     element.component = this
 
     // works like being dragged
-    draw.dragTarget = element
-    element.on('dragmove', () => element.fire('update', { target: this }) )
+    draw.appendingPoint = element
+    element.on('move', () => element.fire('update', { target: this }) )
 
     // watch the target component
     const targetComponent = componentByNo(draw, componentRef)
@@ -44,7 +44,7 @@ export class AppendingPinPoint {
     this.targetComponent.element.off('update', this.update)
     this.targetComponent.element.off('remove', this.remove)
     this.element.remove()
-    this.draw.dragTarget = null
+    this.draw.appendingPoint = null
   }
   update() {
     // appending mode:
@@ -63,7 +63,9 @@ export class AppendingPinPoint {
       if (radius == 0) return
       const center = { x: circle.cx(), y: circle.cy() }
       const v = { x: this.draw.mousePosition.x - center.x, y : this.draw.mousePosition.y - center.y }
-      const ratio = radius / Math.sqrt( v.x ** 2 + v.y ** 2)
+      const length = Math.sqrt( v.x ** 2 + v.y ** 2)
+      if (length == 0) return
+      const ratio = radius / length
       const coord = { x: center.x + v.x * ratio, y: center.y + v.y * ratio }
       this.element.center(coord.x, coord.y)
     }
@@ -92,8 +94,8 @@ export class AppendingIntersectPoint {
     element.component = this
 
     // works like being dragged
-    draw.dragTarget = element
-    element.on('dragmove', () => element.fire('update', { target: this }) )
+    draw.appendingPoint = element
+    element.on('move', () => element.fire('update', { target: this }) )
 
     this.draw = draw
     this.intersectPoints = intersectPoints
@@ -108,7 +110,7 @@ export class AppendingIntersectPoint {
   }
   remove() {
     this.element.remove()
-    this.draw.dragTarget = null
+    this.draw.appendingPoint = null
   }
   update() {
     const distance0 = distanceOfCoords(this.draw.mousePosition, this.intersectPoints[0])
