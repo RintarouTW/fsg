@@ -77,4 +77,14 @@ function makeid(length) {
   return result
 }
 
-export { isExperimental, isDebug, wait, makeid, loadCSS, loadScript, fetchURL, fetchSrc }
+function isRightButton(evt) {
+  if (evt.button == 2) {
+    console.log('is right button')
+    evt.preventDefault()
+    evt.stopPropagation()
+    return true
+  }
+  return false
+}
+
+export { isExperimental, isDebug, wait, makeid, loadCSS, loadScript, fetchURL, fetchSrc, isRightButton }

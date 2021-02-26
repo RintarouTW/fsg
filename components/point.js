@@ -12,9 +12,11 @@ export class SelectablePoint extends SelectableComponent {
   constructor({draw, element, refs, override}) {
     if (!override) {
       element.on('mousedown', evt => {
+        if (isRightButton(evt)) return // reserved for menu(do nothing so far)
         element.lastEvent = 'mousedown'
         evt.stopPropagation()
       }).on('mouseup', () => {
+        if (isRightButton(evt)) return // reserved for menu(do nothing so far)
         if (element.lastEvent == 'mousedown') this.toggleSelected()
         element.lastEvent = 'mouseup'
       })

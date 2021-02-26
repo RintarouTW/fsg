@@ -11,6 +11,8 @@ import {
   FSG_HOVER_ATTR,
 } from '../common/define.js'
 
+import { isRightButton } from '../common/common.js'
+
 export function init_component_system(draw) {
   draw.fsg.component = {}
   const list = draw.find(`[${NO_ATTR}]`)
@@ -177,10 +179,12 @@ export class Component {
     } 
     // make label to be draggable
     label.on('mousedown', evt => {
+      if (isRightButton(evt)) return // reserved for menu(do nothing so far)
       label.lastEvent = 'mousedown'
       label.fire('dragstart', { dragTarget: label })
       evt.stopPropagation()
     }).on('mouseup', () => {
+      if (isRightButton(evt)) return // reserved for menu(do nothing so far)
       label.lastEvent = 'mouseup'
       label.fire('dragend')
     }).on('mousemove', () => {
@@ -244,7 +248,7 @@ export class SelectableComponent extends Component {
     if (!override) {
       // Mouse Hover
       element.on('mouseenter', () => {
-        if (!draw.dragTarget && !draw.dragSelectStart) {
+        if (!draw.dragTarget && !draw.selectBoxStart) {
           element.attr(FSG_HOVER_ATTR, true)
         }
       }).on('mouseleave', () => {
@@ -253,9 +257,11 @@ export class SelectableComponent extends Component {
 
       // Selection
       element.on('mousedown', evt => {
+        if (isRightButton(evt)) return // reserved for menu(do nothing so far)
         element.lastEvent = 'mousedown'
         evt.stopPropagation()
-      }).on('mouseup', () => {
+      }).on('mouseup', evt => {
+        if (isRightButton(evt)) return // reserved for menu(do nothing so far)
         if (element.lastEvent == 'mousedown') this.toggleSelected()
         element.lastEvent = 'mouseup'
       })

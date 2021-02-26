@@ -7,6 +7,8 @@ import {
   FSG_HOVER_ATTR
 } from '../common/define.js'
 
+import { isRightButton } from '../common/common.js'
+
 import { SelectableComponent } from './component.js'
 
 function findBottom(draw, points) {
@@ -51,10 +53,11 @@ export class Shape extends SelectableComponent {
       .attr('fill', DEFAULT_TRANSPARENT_COLOR) // fill with transparent color
 
     cover?.on('mousedown', evt => { // selectable by mousedown
+      if (isRightButton(evt)) return // reserved for menu(do nothing so far)
       this.toggleSelected()
       evt.stopPropagation()
     }).on('mouseenter', () => {
-      if (!draw.dragTarget && !draw.dragSelectStart) {
+      if (!draw.dragTarget && !draw.selectBoxStart) {
         element.attr(FSG_HOVER_ATTR, true)
       }
     }).on('mouseleave', () => {

@@ -19,12 +19,14 @@ export class DraggablePoint extends SelectablePoint {
   constructor({draw, element, refs, override}) {
     if (!override) {
       element.on('mousedown', evt => {
+        if (isRightButton(evt)) return // reserved for menu(do nothing so far)
         element.lastEvent = 'mousedown'
         // draw.dragPointStart = draw.point(evt.clientX, evt.clientY)
         draw.dragPointStart = { x: element.cx(), y: element.cy() }
         element.fire('dragstart', { dragTarget: element, shiftKey: evt.shiftKey })
         evt.stopPropagation()
-      }).on('mouseup', () => {
+      }).on('mouseup', evt => {
+        if (isRightButton(evt)) return // reserved for menu(do nothing so far)
         if (element.lastEvent == 'mousedown') this.toggleSelected()
         element.lastEvent = 'mouseup'
         element.fire('dragend')
@@ -121,12 +123,14 @@ export class PinPoint extends DraggablePoint {
 
     // override for better performance
     element.on('mousedown', evt => {
+      if (isRightButton(evt)) return // reserved for menu(do nothing so far)
       // console.log('mousedown')
       element.lastEvent = 'mousedown'
       draw.dragPointStart = draw.point(evt.clientX, evt.clientY)
       element.fire('dragstart', { dragTarget: element })
       evt.stopPropagation()
-    }).on('mouseup', () => {
+    }).on('mouseup', evt => {
+      if (isRightButton(evt)) return // reserved for menu(do nothing so far)
       if (element.lastEvent == 'mousedown') this.toggleSelected()
       element.lastEvent = 'mouseup'
       element.fire('dragend')

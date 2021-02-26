@@ -1,6 +1,7 @@
 'use strict'
 
 import { DEFAULT_TEXT, OF_ATTR, NO_ATTR, FSG_DRAGGING_ATTR } from '../common/define.js'
+import { isRightButton } from '../common/common.js'
 import { SelectableComponent, componentByNo } from './component.js'
 import { currentStrokeColor } from '../module/color_picker.js'
 
@@ -39,11 +40,13 @@ export class LaTeX extends SelectableComponent {
     const target = this.target
     // selectable and draggable
     element.on('mousedown', evt => {
+      if (isRightButton(evt)) return // reserved for menu(do nothing so far)
       element.lastEvent = 'mousedown'
       draw.dragPointStart = { x: element.cx(), y: element.cy() }
       element.fire('dragstart', { dragTarget: element })
       evt.stopPropagation()
-    }).on('mouseup', () => {
+    }).on('mouseup', evt => {
+      if (isRightButton(evt)) return // reserved for menu(do nothing so far)
       if (element.lastEvent == 'mousedown') this.toggleSelected()
       element.lastEvent = 'mouseup'
       element.fire('dragend')

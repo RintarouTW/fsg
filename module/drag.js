@@ -1,7 +1,7 @@
 'use strict'
 
 import { CLASS_FSG_UI_SELECT_BOX, NO_ATTR, FSG_SELECTED_ATTR } from '../common/define.js'
-import { snapTo } from '../common/common.js'
+import { isRightButton , snapTo } from '../common/common.js'
 
 import { addPoint, PinPoint, addPinPoint } from '../components/draggable-point.js'
 import { InvisiblePoint } from '../components/invisible-point.js'
@@ -40,22 +40,20 @@ export function init_module_drag(draw, click_to_add_point = true) {
   // The Drag and Drop System
   draw.selectBox = selectBox
   draw.dragTarget = null
-  draw.dragSelectStart = null
+  draw.selectBoxStart = null
   draw.on('mousedown', evt => {
-    console.log('draw.mousedown')
+    // console.log('draw.mousedown')
     if (draw.menu) { // if menu exist(shown) remove menu
       draw.menu.remove()
       return
     }
     // right click for menu
-    if (evt.button == 2) {
+    if (isRightButton(evt)) {
       if (window.FSG_RUNTIME) {
         new RuntimeMenu(draw, draw.point(evt.clientX, evt.clientY))
       } else if (window.FSG_BUILDER) {
         new BuilderMenu(draw, draw.point(evt.clientX, evt.clientY))
       }
-      evt.preventDefault()
-      evt.stopPropagation()
       return
     }
     if (evt.button != 0) return // skip other buttons
@@ -72,7 +70,7 @@ export function init_module_drag(draw, click_to_add_point = true) {
     }
 
     if (!evt.altKey) { // remember the dragging selection start coord
-      draw.dragSelectStart = draw.point(evt.clientX, evt.clientY)
+      draw.selectBoxStart = draw.point(evt.clientX, evt.clientY)
     }
     draw.lastEvent = 'mousedown'
     draw.dragTarget = null
@@ -83,18 +81,17 @@ export function init_module_drag(draw, click_to_add_point = true) {
       draw.dragTarget.fire('dragend')
       draw.dragTarget = null
     }
-    if (draw.dragSelectStart) {
-      draw.dragSelectStart = null
+    if (draw.selectBoxStart) {
+      draw.selectBoxStart = null
       selectBox.size(0, 0)
     }
   }).on('mouseup', evt => {
     // console.log('draw.mouseup')
     if (draw.dragTarget) {
-      // console.log('dragend')
       draw.dragTarget.fire('dragend')
       draw.dragTarget = null
     }
-    draw.dragSelectStart = null
+    draw.selectBoxStart = null
     selectBox.size(0, 0)
     if (draw.lastEvent != 'mousedown') return
     draw.lastEvent = 'mouseup'
@@ -130,11 +127,11 @@ export function init_module_drag(draw, click_to_add_point = true) {
       }
       return
     }
-    if (draw.dragSelectStart) {
-      let width = Math.abs(mousePosition.x - draw.dragSelectStart.x)
-      let height = Math.abs(mousePosition.y - draw.dragSelectStart.y)
-      let cx = (mousePosition.x + draw.dragSelectStart.x) / 2
-      let cy = (mousePosition.y + draw.dragSelectStart.y) / 2
+    if (draw.selectBoxStart) {
+      let width = Math.abs(mousePosition.x - draw.selectBoxStart.x)
+      let height = Math.abs(mousePosition.y - draw.selectBoxStart.y)
+      let cx = (mousePosition.x + draw.selectBoxStart.x) / 2
+      let cy = (mousePosition.y + draw.selectBoxStart.y) / 2
       selectBox.size(width, height).center(cx, cy)
       selectAllInBox(draw, selectBox, evt.shiftKey)
     }
