@@ -11,6 +11,8 @@ import {
   FSG_SHAPE_ATTR,
 } from '../common/define.js'
 
+import { lengthOfVector } from '../common/math.js'
+
 import { componentByNo } from './component.js'
 import { Shape, putBehindPoints } from './shape.js'
 import { useCurrentColors } from '../module/color_picker.js'
@@ -22,21 +24,16 @@ import { useCurrentColors } from '../module/color_picker.js'
 function arrowedArcPathOf(p1, p2, p3, large_arc = false) {
   const radius = DEFAULT_ANGLE_RADIUS * 3
   p2 = { x: p2.cx(), y: p2.cy() }
-  const dx1 = p1.cx() - p2.x
-  const dy1 = p1.cy() - p2.y
-  const dx2 = p3.cx() - p2.x
-  const dy2 = p3.cy() - p2.y
-  const v1_length = Math.sqrt(dx1 ** 2 + dy1 ** 2)
-  const v2_length = Math.sqrt(dx2 ** 2 + dy2 ** 2)
-  if (v1_length == 0 || v2_length == 0) {
-    return '' // empty path, draw nothing
-  }
-  let v1 = { x: dx1 / v1_length * radius, y: dy1 / v1_length * radius}
-  let v2 = { x: dx2 / v2_length * radius, y: dy2 / v2_length * radius}
-  const p1x = p2.x + v1.x
-  const p1y = p2.y + v1.y
-  const p3x = p2.x + v2.x
-  const p3y = p2.y + v2.y
+  const d1 = { x: p1.cx() - p2.x, y: p1.cy() - p2.y }
+  const d2 = { x: p3.cx() - p2.x, y: p3.cy() - p2.y }
+  const d1Len = lengthOfVector(d1)
+  const d2Len = lengthOfVector(d2)
+  if (d1Len == 0 || d2Len == 0) return '' // empty path, draw nothing
+  
+  const v1 = { x: d1.x / d1Len * radius, y: d1.y / d1Len * radius}
+  const v2 = { x: d2.x / d2Len * radius, y: d2.y / d2Len * radius}
+  const p1x = p2.x + v1.x, p1y = p2.y + v1.y
+  const p3x = p2.x + v2.x, p3y = p2.y + v2.y
   let large = (v1.x * v2.y - v1.y * v2.x >= 0) ? 0 : 1
   let ccw = 1
   if (!large_arc) {
@@ -55,7 +52,6 @@ export class ArrowedArc extends Shape {
       this.large_arc = false
     else
       this.large_arc = (large_arc == 'true') ? true : false
-
   }
   update() {
     const [p1, p2, p3] = this.points

@@ -1,7 +1,7 @@
 'use strict'
 
 import { FSG_DRAGGING_ATTR, POINT_RADIUS } from '../common/define.js'
-import { distanceOfCoords, projectPointOnLine } from '../common/math.js'
+import { distanceOfCoords, lengthOfVector, projectPointOnLine } from '../common/math.js'
 import { componentByNo } from './component.js'
 
 ///
@@ -63,9 +63,9 @@ export class AppendingPinPoint {
       if (radius == 0) return
       const center = { x: circle.cx(), y: circle.cy() }
       const v = { x: this.draw.mousePosition.x - center.x, y : this.draw.mousePosition.y - center.y }
-      const length = Math.sqrt( v.x ** 2 + v.y ** 2)
-      if (length == 0) return
-      const ratio = radius / length
+      const vLen = lengthOfVector(v) 
+      if (vLen == 0) return
+      const ratio = radius / vLen
       const coord = { x: center.x + v.x * ratio, y: center.y + v.y * ratio }
       this.element.center(coord.x, coord.y)
     }

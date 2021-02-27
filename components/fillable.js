@@ -6,7 +6,7 @@ import {
   FSG_FILL_NONE_ATTR,
   FSG_SHAPE_ATTR,
 } from '../common/define.js'
-import { pointOnScreen } from '../common/math.js'
+import { pointOnScreen, distanceOfPoints, distanceOfCoords } from '../common/math.js'
 
 import { componentByNo } from './component.js'
 import { Shape, putBehindPoints } from './shape.js'
@@ -42,11 +42,10 @@ export class Circle extends FillableShape {
     const [cp, rp] = this.points
     const coord1 = pointOnScreen({ element: cp })
     const coord2 = pointOnScreen({ element: rp })
-    const r = Math.sqrt((coord2.x - coord1.x) ** 2 + (coord2.y - coord1.y) ** 2)
+    const r = distanceOfCoords(coord1, coord2)
     this.radius = r
-    this.element.radius(r).center(cp.cx(), cp.cy())
     this.cover?.radius(r).center(cp.cx(), cp.cy())
-    this.element.fire('update')
+    this.element.radius(r).center(cp.cx(), cp.cy()).fire('update')
   }
   // Implement the Appendable Interface
   endAppendMode() {
@@ -69,7 +68,7 @@ export function addCircle({draw, refs, element, cover, no}) {
 
   const points = refs.map(compNo => componentByNo(draw, compNo).element)
   const [cp, rp] = points
-  const radius = Math.sqrt((rp.cx() - cp.cx()) ** 2 + (rp.cy() - cp.cy()) ** 2)
+  const radius = distanceOfPoints(cp, rp)
   if (!element) {
     element = draw.circle().radius(radius).center(cp.cx(), cp.cy())
       .attr('class', 'circle dashed')
@@ -141,9 +140,8 @@ function arcPathOf(p1, p2, p3, large_arc = false) {
   const dy2 = p3.cy() - p2.y
   const v1_length = Math.sqrt(dx1 ** 2 + dy1 ** 2)
   const v2_length = Math.sqrt(dx2 ** 2 + dy2 ** 2)
-  if (v1_length == 0 || v2_length == 0) {
-    return '' // empty path, draw nothing
-  }
+  if (v1_length == 0 || v2_length == 0) return '' // empty path, draw nothing
+
   let v1 = { x: dx1 / v1_length * radius, y: dy1 / v1_length * radius}
   let v2 = { x: dx2 / v2_length * radius, y: dy2 / v2_length * radius}
   const p1x = p2.x + v1.x

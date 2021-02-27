@@ -12,6 +12,10 @@ export function distanceOfCoords(c1, c2) {
   return Math.sqrt((c2.x - c1.x) ** 2 + (c2.y - c1.y) ** 2)
 }
 
+export function lengthOfVector(v) {
+  return Math.sqrt(v.x ** 2 + v.y ** 2)
+}
+
 /// box : { x, y, width, height }
 /// point : { x, y }
 export function inside(box, point) {
