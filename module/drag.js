@@ -118,6 +118,7 @@ export function init_module_drag(draw, click_to_add_point = true) {
         component.update()
         return
       }
+      console.assert(draw.dragStart, 'draw.dragStart must exist', dragTarget)
       const offset = {
         x: mousePosition.x - draw.dragStart.x,
         y: mousePosition.y - draw.dragStart.y,

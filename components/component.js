@@ -180,6 +180,7 @@ export class Component {
     // make label to be draggable
     label.on('mousedown', evt => {
       if (isRightButton(evt)) return // reserved for menu(do nothing so far)
+      draw.dragStart = { x: label.cx(), y: label.cy() }
       label.lastEvent = 'mousedown'
       label.fire('dragstart', { dragTarget: label })
       evt.stopPropagation()
@@ -190,6 +191,7 @@ export class Component {
     }).on('mousemove', () => {
       label.lastEvent = 'mousemove'
     }).on('dragstart', () => {
+      label.orgValue = {x: label.cx(), y: label.cy()}
       draw.dragTarget = label
     }).on('dragend', () => {
       draw.dragTarget = null
