@@ -16,14 +16,14 @@ import { init_module_script } from './module/script.js'
 import './lib/svg.panzoom.js'
 
 let _draw = null
-let _content = null
+let _document = null
 
 function cleanUp() {
   if (_draw) deinit_component_system(_draw)
   // clear edit areas
   SVG('#editArea').clear()
   _draw = null
-  _content = null
+  _document = null
 }
 
 function loadAsSVG(content) {
@@ -51,7 +51,7 @@ export function loadFSG(content) {
 
   cleanUp()
 
-  _content = content
+  _document = content
 
   svg.addTo('#editArea') // use content's viewbox
     .panZoom({zoomMin: 1, zoomMax: 3})

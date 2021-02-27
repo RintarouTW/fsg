@@ -36,7 +36,7 @@ import { getCode } from './module/server.js'
 import './lib/svg.panzoom.js'
 
 let _draw = null
-let _content = null
+let _document = null
 let _windowSize = {}
 
 function openFile(file) {
@@ -74,7 +74,7 @@ function cleanUp() {
   // clear edit areas
   SVG('#editArea').clear()
   _draw = null
-  _content = null
+  _document = null
 }
 
 function setSnapshotHandler(draw) {
@@ -159,7 +159,7 @@ export function loadFSG(content) {
 
   cleanUp()
 
-  _content = content
+  _document = content
 
   svg.addTo('#editArea') // use content's viewbox
     .panZoom({zoomMin: 1, zoomMax: 3})
@@ -240,7 +240,7 @@ function init() {
 
   buttonClass(SVG('#runButton'), () => execute_user_script(_draw))
   buttonClass(SVG('#reloadButton'), () => {
-    if (_content) _draw = loadFSG(_content)
+    if (_document) _draw = loadFSG(_document)
   })
 
   _draw.mousePosition = { x: -150, y: 30 }
@@ -260,9 +260,9 @@ function init() {
   })
 
   // when mouse up out of drag area.
-  document.addEventListener('mouseup', () => {
-    _draw?.fire('mouseup_on_document')
-  })
+  document.addEventListener('mouseup', () => _draw?.fire('mouseup_on_document') )
+  // save as svg would update the document
+  document.addEventListener('update_document', evt => _document = evt.detail )
 
   opening_animation(_draw, () => {
     _windowSize = { width: window.outerWidth, height: window.outerHeight }

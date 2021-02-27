@@ -317,6 +317,7 @@ export function saveAsSVG(draw) {
   document.body.appendChild(download)
   download.click()
   document.body.removeChild(download)
+  return content
 }
 
 export function exportToHTML(draw) {

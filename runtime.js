@@ -75,7 +75,7 @@ function loadFSG(fsg) {
     fsg.clear()
     const svg = SVG(content)
     const draw = svg.first()
-    draw._content = svg.svg()
+    draw._document = svg.svg()
     init_modules(draw)
     draw.fsg.filename = src.split('/').pop()
     draw.ready = true
@@ -122,7 +122,7 @@ function init() {
   // loaded by standalone svg
   const svg = SVG('svg')
   const draw = svg.first()
-  draw._content = svg.svg() // remember the original content
+  draw._document = svg.svg() // remember the original content
   init_modules(draw)
   draw.fsg.filename = window.location.pathname.split('/').pop()
   draw.ready = true

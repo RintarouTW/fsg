@@ -329,7 +329,8 @@ export function init_module_keybinding(draw) {
         break
       case 'KeyS':
         if (evt.metaKey) { // cmd + s : save as svg
-          saveAsSVG(draw)
+          const _document = saveAsSVG(draw)
+          document.dispatchEvent(new CustomEvent('update_document', { detail : _document }))
           evt.preventDefault()
           evt.stopPropagation()
           return
