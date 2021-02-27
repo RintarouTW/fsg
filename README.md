@@ -104,7 +104,7 @@ It's also supported and it would work just like custome `<fsg>` tag.
 - common/ : shared definition and helpers.
 - components/ : FSG components that managed the svgjs elements within the canvas.
 - modules/ : support multiple canvases in a single page. mostly for editor modules.
-- `rollup.sh` : use rollup and terser to bundle and minify the editor and runtime code to release.
+- `build.sh` : use rollup and terser to bundle and minify the editor and runtime code to release.
 - `main.js` : the editor's main function.
 - `runtime.js` : the runtime's main function.
 - `manifest.webmanifest` : support for PWA.
@@ -112,6 +112,8 @@ It's also supported and it would work just like custome `<fsg>` tag.
 - `dev.html` : For local development.
 - `manifest.webmanifest.dev` : for local development.
 - `local-serve.sh` : for local development with the `live-server`
+- `convert.html` : convert old verion files to the updated file format
+- `convert.js` : convert's main function
 
 ## Dependency
 
@@ -132,10 +134,10 @@ It's also supported and it would work just like custome `<fsg>` tag.
 - `npm install -g rollup` to install `rollup`
 - `npm install -g @rollup/plugin-strip` to install the `strip` plugin for rollup
 - `npm install -g terser` to install the `terser` that mangle and compress the rolluped code to `main.min.js` and `runtime.min.js`.
-- modify `DEV_TESTING` to `true` in `common/define.js` to make the generated .svg and .html to load local `runtime.min.js`. BEWARE! it won't load `runtime.js` directly since script in SVG doesn't support modules yet, so we need to run `rollup.sh` to update the runtime.min.js everytime you updated `runtime.js`.
+- modify `DEV_TESTING` to `true` in `common/define.js` to make the generated .svg and .html to load local `runtime.min.js`. **BEWARE!** it won't load `runtime.js` directly since SVG doesn't support modules yet. We need to run `build.sh` to update the `runtime.min.js` everytime you updated `runtime.js`.
 
 ## Why?
 
-I enjoyed Geogebra for a long time, but it's too heavy and slow for the web. The runtime of Geogebra is not designed for the web, that makes your work hard to be reused in the web pages. At the same time, it's kind of too complex for people who are not major in Math. No way to customize the styles and hard to animate the geometry.
+I enjoyed `Geogebra` for a long time, but it's too heavy and slow for the web. The runtime of `Geogebra` is not designed for the web, that makes your work hard to be reused in the web pages. At the same time, it's kind of too complex for people who are not major in Math. No way to customize the styles and hard to animate the geometry.
 
 So I decided to build this builder that I can create the geometry I want in minutes.
