@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" rx="8" ry="8" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="35" y="-53.875"></rect><line x1="-433.5" y1="0" x2="433.5" y2="0" class="axis-x" stroke="#888888aa" fsg_shape="true" marker-end="url(#SvgjsMarker1000)" fsg-no="1"></line><line x1="0" y1="-325.125" x2="0" y2="325.125" class="axis-y" stroke="#888888aa" fsg_shape="true" marker-end="url(#SvgjsMarker1000)" fsg-no="2"></line><polygon points="0,0 79.99999401240737,-0.030951813929552766 80.0522251984135,134.96903808200787" class="polygon" fsg_shape="true" fill="#ff0f6328" stroke="#ff0f6328" fsg-no="7" fsg-refs="4,5,6" id="polygon" transform="matrix(1,-2.694222958124175e-15,2.694222958124175e-15,1,0,0)"></polygon><circle r="3" cx="0" cy="0" class="point" stroke="#888888aa" fsg-no="4" transform="matrix(1,-2.694222958124175e-15,2.694222958124175e-15,1,0,0)"></circle><circle r="3" cx="80" cy="0" class="point" stroke="#888888aa" fsg-no="5" id="p2" transform="matrix(1,-3.4290110376125857e-15,3.4290110376125857e-15,1,0,0)"></circle><circle r="3" cx="80" cy="135" class="point" stroke="#888888aa" fsg-no="6" id="p1" transform="matrix(1,-3.4290110376125857e-15,3.4290110376125857e-15,1,0,0)"></circle></g><defs><style>
+svg {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+svg .fsg-board {
+  fill: #151c23;
+}
+
+svg .fsg-ui-select-box {
+  stroke-width: 0.5;
+  fill: none;
+}
+
+svg .menu {
+  font: 0.9em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
+}
+
+svg .menu_title {
+  fill: #aaa;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+svg .menu_item {
+  font-weight: 300;
+  fill: #888;
+}
+
+svg .menu_item:hover {
+  fill: #fff;
+  cursor: pointer;
+}
+
+svg *[fsg_hidden] {
+  visibility: hidden;
+}
+
+svg *[fsg_fill_none]{
+  fill: none;
+}
+
+svg *[fsg_shape]:hover {
+  stroke: #fff;
+}
+
+svg .dashed {
+  stroke-dasharray: 3;
+  stroke-width: 1.2;
+}
+
+svg .axis-x, svg .axis-y {
+  stroke: #555; 
+  stroke-width: 1.2;
+}
+
+svg .vector-marker-start, svg .vector-marker-end {
+  fill: #999;
+}
+
+svg .point {
+  fill: #2f2f2f;
+  stroke: #ff0;
+}
+
+svg .pin-point {
+  fill: #777777aa;
+  stroke: #ff0;
+}
+
+svg .mid-point, svg .intersect-point {
+  fill: #777777aa;
+  stroke: #565656aa;
+}
+
+svg .point:hover, svg .pin-point:hover {
+  cursor: grab;
+}
+
+svg .mid-point:hover, svg .intersect-point:hover {
+  cursor: pointer;
+}
+
+svg g, svg div, svg foreignObject, svg span {
+  position: relative;
+}
+
+svg span.base {
+  position: relative !important;
+}
+
+svg .latex-container {
+  width: max-content;
+  height: max-content;
+  position: fixed; /* important for Safari */
+}
+
+svg .latex,
+svg .label {
+  color: #999;
+  fill: #999;
+  font-family: 'KaTeX_Math', 'Times New Roman', Times, serif;
+}
+</style><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://rintaroutw.github.io/fsg/style/runtime.css"></link><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"></link><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3, 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><script href="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://rintaroutw.github.io/fsg/runtime.min.js" namespace="FSG_RUNTIME"></script><script xmlns="https://rintaroutw.github.io/fsg">// get the polygon element
+const polygon = SVG('#polygon')
+
+// get all the points of the polygon with itself.
+const elements = Array.from(polygon.component.points).concat([polygon])
+
+// the shared animation timeline for all elements
+const timeline = new SVG.Timeline()
+
+elements.forEach(element =&gt; {
+  element.timeline(timeline) // use the same timeline
+  // use animate() instead of anime(), so it won't trigger the update event
+  // while animating the points which are referenced by the polygon
+  element.animate(1000, 0, 'absolute').rotate(90, 0, 0)
+})
+</script></defs></svg>
