@@ -133,7 +133,7 @@ export function init_module_keybinding(draw) {
           evt.preventDefault()
           evt.stopPropagation()
           const components = getLastSelectedAngleComponents(draw)
-          if (!component && showHint('Select angle first!')) return
+          if (!components && showHint('Select angle first!')) return
           components.forEach(angle => angle.toggleMode() )
         }
         break
