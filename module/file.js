@@ -14,7 +14,6 @@ import {
   FSG_INSPECTING_ATTR,
   FSG_DRAGGING_ATTR,
   FSG_HOVER_ATTR,
-  FSG_FILL_NONE_ATTR,
   FSG_HIDDEN_ATTR,
   FSG_SHAPE_ATTR,
 } from '../common/define.js'
@@ -208,7 +207,7 @@ function cleanupDirtyElements(draw) {
       element.removeClass('shape').attr(FSG_SHAPE_ATTR, true)
     }
     if (element.hasClass('none')) {
-      element.removeClass('none').attr(FSG_FILL_NONE_ATTR, true)
+      element.removeClass('none').attr('fill', 'none')
     }
     if (element.hasClass('hidden')) {
       element.removeClass('hidden').attr(FSG_HIDDEN_ATTR, true)
@@ -278,6 +277,9 @@ function patchToNewAttributes(draw) {
   draw.find('[of]').each(element => {
     const refs = element.attr('of')
     element.attr('of', null).attr(OF_ATTR, refs)
+  })
+  draw.find('[fsg_fill_none]').each(element => {
+    element.attr('fsg_fill_none', null).attr('fill', 'none')
   })
 }
 

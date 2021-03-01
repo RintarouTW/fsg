@@ -115,6 +115,11 @@ svg .label {
   fill: #999;
   font-family: 'KaTeX_Math', 'Times New Roman', Times, serif;
 }
+
+svg .length-marker,
+svg .angle-marker {
+  fill: none
+}
 </style>`
 
 export const RUNTIME_STYLE_LINK = String.raw`<link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="${SERVER_ROOT}/style/runtime.css"/>`
@@ -136,7 +141,6 @@ export const FSG_SHAPE_ATTR = 'fsg_shape'
 export const CLASS_FSG_BOARD = 'fsg-board'
 export const CLASS_FSG_UI_SELECT_BOX = 'fsg-ui-select-box'
 export const DEFAULT_BOARD_RADIUS = 8
-export const FSG_FILL_NONE_ATTR = 'fsg_fill_none'
 export const FSG_HIDDEN_ATTR = 'fsg_hidden'
 
 // component attributes

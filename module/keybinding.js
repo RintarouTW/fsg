@@ -1,6 +1,6 @@
 'use strict'
 
-import { NO_ATTR, FSG_FILL_NONE_ATTR, FSG_HIDDEN_ATTR } from '../common/define.js'
+import { NO_ATTR, FSG_HIDDEN_ATTR } from '../common/define.js'
 import { intersect, intersectLineAndCircle, projectPointOnLine, twoCirclesIntersection } from '../common/math.js'
 // modules
 import { toggleAttribute, toggleClass, changeStyle } from './style.js'

@@ -7,7 +7,6 @@ import {
   DEFAULT_LENGTH_MARKER_DISTANCE,
   DEFAULT_LABEL_OFFSET_X,
   DEFAULT_LABEL_OFFSET_Y,
-  FSG_FILL_NONE_ATTR,
   FSG_SHAPE_ATTR,
 } from '../common/define.js'
 
@@ -15,7 +14,7 @@ import { lengthOfVector } from '../common/math.js'
 
 import { componentByNo } from './component.js'
 import { Shape, putBehindPoints } from './shape.js'
-import { useCurrentColors } from '../module/color_picker.js'
+import { setStrokeColor } from '../module/color_picker.js'
 
 ///
 /// ArrowedArcPath
@@ -108,9 +107,9 @@ export function addAngleMarker({ draw, refs, element, cover, no }) {
     const arcPath = arrowedArcPathOf(p1, p2, p3, false /* large_arc */)
     element = draw.path(arcPath)
       .attr('class', 'angle-marker')
-      .attr(FSG_FILL_NONE_ATTR, true)
+      .attr('fill', 'none')
       .attr(FSG_SHAPE_ATTR, true)
-    useCurrentColors(element)
+    setStrokeColor(element)
   }
   if (window.FSG_BUILDER) {
     cover = draw.path(element.array()).attr('class', 'cover')
@@ -198,9 +197,9 @@ export function addLengthMarker({ draw, refs, element, cover, no }) {
     const path = lengthPathOf(p1, p2, DEFAULT_LENGTH_MARKER_DISTANCE)
     element = draw.path(path)
       .attr('class', 'length-marker')
-      .attr(FSG_FILL_NONE_ATTR, true)
+      .attr('fill', 'none')
       .attr(FSG_SHAPE_ATTR, true)
-    useCurrentColors(element)
+    setStrokeColor(element)
   }
   if (window.FSG_BUILDER) {
     cover = draw.path(element.array()).attr('class', 'cover')

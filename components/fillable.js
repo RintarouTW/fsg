@@ -3,7 +3,6 @@
 import { 
   NO_ATTR,
   DEFAULT_ANGLE_RADIUS,
-  FSG_FILL_NONE_ATTR,
   FSG_SHAPE_ATTR,
 } from '../common/define.js'
 import { pointOnScreen, distanceOfPoints, distanceOfCoords } from '../common/math.js'
@@ -72,7 +71,7 @@ export function addCircle({draw, refs, element, cover, no}) {
   if (!element) {
     element = draw.circle().radius(radius).center(cp.cx(), cp.cy())
       .attr('class', 'circle dashed')
-      .attr(FSG_FILL_NONE_ATTR, true)
+      .attr('fill', 'none')
       .attr(FSG_SHAPE_ATTR, true)
     useCurrentColors(element)
     cover = draw.circle().radius(radius).center(cp.cx(), cp.cy()).attr('class', 'cover')
@@ -110,7 +109,7 @@ export function addPolygon({draw, refs, element, cover, no}) {
   if (!element) {
     element = draw.polygon(pts)
       .attr('class', 'polygon dashed') 
-      .attr(FSG_FILL_NONE_ATTR, true)
+      .attr('fill', 'none')
       .attr(FSG_SHAPE_ATTR, true)
 
     useCurrentColors(element)
@@ -201,7 +200,7 @@ export function addAngle({ draw, refs, element, cover, no }) {
     // console.log(arcPath)
     element = draw.path(arcPath)
       .attr('class', 'angle')
-      .attr(FSG_FILL_NONE_ATTR, true)
+      .attr('fill', 'none')
       .attr(FSG_SHAPE_ATTR, true)
     useCurrentColors(element)
   }
