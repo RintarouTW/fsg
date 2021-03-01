@@ -12,7 +12,7 @@ import { addIntersectPoint, addMidPoint } from '../components/point.js'
 import { addPoint } from '../components/draggable-point.js'
 import { LineShape, addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
 import { addEdge, addVector } from '../components/line-segment.js'
-import { addPolygon, addCircle, addAngle } from '../components/fillable.js'
+import { addPolygon, addCircle, addAngle, FillableShape } from '../components/fillable.js'
 import { addAngleMarker, addLengthMarker } from '../components/measure.js'
 import { addLaTeX } from '../components/latex.js'
 import { 
@@ -243,18 +243,33 @@ export function init_module_keybinding(draw) {
         doAction(draw, addEdge, {draw, refs})
         break
       case 'KeyF':
-        { // f: toggle fill of all fillable selections
-          let components = getSelectedFillableShapes(draw)
-          if (!components[0] && showHint('Select one circle or polygon first!')) return
-          components = components.map(component => component.no)
+        { 
+          if (evt.shiftKey) { // shift + f: toggle fill of all fillable selections
+            let components = getSelectedFillableShapes(draw)
+            if (!components[0] && showHint('Select one circle or polygon first!')) return
+            components = components.map(component => component.no)
+            doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_FILL_NONE_ATTR})
+            return
+          }
+          const component = lastSelectedComponent(draw)
+          if ((!component || !(component instanceof FillableShape))
+              && showHint('Select one circle or polygon first!')) return
+          const components = [component.no]
           doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_FILL_NONE_ATTR})
         }
         break
       case 'KeyH':
-        { // h : hide all selections
-          let components = getSelectedComponents(draw)
-          if (!hasComponent(components[0])) return
-          components = components.map(component => component.no)
+        {
+          if (evt.shiftKey) { // shift + h : hide all selections
+            let components = getSelectedComponents(draw)
+            if (!hasComponent(components[0])) return
+            components = components.map(component => component.no)
+            doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_HIDDEN_ATTR})
+            return
+          }
+          const component = lastSelectedComponent(draw)
+          if (!hasComponent(component)) return
+          const components = [component.no]
           doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_HIDDEN_ATTR})
         }
         break
