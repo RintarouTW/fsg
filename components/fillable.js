@@ -71,7 +71,6 @@ export function addCircle({draw, refs, element, cover, no}) {
   if (!element) {
     element = draw.circle().radius(radius).center(cp.cx(), cp.cy())
       .attr('class', 'circle dashed')
-      .attr('fill', 'none')
       .attr(FSG_SHAPE_ATTR, true)
     useCurrentColors(element)
     cover = draw.circle().radius(radius).center(cp.cx(), cp.cy()).attr('class', 'cover')
@@ -109,7 +108,6 @@ export function addPolygon({draw, refs, element, cover, no}) {
   if (!element) {
     element = draw.polygon(pts)
       .attr('class', 'polygon dashed') 
-      .attr('fill', 'none')
       .attr(FSG_SHAPE_ATTR, true)
 
     useCurrentColors(element)
@@ -200,7 +198,6 @@ export function addAngle({ draw, refs, element, cover, no }) {
     // console.log(arcPath)
     element = draw.path(arcPath)
       .attr('class', 'angle')
-      .attr('fill', 'none')
       .attr(FSG_SHAPE_ATTR, true)
     useCurrentColors(element)
   }

@@ -34,7 +34,7 @@ import {
 } from './selection.js'
 import { showHint } from './ui.js'
 import { toggle_preference_window } from './preference.js'
-import { editField, lastVisibleFillColor, lastVisibleStrokeColor, whichColorField } from './inspector.js'
+import { altColorPicker, editField, lastVisibleFillColor, lastVisibleStrokeColor, whichColorField } from './inspector.js'
 import { addAppendingIntersectPoint, AppendingPinPoint } from '../components/appending-point.js'
 
 let _keydownHandler, _keyupHandler
@@ -243,6 +243,10 @@ export function init_module_keybinding(draw) {
         break
       case 'KeyF':
         { 
+          if (evt.altKey) {
+            altColorPicker('#field_fill')
+            return
+          }
           const attributeName = whichColorField()
           const newValue = (attributeName == 'fill') ? lastVisibleFillColor() : lastVisibleStrokeColor()
           if (evt.shiftKey) { // shift + f: fill/stroke color of all fillable selected components
@@ -381,6 +385,10 @@ export function init_module_keybinding(draw) {
           document.dispatchEvent(new CustomEvent('update_document', { detail : _document }))
           evt.preventDefault()
           evt.stopPropagation()
+          return
+        }
+        if (evt.altKey) {
+          altColorPicker('#field_stroke')
           return
         }
         // s : toggle solid / dashed stroke

@@ -47,6 +47,13 @@ export function whichColorField() {
   return _currentColorField.getAttribute('id').substr(6)
 }
 
+export function altColorPicker(fieldId) {
+  const field = SVG(fieldId).node
+  console.assert(field, 'field not found', fieldId)
+  _currentColorField = field
+  attachColorPicker(field)
+}
+
 export function editField(fieldId) {
   SVG(fieldId).node.focus()
 }
