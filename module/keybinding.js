@@ -3,7 +3,7 @@
 import { NO_ATTR, FSG_FILL_NONE_ATTR, FSG_HIDDEN_ATTR } from '../common/define.js'
 import { intersect, intersectLineAndCircle, projectPointOnLine, twoCirclesIntersection } from '../common/math.js'
 // modules
-import { toggleAttribute, toggleClass } from './style.js'
+import { toggleAttribute, toggleClass, changeStyle } from './style.js'
 import { undo, redo, doAction } from './history.js'
 import { saveAsSVG, exportToHTML, svgDocument } from './file.js'
 import { toggle_code_editor } from './code_editor.js'
@@ -34,11 +34,10 @@ import {
 } from './selection.js'
 import { showHint } from './ui.js'
 import { toggle_preference_window } from './preference.js'
-import { editField } from './inspector.js'
-import {addAppendingIntersectPoint, AppendingIntersectPoint, AppendingPinPoint} from '../components/appending-point.js'
+import { editField, lastVisibleFillColor, lastVisibleStrokeColor, whichColorField } from './inspector.js'
+import { addAppendingIntersectPoint, AppendingPinPoint } from '../components/appending-point.js'
 
 let _keydownHandler, _keyupHandler
-let _appendingIntersectPoint
 
 function hasComponent(component) {
   if (!component && showHint('Select one component first!')) return false
@@ -244,18 +243,27 @@ export function init_module_keybinding(draw) {
         break
       case 'KeyF':
         { 
-          if (evt.shiftKey) { // shift + f: toggle fill of all fillable selections
+          const attributeName = whichColorField()
+          const newValue = (attributeName == 'fill') ? lastVisibleFillColor() : lastVisibleStrokeColor()
+          if (evt.shiftKey) { // shift + f: fill/stroke color of all fillable selected components
             let components = getSelectedFillableShapes(draw)
             if (!components[0] && showHint('Select one circle or polygon first!')) return
+            const oldValues = []
+            components.forEach(component => {
+              oldValues.push(component.getAttribute('fill'))
+            })
             components = components.map(component => component.no)
-            doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_FILL_NONE_ATTR})
+            doAction(draw, changeStyle, {draw, components, attributeName, oldValues, newValue})
             return
           }
+          // fill/stroke color to the last selected component
           const component = lastSelectedComponent(draw)
           if ((!component || !(component instanceof FillableShape))
-              && showHint('Select one circle or polygon first!')) return
+            && showHint('Select one circle or polygon first!')) return
           const components = [component.no]
-          doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_FILL_NONE_ATTR})
+          const oldValue = component.getAttribute('fill')
+          const oldValues = [oldValue]
+          doAction(draw, changeStyle, {draw, components, attributeName, oldValues, newValue})
         }
         break
       case 'KeyH':
@@ -313,6 +321,31 @@ export function init_module_keybinding(draw) {
           doAction(draw, addMidPoint, {draw, refs}) // add mid point between 2 points
         }
         break
+      case 'KeyN':
+        { 
+          const attributeName = whichColorField()
+          const newValue = 'none'
+          if (evt.shiftKey) { // shift + f: fill/stroke none to all fillable selected components
+            let components = getSelectedFillableShapes(draw)
+            if (!components[0] && showHint('Select one circle or polygon first!')) return
+            const oldValues = []
+            components.forEach(component => {
+              oldValues.push(component.getAttribute('fill'))
+            })
+            components = components.map(component => component.no)
+            doAction(draw, changeStyle, {draw, components, attributeName, oldValues, newValue})
+            return
+          }
+          // fill/stroke none the last selected component
+          const component = lastSelectedComponent(draw)
+          if ((!component || !(component instanceof FillableShape))
+            && showHint('Select one circle or polygon first!')) return
+          const components = [component.no]
+          const oldValue = component.getAttribute('fill')
+          const oldValues = [oldValue]
+          doAction(draw, changeStyle, {draw, components, attributeName, oldValues, newValue})
+        }
+        break
       case 'KeyP':
         { // p : add polygon
           points = getSelectedSelectablePointElements(draw)
@@ -351,10 +384,17 @@ export function init_module_keybinding(draw) {
           return
         }
         // s : toggle solid / dashed stroke
-        let components = getSelectedShapes(draw)
-        if (!hasComponent(components[0])) return
-        components = components.map(component => component.no)
         const className = 'dashed'
+        if (evt.shiftKey) {
+          let components = getSelectedShapes(draw)
+          if (!hasComponent(components[0])) return
+          components = components.map(component => component.no)
+          doAction(draw, toggleClass, {draw, components, className})
+          return
+        }
+        const component = lastSelectedComponent(draw)
+        if (!hasComponent(component)) return
+        const components = [component.no]
         doAction(draw, toggleClass, {draw, components, className})
         break
       case 'KeyT': // text

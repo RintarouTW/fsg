@@ -54,10 +54,6 @@ svg *[fsg_hidden] {
   visibility: hidden;
 }
 
-svg *[fsg_fill_none]{
-  fill: none;
-}
-
 svg *[fsg_shape]:hover {
   stroke: #fff;
 }

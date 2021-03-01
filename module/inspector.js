@@ -29,12 +29,27 @@ const fieldDefaultValue = {
   'stroke' : DEFAULT_STROKE_COLOR
 }
 
+let _inspecting_element
+let _isColorFieldFocused = false
+let _currentColorField = SVG('#field_fill').node 
+let _lastVisibleFillColor = DEFAULT_FILL_COLOR
+let _lastVisibleStrokeColor = DEFAULT_STROKE_COLOR
+
+export function lastVisibleFillColor() {
+  return _lastVisibleFillColor
+}
+
+export function lastVisibleStrokeColor() {
+  return _lastVisibleStrokeColor
+}
+
+export function whichColorField() {
+  return _currentColorField.getAttribute('id').substr(6)
+}
+
 export function editField(fieldId) {
   SVG(fieldId).node.focus()
 }
-
-let _inspecting_element
-let _isColorFieldFocused = false
 
 function setInspecting(element) {
   return element?.attr(FSG_INSPECTING_ATTR, true)
@@ -82,8 +97,11 @@ function inspect_component(component) {
     if (typeof value === 'undefined')
       value = fieldDefaultValue[name]
 
-    if (name == 'fill' || name == 'stroke')
+    if (name == 'fill' || name == 'stroke') {
+      if (name == 'fill' && value != 'none') _lastVisibleFillColor = value
+      if (name == 'stroke' && value != 'none') _lastVisibleStrokeColor = value
       field.style.backgroundColor = value
+    }
 
     field.value = value
     SVG(field).fire('change')
@@ -128,6 +146,10 @@ function resetToSelected(draw) {
 }
 
 export function init_module_inspector(draw) {
+
+  // window.lastVisibleStrokeColor = lastVisibleStrokeColor
+  // window.lastVisibleFillColor =  lastVisibleFillColor
+
   init_fields(draw)
   SVG('#inspector').on('inspect-component', evt => {
     if(!draw.ready) return
@@ -191,9 +213,6 @@ function checkColor(color) {
   if (/^#[a-f|0-9]{8}$/i.test(color)) {
     return color.toLowerCase()
   }
-  if (/^none$/i.test(color)) {
-    return 'none'
-  }
   return 'none'
 }
 
@@ -210,6 +229,10 @@ function init_fields(draw) {
 
       const attributeName = evt.target.id.substr(6)
       let value = checkColor(evt.target.value)
+      if (value != 'none') {
+        if (attributeName == 'fill') _lastVisibleFillColor = value
+        else _lastVisibleStrokeColor = value
+      }
 
       try { // console.log(attribute_name, value)
         if (draw.targetComponents) {
@@ -234,6 +257,7 @@ function init_fields(draw) {
 
   const color_fields = SVG('#inspector').find('.field_color')
   color_fields.on('focus', evt => {
+    _currentColorField = evt.target
     attachColorPicker(evt.target)
     unsetAllSelected(draw)
     unsetInspecting(_inspecting_element)
