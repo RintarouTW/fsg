@@ -1,6 +1,10 @@
 'use strict'
 
-import { DEFAULT_FILL_COLOR, DEFAULT_STROKE_COLOR } from '../common/define.js'
+import {
+  DEFAULT_FILL_COLOR,
+  DEFAULT_STROKE_COLOR,
+  DEFAULT_TRANSPARENT_COLOR,
+} from '../common/define.js'
 
 ///
 /// ColorPicker is always attached to one of the input fields now.
@@ -54,9 +58,29 @@ export function init_module_color_picker() {
   _enabled = false // disabled until enableColorPicker()
 }
 
-// console.log('user input changed')
+function toHex8String(color) {
+  if (/^#[a-f|0-9]{3}$/i.test(color)) {
+    let str = '#' + color[1] + color[1] + color[2] + color[2] + color[3] + color[3] + 'ff'
+    return str.toLowerCase()
+  }
+  if (/^#[a-f|0-9]{6}$/i.test(color)) {
+    return color.toLowerCase() + 'ff'
+  }
+  if (/^#[a-f|0-9]{8}$/i.test(color)) {
+    return color.toLowerCase()
+  }
+  if (/^none$/i.test(color)) {
+    return DEFAULT_TRANSPARENT_COLOR
+  }
+  return null
+}
+
 function onInputChange() {
-  _colorPicker.color.hex8String = _hexInput.value;
+  const color = toHex8String(_hexInput.value)
+  if (!color) return // prevent illegal color inputs
+  _enabled = false
+  _colorPicker.color.hex8String = color
+  _enabled = true 
 }
 
 function onColorChange(color) {
@@ -82,8 +106,7 @@ export function attachColorPicker(hexInput) {
   else
     document.querySelector('#colorIndicator').style.right = '260px';
 
-  _colorPicker.color.hex8String = _hexInput.value
-  // console.log(_colorPicker.color.hex8String, _hexInput.value)
+  onInputChange() // show the attached input field color
 
   _colorPicker.on("color:change", onColorChange)
   _colorPicker.on("input:start", () => {

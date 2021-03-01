@@ -137,6 +137,7 @@ export function init_module_inspector(draw) {
   })
 
   document.addEventListener('colorpicker:change-start', evt => {
+    if(!_inspecting_element) return
     if (draw.targetComponents) return
     if (!draw.selectedComponents) unsetAllSelected(draw)
 
@@ -180,6 +181,22 @@ export function init_module_inspector(draw) {
   })
 }
 
+function checkColor(color) {
+  if (/^#[a-f|0-9]{3}$/i.test(color)) {
+    return color.toLowerCase()
+  }
+  if (/^#[a-f|0-9]{6}$/i.test(color)) {
+    return color.toLowerCase()
+  }
+  if (/^#[a-f|0-9]{8}$/i.test(color)) {
+    return color.toLowerCase()
+  }
+  if (/^none$/i.test(color)) {
+    return 'none'
+  }
+  return 'none'
+}
+
 function init_fields(draw) {
 
   _inspecting_element?.off('update dragend', update_fields)
@@ -192,8 +209,7 @@ function init_fields(draw) {
     field.on('input', evt => { // when user edit the field, apply to the inspecting element.
 
       const attributeName = evt.target.id.substr(6)
-      let value = evt.target.value
-      if (value == '') value = null
+      let value = checkColor(evt.target.value)
 
       try { // console.log(attribute_name, value)
         if (draw.targetComponents) {
