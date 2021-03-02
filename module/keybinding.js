@@ -299,8 +299,9 @@ export function init_module_keybinding(draw) {
           const component = lastSelectedComponent(draw)
           if ((!component || !(component instanceof FillableShape))
             && showHint('Select one circle or polygon first!')) return
-          refs = [component.no]
           const oldValue = component.getAttribute('fill')
+          if (oldValue != 'none') return // alread filled
+          refs = [component.no]
           const oldValues = [oldValue]
           doAction(draw, changeStyle, {draw, refs, attributeName, oldValues, newValue})
         }
@@ -388,8 +389,9 @@ export function init_module_keybinding(draw) {
           const component = lastSelectedComponent(draw)
           if ((!component || !(component instanceof FillableShape))
             && showHint('Select one circle or polygon first!')) return
-          refs = [component.no]
           const oldValue = component.getAttribute('fill')
+          if (oldValue == 'none') return // already none
+          refs = [component.no]
           const oldValues = [oldValue]
           doAction(draw, changeStyle, {draw, refs, attributeName, oldValues, newValue})
         }
