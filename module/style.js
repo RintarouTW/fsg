@@ -18,11 +18,17 @@ export function hasDashedClass(element) {
 }
 
 function doToggleSolid(element, className) {
-  if (hasDashedClass(element)) {
-    removeAllDashedClass(element)
+  const dashed = hasDashedClass(element)
+  removeAllDashedClass(element)
+  if (dashed) {
+    element.orgDash = dashed
   } else {
-    removeAllDashedClass(element)
-    element.addClass(className)
+    if (element.orgDash) {
+      element.addClass(element.orgDash)
+      element.orgDash = null
+    } else {
+      element.addClass(className)
+    }
   }
   element.fire('update') // let the inspector to know the element status is changed.
 }
