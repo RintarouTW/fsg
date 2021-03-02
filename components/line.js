@@ -11,7 +11,9 @@ export function coverForLineElement(draw, element) {
   if (window.FSG_BUILDER) {
     const coord1 = { x: element.attr('x1'), y: element.attr('y1') }
     const coord2 = { x: element.attr('x2'), y: element.attr('y2') }
-    return draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
+    const cover = draw.line(coord1.x, coord1.y, coord2.x, coord2.y).attr('class', 'cover')
+    element.after(cover)
+    return cover
   }
   return null
 }
@@ -31,13 +33,13 @@ export class LineShape extends Shape {
   updateDirection() {
     const [p1, p2] = this.points
     // element of a component may be transformed
-    const coord1 = pointOnScreen(p1.component)
-    const coord2 = pointOnScreen(p2.component)
+    const coord1 = pointOnScreen({ element: p1})
+    const coord2 = pointOnScreen({ element: p2})
     const dx = coord2.x - coord1.x
     const dy = coord2.y - coord1.y
     const length = Math.sqrt(dx ** 2 + dy **2)
-    if (length !== 0)
-      this._direction = {x: dx/length , y: dy/length}
+    if (length != 0)
+      this._direction = {x: dx / length , y: dy / length}
   }
   direction() {
     if (!this._direction) this.updateDirection()

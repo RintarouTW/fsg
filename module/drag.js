@@ -5,7 +5,7 @@ import { isRightButton , snapTo } from '../common/common.js'
 
 import { addPoint, PinPoint, addPinPoint } from '../components/draggable-point.js'
 import { InvisiblePoint } from '../components/invisible-point.js'
-import { AppendingIntersectPoint, AppendingPinPoint } from '../components/appending-point.js'
+import { AppendingPinPoint } from '../components/appending-point.js'
 import { LaTeX } from '../components/latex.js'
 
 import { doAction } from './history.js'
@@ -41,6 +41,18 @@ export function init_module_drag(draw, click_to_add_point = true) {
   draw.selectBox = selectBox
   draw.selectStart = null
   draw.dragTarget = null
+  draw.endAppendingPoint = evt => {
+    if (!draw.appendingPoint) return false
+    evt.preventDefault()
+    evt.stopPropagation()
+    const component = draw.appendingPoint.component
+    const action = (component instanceof AppendingPinPoint) ? addPinPoint : addIntersectPoint
+    const pointInfo = component.done()
+    doAction(draw, action, pointInfo)
+    // don't set lastEvent to 'mousedown', so it won't add new point on the next mouse up.
+    draw.appendingPoint = null
+    return true
+  }
   draw.on('mousedown', evt => {
     // console.log('draw.mousedown')
     if (draw.menu) { // if menu exist(shown) remove menu
@@ -49,26 +61,17 @@ export function init_module_drag(draw, click_to_add_point = true) {
     }
     // right click for menu
     if (isRightButton(evt)) {
-      if (window.FSG_RUNTIME) {
+      if (window.FSG_RUNTIME)
         new RuntimeMenu(draw, draw.point(evt.clientX, evt.clientY))
-      } else if (window.FSG_BUILDER) {
+      else if (window.FSG_BUILDER)
         new BuilderMenu(draw, draw.point(evt.clientX, evt.clientY))
-      }
       return
     }
 
     if (evt.button != 0) return // skip other buttons
 
     // appending mode end for AppendingPinPoint and AppendingIntersectPoint
-    if (draw.appendingPoint) {
-      const component = draw.appendingPoint.component
-      const action = (component instanceof AppendingPinPoint) ? addPinPoint : addIntersectPoint
-      const pointInfo = component.done()
-      doAction(draw, action, pointInfo)
-      // don't set lastEvent to 'mousedown', so it won't add new point on the next mouse up.
-      draw.appendingPoint = null
-      return
-    }
+    if (draw.endAppendingPoint(evt)) return
 
     if (!evt.altKey) { // remember the dragging selection start coord
       draw.selectStart = draw.point(evt.clientX, evt.clientY)
