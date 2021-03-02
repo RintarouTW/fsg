@@ -1,20 +1,29 @@
 'use strict'
 
 import { NO_ATTR, FSG_HIDDEN_ATTR } from '../common/define.js'
-import { intersect, intersectLineAndCircle, projectPointOnLine, twoCirclesIntersection } from '../common/math.js'
+import { projectPointOnLine } from '../common/math.js'
+
 // modules
-import { toggleAttribute, toggleClass, changeStyle } from './style.js'
 import { undo, redo, doAction } from './history.js'
 import { saveAsSVG, exportToHTML, svgDocument } from './file.js'
 import { toggle_code_editor } from './code_editor.js'
-// components
-import { addIntersectPoint, addMidPoint } from '../components/point.js'
-import { addPoint } from '../components/draggable-point.js'
-import { LineShape, addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
-import { addEdge, addVector } from '../components/line-segment.js'
-import { addPolygon, addCircle, addAngle, FillableShape } from '../components/fillable.js'
-import { addAngleMarker, addLengthMarker } from '../components/measure.js'
-import { addLaTeX } from '../components/latex.js'
+import { showHint } from './ui.js'
+import { toggle_preference_window } from './preference.js'
+import {
+  toggleAttribute,
+  toggleSolid,
+  changeStyle,
+  changeClass,
+  hasDashedClass,
+  removeAllDashedClass
+} from './style.js'
+import {
+  altColorPicker,
+  editField,
+  lastVisibleFillColor,
+  lastVisibleStrokeColor,
+  whichColorField
+} from './inspector.js'
 import { 
   unselectAllSelections,
   removeAllSelections,
@@ -32,10 +41,17 @@ import {
   getLastSelectedAngleComponents,
   selectAllSelectableComponents,
 } from './selection.js'
-import { showHint } from './ui.js'
-import { toggle_preference_window } from './preference.js'
-import { altColorPicker, editField, lastVisibleFillColor, lastVisibleStrokeColor, whichColorField } from './inspector.js'
-import { addAppendingIntersectPoint, AppendingPinPoint } from '../components/appending-point.js'
+
+// components
+import { addIntersectPoint, addMidPoint } from '../components/point.js'
+import { addPoint } from '../components/draggable-point.js'
+import { addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
+import { addEdge, addVector } from '../components/line-segment.js'
+import { Shape } from '../components/shape.js'
+import { addPolygon, addCircle, addAngle, FillableShape } from '../components/fillable.js'
+import { addAngleMarker, addLengthMarker } from '../components/measure.js'
+import { addLaTeX } from '../components/latex.js'
+import { chooseIntersectPoint, AppendingPinPoint } from '../components/appending-point.js'
 
 let _keydownHandler, _keyupHandler
 
@@ -54,38 +70,31 @@ function has3Points(points) {
   return true
 }
 
-function chooseIntersectPoint(draw, intersectPoints, refs) {
-  // enter point choose mode
-  addAppendingIntersectPoint({draw, intersectPoints, refs})
-}
+function setDashedClass(evt, draw, className) {
+  const newValue = className
 
-function doIntersectPoints(draw, intersectableComponents) {
-  if (intersectableComponents[0] instanceof LineShape) {
-    if (intersectableComponents[1] instanceof LineShape) { // intersect two lines
-      const [l1, l2] = intersectableComponents
-      const coord = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
-      // console.log(coord, l1.direction(), l2, l2.direction())
-      doAction(draw, addIntersectPoint, {draw, coord, index : 0, refs : [l1.no, l2.no]})
-    } else { // line + circle
-      const [line, circle] = intersectableComponents
-      const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-      chooseIntersectPoint(draw, intersectPoints, [line.no, circle.no])
-    }
+  if (evt.shiftKey) {
+    const components = getSelectedShapes(draw)
+    const oldValues = []
+    const refs = components.map(component => {
+      const element = component.element
+      oldValues.push(element.attr('class'))
+      removeAllDashedClass(element)
+      return component.no
+    })
+    doAction(draw, changeClass, {draw, refs, oldValues, newValue})
     return
-  } 
-  if (intersectableComponents[1] instanceof LineShape) { // circle + line
-    const [circle, line] = intersectableComponents
-    const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
-    chooseIntersectPoint(draw, intersectPoints, [line.no, circle.no])
-    return
-  } 
-  // two circles
-  const [circle1, circle2] = intersectableComponents
-  const c1 = { a: circle1.center().x, b: circle1.center().y, r: circle1.radius }
-  const c2 = { a: circle2.center().x, b: circle2.center().y, r: circle2.radius }
-  const intersectPoints = twoCirclesIntersection(c1, c2)
-  if (!intersectPoints) return
-  chooseIntersectPoint(draw, intersectPoints, [circle1.no, circle2.no])
+  }
+
+  const component = lastSelectedComponent(draw)
+  if ((!component || !(component instanceof Shape)) && showHint('Select a shape first!')) return
+  const element = component.element
+  if (hasDashedClass(element) == newValue) return
+
+  const refs = [component.no]
+  const oldValues = [element.attr('class')]
+  removeAllDashedClass(element)
+  doAction(draw, changeClass, {draw, refs, oldValues, newValue})
 }
 
 export function init_module_keybinding(draw) {
@@ -104,7 +113,7 @@ export function init_module_keybinding(draw) {
 
     if (typeof window.FSG_BUILDER !== 'undefined' && evt.target != document.body) return
 
-    if (!draw.ready) return // ready to action after the opening animation
+    if (!draw.ready) return // don't responde before system ready
 
     if (draw.appendingPoint) {
       if (evt.code == 'Escape') { // escape from special modes
@@ -117,27 +126,37 @@ export function init_module_keybinding(draw) {
       return
     }
 
+    if (!(evt.metaKey && evt.altKey && evt.code == 'KeyI') &&
+        !(evt.metaKey && evt.code == 'KeyR')) {
+      evt.preventDefault()
+      evt.stopPropagation()
+    }
+
     let points = getLast2SelectedPointElements(draw)
     let refs
     if (points) refs = points.map(p => p.attr(NO_ATTR))
     switch(evt.code) {
       case 'F1':
-        toggle_code_editor() // F1: toggle code editor
+        {
+          toggle_code_editor() // F1: toggle code editor
+        }
         break
       case 'Comma':
-        if(evt.metaKey) toggle_preference_window(draw) // cmd + , : toggle preference
+        {
+          if(evt.metaKey) toggle_preference_window(draw) // cmd + , : toggle preference
+        }
         break
       case 'Tab': // tab: toggle angle's large arc mode
         {
-          evt.preventDefault()
-          evt.stopPropagation()
           const components = getLastSelectedAngleComponents(draw)
           if (!components && showHint('Select angle first!')) return
           components.forEach(angle => angle.toggleMode() )
         }
         break
       case 'Backspace': // backspace : delete all selected
-        doAction(draw, removeAllSelections, { draw })
+        {
+          doAction(draw, removeAllSelections, { draw })
+        }
         break
       case 'BracketLeft': // [ : backward, shift + [ : back
         {
@@ -153,12 +172,30 @@ export function init_module_keybinding(draw) {
           (evt.shiftKey) ? component.front() : component.forward()
         }
         break
+      case 'Digit1':
+        {
+          setDashedClass(evt, draw, 'dashed')
+        }
+        break
+      case 'Digit2':
+        {
+          setDashedClass(evt, draw, 'dashed2')
+        }
+        break
+      case 'Digit3':
+        {
+          setDashedClass(evt, draw, 'dashed3')
+        }
+        break
+      case 'Digit4':
+        {
+          setDashedClass(evt, draw, 'dashed4')
+        }
+        break
       case 'KeyA':
         {
           if (evt.metaKey) { // cmd + a : select all
             doAction(draw, selectAllSelectableComponents, {draw})
-            evt.preventDefault()
-            evt.stopPropagation()
             return
           } 
           if (evt.shiftKey) { // shift + a : add angle
@@ -170,7 +207,7 @@ export function init_module_keybinding(draw) {
             return
           }
           const component = getLastSelectedAppendableComponent(draw)
-          if(component) { // a : appending pin point
+          if (component) { // a : appending pin point
             component.toggleAppendMode(draw)
             return
           }
@@ -180,7 +217,8 @@ export function init_module_keybinding(draw) {
         }
         break
       case 'KeyB':
-        { // b : Bisector Line
+        {
+          // b : Bisector Line
           points = getSelectedSelectablePointElements(draw)
           if (!has3Points(points)) return
           points = [points[0], points[1], points[2]] // use only the last 3 points
@@ -192,7 +230,6 @@ export function init_module_keybinding(draw) {
         {
           if (evt.altKey) { // alt + c : edit class
             editField('#field_class')
-            evt.preventDefault()
             return
           } 
           if (evt.metaKey) { // cmd + c : copy to clipboard
@@ -208,66 +245,64 @@ export function init_module_keybinding(draw) {
       case 'KeyD':
         {
           if (numberOfSelections(draw) > 0) {
-            (evt.shiftKey) 
-              ? doAction(draw, unselectAllSelections, draw) // shift + d : unselect all
-              : doAction(draw, deselectLastSelection, draw) // d : unselect the last one
+            (evt.metaKey) 
+              ? doAction(draw, unselectAllSelections, draw) // cmd + d : deselect all
+              : doAction(draw, deselectLastSelection, draw) // d : deselect the last one
           }
         }
         break
       case 'KeyE':
-        if (evt.metaKey) { // cmd + e : export to html
-          evt.preventDefault()
-          evt.stopPropagation()
-          exportToHTML(draw)
-          return
-        }
-        if (evt.ctrlKey) { // ctrl + e : execute user script
-          evt.preventDefault()
-          evt.stopPropagation()
-          SVG('#runButton').node.click()
-          return
-        }
-        if (evt.shiftKey) { // shift + e : close with edge (last to first)
-          points = getSelectedSelectablePointElements(draw)
-          if ((!points || points.length < 3) && showHint('At least 3 points to close the shape')) return
-          refs = points.map(p => p.attr(NO_ATTR))
-          const firstRef = refs[0]
-          const lastRef = refs[points.length - 1]
-          refs = [lastRef, firstRef]
+        {
+          if (evt.metaKey) { // cmd + e : export to html
+            exportToHTML(draw)
+            return
+          }
+          if (evt.ctrlKey) { // ctrl + e : execute user script
+            SVG('#runButton').node.click()
+            return
+          }
+          if (evt.shiftKey) { // shift + e : close with edge (last to first)
+            points = getSelectedSelectablePointElements(draw)
+            if ((!points || points.length < 3) && showHint('At least 3 points to close the shape')) return
+            refs = points.map(p => p.attr(NO_ATTR))
+            const firstRef = refs[0]
+            const lastRef = refs[points.length - 1]
+            refs = [lastRef, firstRef]
+            doAction(draw, addEdge, {draw, refs})
+            return
+          }
+          // e : add edge
+          if (!has2Points(points)) return
           doAction(draw, addEdge, {draw, refs})
-          return
         }
-        // e : add edge
-        if (!has2Points(points)) return
-        doAction(draw, addEdge, {draw, refs})
         break
       case 'KeyF':
         { 
-          if (evt.altKey) {
+          if (evt.altKey) { // alt + f : switch to fill field
             altColorPicker('#field_fill')
             return
           }
           const attributeName = whichColorField()
           const newValue = (attributeName == 'fill') ? lastVisibleFillColor() : lastVisibleStrokeColor()
+
           if (evt.shiftKey) { // shift + f: fill/stroke color of all fillable selected components
-            let components = getSelectedFillableShapes(draw)
+            const components = getSelectedFillableShapes(draw)
             if (!components[0] && showHint('Select one circle or polygon first!')) return
             const oldValues = []
-            components.forEach(component => {
-              oldValues.push(component.getAttribute('fill'))
-            })
-            components = components.map(component => component.no)
-            doAction(draw, changeStyle, {draw, components, attributeName, oldValues, newValue})
+            components.forEach(component => oldValues.push(component.getAttribute('fill')) )
+            refs = components.map(component => component.no)
+            doAction(draw, changeStyle, {draw, refs, attributeName, oldValues, newValue})
             return
           }
+
           // fill/stroke color to the last selected component
           const component = lastSelectedComponent(draw)
           if ((!component || !(component instanceof FillableShape))
             && showHint('Select one circle or polygon first!')) return
-          const components = [component.no]
+          refs = [component.no]
           const oldValue = component.getAttribute('fill')
           const oldValues = [oldValue]
-          doAction(draw, changeStyle, {draw, components, attributeName, oldValues, newValue})
+          doAction(draw, changeStyle, {draw, refs, attributeName, oldValues, newValue})
         }
         break
       case 'KeyH':
@@ -275,33 +310,38 @@ export function init_module_keybinding(draw) {
           if (evt.shiftKey) { // shift + h : hide all selections
             let components = getSelectedComponents(draw)
             if (!hasComponent(components[0])) return
-            components = components.map(component => component.no)
-            doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_HIDDEN_ATTR})
+            refs = components.map(component => component.no)
+            doAction(draw, toggleAttribute, {draw, refs, attributeName : FSG_HIDDEN_ATTR})
             return
           }
+          // h : hide the last selected
           const component = lastSelectedComponent(draw)
           if (!hasComponent(component)) return
-          const components = [component.no]
-          doAction(draw, toggleAttribute, {draw, components, attributeName : FSG_HIDDEN_ATTR})
+          refs = [component.no]
+          doAction(draw, toggleAttribute, {draw, refs, attributeName : FSG_HIDDEN_ATTR})
         }
         break
       case 'KeyI':
-        if (evt.metaKey) return
-        if (evt.altKey) { // alt + i : edit id
-          editField('#field_id')
-          evt.preventDefault()
-          return
-        } 
-        // Intersect point(s)
-        const intersectableComponents = getLast2SelectedIntersectableComponents(draw)
-        if (!intersectableComponents) {
-          showHint('Select 2 intersectable components(line or circle) first')
-          return
+        {
+          if (evt.metaKey) return
+
+          if (evt.altKey) { // alt + i : edit id
+            editField('#field_id')
+            return
+          } 
+
+          // Intersect point(s)
+          const intersectableComponents = getLast2SelectedIntersectableComponents(draw)
+          if (!intersectableComponents) {
+            showHint('Select 2 intersectable components(line or circle) first')
+            return
+          }
+          chooseIntersectPoint(draw, intersectableComponents)
         }
-        doIntersectPoints(draw, intersectableComponents)
         break
       case 'KeyL':
-        { // l : add line
+        {
+          // l : add line
           if (has2Points(points)) doAction(draw, addLine, {draw, refs})
         }
         break
@@ -321,6 +361,7 @@ export function init_module_keybinding(draw) {
             doAction(draw, addAngleMarker, {draw, refs})
             return
           }
+          // m : mid point
           if (!has2Points(points)) return
           doAction(draw, addMidPoint, {draw, refs}) // add mid point between 2 points
         }
@@ -329,29 +370,33 @@ export function init_module_keybinding(draw) {
         { 
           const attributeName = whichColorField()
           const newValue = 'none'
-          if (evt.shiftKey) { // shift + f: fill/stroke none to all fillable selected components
+
+          // shift + f: fill/stroke none to all fillable selected components
+          if (evt.shiftKey) {
             let components = getSelectedFillableShapes(draw)
             if (!components[0] && showHint('Select one circle or polygon first!')) return
             const oldValues = []
             components.forEach(component => {
               oldValues.push(component.getAttribute('fill'))
             })
-            components = components.map(component => component.no)
-            doAction(draw, changeStyle, {draw, components, attributeName, oldValues, newValue})
+            refs = components.map(component => component.no)
+            doAction(draw, changeStyle, {draw, refs, attributeName, oldValues, newValue})
             return
           }
+
           // fill/stroke none the last selected component
           const component = lastSelectedComponent(draw)
           if ((!component || !(component instanceof FillableShape))
             && showHint('Select one circle or polygon first!')) return
-          const components = [component.no]
+          refs = [component.no]
           const oldValue = component.getAttribute('fill')
           const oldValues = [oldValue]
-          doAction(draw, changeStyle, {draw, components, attributeName, oldValues, newValue})
+          doAction(draw, changeStyle, {draw, refs, attributeName, oldValues, newValue})
         }
         break
       case 'KeyP':
-        { // p : add polygon
+        {
+          // p : add polygon
           points = getSelectedSelectablePointElements(draw)
           if (!has3Points(points)) return
           refs = points.map(p => p.attr(NO_ATTR))
@@ -364,8 +409,6 @@ export function init_module_keybinding(draw) {
             const file = SVG('#file')
             file.node.value = '' // reset or the same file won't be opened. bug fixed: issue #3
             file.node.click()
-            evt.preventDefault()
-            evt.stopPropagation()
           }
         }
         break
@@ -373,37 +416,39 @@ export function init_module_keybinding(draw) {
         {
           if (evt.ctrlKey) { // ctrl + r : reload content
             SVG('#reloadButton').node.click()
-          } else if(!evt.metaKey) { // prevent cmd + r
+          } else if (!evt.metaKey) { // prevent cmd + r
             if (!has2Points(points)) return
             doAction(draw, addRay, {draw, refs}) // r : add ray
           }
         }
         break
       case 'KeyS':
-        if (evt.metaKey) { // cmd + s : save as svg
-          const _document = saveAsSVG(draw)
-          document.dispatchEvent(new CustomEvent('update_document', { detail : _document }))
-          evt.preventDefault()
-          evt.stopPropagation()
-          return
+        {
+          if (evt.metaKey) { // cmd + s : save as svg
+            const _document = saveAsSVG(draw)
+            document.dispatchEvent(new CustomEvent('update_document', { detail : _document }))
+            return
+          }
+          if (evt.altKey) { // alt + s : switch to stroke field
+            altColorPicker('#field_stroke')
+            return
+          }
+
+          // shift + s : toggle solid of all selected
+          if (evt.shiftKey) {
+            const components = getSelectedShapes(draw)
+            if (!hasComponent(components[0])) return
+            refs = components.map(component => component.no)
+            doAction(draw, toggleSolid, {draw, refs})
+            return
+          }
+
+          // s : toggle solid / dashed stroke
+          const component = lastSelectedComponent(draw)
+          if ((!component || !(component instanceof Shape)) && showHint('Select a shape first!')) return
+          refs = [component.no]
+          doAction(draw, toggleSolid, {draw, refs})
         }
-        if (evt.altKey) {
-          altColorPicker('#field_stroke')
-          return
-        }
-        // s : toggle solid / dashed stroke
-        const className = 'dashed'
-        if (evt.shiftKey) {
-          let components = getSelectedShapes(draw)
-          if (!hasComponent(components[0])) return
-          components = components.map(component => component.no)
-          doAction(draw, toggleClass, {draw, components, className})
-          return
-        }
-        const component = lastSelectedComponent(draw)
-        if (!hasComponent(component)) return
-        const components = [component.no]
-        doAction(draw, toggleClass, {draw, components, className})
         break
       case 'KeyT': // text
         {
@@ -419,7 +464,6 @@ export function init_module_keybinding(draw) {
             doAction(draw, addLaTeX, {draw})
           }
           editField('#field_text')
-          evt.preventDefault()
         }
         break
       case 'KeyV':
@@ -430,7 +474,6 @@ export function init_module_keybinding(draw) {
       case 'Equal':
         { 
           const lineAndPoint = getLastSelectedLineBaseAndPointComponent(draw)
-          // console.log(lineAndPoint)
           if (!lineAndPoint) {
             showHint('Select one line/edge/vector and one point first')
             return
@@ -461,8 +504,10 @@ export function init_module_keybinding(draw) {
         break
       case 'KeyU':
       case 'KeyZ':
-        if (evt.shiftKey) redo(draw) // shift + u/z : redo
-        else undo(draw) // u/z : undo
+        {
+          if (evt.shiftKey) redo(draw) // shift + u/z : redo
+          else undo(draw) // u/z : undo
+        }
         break
     }
   }

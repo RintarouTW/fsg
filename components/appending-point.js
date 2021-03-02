@@ -1,8 +1,16 @@
 'use strict'
 
 import { FSG_DRAGGING_ATTR, POINT_RADIUS } from '../common/define.js'
-import { distanceOfCoords, lengthOfVector, projectPointOnLine } from '../common/math.js'
+import {
+  intersect,
+  intersectLineAndCircle,
+  distanceOfCoords,
+  lengthOfVector,
+  projectPointOnLine,
+  twoCirclesIntersection
+} from '../common/math.js'
 import { componentByNo } from './component.js'
+import { LineShape } from './line.js'
 
 ///
 /// AppendingPinPoint is not a component
@@ -132,3 +140,35 @@ export function addAppendingIntersectPoint({ draw, intersectPoints, refs }) {
     .attr('class', 'pin-point')
   return new AppendingIntersectPoint({ draw, element, intersectPoints, refs, index })
 }
+
+export function chooseIntersectPoint(draw, intersectableComponents) {
+  if (intersectableComponents[0] instanceof LineShape) {
+    if (intersectableComponents[1] instanceof LineShape) { // intersect two lines
+      const [l1, l2] = intersectableComponents
+      const coord = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
+      doAction(draw, addIntersectPoint, {draw, coord, index : 0, refs : [l1.no, l2.no]})
+    } else { // line + circle
+      const [line, circle] = intersectableComponents
+      const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
+  // enter point choose mode
+  addAppendingIntersectPoint({draw, intersectPoints, refs : [line.no, circle.no]})
+    }
+    return
+  } 
+  if (intersectableComponents[1] instanceof LineShape) { // circle + line
+    const [circle, line] = intersectableComponents
+    const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)
+  // enter point choose mode
+  addAppendingIntersectPoint({draw, intersectPoints, refs : [line.no, circle.no]})
+    return
+  } 
+  // two circles
+  const [circle1, circle2] = intersectableComponents
+  const c1 = { a: circle1.center().x, b: circle1.center().y, r: circle1.radius }
+  const c2 = { a: circle2.center().x, b: circle2.center().y, r: circle2.radius }
+  const intersectPoints = twoCirclesIntersection(c1, c2)
+  if (!intersectPoints) return
+  // enter point choose mode
+  addAppendingIntersectPoint({draw, intersectPoints, refs : [circle1.no, circle2.no]})
+}
+

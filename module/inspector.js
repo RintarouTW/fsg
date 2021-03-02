@@ -193,14 +193,14 @@ export function init_module_inspector(draw) {
     const {field, newValue} = evt.detail
     const attributeName = field.substr(6)
     const oldValues = []
-    const components = draw.targetComponents
-    components.forEach(componentNo => {
+    const refs = draw.targetComponents
+    refs.forEach(componentNo => {
       const component = componentByNo(draw, componentNo)
       const element = component.element
       oldValues.push(element.orgValue)
       element.orgValue = null
     })
-    doAction(draw, changeStyle, {draw, components, attributeName, oldValues, newValue})
+    doAction(draw, changeStyle, {draw, refs, attributeName, oldValues, newValue})
 
     if (!_isColorFieldFocused) { // set the origianl selected components back to selected state
       resetToSelected(draw)

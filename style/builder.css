@@ -26,7 +26,7 @@
 
 /* override for testing */
 .dashed {
-  stroke-dasharray: 3 !important;
+  stroke-dasharray: 2.5 2.5 !important;
   stroke-width: 1.2 !important;
 }
 
