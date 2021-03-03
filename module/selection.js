@@ -77,6 +77,8 @@ class SelectAllAction {
       }
     })
     draw.fsg.selection.selections = selections
+    const last = selections.pop()
+    if (last) selectComponent(draw, last)
     this.components = selections
   }
   undo() {
