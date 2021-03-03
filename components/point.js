@@ -1,6 +1,7 @@
 'use strict'
 
 import { POINT_RADIUS, NO_ATTR } from '../common/define.js'
+import { isRightButton } from '../common/common.js'
 import { intersect, projectPointOnLine, intersectLineAndCircle, twoCirclesIntersection, pointOnScreen } from '../common/math.js'
 import { SelectableComponent, componentByNo } from './component.js'
 import { LineShape } from './line.js'
