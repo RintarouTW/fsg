@@ -41,6 +41,7 @@ import {
   lastSelectedComponent,
   getLastSelectedAngleComponents,
   selectAllSelectableComponents,
+  removeLastSelection,
 } from './selection.js'
 
 // components
@@ -151,7 +152,14 @@ export function init_module_keybinding(draw) {
         break
       case 'Backspace': // backspace : delete all selected
         {
-          doAction(draw, removeAllSelections, { draw })
+          const component = lastSelectedComponent(draw)
+          if (!hasComponent(component)) return
+          if (evt.shiftKey) {
+            doAction(draw, removeAllSelections, { draw })
+            return
+          }
+
+          doAction(draw, removeLastSelection, { draw })
         }
         break
       case 'BracketLeft': // [ : backward, shift + [ : back

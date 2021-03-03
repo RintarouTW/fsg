@@ -132,7 +132,7 @@ class DeleteAllSelectionsAction {
     detach()
     this.content = draw.parent().svg()
     this.draw = draw
-    this.selections = []
+    this.selections = [] // selections before delete
     draw.fsg.selection.selections.forEach(component => {
       this.selections.push(component.no)
       component.remove() 
@@ -149,6 +149,30 @@ export function removeAllSelections({draw}) {
   const action = new DeleteAllSelectionsAction(draw)
   return action
 }
+
+class DeleteLastSelectionAction {
+  constructor(draw) {
+    detach()
+    this.content = draw.parent().svg()
+    this.draw = draw
+    this.selections = []
+    draw.fsg.selection.selections.forEach(component => {
+      this.selections.push(component.no)
+    })
+    const component = draw.fsg.selection.selections.pop()
+    component.remove() 
+  }
+  undo() { // reconstruct
+    this.draw.fire('loadSnapshot', { content : this.content, selections: this.selections })
+  }
+}
+
+export function removeLastSelection({draw}) {
+  console.assert(draw, 'draw must exist')
+  const action = new DeleteLastSelectionAction(draw)
+  return action
+}
+
 
 // helpers
 export function getLastSelectedAppendableComponent(draw) {
