@@ -16,7 +16,7 @@
   --ui-help-border-color: #333 !important;
   --ui-help-text-color: #bbbbbb !important;
 
-  --ui-hover-stroke-color: #bbe1fa !important;
+  --ui-hover-stroke-color: #fff !important;
   --ui-selected-stroke-color: #89ceff !important;
   --ui-select-box-stroke-color: #fff !important;
   --ui-select-box-fill-color: #ffffff33 !important;
@@ -350,10 +350,6 @@ svg .cover:hover {
   cursor: pointer;
 }
 
-[fsg_shape][fsg_hover], [fsg_shape]:hover {
-  stroke: var(--ui-hover-stroke-color) !important;
-}
-
 [fsg_hover]:not([fsg_shape]) {
   stroke: var(--ui-hover-stroke-color) !important;
   stroke-width: 1.5 !important;
@@ -365,6 +361,10 @@ svg .cover:hover {
 
 [fsg_selected]:not([fsg_inspecting]) {
   stroke: var(--ui-selected-stroke-color) !important;
+}
+
+[fsg_shape][fsg_hover], [fsg_shape]:hover {
+  stroke: var(--ui-hover-stroke-color) !important;
 }
 
 .point {
