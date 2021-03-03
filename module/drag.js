@@ -75,6 +75,7 @@ export function init_module_drag(draw, click_to_add_point = true) {
       selectBox.size(0, 0)
     }
   }).on('mouseup', evt => { // console.log('draw.mouseup')
+    if (isRightButton(evt)) return
     if (draw.dragTarget) {
       draw.dragTarget.fire('dragend')
       draw.dragTarget = null

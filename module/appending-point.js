@@ -107,7 +107,7 @@ export class AppendingPinPoint {
 //
 // ref components: lines, circle
 //
-export function addAppendingPinPoint({ draw, componentRef })  {
+function addAppendingPinPoint({ draw, componentRef })  {
   console.assert(componentRef, 'componentRef must be defined')
   const element = draw.circle(POINT_RADIUS)
     .move(draw.mousePosition.x - POINT_RADIUS/2, draw.mousePosition.y - POINT_RADIUS/2)
@@ -154,7 +154,7 @@ export class AppendingIntersectPoint {
   }
 }
 
-export function addAppendingIntersectPoint({ draw, intersectPoints, refs }) {
+function addAppendingIntersectPoint({ draw, intersectPoints, refs }) {
   const distance0 = distanceOfCoords(draw.mousePosition, intersectPoints[0])
   const distance1 = distanceOfCoords(draw.mousePosition, intersectPoints[1])
   const index = (distance0 < distance1) ? 0 : 1

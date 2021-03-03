@@ -189,7 +189,7 @@ export class Component {
       label.lastEvent = 'mousedown'
       label.fire('dragstart', { dragTarget: label })
       evt.stopPropagation()
-    }).on('mouseup', () => {
+    }).on('mouseup', evt => {
       if (isRightButton(evt)) return // reserved for menu(do nothing so far)
       label.lastEvent = 'mouseup'
       label.fire('dragend')
