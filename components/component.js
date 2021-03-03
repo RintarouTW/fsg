@@ -130,16 +130,21 @@ export class Component {
   }
   /// Inspectable Attribute Inerface
   getAttributes() {
-    return ['id', 'class', 'cx', 'cy', 'text', 'fill', 'stroke']
+    return ['id', 'class', 'cx', 'cy', 'fill', 'stroke', 'text']
   }
   getAttribute(attributeName) {
     if (attributeName == 'text') return this.getText()
     return this.element.attr(attributeName)
   }
   setAttribute(attributeName, value) {
+    const attributes = this.getAttributes()
+    if (!attributes.includes(attributeName)) {
+      console.warn(`${this} doesn't contain attribut '${attributeName}'`)
+      return
+    }
     if (attributeName == 'text') {
-      attributeName = 'label' // use 'label' instead 'text' in element attribute
-      this.element.attr(attributeName, value)
+      // use 'label' instead 'text' in element attribute
+      this.element.attr('label', value)
       this.setText(value)
       return
     }
@@ -284,12 +289,11 @@ export class SelectableComponent extends Component {
   isSelected() {
     return this.element.attr(FSG_SELECTED_ATTR)
   }
-  // selection looks only, called by selection module
+  /// select interface, update attribute only, called by selection module
   select() {
     this.element.attr(FSG_SELECTED_ATTR, true)
   }
   unselect() {
-    this.element.attr(FSG_SELECTED_ATTR, null)
-      .attr(FSG_HOVER_ATTR, null)
+    this.element.attr(FSG_SELECTED_ATTR, null).attr(FSG_HOVER_ATTR, null)
   }
 }
