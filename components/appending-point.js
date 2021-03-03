@@ -10,7 +10,30 @@ import {
   twoCirclesIntersection
 } from '../common/math.js'
 import { componentByNo } from './component.js'
+import { addIntersectPoint } from './point.js'
+import { addPinPoint } from './draggable-point.js'
 import { LineShape } from './line.js'
+
+export function init_appending_point(draw) {
+  draw.endAppendingPoint = evt => {
+    if (!draw.appendingPoint) return false
+    evt.preventDefault()
+    evt.stopPropagation()
+    const component = draw.appendingPoint.component
+    const action = (component instanceof AppendingPinPoint) ? addPinPoint : addIntersectPoint
+    const pointInfo = component.done()
+    draw.fsg.history.doAction(draw, action, pointInfo)
+    // don't set lastEvent to 'mousedown', so it won't add new point on the next mouse up.
+    draw.appendingPoint = null
+    return true
+  }
+  draw.cancelAppendingPoint = () => {
+    const component = draw.appendingPoint.component
+    if (component instanceof AppendingPinPoint) 
+      component.targetComponent.endAppendMode(draw) // target component end appending mode
+    component.remove()
+  }
+}
 
 ///
 /// AppendingPinPoint is not a component

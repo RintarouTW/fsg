@@ -2,6 +2,17 @@
 
 import { componentByNo } from '../components/component.js'
 
+let _copiedStyle = {}
+
+export function copyStyle(component) {
+  _copiedStyle = {
+    stroke : component.getAttribute('stroke'),
+    fill : component.getAttribute('fill'),
+    dashed : hasDashedClass(component.element)
+  }
+  return _copiedStyle
+}
+
 ///
 /// Styles
 ///

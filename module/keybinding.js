@@ -51,7 +51,7 @@ import { Shape } from '../components/shape.js'
 import { addPolygon, addCircle, addAngle, FillableShape } from '../components/fillable.js'
 import { addAngleMarker, addLengthMarker } from '../components/measure.js'
 import { addLaTeX } from '../components/latex.js'
-import { chooseIntersectPoint, AppendingPinPoint } from '../components/appending-point.js'
+import { chooseIntersectPoint } from '../components/appending-point.js'
 
 let _keydownHandler, _keyupHandler
 
@@ -116,13 +116,8 @@ export function init_module_keybinding(draw) {
     if (!draw.ready) return // don't responde before system ready
 
     if (draw.appendingPoint) {
-      if (evt.code == 'Escape') { // escape from special modes
-        const component = draw.appendingPoint.component
-        if (component instanceof AppendingPinPoint) 
-          component.targetComponent.endAppendMode(draw) // target component end appending mode
-        component.remove()
-        return
-      }
+      // escape from appending modes
+      if (evt.code == 'Escape') draw.cancelAppendingPoint()
       return
     }
 

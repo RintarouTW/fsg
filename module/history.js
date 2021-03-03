@@ -6,6 +6,7 @@ export function init_module_history(draw) {
   draw.fsg.history = {}
   draw.fsg.history.history = []
   draw.fsg.history.redo_list = []
+  draw.fsg.history.doAction = doAction
 }
 
 export function undo(draw) {
