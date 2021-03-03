@@ -15,7 +15,8 @@ import {
   changeStyle,
   changeClass,
   hasDashedClass,
-  removeAllDashedClass
+  removeAllDashedClass,
+  copyStyle
 } from './style.js'
 import {
   altColorPicker,
@@ -229,8 +230,14 @@ export function init_module_keybinding(draw) {
           } 
           if (evt.metaKey) { // cmd + c : copy to clipboard
             const content = svgDocument(draw) 
-            navigator.clipboard.writeText(content).then(() => showHint('Copied!') )
+            navigator.clipboard.writeText(content).then(() => showHint('Copied to the clipboard!') )
             return 
+          }
+          if (evt.ctrlKey) { // ctrl + c : copy style
+            const component = lastSelectedComponent(draw)
+            if ((!component || !(component instanceof Shape)) && showHint('Select a shape first')) return
+            copyStyle(component)
+            return
           }
           // c : add circle
           if (!has2Points(points)) return

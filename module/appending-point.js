@@ -170,7 +170,7 @@ export function chooseIntersectPoint(draw, intersectableComponents) {
     if (intersectableComponents[1] instanceof LineShape) { // intersect two lines
       const [l1, l2] = intersectableComponents
       const coord = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
-      doAction(draw, addIntersectPoint, {draw, coord, index : 0, refs : [l1.no, l2.no]})
+      draw.fsg.history.doAction(draw, addIntersectPoint, {draw, coord, index : 0, refs : [l1.no, l2.no]})
     } else { // line + circle
       const [line, circle] = intersectableComponents
       const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)

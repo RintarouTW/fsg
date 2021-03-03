@@ -235,10 +235,14 @@ function init_fields(draw) {
     field.on('input', evt => { // when user edit the field, apply to the inspecting element.
 
       const attributeName = evt.target.id.substr(6)
-      let value = checkColor(evt.target.value)
-      if (value != 'none') {
-        if (attributeName == 'fill') _lastVisibleFillColor = value
-        else _lastVisibleStrokeColor = value
+
+      let value = evt.target.value
+      if (['fill', 'stroke'].includes(attributeName)) {
+        value = checkColor(evt.target.value)
+        if (value != 'none') {
+          if (attributeName == 'fill') _lastVisibleFillColor = value
+          else _lastVisibleStrokeColor = value
+        }
       }
 
       try { // console.log(attribute_name, value)

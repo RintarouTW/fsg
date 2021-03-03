@@ -10,7 +10,12 @@ export function copyStyle(component) {
     fill : component.getAttribute('fill'),
     dashed : hasDashedClass(component.element)
   }
+  console.log(_copiedStyle)
   return _copiedStyle
+}
+
+export function pasteStyle(refs) {
+
 }
 
 ///
