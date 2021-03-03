@@ -54,7 +54,7 @@ export class Shape extends SelectableComponent {
 
     cover?.on('mousedown', evt => { // selectable by mousedown
       if (isRightButton(evt)) return // reserved for menu(do nothing so far)
-      if (draw.endAppendingPoint(evt)) return
+      if (window.FSG_BUILDER && draw.endAppendingPoint(evt)) return
       this.toggleSelected()
       evt.stopPropagation()
     }).on('mouseenter', () => {

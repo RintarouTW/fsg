@@ -9,7 +9,6 @@ import { pointOnScreen, distanceOfPoints, distanceOfCoords } from '../common/mat
 
 import { componentByNo } from './component.js'
 import { Shape, putBehindPoints } from './shape.js'
-import { addAppendingPinPoint } from './appending-point.js'
 import { useCurrentColors } from '../module/color_picker.js'
 
 function coverForCircleElement(draw, element) {
@@ -56,7 +55,7 @@ export class Circle extends FillableShape {
   toggleAppendMode(draw) {
     if (!this.isAppending) {
       const componentRef = this.no
-      this.isAppending = addAppendingPinPoint({draw, componentRef})
+      this.isAppending = draw.addAppendingPinPoint({draw, componentRef})
       return
     }
     this.endAppendMode()

@@ -26,11 +26,11 @@ import { init_ui_axis, buttonClass, opening_animation, showHint } from './module
 import { init_module_color_picker, enableColorPicker } from './module/color_picker.js'
 import { init_module_code_editor } from './module/code_editor.js'
 import { init_module_preference } from './module/preference.js'
+import { init_appending_point_module } from './module/appending-point.js'
 
 import { init_module_marker } from './module/marker.js'
 // import { init_filter } from './module/filter.js' // not used yet
 import { init_component_system, deinit_component_system, componentByNo } from './components/component.js'
-import { init_appending_point } from './components/appending-point.js'
 import { reconstruct_components } from './module/file.js'
 import { init_module_script, findUserScript, execute_user_script } from './module/script.js'
 import { getCode } from './module/server.js'
@@ -122,7 +122,7 @@ function newFSG() {
   init_module_history(draw)
   init_module_selection(draw)
   init_component_system(draw)
-  init_appending_point(draw)
+  init_appending_point_module(draw)
   init_module_drag(draw)
 
   init_module_inspector(draw)
@@ -185,7 +185,7 @@ export function loadFSG(content) {
   init_module_history(draw)
   init_module_selection(draw)
   init_component_system(draw)
-  init_appending_point(draw)
+  init_appending_point_module(draw)
   init_module_drag(draw)
 
   init_module_keybinding(draw)

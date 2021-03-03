@@ -51,7 +51,7 @@ import { Shape } from '../components/shape.js'
 import { addPolygon, addCircle, addAngle, FillableShape } from '../components/fillable.js'
 import { addAngleMarker, addLengthMarker } from '../components/measure.js'
 import { addLaTeX } from '../components/latex.js'
-import { chooseIntersectPoint } from '../components/appending-point.js'
+import { chooseIntersectPoint } from './appending-point.js'
 
 let _keydownHandler, _keyupHandler
 

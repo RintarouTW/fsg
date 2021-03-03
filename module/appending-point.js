@@ -9,12 +9,13 @@ import {
   projectPointOnLine,
   twoCirclesIntersection
 } from '../common/math.js'
-import { componentByNo } from './component.js'
-import { addIntersectPoint } from './point.js'
-import { addPinPoint } from './draggable-point.js'
-import { LineShape } from './line.js'
+import { componentByNo } from '../components/component.js'
+import { addIntersectPoint } from '../components/point.js'
+import { addPinPoint } from '../components/draggable-point.js'
+import { LineShape } from '../components/line.js'
 
-export function init_appending_point(draw) {
+export function init_appending_point_module(draw) {
+  draw.addAppendingPinPoint = addAppendingPinPoint
   draw.endAppendingPoint = evt => {
     if (!draw.appendingPoint) return false
     evt.preventDefault()

@@ -265,7 +265,7 @@ export class SelectableComponent extends Component {
       // Selection
       element.on('mousedown', evt => {
         if (isRightButton(evt)) return // reserved for menu(do nothing so far)
-        if (draw.endAppendingPoint(evt)) return
+        if (window.FSG_BUILDER && draw.endAppendingPoint(evt)) return
         element.lastEvent = 'mousedown'
         evt.stopPropagation()
       }).on('mouseup', evt => {

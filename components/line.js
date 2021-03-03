@@ -5,7 +5,6 @@ import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { Shape, putBehindPoints } from './shape.js'
 import { setStrokeColor } from '../module/color_picker.js'
-import { addAppendingPinPoint } from './appending-point.js'
 
 export function coverForLineElement(draw, element) {
   if (window.FSG_BUILDER) {
@@ -55,7 +54,7 @@ export class LineShape extends Shape {
   toggleAppendMode(draw) {
     if (!this.isAppending) {
       const componentRef = this.no
-      this.isAppending = addAppendingPinPoint({draw, componentRef})
+      this.isAppending = draw.addAppendingPinPoint({draw, componentRef})
       return
     } 
     this.endAppendMode()
