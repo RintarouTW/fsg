@@ -13,7 +13,6 @@ import {
 
 import { componentByNo } from '../components/component.js'
 import { getSelectedComponents } from './selection.js'
-import { doAction } from './history.js'
 import { changeStyle } from './style.js'
 import { attachColorPicker } from './color_picker.js'
 
@@ -200,7 +199,7 @@ export function init_module_inspector(draw) {
       oldValues.push(element.orgValue)
       element.orgValue = null
     })
-    doAction(changeStyle, {draw, refs, attributeName, oldValues, newValue})
+    draw.fsg.history.doAction(changeStyle, {draw, refs, attributeName, oldValues, newValue})
 
     if (!_isColorFieldFocused) { // set the origianl selected components back to selected state
       resetToSelected(draw)

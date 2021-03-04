@@ -7,7 +7,6 @@ import { addPoint, PinPoint } from '../components/draggable-point.js'
 import { InvisiblePoint } from '../components/invisible-point.js'
 import { LaTeX } from '../components/latex.js'
 
-import { doAction } from './history.js'
 import { RuntimeMenu, BuilderMenu } from './menu.js'
 
 function moveElementByOffset(element, offset) {
@@ -88,7 +87,7 @@ export function init_module_drag(draw, click_to_add_point = true) {
     if (click_to_add_point) {
       let coord = draw.point(evt.clientX, evt.clientY)
       coord = snapTo(coord)
-      doAction(addPoint, {draw, coord})
+      draw.fsg.history.doAction(addPoint, {draw, coord})
     }
   }).on('mousemove', evt => {
     draw.lastEvent = 'mousemove'
