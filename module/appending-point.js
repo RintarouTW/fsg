@@ -23,7 +23,7 @@ export function init_appending_point_module(draw) {
     const component = draw.appendingPoint.component
     const action = (component instanceof AppendingPinPoint) ? addPinPoint : addIntersectPoint
     const pointInfo = component.done()
-    draw.fsg.history.doAction(draw, action, pointInfo)
+    draw.fsg.history.doAction(action, pointInfo)
     // don't set lastEvent to 'mousedown', so it won't add new point on the next mouse up.
     draw.appendingPoint = null
     return true
@@ -170,7 +170,7 @@ export function chooseIntersectPoint(draw, intersectableComponents) {
     if (intersectableComponents[1] instanceof LineShape) { // intersect two lines
       const [l1, l2] = intersectableComponents
       const coord = intersect(l1.startPoint(), l1.direction(), l2.startPoint(), l2.direction())
-      draw.fsg.history.doAction(draw, addIntersectPoint, {draw, coord, index : 0, refs : [l1.no, l2.no]})
+      draw.fsg.history.doAction(addIntersectPoint, {draw, coord, index : 0, refs : [l1.no, l2.no]})
     } else { // line + circle
       const [line, circle] = intersectableComponents
       const intersectPoints = intersectLineAndCircle(line.startPoint(), line.direction(), circle.center(), circle.radius)

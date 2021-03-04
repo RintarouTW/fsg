@@ -53,12 +53,12 @@ export class DraggablePoint extends SelectablePoint {
             newValues.push({ x: point.cx(), y: point.cy() })
             point.attr(FSG_DRAGGING_ATTR, null)
           }) 
-          doAction(draw, changeLocation, {draw, components, oldValues, newValues})
+          doAction(changeLocation, {draw, components, oldValues, newValues})
         } else {
           const components = [element.component.no]
           const oldValues = [{ x: draw.dragStart.x, y: draw.dragStart.y }]
           const newValues = [{ x: element.cx(), y: element.cy() }]
-          doAction(draw, changeLocation, {draw, components, oldValues, newValues})
+          doAction(changeLocation, {draw, components, oldValues, newValues})
           element.attr(FSG_DRAGGING_ATTR, null)
         }
 
@@ -142,7 +142,7 @@ export class PinPoint extends DraggablePoint {
       const components = [element.component.no]
       const oldValues = [{ x: draw.dragStart.x, y: draw.dragStart.y }]
       const newValues = [{ x: element.cx(), y: element.cy() }]
-      doAction(draw, changeLocation, {draw, components, oldValues, newValues})
+      doAction(changeLocation, {draw, components, oldValues, newValues})
 
       element.attr(FSG_DRAGGING_ATTR, null)
       this.calcState()

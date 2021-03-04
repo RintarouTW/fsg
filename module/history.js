@@ -30,12 +30,13 @@ export function redo(draw) {
   // console.log('redo redo_list = ', redo_list)
 }
 
-export function doAction(draw, cmd, args) {
+export function doAction(cmd, args) {
+  const { draw } = args
   const history = draw.fsg.history
   const action = cmd(args)
   action.redo = () => {
     if(action.no) args.no = action.no
-    doAction(draw, cmd, args)
+    doAction(cmd, args)
   }
   history.history.push(action)
   // console.log('history =', history)

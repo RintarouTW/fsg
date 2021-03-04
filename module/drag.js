@@ -88,7 +88,7 @@ export function init_module_drag(draw, click_to_add_point = true) {
     if (click_to_add_point) {
       let coord = draw.point(evt.clientX, evt.clientY)
       coord = snapTo(coord)
-      doAction(draw, addPoint, {draw, coord})
+      doAction(addPoint, {draw, coord})
     }
   }).on('mousemove', evt => {
     draw.lastEvent = 'mousemove'

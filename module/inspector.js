@@ -200,7 +200,7 @@ export function init_module_inspector(draw) {
       oldValues.push(element.orgValue)
       element.orgValue = null
     })
-    doAction(draw, changeStyle, {draw, refs, attributeName, oldValues, newValue})
+    doAction(changeStyle, {draw, refs, attributeName, oldValues, newValue})
 
     if (!_isColorFieldFocused) { // set the origianl selected components back to selected state
       resetToSelected(draw)

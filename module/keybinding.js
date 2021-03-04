@@ -16,7 +16,9 @@ import {
   changeClass,
   hasDashedClass,
   removeAllDashedClass,
-  copyStyle
+  copyStyle,
+  isCopiedStyle,
+  pasteStyle
 } from './style.js'
 import {
   altColorPicker,
@@ -84,7 +86,7 @@ function setDashedClass(evt, draw, className) {
       removeAllDashedClass(element)
       return component.no
     })
-    doAction(draw, changeClass, {draw, refs, oldValues, newValue})
+    doAction(changeClass, {draw, refs, oldValues, newValue})
     return
   }
 
@@ -96,7 +98,7 @@ function setDashedClass(evt, draw, className) {
   const refs = [component.no]
   const oldValues = [element.attr('class')]
   removeAllDashedClass(element)
-  doAction(draw, changeClass, {draw, refs, oldValues, newValue})
+  doAction(changeClass, {draw, refs, oldValues, newValue})
 }
 
 export function init_module_keybinding(draw) {
@@ -155,11 +157,11 @@ export function init_module_keybinding(draw) {
           const component = lastSelectedComponent(draw)
           if (!hasComponent(component)) return
           if (evt.shiftKey) {
-            doAction(draw, removeAllSelections, { draw })
+            doAction(removeAllSelections, { draw })
             return
           }
 
-          doAction(draw, removeLastSelection, { draw })
+          doAction(removeLastSelection, { draw })
         }
         break
       case 'BracketLeft': // [ : backward, shift + [ : back
@@ -199,7 +201,7 @@ export function init_module_keybinding(draw) {
       case 'KeyA':
         {
           if (evt.metaKey) { // cmd + a : select all
-            doAction(draw, selectAllSelectableComponents, {draw})
+            doAction(selectAllSelectableComponents, {draw})
             return
           } 
           if (evt.shiftKey) { // shift + a : add angle
@@ -207,7 +209,7 @@ export function init_module_keybinding(draw) {
             if (!has3Points(points)) return
             points = [points[0], points[1], points[2]] // use only the last 3 points
             refs = points.map(p => p.attr(NO_ATTR))
-            doAction(draw, addAngle, {draw, refs})
+            doAction(addAngle, {draw, refs})
             return
           }
           const component = getLastSelectedAppendableComponent(draw)
@@ -217,7 +219,7 @@ export function init_module_keybinding(draw) {
           }
           // a : add point
           const coord = draw.mousePosition
-          doAction(draw, addPoint, {draw, coord})
+          doAction(addPoint, {draw, coord})
         }
         break
       case 'KeyB':
@@ -227,7 +229,7 @@ export function init_module_keybinding(draw) {
           if (!has3Points(points)) return
           points = [points[0], points[1], points[2]] // use only the last 3 points
           refs = points.map(p => p.attr(NO_ATTR))
-          doAction(draw, addBisectorLine, {draw, refs})
+          doAction(addBisectorLine, {draw, refs})
         }
         break
       case 'KeyC':
@@ -249,15 +251,15 @@ export function init_module_keybinding(draw) {
           }
           // c : add circle
           if (!has2Points(points)) return
-          doAction(draw, addCircle, {draw, refs})
+          doAction(addCircle, {draw, refs})
         }
         break
       case 'KeyD':
         {
           if (numberOfSelections(draw) > 0) {
             (evt.metaKey) 
-              ? doAction(draw, unselectAllSelections, draw) // cmd + d : deselect all
-              : doAction(draw, deselectLastSelection, draw) // d : deselect the last one
+              ? doAction(unselectAllSelections, draw) // cmd + d : deselect all
+              : doAction(deselectLastSelection, draw) // d : deselect the last one
           }
         }
         break
@@ -278,12 +280,12 @@ export function init_module_keybinding(draw) {
             const firstRef = refs[0]
             const lastRef = refs[points.length - 1]
             refs = [lastRef, firstRef]
-            doAction(draw, addEdge, {draw, refs})
+            doAction(addEdge, {draw, refs})
             return
           }
           // e : add edge
           if (!has2Points(points)) return
-          doAction(draw, addEdge, {draw, refs})
+          doAction(addEdge, {draw, refs})
         }
         break
       case 'KeyF':
@@ -301,7 +303,7 @@ export function init_module_keybinding(draw) {
             const oldValues = []
             components.forEach(component => oldValues.push(component.getAttribute('fill')) )
             refs = components.map(component => component.no)
-            doAction(draw, changeStyle, {draw, refs, attributeName, oldValues, newValue})
+            doAction(changeStyle, {draw, refs, attributeName, oldValues, newValue})
             return
           }
 
@@ -313,7 +315,7 @@ export function init_module_keybinding(draw) {
           if (oldValue != 'none') return // alread filled
           refs = [component.no]
           const oldValues = [oldValue]
-          doAction(draw, changeStyle, {draw, refs, attributeName, oldValues, newValue})
+          doAction(changeStyle, {draw, refs, attributeName, oldValues, newValue})
         }
         break
       case 'KeyH':
@@ -322,14 +324,14 @@ export function init_module_keybinding(draw) {
             let components = getSelectedComponents(draw)
             if (!hasComponent(components[0])) return
             refs = components.map(component => component.no)
-            doAction(draw, toggleAttribute, {draw, refs, attributeName : FSG_HIDDEN_ATTR})
+            doAction(toggleAttribute, {draw, refs, attributeName : FSG_HIDDEN_ATTR})
             return
           }
           // h : hide the last selected
           const component = lastSelectedComponent(draw)
           if (!hasComponent(component)) return
           refs = [component.no]
-          doAction(draw, toggleAttribute, {draw, refs, attributeName : FSG_HIDDEN_ATTR})
+          doAction(toggleAttribute, {draw, refs, attributeName : FSG_HIDDEN_ATTR})
         }
         break
       case 'KeyI':
@@ -353,7 +355,7 @@ export function init_module_keybinding(draw) {
       case 'KeyL':
         {
           // l : add line
-          if (has2Points(points)) doAction(draw, addLine, {draw, refs})
+          if (has2Points(points)) doAction(addLine, {draw, refs})
         }
         break
       case 'KeyM':
@@ -363,18 +365,18 @@ export function init_module_keybinding(draw) {
             if (!has2Points(points)) return
             if (points.length == 2) { // measure length between 2 points
               refs = points.map(p => p.attr(NO_ATTR))
-              doAction(draw, addLengthMarker, {draw, refs})
+              doAction(addLengthMarker, {draw, refs})
               return
             }
             // measure angle of 3 points
             points = [points[0], points[1], points[2]] // use only the last 3 points
             refs = points.map(p => p.attr(NO_ATTR))
-            doAction(draw, addAngleMarker, {draw, refs})
+            doAction(addAngleMarker, {draw, refs})
             return
           }
           // m : mid point
           if (!has2Points(points)) return
-          doAction(draw, addMidPoint, {draw, refs}) // add mid point between 2 points
+          doAction(addMidPoint, {draw, refs}) // add mid point between 2 points
         }
         break
       case 'KeyN':
@@ -391,7 +393,7 @@ export function init_module_keybinding(draw) {
               oldValues.push(component.getAttribute('fill'))
             })
             refs = components.map(component => component.no)
-            doAction(draw, changeStyle, {draw, refs, attributeName, oldValues, newValue})
+            doAction(changeStyle, {draw, refs, attributeName, oldValues, newValue})
             return
           }
 
@@ -403,7 +405,7 @@ export function init_module_keybinding(draw) {
           if (oldValue == 'none') return // already none
           refs = [component.no]
           const oldValues = [oldValue]
-          doAction(draw, changeStyle, {draw, refs, attributeName, oldValues, newValue})
+          doAction(changeStyle, {draw, refs, attributeName, oldValues, newValue})
         }
         break
       case 'KeyP':
@@ -412,7 +414,7 @@ export function init_module_keybinding(draw) {
           points = getSelectedSelectablePointElements(draw)
           if (!has3Points(points)) return
           refs = points.map(p => p.attr(NO_ATTR))
-          doAction(draw, addPolygon, {draw, refs})
+          doAction(addPolygon, {draw, refs})
         }
         break
       case 'KeyO':
@@ -430,7 +432,7 @@ export function init_module_keybinding(draw) {
             SVG('#reloadButton').node.click()
           } else if (!evt.metaKey) { // prevent cmd + r
             if (!has2Points(points)) return
-            doAction(draw, addRay, {draw, refs}) // r : add ray
+            doAction(addRay, {draw, refs}) // r : add ray
           }
         }
         break
@@ -451,7 +453,7 @@ export function init_module_keybinding(draw) {
             const components = getSelectedShapes(draw)
             if (!hasComponent(components[0])) return
             refs = components.map(component => component.no)
-            doAction(draw, toggleSolid, {draw, refs})
+            doAction(toggleSolid, {draw, refs})
             return
           }
 
@@ -459,7 +461,7 @@ export function init_module_keybinding(draw) {
           const component = lastSelectedComponent(draw)
           if ((!component || !(component instanceof Shape)) && showHint('Select a shape first!')) return
           refs = [component.no]
-          doAction(draw, toggleSolid, {draw, refs})
+          doAction(toggleSolid, {draw, refs})
         }
         break
       case 'KeyT': // text
@@ -471,16 +473,24 @@ export function init_module_keybinding(draw) {
               return
             }
             const refs = [target.no]
-            doAction(draw, addLaTeX, {draw, refs})
+            doAction(addLaTeX, {draw, refs})
           } else if (!evt.altKey) { // t: add LaTeX
-            doAction(draw, addLaTeX, {draw})
+            doAction(addLaTeX, {draw})
           }
           editField('#field_text')
         }
         break
       case 'KeyV':
-        { // v : add vector
-          if (has2Points(points)) doAction(draw, addVector, {draw, refs})
+        { 
+          if (evt.ctrlKey) { // ctrl + v: paste style
+            if (!isCopiedStyle() && showHint('Copy a style first!')) return
+            const component = lastSelectedComponent(draw)
+            if ((!component || !(component instanceof Shape)) && showHint('Can only paste the style to a shape')) return
+            pasteStyle({draw, refs: [component.no]})
+            return
+          }
+          // v : add vector
+          if (has2Points(points)) doAction(addVector, {draw, refs})
         }
         break
       case 'Equal':
@@ -493,9 +503,9 @@ export function init_module_keybinding(draw) {
           const [ line, point ] = lineAndPoint
           const refs = [line.no, point.no]
           if (evt.shiftKey) { // shift + = (+): Perp Line
-            doAction(draw, addPerpLine, {draw, refs})
+            doAction(addPerpLine, {draw, refs})
           } else { // = : Parallel Line
-            doAction(draw, addParallelLine, {draw, refs})
+            doAction(addParallelLine, {draw, refs})
           }
         }
         break
@@ -511,7 +521,7 @@ export function init_module_keybinding(draw) {
           const coord = projectPointOnLine(point.center(), line.startPoint(), line.direction())
           const refs = [line.no, point.no]
           const index = 0
-          doAction(draw, addIntersectPoint, {draw, coord, index, refs})
+          doAction(addIntersectPoint, {draw, coord, index, refs})
         }
         break
       case 'KeyU':

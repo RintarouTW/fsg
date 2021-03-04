@@ -2,7 +2,7 @@
 
 import { componentByNo } from '../components/component.js'
 
-let _copiedStyle = {}
+let _copiedStyle
 
 export function copyStyle(component) {
   _copiedStyle = {
@@ -10,12 +10,24 @@ export function copyStyle(component) {
     fill : component.getAttribute('fill'),
     dashed : hasDashedClass(component.element)
   }
-  console.log(_copiedStyle)
   return _copiedStyle
 }
 
-export function pasteStyle(refs) {
+export function isCopiedStyle() {
+  return _copiedStyle
+}
 
+export function pasteStyle({draw, refs}) {
+  if (!_copiedStyle) return 
+  refs.forEach(no => {
+    const component = componentByNo(draw, no)
+    if (_copiedStyle.stroke) 
+      component.setAttribute('stroke', _copiedStyle.stroke)
+    if (_copiedStyle.fill) 
+      component.setAttribute('fill', _copiedStyle.fill)
+    // if (_copiedStyle.dashed) 
+      // component.setAttribute('fill', _copiedStyle.fill)
+  })
 }
 
 ///
