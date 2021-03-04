@@ -7,6 +7,7 @@ export function init_module_history(draw) {
   draw.fsg.history.history = []
   draw.fsg.history.redo_list = []
   draw.fsg.history.doAction = doAction
+  draw.fsg.history.changeLocation = changeLocation
 }
 
 export function undo(draw) {

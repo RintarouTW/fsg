@@ -6,7 +6,6 @@ import { lengthOfVector, projectPointOnLine } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { SelectablePoint } from './point.js'
 import { setStrokeColor } from '../module/color_picker.js'
-import { doAction, changeLocation } from '../module/history.js'
 
 ///
 /// DraggablePoint
@@ -14,6 +13,7 @@ import { doAction, changeLocation } from '../module/history.js'
 export class DraggablePoint extends SelectablePoint {
   constructor({draw, element, refs, override}) {
     if (!override) {
+      const { doAction, changeLocation } = draw.fsg.history
       element.on('mousedown', evt => {
         if (isRightButton(evt)) return // reserved for menu(do nothing so far)
         element.lastEvent = 'mousedown'
