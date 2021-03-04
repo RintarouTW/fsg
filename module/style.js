@@ -115,7 +115,6 @@ class ChangeClassAction {
     for (let i = 0; i < refs.length; i++) {
       const component = componentByNo(draw, refs[i])
       component.element.addClass(newValue).fire('update')
-      SVG('#field_class').fire('change')
     }
     this.state = { draw, refs, oldValues }
   }
@@ -125,7 +124,6 @@ class ChangeClassAction {
       const component = componentByNo(draw, refs[i])
       const oldValue = oldValues[i]
       component.element.attr('class', oldValue).fire('update')
-      SVG('#field_class').fire('change')
     }
   }
 }
@@ -135,31 +133,44 @@ export function changeClass({draw, refs, oldValues, newValue}) {
 }
 
 ///
-/// ChangeStyleAction
+/// ChangeAttributesAction
 ///
 
-class ChangeStyleAction {
-  constructor(draw, refs, attributeName, oldValues, newValue) {
+class ChangeAttributesAction{
+  constructor(draw, refs, attributeNames, oldValues, newValue) {
     for (let i = 0; i < refs.length; i++) {
       const component = componentByNo(draw, refs[i])
-      component.setAttribute(attributeName, newValue)
+      attributeNames.forEach(attributeName => {
+        component.setAttribute(attributeName, newValue[attributeName])
+      })
       component.element.fire('update')
-      SVG('#field_' + attributeName).fire('change')
     }
-    this.state = { draw, refs, attributeName, oldValues }
+    this.state = { draw, refs, attributeNames, oldValues }
   }
   undo() {
-    const { draw, refs, oldValues, attributeName } = this.state
+    const { draw, refs, oldValues, attributeNames } = this.state
     for (let i = 0; i < refs.length; i++) {
       const component = componentByNo(draw, refs[i])
       const oldValue = oldValues[i]
-      component.setAttribute(attributeName, oldValue)
+      attributeNames.forEach(attributeName => {
+        component.setAttribute(attributeName, oldValue[attributeName])
+      })
       component.element.fire('update')
-      SVG('#field_' + attributeName).fire('change')
     }
   }
 }
 
-export function changeStyle({draw, refs, attributeName, oldValues, newValue}) {
-  return new ChangeStyleAction(draw, refs, attributeName, oldValues, newValue)
+export function changeStyle({draw, refs, newValue}) {
+  console.assert(newValue, 'newValue must be defined')
+  const oldValues = []
+  const attributeNames = Object.keys(newValue)
+  refs.forEach(no => {
+    const component = componentByNo(draw, no)
+    attributeNames.forEach(attributeName => {
+      const oldValue = {}
+      oldValue[attributeName] = component.getAttribute(attributeName)
+      oldValues.push(oldValue)
+    })
+  })
+  return new ChangeAttributesAction(draw, refs, attributeNames, oldValues, newValue)
 }

@@ -295,15 +295,14 @@ export function init_module_keybinding(draw) {
             return
           }
           const attributeName = whichColorField()
-          const newValue = (attributeName == 'fill') ? lastVisibleFillColor() : lastVisibleStrokeColor()
+          const newValue = {}
+          newValue[attributeName] = (attributeName == 'fill') ? lastVisibleFillColor() : lastVisibleStrokeColor()
 
           if (evt.shiftKey) { // shift + f: fill/stroke color of all fillable selected components
             const components = getSelectedFillableShapes(draw)
             if (!components[0] && showHint('Select one circle or polygon first!')) return
-            const oldValues = []
-            components.forEach(component => oldValues.push(component.getAttribute('fill')) )
             refs = components.map(component => component.no)
-            doAction(changeStyle, {draw, refs, attributeName, oldValues, newValue})
+            doAction(changeStyle, {draw, refs, newValue})
             return
           }
 
@@ -314,8 +313,7 @@ export function init_module_keybinding(draw) {
           const oldValue = component.getAttribute('fill')
           if (oldValue != 'none') return // alread filled
           refs = [component.no]
-          const oldValues = [oldValue]
-          doAction(changeStyle, {draw, refs, attributeName, oldValues, newValue})
+          doAction(changeStyle, {draw, refs, newValue})
         }
         break
       case 'KeyH':
@@ -382,18 +380,15 @@ export function init_module_keybinding(draw) {
       case 'KeyN':
         { 
           const attributeName = whichColorField()
-          const newValue = 'none'
+          const newValue = {}
+          newValue[attributeName] = 'none'
 
           // shift + f: fill/stroke none to all fillable selected components
           if (evt.shiftKey) {
             let components = getSelectedFillableShapes(draw)
             if (!components[0] && showHint('Select one circle or polygon first!')) return
-            const oldValues = []
-            components.forEach(component => {
-              oldValues.push(component.getAttribute('fill'))
-            })
             refs = components.map(component => component.no)
-            doAction(changeStyle, {draw, refs, attributeName, oldValues, newValue})
+            doAction(changeStyle, {draw, refs, newValue})
             return
           }
 
@@ -404,8 +399,7 @@ export function init_module_keybinding(draw) {
           const oldValue = component.getAttribute('fill')
           if (oldValue == 'none') return // already none
           refs = [component.no]
-          const oldValues = [oldValue]
-          doAction(changeStyle, {draw, refs, attributeName, oldValues, newValue})
+          doAction(changeStyle, {draw, refs, newValue})
         }
         break
       case 'KeyP':
