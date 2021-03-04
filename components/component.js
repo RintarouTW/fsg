@@ -4,6 +4,7 @@ import {
   NO_ATTR,
   REFS_ATTR,
   OF_ATTR,
+  TEXT_ATTR,
   DEFAULT_LABEL_OFFSET_X,
   DEFAULT_LABEL_OFFSET_Y,
   CLASS_FSG_UI_SELECT_BOX,
@@ -130,10 +131,10 @@ export class Component {
   }
   /// Inspectable Attribute Inerface
   getAttributes() {
-    return ['id', 'class', 'cx', 'cy', 'fill', 'stroke', 'text']
+    return ['id', 'class', 'cx', 'cy', TEXT_ATTR]
   }
   getAttribute(attributeName) {
-    if (attributeName == 'text') return this.getText()
+    if (attributeName == TEXT_ATTR) return this.getText()
     return this.element.attr(attributeName)
   }
   setAttribute(attributeName, value) {
@@ -142,7 +143,7 @@ export class Component {
       console.warn(`${this} doesn't contain attribut '${attributeName}'`)
       return
     }
-    if (attributeName == 'text') {
+    if (attributeName == TEXT_ATTR) {
       // use 'label' instead 'text' in element attribute
       this.element.attr('label', value)
       this.setText(value)

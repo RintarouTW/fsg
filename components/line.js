@@ -1,6 +1,6 @@
 'use strict'
 
-import { NO_ATTR, FSG_SHAPE_ATTR } from '../common/define.js'
+import { NO_ATTR, FSG_SHAPE_ATTR, TEXT_ATTR, FSG_STROKE_TYPE_ATTR } from '../common/define.js'
 import { clipping, pointOnScreen } from '../common/math.js'
 import { componentByNo } from './component.js'
 import { Shape, putBehindPoints } from './shape.js'
@@ -60,7 +60,7 @@ export class LineShape extends Shape {
     this.endAppendMode()
   }
   getAttributes() {
-    return ['id', 'class', 'cx', 'cy', 'text', 'stroke']
+    return ['id', 'class', 'cx', 'cy', 'stroke', FSG_STROKE_TYPE_ATTR, TEXT_ATTR]
   }
 }
 

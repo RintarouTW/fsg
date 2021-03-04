@@ -166,11 +166,16 @@ export function changeStyle({draw, refs, newValue}) {
   const attributeNames = Object.keys(newValue)
   refs.forEach(no => {
     const component = componentByNo(draw, no)
+    const orgValue = component.element.orgValue
     attributeNames.forEach(attributeName => {
       const oldValue = {}
-      oldValue[attributeName] = component.getAttribute(attributeName)
+      if (orgValue)
+        oldValue[attributeName] = orgValue[attributeName]
+      else
+        oldValue[attributeName] = component.getAttribute(attributeName)
       oldValues.push(oldValue)
     })
+    component.element.orgValue = null
   })
   return new ChangeAttributesAction(draw, refs, attributeNames, oldValues, newValue)
 }

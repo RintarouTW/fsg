@@ -5,10 +5,12 @@
 ///
 
 import {
+  TEXT_ATTR,
   DEFAULT_FILL_COLOR,
   DEFAULT_STROKE_COLOR,
   FSG_INSPECTING_ATTR,
-  FSG_SELECTED_ATTR
+  FSG_SELECTED_ATTR,
+  FSG_STROKE_TYPE_ATTR,
 } from '../common/define.js'
 
 import { componentByNo } from '../components/component.js'
@@ -16,17 +18,17 @@ import { getSelectedComponents } from './selection.js'
 import { changeStyle } from './style.js'
 import { attachColorPicker } from './color_picker.js'
 
-const fields = ['id', 'class', 'cx', 'cy', 'text', 'fill', 'stroke']
-const non_color_fields = ['id', 'class', 'cx', 'cy', 'text']
+const fields = ['id', 'class', 'cx', 'cy', TEXT_ATTR, 'fill', 'stroke']
+const non_color_fields = ['id', 'class', 'cx', 'cy', TEXT_ATTR]
 const fieldDefaultValue = {
   'id' : '', 
   'class' : '',
   'cx' : '',
   'cy' : '',
-  'text' : '',
   'fill' : DEFAULT_FILL_COLOR,
   'stroke' : DEFAULT_STROKE_COLOR
 }
+fieldDefaultValue[TEXT_ATTR] = ''
 
 let _inspecting_element
 let _isColorFieldFocused = false
@@ -97,6 +99,7 @@ function inspect_component(component) {
   // read the values of the element
   const attributes = component.getAttributes()
   attributes.forEach(name => {
+    if (name == FSG_STROKE_TYPE_ATTR) return // fsg-stroke-type has no inspector element
     const field = SVG('#field_' + name).node
     let value = component.getAttribute(name)
 
@@ -180,7 +183,9 @@ export function init_module_inspector(draw) {
     draw.targetComponents.forEach(componentNo => {
       const component = componentByNo(draw, componentNo)
       const element = component.element
-      element.orgValue = component.getAttribute(attributeName)
+      const orgValue = {}
+      orgValue[attributeName] = component.getAttribute(attributeName)
+      element.orgValue = orgValue
     })
     unsetInspecting(_inspecting_element)
   })
@@ -189,17 +194,12 @@ export function init_module_inspector(draw) {
     if (!_inspecting_element) return
     if (!draw.targetComponents) return // FIXME: temp workaround, somehow change-end was triggered twice. 
 
-    const {field, newValue} = evt.detail
+    const {field, newColor} = evt.detail
     const attributeName = field.substr(6)
-    const oldValues = []
+    const newValue = {}
+    newValue[attributeName] = newColor
     const refs = draw.targetComponents
-    refs.forEach(componentNo => {
-      const component = componentByNo(draw, componentNo)
-      const element = component.element
-      oldValues.push(element.orgValue)
-      element.orgValue = null
-    })
-    draw.fsg.history.doAction(changeStyle, {draw, refs, attributeName, oldValues, newValue})
+    draw.fsg.history.doAction(changeStyle, {draw, refs, newValue})
 
     if (!_isColorFieldFocused) { // set the origianl selected components back to selected state
       resetToSelected(draw)
@@ -286,6 +286,7 @@ function update_fields() {
   const component = _inspecting_element.component
   const attributes = component.getAttributes()
   attributes.forEach(name => {
+    if (name == FSG_STROKE_TYPE_ATTR) return // fsg-stroke-type has no inspector element
     const field = SVG('#field_' + name).node
     let value = component.getAttribute(name)
     field.value = (value === '' || (typeof(value) == 'undefined')) ? null : String(value)

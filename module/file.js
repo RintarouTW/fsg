@@ -84,7 +84,7 @@ export function reconstruct_components(draw) {
       addPinPoint({draw, type, refs, element})
       return
     }
-    if (element.hasClass('latex') || element.hasClass('text')) {
+    if (element.hasClass('latex')) {
       addLaTeX({draw, element})
       return
     }

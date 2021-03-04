@@ -2,8 +2,10 @@
 
 import { 
   NO_ATTR,
+  TEXT_ATTR,
   DEFAULT_ANGLE_RADIUS,
   FSG_SHAPE_ATTR,
+  FSG_STROKE_TYPE_ATTR,
 } from '../common/define.js'
 import { pointOnScreen, distanceOfPoints, distanceOfCoords } from '../common/math.js'
 
@@ -45,7 +47,10 @@ export class Circle extends FillableShape {
     this.cover?.radius(r).center(cp.cx(), cp.cy())
     this.element.radius(r).center(cp.cx(), cp.cy()).fire('update')
   }
-  // Implement the Appendable Interface
+  getAttributes() {
+    return ['id', 'class', 'cx', 'cy', 'fill', 'stroke', FSG_STROKE_TYPE_ATTR, TEXT_ATTR]
+  }
+ // Implement the Appendable Interface
   endAppendMode() {
     if (this.isAppending) {
       this.isAppending.remove()

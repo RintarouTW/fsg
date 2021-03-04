@@ -1,6 +1,6 @@
 'use strict'
 
-import { DEFAULT_TEXT, OF_ATTR, NO_ATTR, FSG_DRAGGING_ATTR } from '../common/define.js'
+import { DEFAULT_TEXT, OF_ATTR, NO_ATTR, FSG_DRAGGING_ATTR, TEXT_ATTR } from '../common/define.js'
 import { isRightButton } from '../common/common.js'
 import { SelectableComponent, componentByNo } from './component.js'
 import { currentStrokeColor } from '../module/color_picker.js'
@@ -97,10 +97,10 @@ export class LaTeX extends SelectableComponent {
     draw.add(newElement)
   }
   getText() {
-    return this.element.attr('text')
+    return this.element.attr(TEXT_ATTR)
   }
   getAttributes() {
-    return ['id', 'class', 'cx', 'cy', 'text', 'stroke']
+    return ['id', 'class', 'cx', 'cy', 'stroke', TEXT_ATTR]
   }
   getAttribute(attributeName) {
     if (attributeName == 'stroke') {
@@ -178,7 +178,7 @@ function genLaTeX(draw, text, position) {
   const element = foreignTex(draw, text).flip('y')
   if (!element) return null
   element.attr('class', 'latex')
-    .attr('text', text)
+    .attr(TEXT_ATTR, text)
     .attr('x', position.x)
     .attr('y', -position.y)
     .attr('style', 'color: #888')

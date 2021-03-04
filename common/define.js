@@ -162,6 +162,7 @@ export const FSG_HIDDEN_ATTR = 'fsg_hidden'
 export const NO_ATTR = 'fsg-no'
 export const REFS_ATTR = 'fsg-refs'
 export const OF_ATTR = 'fsg-of'
+export const TEXT_ATTR = 'text'
 
 // marker
 export const VECTOR_START_MARKER_RADIUS = 3
@@ -186,6 +187,7 @@ export const DEFAULT_LABEL_OFFSET_Y = 5
 export const DEFAULT_FILL_COLOR = '#ff0f6328'
 export const DEFAULT_STROKE_COLOR = '#888888aa'
 export const DEFAULT_TRANSPARENT_COLOR = '#ffffff00'
+export const FSG_STROKE_TYPE_ATTR = 'fsg-stroke-type'
 
 /// Tests
 export const test_user_script = String.raw`console.log('execute user script')

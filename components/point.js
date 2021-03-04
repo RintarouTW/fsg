@@ -1,6 +1,6 @@
 'use strict'
 
-import { POINT_RADIUS, NO_ATTR } from '../common/define.js'
+import { POINT_RADIUS, NO_ATTR, TEXT_ATTR } from '../common/define.js'
 import { isRightButton } from '../common/common.js'
 import { intersect, projectPointOnLine, intersectLineAndCircle, twoCirclesIntersection, pointOnScreen } from '../common/math.js'
 import { SelectableComponent, componentByNo } from './component.js'
@@ -25,7 +25,7 @@ export class SelectablePoint extends SelectableComponent {
     super({draw, element, refs})
   }
   getAttributes() {
-    return ['id', 'class', 'cx', 'cy', 'text']
+    return ['id', 'class', 'cx', 'cy', TEXT_ATTR]
   }
 }
 
