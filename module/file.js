@@ -4,6 +4,7 @@ import {
   REFS_ATTR,
   NO_ATTR,
   OF_ATTR,
+  TEXT_ATTR,
   SERVER_ROOT,
   FSG_NAMESPACE,
   RUNTIME_DEFAULT_STYLE,
@@ -63,14 +64,6 @@ export function reconstruct_components(draw) {
       if (!attr_refs) return
       const refs = attr_refs.split(',').map(item => Number(item))
       addIntersectPoint({draw, refs, element})
-      return
-    }
-    if (element.hasClass('parallel-point')) {
-      // not used anymore
-      return
-    }
-    if (element.hasClass('perp-point')) {
-      // not used anymore
       return
     }
     if (element.hasClass('pin-point')) {
@@ -280,6 +273,11 @@ function patchToNewAttributes(draw) {
   })
   draw.find('[fsg_fill_none]').each(element => {
     element.attr('fsg_fill_none', null).attr('fill', 'none')
+  })
+  // now use fsg-text as attribute instead of label
+  draw.find('[label]').each(element => {
+    const text = element.attr('label')
+    element.attr('label', null).attr(TEXT_ATTR, text)
   })
 }
 

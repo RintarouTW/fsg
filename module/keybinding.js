@@ -1,6 +1,6 @@
 'use strict'
 
-import { NO_ATTR, FSG_HIDDEN_ATTR } from '../common/define.js'
+import { NO_ATTR, FSG_HIDDEN_ATTR, TEXT_ATTR } from '../common/define.js'
 import { projectPointOnLine } from '../common/math.js'
 
 // modules
@@ -258,8 +258,8 @@ export function init_module_keybinding(draw) {
         {
           if (numberOfSelections(draw) > 0) {
             (evt.metaKey) 
-              ? doAction(unselectAllSelections, draw) // cmd + d : deselect all
-              : doAction(deselectLastSelection, draw) // d : deselect the last one
+              ? doAction(unselectAllSelections, {draw}) // cmd + d : deselect all
+              : doAction(deselectLastSelection, {draw}) // d : deselect the last one
           }
         }
         break
@@ -471,7 +471,7 @@ export function init_module_keybinding(draw) {
           } else if (!evt.altKey) { // t: add LaTeX
             doAction(addLaTeX, {draw})
           }
-          editField('#field_text')
+          editField('#field_' + TEXT_ATTR)
         }
         break
       case 'KeyV':

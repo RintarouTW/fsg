@@ -5,7 +5,6 @@ import { fetchSrc } from './common/common.js'
 import { init_component_system } from './components/component.js'
 import { init_module_marker } from './module/marker.js'
 import { init_module_drag } from './module/drag.js'
-import { init_module_history } from './module/history.js'
 import { init_module_selection } from './module/selection.js'
 import { reconstruct_components } from './module/file.js'
 import { contain_user_script, execute_user_script } from './module/script.js'
@@ -13,7 +12,6 @@ import { contain_user_script, execute_user_script } from './module/script.js'
 function init_modules(draw) {
   draw.fsg = {}
   init_module_marker(draw)
-  init_module_history(draw)
   init_module_selection(draw)
   init_component_system(draw)
   init_module_drag(draw, false)

@@ -30,8 +30,7 @@ export function showHint(text) {
 export function opening_animation(draw, callback) {
   // open animation
   const text = String.raw`Fast\ SVG\ Geometry\ Builder\ 0.1`
-  const unselect = true
-  const element = addLaTeX({draw, text, unselect}).element
+  const element = addLaTeX({draw, text, unselect : true}).element
   element.attr('style', 'color: #fff;')
   element.center(0, 0).attr('opacity', 0)
   element.animate(600).dmove(0, -30).attr('opacity', 1)

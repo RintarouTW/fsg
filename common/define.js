@@ -162,7 +162,7 @@ export const FSG_HIDDEN_ATTR = 'fsg_hidden'
 export const NO_ATTR = 'fsg-no'
 export const REFS_ATTR = 'fsg-refs'
 export const OF_ATTR = 'fsg-of'
-export const TEXT_ATTR = 'text'
+export const TEXT_ATTR = 'fsg-text'
 
 // marker
 export const VECTOR_START_MARKER_RADIUS = 3

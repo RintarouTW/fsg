@@ -101,7 +101,7 @@ class UnSelectAllAction {
   }
 }
 
-export function deselectLastSelection(draw) {
+export function deselectLastSelection({draw}) {
   console.assert(draw, 'draw must exist')
   const selections = draw.fsg.selection.selections
 
@@ -112,7 +112,7 @@ export function deselectLastSelection(draw) {
   return action
 }
 
-export function unselectAllSelections(draw) {
+export function unselectAllSelections({draw}) {
   console.assert(draw, 'draw must exist')
   detach()
   const selections = draw.fsg.selection.selections

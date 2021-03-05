@@ -76,9 +76,11 @@ export class Component {
     }
     this.no = Number(no) 
 
-    // Label
-    const labelText = element.attr('label')
-    if (labelText) this.addLabel(draw, labelText)
+    // Label, except latex component has no label
+    if (!element.hasClass('latex')) {
+      const labelText = element.attr(TEXT_ATTR)
+      if (labelText) this.addLabel(labelText)
+    }
 
     // Watch referenced components
     if (refs) {
@@ -143,13 +145,11 @@ export class Component {
       console.warn(`${this} doesn't contain attribut '${attributeName}'`)
       return
     }
+    this.element.attr(attributeName, value)
     if (attributeName == TEXT_ATTR) {
-      // use 'label' instead 'text' in element attribute
-      this.element.attr('label', value)
       this.setText(value)
       return
     }
-    this.element.attr(attributeName, value)
   }
   /// Label(text) interface
   setText(text) {
@@ -174,6 +174,7 @@ export class Component {
     if (!label)  {
       const targetCenter = this.center()
       const position = { x: targetCenter.x + DEFAULT_LABEL_OFFSET_X, y: -targetCenter.y + DEFAULT_LABEL_OFFSET_Y}
+      console.log(text)
       label = draw.text(text)
         .attr('class', 'label')
         .attr('offset_x', DEFAULT_LABEL_OFFSET_X)
@@ -217,8 +218,8 @@ export class Component {
 
     const observer = new MutationObserver(mutations => {
       mutations.forEach(mutation => {
-        if(mutation.attributeName == 'label') {
-          let value = target.node.getAttribute('label')
+        if(mutation.attributeName == TEXT_ATTR) {
+          let value = target.node.getAttribute(TEXT_ATTR)
           if (!value) value = ''
 
           const offsetX = label.attr('offset_x')

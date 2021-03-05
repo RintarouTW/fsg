@@ -10,6 +10,7 @@ import {
 
 import { init_module_selection } from './module/selection.js'
 import { init_module_marker } from './module/marker.js'
+// import { init_module_history } from './module/history.js'
 import { init_component_system, deinit_component_system } from './components/component.js'
 import { reconstruct_components, saveAsSVG } from './module/file.js'
 import { init_module_script } from './module/script.js'
@@ -73,6 +74,7 @@ export function loadFSG(content) {
   defs.first().before(SVG(RUNTIME_DEFAULT_STYLE))
   // }
 
+  // init_module_history(draw)
   init_module_script(draw)
   init_module_selection(draw)
 

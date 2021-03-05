@@ -3,11 +3,13 @@
 import { componentByNo } from '../components/component.js'
 
 export function init_module_history(draw) {
-  draw.fsg.history = {}
-  draw.fsg.history.history = []
-  draw.fsg.history.redo_list = []
-  draw.fsg.history.doAction = doAction
-  draw.fsg.history.changeLocation = changeLocation
+  const history = {
+    'history' : [],
+    'redo_list' : [],
+    'doAction' : doAction,
+    'changeLocation' : changeLocation
+  }
+  draw.fsg.history = history
 }
 
 export function undo(draw) {

@@ -20,7 +20,7 @@ function moveElementByOffset(element, offset) {
   element.fire('dragmove')
 }
 
-export function init_module_drag(draw, click_to_add_point = true) {
+export function init_module_drag(draw) {
 
   // disable default right click menu
   draw.on('contextmenu', evt => evt.preventDefault())
@@ -84,7 +84,7 @@ export function init_module_drag(draw, click_to_add_point = true) {
     if (draw.lastEvent != 'mousedown') return
     draw.lastEvent = 'mouseup'
 
-    if (click_to_add_point) {
+    if (window.FSG_BUILDER) {
       let coord = draw.point(evt.clientX, evt.clientY)
       coord = snapTo(coord)
       draw.fsg.history.doAction(addPoint, {draw, coord})
