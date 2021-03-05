@@ -44,23 +44,7 @@ export class DraggablePoint extends SelectablePoint {
       }).on('dragend', () => {
         if (window.FSG_BUILDER) { // only builder support action
           const { doAction, changeLocation } = draw.fsg.history
-          if (draw.dragPoints) {
-            const components = []
-            const oldValues = []
-            const newValues = []
-            draw.dragPoints.map(point => {
-              components.push(point.component.no)
-              oldValues.push(point.orgValue)
-              newValues.push({ x: point.cx(), y: point.cy() })
-              point.attr(FSG_DRAGGING_ATTR, null)
-            })
-            doAction(changeLocation, {draw, components, oldValues, newValues})
-          } else {
-            const components = [element.component.no]
-            const oldValues = [{ x: draw.dragStart.x, y: draw.dragStart.y }]
-            const newValues = [{ x: element.cx(), y: element.cy() }]
-            doAction(changeLocation, {draw, components, oldValues, newValues})
-          }
+          doAction(changeLocation, {draw})
         }
         element.attr(FSG_DRAGGING_ATTR, null)
         draw.dragTarget = null
@@ -140,12 +124,10 @@ export class PinPoint extends DraggablePoint {
     }).on('dragend', () => {
       // console.log('dragend')
       console.assert(draw.dragStart, 'FIXME: dragend without dragStart')
+
       if (window.FSG_BUILDER) {
         const { doAction, changeLocation } = draw.fsg.history
-        const components = [element.component.no]
-        const oldValues = [{ x: draw.dragStart.x, y: draw.dragStart.y }]
-        const newValues = [{ x: element.cx(), y: element.cy() }]
-        doAction(changeLocation, {draw, components, oldValues, newValues})
+        doAction(changeLocation, {draw})
       }
 
       element.attr(FSG_DRAGGING_ATTR, null)

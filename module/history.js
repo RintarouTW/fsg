@@ -1,5 +1,6 @@
 'use strict'
 
+import { FSG_DRAGGING_ATTR } from '../common/define.js'
 import { componentByNo } from '../components/component.js'
 
 export function init_module_history(draw) {
@@ -19,18 +20,14 @@ export function undo(draw) {
   if (!action) return
   action.undo()
   history.redo_list.push(action)
-  // console.log('undo redo_list = ', redo_list)
-  // console.log('history =', history)
 }
 
-// TODO: fixme, Action interface is required.
 export function redo(draw) {
   console.assert(draw, 'draw is required')
   const history = draw.fsg.history
   let action = history.redo_list.pop()
   if (!action) return
   action.redo()
-  // console.log('redo redo_list = ', redo_list)
 }
 
 export function doAction(cmd, args) {
@@ -42,7 +39,6 @@ export function doAction(cmd, args) {
     doAction(cmd, args)
   }
   history.history.push(action)
-  // console.log('history =', history)
 }
 
 ///
@@ -50,24 +46,24 @@ export function doAction(cmd, args) {
 ///
 
 class ChangeLocationAction {
-  constructor(draw, components, oldValues, newValues) {
-    for (let i = 0; i < components.length; i++) {
-      const component = componentByNo(draw, components[i])
+  constructor(draw, refs, oldValues, newValues) {
+    for (let i = 0; i < refs.length; i++) {
+      const component = componentByNo(draw, refs[i])
       const newValue = newValues[i]
       component.setAttribute('cx', newValue.x)
       component.setAttribute('cy', newValue.y)
       component.element.fire('update')
     }
     this.draw = draw
-    this.components = components
+    this.refs = refs
     this.oldValues = oldValues
     this.newValues = newValues
   }
   undo() {
-    const components = this.components
+    const refs = this.refs
     const oldValues = this.oldValues
-    for (let i = 0; i < components.length; i++) {
-      const component = componentByNo(this.draw, components[i])
+    for (let i = 0; i < refs.length; i++) {
+      const component = componentByNo(this.draw, refs[i])
       const oldValue = oldValues[i]
       component.setAttribute('cx', oldValue.x)
       component.setAttribute('cy', oldValue.y)
@@ -76,6 +72,20 @@ class ChangeLocationAction {
   }
 }
 
-export function changeLocation({draw, components, oldValues, newValues}) {
-  return new ChangeLocationAction(draw, components, oldValues, newValues)
+export function changeLocation({draw}) {
+  const refs = [], oldValues = [], newValues = []
+  if (draw.dragPoints) {
+    draw.dragPoints.map(point => {
+      refs.push(point.component.no)
+      oldValues.push(point.orgValue)
+      newValues.push({ x: point.cx(), y: point.cy() })
+      point.attr(FSG_DRAGGING_ATTR, null)
+    })
+  } else {
+    const element = draw.dragTarget
+    refs.push(element.component.no)
+    oldValues.push({ x: draw.dragStart.x, y: draw.dragStart.y })
+    newValues.push({ x: element.cx(), y: element.cy() })
+  }
+  return new ChangeLocationAction(draw, refs, oldValues, newValues)
 }
