@@ -41,7 +41,22 @@ svg *[fsg_shape]:hover {
 }
 
 svg .dashed {
-  stroke-dasharray: 3;
+  stroke-dasharray: 2.5 2.5;
+  stroke-width: 1.2;
+}
+
+svg .dashed2 {
+  stroke-dasharray: 6 3;
+  stroke-width: 1.2;
+}
+
+svg .dashed3 {
+  stroke-dasharray: 5 5;
+  stroke-width: 1.2;
+}
+
+svg .dashed4 {
+  stroke-dasharray: 3 2 8;
   stroke-width: 1.2;
 }
 
