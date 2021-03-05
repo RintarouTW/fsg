@@ -346,7 +346,7 @@ svg .cover:hover {
 
 [fsg_hover]:not([fsg_shape]) {
   stroke: var(--ui-hover-stroke-color) !important;
-  stroke-width: 1.5 !important;
+  stroke-width: 1.4 !important;
 }
 
 [fsg_dragging] {

@@ -16,7 +16,7 @@ export class SelectablePoint extends SelectableComponent {
         if (isRightButton(evt)) return // reserved for menu(do nothing so far)
         element.lastEvent = 'mousedown'
         evt.stopPropagation()
-      }).on('mouseup', () => {
+      }).on('mouseup', evt => {
         if (isRightButton(evt)) return // reserved for menu(do nothing so far)
         if (element.lastEvent == 'mousedown') this.toggleSelected()
         element.lastEvent = 'mouseup'

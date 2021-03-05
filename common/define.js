@@ -99,7 +99,7 @@ svg .pin-point {
 
 svg .mid-point, svg .intersect-point {
   fill: #777777aa;
-  stroke: #565656aa;
+  stroke: #8a8a8aaa;
 }
 
 svg .point:hover, svg .pin-point:hover {
