@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" rx="8" ry="8" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="85" y="83.125"></rect><circle r="148.49242404917499" cx="0" cy="0" class="circle" fsg_shape="true" fill="none" stroke="#ffffffaa" fsg-no="6" fsg-refs="4,5"></circle><line x1="-325.125" y1="-325.125" x2="325.125" y2="325.125" class="perp-line dashed" fsg_shape="true" stroke="#888888aa" fsg-no="8" fsg-refs="7,4"></line><line x1="325.125" y1="-325.125" x2="-325.125" y2="325.125" class="line dashed" fsg_shape="true" stroke="#888888aa" fsg-no="7" fsg-refs="5,4"></line><path d="M 0 0 L 10.606601717798211 -10.606601717798211 L 21.213203435596423 0 L 10.606601717798211 10.606601717798211 Z" class="angle" fsg_shape="true" fill="#ff0f6328" stroke="#f5ebffaa" fsg-no="18" fsg-refs="5,4,10"></path><circle r="3" cx="0" cy="0" class="point" stroke="#888888aa" fsg-no="4"></circle><line x1="105" y1="-105" x2="-105" y2="-105" class="edge dashed" fsg_shape="true" stroke="#33f1ffaa" fsg-no="13" fsg-refs="5,9"></line><line x1="105" y1="105" x2="105" y2="-105" class="edge dashed" fsg_shape="true" stroke="#33f1ffaa" fsg-no="16" fsg-refs="10,5"></line><circle r="3" cx="105" cy="-105" class="point" stroke="#888888aa" fsg-no="5"></circle><line x1="-105" y1="-105" x2="-104.99999999999997" y2="104.99999999999997" class="edge dashed" fsg_shape="true" stroke="#33f1ffaa" fsg-no="14" fsg-refs="9,11"></line><circle r="3" cx="-105" cy="-105" class="intersect-point" index="0" fsg-no="9" fsg-refs="8,6"></circle><line x1="-104.99999999999997" y1="104.99999999999997" x2="105" y2="105" class="edge dashed" fsg_shape="true" stroke="#33f1ffaa" fsg-no="15" fsg-refs="11,10"></line><circle r="3" cx="105" cy="105" class="intersect-point" index="1" fsg-no="10" fsg-refs="8,6"></circle><circle r="3" cx="-104.99999999999997" cy="104.99999999999997" class="intersect-point" index="0" fsg-no="11" fsg-refs="7,6"></circle><foreignObject width="77.5" height="23" transform="matrix(1,0,0,-1,0,0)" class="latex" text="圓出於方" x="-33.75" y="-231.5" style="color: #ffffffaa;" offset_x="0" offset_y="0" fsg-no="17"><div class="latex-container" xmlns="http://www.w3.org/1999/xhtml"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">圓</span><span class="mord cjk_fallback">出</span><span class="mord cjk_fallback">於</span><span class="mord cjk_fallback">方</span></span></span></span></div></foreignObject></g><defs><style>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" rx="8" ry="8" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="85" y="83.125"></rect><circle r="148.49242404917499" cx="0" cy="0" class="circle" fsg_shape="true" fill="none" stroke="#ffffffaa" fsg-no="6" fsg-refs="4,5"></circle><line x1="-325.125" y1="-325.125" x2="325.125" y2="325.125" class="perp-line" fsg_shape="true" stroke="#888888aa" fsg-no="8" fsg-refs="7,4" fsg-stroke-type="dashed"></line><line x1="325.125" y1="-325.125" x2="-325.125" y2="325.125" class="line" fsg_shape="true" stroke="#888888aa" fsg-no="7" fsg-refs="5,4" fsg-stroke-type="dashed"></line><path d="M 0 0 L 10.606601717798211 -10.606601717798211 L 21.213203435596423 0 L 10.606601717798211 10.606601717798211 Z" class="angle" fsg_shape="true" fill="#ff0f6328" stroke="#f5ebffaa" fsg-no="18" fsg-refs="5,4,10"></path><circle r="3" cx="0" cy="0" class="point" stroke="#888888aa" fsg-no="4"></circle><line x1="105" y1="-105" x2="-105" y2="-105" class="edge" fsg_shape="true" stroke="#33f1ffaa" fsg-no="13" fsg-refs="5,9" fsg-stroke-type="dashed"></line><line x1="105" y1="105" x2="105" y2="-105" class="edge" fsg_shape="true" stroke="#33f1ffaa" fsg-no="16" fsg-refs="10,5" fsg-stroke-type="dashed"></line><circle r="3" cx="105" cy="-105" class="point" stroke="#888888aa" fsg-no="5"></circle><line x1="-105" y1="-105" x2="-104.99999999999997" y2="104.99999999999997" class="edge" fsg_shape="true" stroke="#33f1ffaa" fsg-no="14" fsg-refs="9,11" fsg-stroke-type="dashed"></line><circle r="3" cx="-105" cy="-105" class="intersect-point" index="0" fsg-no="9" fsg-refs="8,6"></circle><line x1="-104.99999999999997" y1="104.99999999999997" x2="105" y2="105" class="edge" fsg_shape="true" stroke="#33f1ffaa" fsg-no="15" fsg-refs="11,10" fsg-stroke-type="dashed"></line><circle r="3" cx="105" cy="105" class="intersect-point" index="1" fsg-no="10" fsg-refs="8,6"></circle><circle r="3" cx="-104.99999999999997" cy="104.99999999999997" class="intersect-point" index="0" fsg-no="11" fsg-refs="7,6"></circle><foreignObject width="77.5" height="23" transform="matrix(1,0,0,-1,0,0)" class="latex" text="圓出於方" x="-33.75" y="-231.5" style="color: #ffffffaa;" offset_x="0" offset_y="0" fsg-no="17"><div class="latex-container" xmlns="http://www.w3.org/1999/xhtml"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">圓</span><span class="mord cjk_fallback">出</span><span class="mord cjk_fallback">於</span><span class="mord cjk_fallback">方</span></span></span></span></div></foreignObject></g><defs><style>
 svg {
   user-select: none;
   -webkit-user-select: none;
@@ -40,22 +40,22 @@ svg *[fsg_shape]:hover {
   stroke: #fff;
 }
 
-svg .dashed {
+svg *[fsg-stroke-type="dashed"] {
   stroke-dasharray: 2.5 2.5;
   stroke-width: 1.2;
 }
 
-svg .dashed2 {
+svg *[fsg-stroke-type="dashed2"] {
   stroke-dasharray: 6 3;
   stroke-width: 1.2;
 }
 
-svg .dashed3 {
+svg *[fsg-stroke-type="dashed3"] {
   stroke-dasharray: 5 5;
   stroke-width: 1.2;
 }
 
-svg .dashed4 {
+svg *[fsg-stroke-type="dashed4"] {
   stroke-dasharray: 3 2 8;
   stroke-width: 1.2;
 }

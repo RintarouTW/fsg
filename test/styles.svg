@@ -40,22 +40,22 @@ svg *[fsg_shape]:hover {
   stroke: #fff;
 }
 
-svg .dashed {
+svg *[fsg-stroke-type="dashed"] {
   stroke-dasharray: 2.5 2.5;
   stroke-width: 1.2;
 }
 
-svg .dashed2 {
+svg *[fsg-stroke-type="dashed2"] {
   stroke-dasharray: 6 3;
   stroke-width: 1.2;
 }
 
-svg .dashed3 {
+svg *[fsg-stroke-type="dashed3"] {
   stroke-dasharray: 5 5;
   stroke-width: 1.2;
 }
 
-svg .dashed4 {
+svg *[fsg-stroke-type="dashed4"] {
   stroke-dasharray: 3 2 8;
   stroke-width: 1.2;
 }
@@ -123,7 +123,7 @@ svg .angle-marker {
 	<feGaussianBlur stdDeviation="0 10" x="-50%" y="-50%" width="100%" height="100%" in="SourceGraphic" edgeMode="none" result="blur"></feGaussianBlur>
 </filter><filter id="filter_color_matrix" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
 	<feColorMatrix type="saturate" values="5" x="-50%" y="-50%" width="100%" height="100%" in="blur" result="colormatrix"></feColorMatrix>
-</filter><line x1="-371" y1="0" x2="371" y2="0" class="axis-x" marker-end="url(#SvgjsMarker1000)" fsg_shape="true" fsg-no="1"></line><line x1="0" y1="-278.25" x2="0" y2="278.25" class="axis-y" marker-end="url(#SvgjsMarker1000)" fsg_shape="true" fsg-no="2"></line><circle r="138.2931668593933" cx="0" cy="0" class="circle dashed filled" filter="url(#filter_shadow)" fsg_shape="true" fsg-no="5" fsg-refs="3,4"></circle><line x1="0" y1="0" x2="105" y2="-90" class="vector dashed" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" fsg_shape="true" fsg-no="6" fsg-refs="3,4"></line><polygon points="0,0 89.1851578556128,105.69298755484881 89.18515785561283,0" class="polygon dashed" fsg_shape="true" fsg-no="10" fsg-refs="3,7,9"></polygon><circle r="3" cx="0" cy="0" class="point" fsg-no="3"></circle><style>
+</filter><line x1="-371" y1="0" x2="371" y2="0" class="axis-x" marker-end="url(#SvgjsMarker1000)" fsg_shape="true" fsg-no="1"></line><line x1="0" y1="-278.25" x2="0" y2="278.25" class="axis-y" marker-end="url(#SvgjsMarker1000)" fsg_shape="true" fsg-no="2"></line><circle r="138.2931668593933" cx="0" cy="0" class="circle filled" filter="url(#filter_shadow)" fsg_shape="true" fsg-no="5" fsg-refs="3,4" fsg-stroke-type="dashed"></circle><line x1="0" y1="0" x2="105" y2="-90" class="vector" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" fsg_shape="true" fsg-no="6" fsg-refs="3,4" fsg-stroke-type="dashed"></line><polygon points="0,0 89.1851578556128,105.69298755484881 89.18515785561283,0" class="polygon" fsg_shape="true" fsg-no="10" fsg-refs="3,7,9" fsg-stroke-type="dashed"></polygon><circle r="3" cx="0" cy="0" class="point" fsg-no="3"></circle><style>
 :root {
   --vector-marker-color: #1dd3fd;
   --axis-stroke-color: #9fc7d0;

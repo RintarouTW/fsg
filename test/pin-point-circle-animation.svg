@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="40" y="90"></rect><line x1="-433.5" y1="0" x2="433.5" y2="0" class="axis-x" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" fsg_shape="true" fsg-no="1"></line><line x1="0" y1="-325.125" x2="0" y2="325.125" class="axis-y" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" fsg_shape="true" fsg-no="2"></line><circle r="111.01801655587259" cx="0" cy="0" class="circle dashed" fill="#ff0f6328" stroke="#ffffffaa" fsg_shape="true" fsg-no="6" fsg-refs="4,5"></circle><line x1="-434" y1="-292.95" x2="434" y2="292.95" class="line dashed" stroke="#888888aa" fsg_shape="true" fsg-no="12" fsg-refs="8,4"></line><line x1="-104.24092529710599" y1="-325.625" x2="104.24092529710599" y2="325.625" class="line dashed" stroke="#ffffffaa" fsg_shape="true" fsg-no="14" fsg-refs="7,4"></line><circle r="3" cx="0" cy="0" class="point" stroke="#888888aa" fsg-no="4"></circle><circle r="3" cx="90" cy="65" class="point" stroke="#888888aa" fsg-no="5"></circle><circle r="168.72159489137425" cx="200" cy="135" class="circle dashed" fill="#00c3ff16" stroke="#ffffffaa" fsg_shape="true" fsg-no="9" fsg-refs="8,7"></circle><circle r="3" cx="33.83559671743597" cy="105.73623974198742" class="pin-point" id="p1" transform="matrix(1,0,0,1,0,0)" fsg-no="7" fsg-refs="6"></circle><circle r="3" cx="200" cy="135" class="point" stroke="#888888aa" fsg-no="8"></circle><circle r="3" cx="110.71751077010713" cy="-8.162892187895771" class="intersect-point" index="1" fsg-no="11" fsg-refs="6,9"></circle></g><defs><style>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="40" y="90"></rect><line x1="-433.5" y1="0" x2="433.5" y2="0" class="axis-x" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" fsg_shape="true" fsg-no="1"></line><line x1="0" y1="-325.125" x2="0" y2="325.125" class="axis-y" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" fsg_shape="true" fsg-no="2"></line><circle r="111.01801655587259" cx="0" cy="0" class="circle" fill="#ff0f6328" stroke="#ffffffaa" fsg_shape="true" fsg-no="6" fsg-refs="4,5" fsg-stroke-type="dashed"></circle><line x1="-434" y1="-292.95" x2="434" y2="292.95" class="line" stroke="#888888aa" fsg_shape="true" fsg-no="12" fsg-refs="8,4" fsg-stroke-type="dashed"></line><line x1="-104.24092529710599" y1="-325.625" x2="104.24092529710599" y2="325.625" class="line" stroke="#ffffffaa" fsg_shape="true" fsg-no="14" fsg-refs="7,4" fsg-stroke-type="dashed"></line><circle r="3" cx="0" cy="0" class="point" stroke="#888888aa" fsg-no="4"></circle><circle r="3" cx="90" cy="65" class="point" stroke="#888888aa" fsg-no="5"></circle><circle r="168.72159489137425" cx="200" cy="135" class="circle" fill="#00c3ff16" stroke="#ffffffaa" fsg_shape="true" fsg-no="9" fsg-refs="8,7" fsg-stroke-type="dashed"></circle><circle r="3" cx="33.83559671743597" cy="105.73623974198742" class="pin-point" id="p1" transform="matrix(1,0,0,1,0,0)" fsg-no="7" fsg-refs="6"></circle><circle r="3" cx="200" cy="135" class="point" stroke="#888888aa" fsg-no="8"></circle><circle r="3" cx="110.71751077010713" cy="-8.162892187895771" class="intersect-point" index="1" fsg-no="11" fsg-refs="6,9"></circle></g><defs><style>
 svg {
   user-select: none;
   -webkit-user-select: none;
@@ -40,22 +40,22 @@ svg *[fsg_shape]:hover {
   stroke: #fff;
 }
 
-svg .dashed {
+svg *[fsg-stroke-type="dashed"] {
   stroke-dasharray: 2.5 2.5;
   stroke-width: 1.2;
 }
 
-svg .dashed2 {
+svg *[fsg-stroke-type="dashed2"] {
   stroke-dasharray: 6 3;
   stroke-width: 1.2;
 }
 
-svg .dashed3 {
+svg *[fsg-stroke-type="dashed3"] {
   stroke-dasharray: 5 5;
   stroke-width: 1.2;
 }
 
-svg .dashed4 {
+svg *[fsg-stroke-type="dashed4"] {
   stroke-dasharray: 3 2 8;
   stroke-width: 1.2;
 }
