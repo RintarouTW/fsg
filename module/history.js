@@ -72,20 +72,6 @@ class ChangeLocationAction {
   }
 }
 
-export function changeLocation({draw}) {
-  const refs = [], oldValues = [], newValues = []
-  if (draw.dragPoints) {
-    draw.dragPoints.map(point => {
-      refs.push(point.component.no)
-      oldValues.push(point.orgValue)
-      newValues.push({ x: point.cx(), y: point.cy() })
-      point.attr(FSG_DRAGGING_ATTR, null)
-    })
-  } else {
-    const element = draw.dragTarget
-    refs.push(element.component.no)
-    oldValues.push({ x: draw.dragStart.x, y: draw.dragStart.y })
-    newValues.push({ x: element.cx(), y: element.cy() })
-  }
+export function changeLocation({draw, refs, oldValues, newValues}) {
   return new ChangeLocationAction(draw, refs, oldValues, newValues)
 }
