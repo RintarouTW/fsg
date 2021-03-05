@@ -27,6 +27,9 @@ export class FillableShape extends Shape {
   constructor({draw, refs, element, cover, points}) {
     super({draw, refs, element, cover, points})
   }
+  getAttributes() {
+    return ['id', 'class', 'cx', 'cy', 'fill', 'stroke', FSG_STROKE_TYPE_ATTR, TEXT_ATTR]
+  }
 }
 
 ///
@@ -47,10 +50,7 @@ export class Circle extends FillableShape {
     this.cover?.radius(r).center(cp.cx(), cp.cy())
     this.element.radius(r).center(cp.cx(), cp.cy()).fire('update')
   }
-  getAttributes() {
-    return ['id', 'class', 'cx', 'cy', 'fill', 'stroke', FSG_STROKE_TYPE_ATTR, TEXT_ATTR]
-  }
- // Implement the Appendable Interface
+  // Implement the Appendable Interface
   endAppendMode() {
     if (this.isAppending) {
       this.isAppending.remove()
@@ -74,7 +74,8 @@ export function addCircle({draw, refs, element, cover, no}) {
   const radius = distanceOfPoints(cp, rp)
   if (!element) {
     element = draw.circle().radius(radius).center(cp.cx(), cp.cy())
-      .attr('class', 'circle dashed')
+      .attr('class', 'circle')
+      .attr(FSG_STROKE_TYPE_ATTR, 'dashed')
       .attr(FSG_SHAPE_ATTR, true)
     useCurrentColors(element)
     cover = draw.circle().radius(radius).center(cp.cx(), cp.cy()).attr('class', 'cover')
@@ -111,7 +112,8 @@ export function addPolygon({draw, refs, element, cover, no}) {
   const pts = points.map(p => [p.cx(), p.cy()])
   if (!element) {
     element = draw.polygon(pts)
-      .attr('class', 'polygon dashed') 
+      .attr('class', 'polygon') 
+      .attr(FSG_STROKE_TYPE_ATTR, 'dashed')
       .attr(FSG_SHAPE_ATTR, true)
 
     useCurrentColors(element)

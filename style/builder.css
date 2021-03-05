@@ -24,12 +24,6 @@
   --ui-kbd-text-color: #fff;
 }
 
-/* override for testing */
-.dashed {
-  stroke-dasharray: 2.5 2.5 !important;
-  stroke-width: 1.2 !important;
-}
-
 .menu {
   font: 0.9em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
 }

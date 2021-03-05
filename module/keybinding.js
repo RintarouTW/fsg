@@ -1,6 +1,6 @@
 'use strict'
 
-import { NO_ATTR, FSG_HIDDEN_ATTR, TEXT_ATTR } from '../common/define.js'
+import { NO_ATTR, FSG_HIDDEN_ATTR, TEXT_ATTR, FSG_STROKE_TYPE_ATTR } from '../common/define.js'
 import { projectPointOnLine } from '../common/math.js'
 
 // modules
@@ -11,13 +11,9 @@ import { showHint } from './ui.js'
 import { toggle_preference_window } from './preference.js'
 import {
   toggleAttribute,
-  toggleSolid,
   changeStyle,
-  changeClass,
-  hasDashedClass,
-  removeAllDashedClass,
   copyStyle,
-  isCopiedStyle,
+  isStyleCopied,
   pasteStyle
 } from './style.js'
 import {
@@ -74,31 +70,24 @@ function has3Points(points) {
   return true
 }
 
-function setDashedClass(evt, draw, className) {
-  const newValue = className
+function setStrokeType(evt, draw, strokeType) {
+  const newValue = {}
+  newValue[FSG_STROKE_TYPE_ATTR] = strokeType
 
   if (evt.shiftKey) {
     const components = getSelectedShapes(draw)
-    const oldValues = []
-    const refs = components.map(component => {
-      const element = component.element
-      oldValues.push(element.attr('class'))
-      removeAllDashedClass(element)
-      return component.no
-    })
-    doAction(changeClass, {draw, refs, oldValues, newValue})
+    const refs = components.map(component => component.no)
+    doAction(changeStyle, {draw, refs, newValue})
     return
   }
 
   const component = lastSelectedComponent(draw)
   if ((!component || !(component instanceof Shape)) && showHint('Select a shape first!')) return
   const element = component.element
-  if (hasDashedClass(element) == newValue) return
+  if (element.attr(FSG_STROKE_TYPE_ATTR) == strokeType) return
 
   const refs = [component.no]
-  const oldValues = [element.attr('class')]
-  removeAllDashedClass(element)
-  doAction(changeClass, {draw, refs, oldValues, newValue})
+  doAction(changeStyle, {draw, refs, newValue})
 }
 
 export function init_module_keybinding(draw) {
@@ -180,22 +169,22 @@ export function init_module_keybinding(draw) {
         break
       case 'Digit1':
         {
-          setDashedClass(evt, draw, 'dashed')
+          setStrokeType(evt, draw, 'dashed')
         }
         break
       case 'Digit2':
         {
-          setDashedClass(evt, draw, 'dashed2')
+          setStrokeType(evt, draw, 'dashed2')
         }
         break
       case 'Digit3':
         {
-          setDashedClass(evt, draw, 'dashed3')
+          setStrokeType(evt, draw, 'dashed3')
         }
         break
       case 'Digit4':
         {
-          setDashedClass(evt, draw, 'dashed4')
+          setStrokeType(evt, draw, 'dashed4')
         }
         break
       case 'KeyA':
@@ -247,6 +236,7 @@ export function init_module_keybinding(draw) {
             const component = lastSelectedComponent(draw)
             if ((!component || !(component instanceof Shape)) && showHint('Select a shape first')) return
             copyStyle(component)
+            showHint('Copied Style!')
             return
           }
           // c : add circle
@@ -442,12 +432,15 @@ export function init_module_keybinding(draw) {
             return
           }
 
+          const newValue = {}
+          newValue[FSG_STROKE_TYPE_ATTR] = null
+
           // shift + s : toggle solid of all selected
           if (evt.shiftKey) {
             const components = getSelectedShapes(draw)
             if (!hasComponent(components[0])) return
             refs = components.map(component => component.no)
-            doAction(toggleSolid, {draw, refs})
+            doAction(changeStyle, {draw, refs, newValue})
             return
           }
 
@@ -455,7 +448,7 @@ export function init_module_keybinding(draw) {
           const component = lastSelectedComponent(draw)
           if ((!component || !(component instanceof Shape)) && showHint('Select a shape first!')) return
           refs = [component.no]
-          doAction(toggleSolid, {draw, refs})
+          doAction(changeStyle, {draw, refs, newValue})
         }
         break
       case 'KeyT': // text
@@ -477,7 +470,7 @@ export function init_module_keybinding(draw) {
       case 'KeyV':
         { 
           if (evt.ctrlKey) { // ctrl + v: paste style
-            if (!isCopiedStyle() && showHint('Copy a style first!')) return
+            if (!isStyleCopied() && showHint('Copy a style first!')) return
             const component = lastSelectedComponent(draw)
             if ((!component || !(component instanceof Shape)) && showHint('Can only paste the style to a shape')) return
             pasteStyle({draw, refs: [component.no]})

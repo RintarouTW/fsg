@@ -4,7 +4,8 @@ import {
   OF_ATTR,
   DEFAULT_TRANSPARENT_COLOR,
   CLASS_FSG_UI_SELECT_BOX,
-  FSG_HOVER_ATTR
+  FSG_HOVER_ATTR,
+  FSG_STROKE_TYPE_ATTR
 } from '../common/define.js'
 
 import { isRightButton } from '../common/common.js'
@@ -36,6 +37,7 @@ export function putBehindPoints(draw, points, cover, element) {
 
 ///
 /// Shape
+/// support 'stroke', 'fill', 'fsg-stroke-type' by default.
 ///
 
 export class Shape extends SelectableComponent {
@@ -66,6 +68,9 @@ export class Shape extends SelectableComponent {
   remove() {
     this.cover?.remove()
     super.remove()
+  }
+  getAttributes() {
+    return ['id', 'class', 'cx', 'cy', 'stroke', FSG_STROKE_TYPE_ATTR, TEXT_ATTR]
   }
   /// order interface, keep the cover over the element
   forward() { // override super

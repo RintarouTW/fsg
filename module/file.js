@@ -17,6 +17,7 @@ import {
   FSG_HOVER_ATTR,
   FSG_HIDDEN_ATTR,
   FSG_SHAPE_ATTR,
+  FSG_STROKE_TYPE_ATTR,
 } from '../common/define.js'
 
 import { addLine, addRay, addParallelLine, addPerpLine, addBisectorLine } from '../components/line.js'
@@ -278,6 +279,13 @@ function patchToNewAttributes(draw) {
   draw.find('[label]').each(element => {
     const text = element.attr('label')
     element.attr('label', null).attr(TEXT_ATTR, text)
+  })
+  // use fsg-stroke-type for dashed/dashed2/dashed3/dashed4 instead of class
+  const dashedTypes = ['dashed', 'dashed2', 'dashed3', 'dashed4']
+  dashedTypes.forEach(dashedType => {
+    draw.find('.' + dashedType).each(element => {
+      element.removeClass(dashedType).attr(FSG_STROKE_TYPE_ATTR, 'dashed')
+    })
   })
 }
 

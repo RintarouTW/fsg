@@ -58,22 +58,22 @@ svg *[fsg_shape]:hover {
   stroke: #fff;
 }
 
-svg .dashed {
+svg *[fsg-stroke-type="dashed"] {
   stroke-dasharray: 2.5 2.5;
   stroke-width: 1.2;
 }
 
-svg .dashed2 {
+svg *[fsg-stroke-type="dashed2"] {
   stroke-dasharray: 6 3;
   stroke-width: 1.2;
 }
 
-svg .dashed3 {
+svg *[fsg-stroke-type="dashed3"] {
   stroke-dasharray: 5 5;
   stroke-width: 1.2;
 }
 
-svg .dashed4 {
+svg *[fsg-stroke-type="dashed4"] {
   stroke-dasharray: 3 2 8;
   stroke-width: 1.2;
 }
@@ -186,6 +186,7 @@ export const DEFAULT_LABEL_OFFSET_Y = 5
 // style
 export const DEFAULT_FILL_COLOR = '#ff0f6328'
 export const DEFAULT_STROKE_COLOR = '#888888aa'
+export const DEFAULT_TEXT_COLOR = '#aaaaaaff'
 export const DEFAULT_TRANSPARENT_COLOR = '#ffffff00'
 export const FSG_STROKE_TYPE_ATTR = 'fsg-stroke-type'
 

@@ -1,6 +1,6 @@
 'use strict'
 
-import { DEFAULT_TEXT, OF_ATTR, NO_ATTR, FSG_DRAGGING_ATTR, TEXT_ATTR } from '../common/define.js'
+import { DEFAULT_TEXT, OF_ATTR, NO_ATTR, FSG_DRAGGING_ATTR, TEXT_ATTR, DEFAULT_TEXT_COLOR } from '../common/define.js'
 import { isRightButton } from '../common/common.js'
 import { SelectableComponent, componentByNo } from './component.js'
 import { currentStrokeColor } from '../module/color_picker.js'
@@ -14,6 +14,9 @@ function useCurrentColors(element) {
 
 ///
 /// LaTeX 
+/// support 'fsg-text' attribute, but no label.
+/// support 'stroke' color only, no 'fsg-stroke-type' and 'fill'
+/// element has 'latex' class
 /// (optional) refs[0] is the target component no that this latex relative to.
 ///
 export class LaTeX extends SelectableComponent {
@@ -106,7 +109,7 @@ export class LaTeX extends SelectableComponent {
     if (attributeName == 'stroke') {
       const color = this.element.node.getAttribute('style')
       const value = color?.replace(/(color| |:|;)/g, '')
-      return value ?? '#999999ff' // default text color
+      return value ?? DEFAULT_TEXT_COLOR // default text color
     }
     return super.getAttribute(attributeName)
   }
