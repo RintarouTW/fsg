@@ -3,6 +3,7 @@
 import { SERVER_ROOT } from './common/define.js'
 import { fetchSrc } from './common/common.js'
 import { init_component_system } from './components/component.js'
+import { init_module_extension } from './module/extension.js'
 import { init_module_marker } from './module/marker.js'
 import { init_module_drag } from './module/drag.js'
 import { init_module_selection } from './module/selection.js'
@@ -97,18 +98,7 @@ function init() {
 
   window.FSG_RUNTIME = true // runtime should only be loaded once.
 
-  // extend SVG.Element to support anime()
-  SVG.extend(SVG.Element, {
-    anime: function(...args) {
-      return this.animate(...args).during( () => this.fire('update') )
-    }
-  })
-  // extend SVG.Runner
-  SVG.extend(SVG.Runner, {
-    update: function() {
-      return this.during( () => this.element().fire('update') )
-    }
-  })
+  init_module_extension()
 
   if (document.contentType.includes('html')) { // loaded by html
     // for reload

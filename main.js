@@ -33,6 +33,7 @@ import { init_module_marker } from './module/marker.js'
 import { init_component_system, deinit_component_system, componentByNo } from './components/component.js'
 import { reconstruct_components } from './module/file.js'
 import { init_module_script, findUserScript, execute_user_script } from './module/script.js'
+import { init_module_extension } from './module/extension.js'
 import { getCode } from './module/server.js'
 import './lib/svg.panzoom.js'
 
@@ -130,7 +131,7 @@ function newFSG() {
   init_ui_axis(draw)
 
   const userScript = findUserScript(draw)
-  init_module_code_editor(userScript)
+  init_module_code_editor(draw, userScript)
   init_module_preference(draw)
   setSnapshotHandler(draw)
   return draw
@@ -194,7 +195,7 @@ export function loadFSG(content) {
   enableColorPicker()
 
   const userScript = findUserScript(draw)
-  init_module_code_editor(userScript)
+  init_module_code_editor(draw, userScript)
   init_module_preference(draw)
 
   setSnapshotHandler(draw)
@@ -217,19 +218,7 @@ function init() {
 
   window.resizeTo(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT) // default window size
 
-  // extend SVG.Element to support anime()
-  SVG.extend(SVG.Element, {
-    anime: function(...args) {
-      return this.animate(...args).during( () => this.fire('update') )
-    }
-  })
-  // extend SVG.Runner
-  SVG.extend(SVG.Runner, {
-    update: function() {
-      return this.during( () => this.element().fire('update') )
-    }
-  })
-
+  init_module_extension()
   init_module_color_picker()
 
   _draw = newFSG() // new file

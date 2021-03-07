@@ -2,6 +2,7 @@
 
 import { DEV_TESTING } from '../common/define.js'
 import { loadCSS, loadScript } from '../common/common.js'
+import { saveAsSVG } from './file.js'
 
 if (!DEV_TESTING) {
 
@@ -36,6 +37,7 @@ if (!DEV_TESTING) {
 
 var _cmInstance // code mirror editor 
 var _window
+var _draw
 
 //
 // Controller
@@ -102,6 +104,16 @@ function codeEditor() {
           }
         }
         break
+      case 'KeyS':
+        {
+          if (evt.metaKey) { // cmd + s : save as svg
+            evt.preventDefault()
+            evt.stopPropagation()
+            const _document = saveAsSVG(_draw)
+            document.dispatchEvent(new CustomEvent('update_document', { detail : _document }))
+            return
+          }
+        }
     } 
   })
 }
@@ -113,7 +125,8 @@ export function toggle_code_editor() {
   }
 }
 
-export function init_module_code_editor(userCode) {
+export function init_module_code_editor(draw, userCode) {
+  _draw = draw
   if(!_cmInstance) { // singlton only
     codeEditor()
   } else {

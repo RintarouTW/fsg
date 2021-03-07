@@ -8,6 +8,7 @@ import {
   RUNTIME_DEFAULT_STYLE,
 } from './common/define.js'
 
+import { init_module_extension } from './module/extension.js'
 import { init_module_selection } from './module/selection.js'
 import { init_module_marker } from './module/marker.js'
 // import { init_module_history } from './module/history.js'
@@ -107,6 +108,8 @@ function convertOneFileAtATime() {
 }
 
 function init() {
+  init_module_extension()
+
   SVG('#dropArea').on(['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave'], evt => {
     evt.preventDefault()
     evt.stopPropagation()

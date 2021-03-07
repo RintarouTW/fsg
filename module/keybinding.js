@@ -52,6 +52,7 @@ import { addPolygon, addCircle, addAngle, FillableShape } from '../components/fi
 import { addAngleMarker, addLengthMarker } from '../components/measure.js'
 import { addLaTeX } from '../components/latex.js'
 import { chooseIntersectPoint } from './appending-point.js'
+import { animatic } from './animatic.js'
 
 let _keydownHandler, _keyupHandler
 
@@ -124,6 +125,17 @@ export function init_module_keybinding(draw) {
     let refs
     if (points) refs = points.map(p => p.attr(NO_ATTR))
     switch(evt.code) {
+      case 'Period':
+        {
+          animatic([["test", actionEnd => {
+            actionEnd(true)
+          }], ["test2", actionEnd => {
+            actionEnd(true)
+          }]
+
+          ])
+        }
+        break
       case 'F1':
         {
           toggle_code_editor() // F1: toggle code editor

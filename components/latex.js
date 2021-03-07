@@ -1,6 +1,6 @@
 'use strict'
 
-import { DEFAULT_TEXT, OF_ATTR, NO_ATTR, FSG_DRAGGING_ATTR, TEXT_ATTR, DEFAULT_TEXT_COLOR } from '../common/define.js'
+import { DEFAULT_TEXT, OF_ATTR, NO_ATTR, FSG_DRAGGING_ATTR, TEXT_ATTR, DEFAULT_TEXT_COLOR, FSG_HOVER_ATTR, FSG_HIDDEN_ATTR } from '../common/define.js'
 import { isRightButton } from '../common/common.js'
 import { SelectableComponent, componentByNo } from './component.js'
 import { currentStrokeColor } from '../module/color_picker.js'
@@ -26,18 +26,25 @@ export class LaTeX extends SelectableComponent {
       element.removeClass('text').addClass('latex')
     }
 
-    if (refs) 
-      this.target = componentByNo(draw, refs[0])?.element
+    if (refs) {
+      const target = componentByNo(draw, refs[0])?.element
+      const hidden = target.attr(FSG_HIDDEN_ATTR) ?? null
+      element.attr(FSG_HIDDEN_ATTR, hidden).attr('opacity', target.attr('opacity'))
+      this.target = target
+    }
 
     this.makeDraggable(draw, element)
   }
   update() {
     const target = this.target
-    const offsetX = this.element.attr('offset_x')
-    const offsetY = this.element.attr('offset_y')
+    const element = this.element
+    const offsetX = element.attr('offset_x')
+    const offsetY = element.attr('offset_y')
     const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }
-    this.element.move(position.x, position.y)
-    this.element.fire('update')
+    element.move(position.x, position.y)
+    const hidden = target.attr(FSG_HIDDEN_ATTR) ?? null
+    element.attr(FSG_HIDDEN_ATTR, hidden).attr('opacity', target.attr('opacity'))
+    element.fire('update')
   }
   makeDraggable(draw, element) {
     const target = this.target

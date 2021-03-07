@@ -10,6 +10,7 @@ import {
   CLASS_FSG_UI_SELECT_BOX,
   FSG_SELECTED_ATTR,
   FSG_HOVER_ATTR,
+  FSG_HIDDEN_ATTR,
 } from '../common/define.js'
 
 import { isRightButton } from '../common/common.js'
@@ -182,6 +183,8 @@ export class Component {
         .attr(OF_ATTR, target.attr(NO_ATTR))
         .flip('y')
         .move(position.x, position.y)
+      const hidden = target.attr(FSG_HIDDEN_ATTR) ?? null
+      label.attr(FSG_HIDDEN_ATTR, hidden).attr('opacity', target.attr('opacity'))
       draw.add(label)
     } 
     // make label to be draggable
@@ -214,6 +217,8 @@ export class Component {
       const position = { x: targetCenter.x + offsetX, y: -targetCenter.y + offsetY}
       // const position = { x: target.cx() + offsetX, y: -target.cy() + offsetY }
       label.move(position.x, position.y)
+      const hidden = target.attr(FSG_HIDDEN_ATTR) ?? null
+      label.attr(FSG_HIDDEN_ATTR, hidden).attr('opacity', target.attr('opacity'))
     })
 
     const observer = new MutationObserver(mutations => {
