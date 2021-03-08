@@ -332,9 +332,11 @@ export function htmlForPlayer(draw) {
   svgjs.attr('href', svgjsURL)
   const userScript = findUserScript(tmp.first())
   const orgScript = userScript.node.textContent
-  userScript.node.textContent = `__autoPlay__ = \`${orgScript}\``
+  userScript.node.textContent = `if (window.FSG_RUNTIME) {
+${orgScript}
+}`
 
-  tmp.defs().find('link').forEach(link => link.remove())
+  // tmp.defs().find('link').forEach(link => link.remove())
   const content = tmp.svg()
 
   // <script src="${svgjsCDN}/svg.min.js"></script>
@@ -365,7 +367,14 @@ export function saveAsSVG(draw) {
 export function exportToHTML(draw) {
   const filename = draw.fsg.filename.replace(/\.svg/, '.html')
   var element = document.createElement('a');
-  const content = svgDocument(draw, { 'style' :  'width:100%;' }) // only for HTML
+  const orgContent = svgDocument(draw, { 'style' :  'width:100%;' }) // only for HTML
+  const tmp = SVG(orgContent)
+  const userScript = findUserScript(tmp.first())
+  const orgScript = userScript.node.textContent
+  userScript.node.textContent = `if (window.FSG_RUNTIME) {
+${orgScript}
+}`
+  const content = tmp.svg()
 
   const head = String.raw`<head>
     <title>Fast SVG Geometry</title>

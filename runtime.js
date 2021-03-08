@@ -112,40 +112,19 @@ function init() {
 
   if (window.FSG_RUNTIME) return // already loaded
 
-  window.FSG_RUNTIME = true // runtime should only be loaded once.
-
   init_module_extension()
   init_module_animatic()
 
+  window.FSG_RUNTIME = true // runtime should only be loaded once.
+
+  SVG.find('svg').forEach(svg => loadSVG(svg))
+
   if (document.contentType.includes('html')) { // loaded by html
-    // autoPlay means it's run in the player of builder.
-    const autoPlay = window.frameElement?.getAttribute('autoplay')
-    if (autoPlay) {
-       const svg = SVG('svg')
-       loadSVG(svg)
-       try {
-        eval(__autoPlay__)
-      } catch (err) {
-        console.log(err)
-        alert(err.stack)
-      }
-      return
-    }
-    // load by exported html
-    const svg = SVG('svg')
-    loadSVG(svg)
     // for reload
     document.addEventListener('load-fsg', evt => loadFSG(evt.detail) )
     // search for custom tag <fsg>
     SVG.find('fsg').forEach(fsg => loadFSG(fsg))
-    console.log('runtime loaded in html')
-    return
   }
-
-  // loaded by standalone svg
-  const svg = SVG('svg')
-  loadSVG(svg)
-  console.log('runtime loaded in svg')
 }
 
 SVG.on(document, 'DOMContentLoaded', () => init())
