@@ -6,6 +6,7 @@ import { projectPointOnLine } from '../common/math.js'
 // modules
 import { undo, redo, doAction } from './history.js'
 import { saveAsSVG, exportToHTML, svgDocument } from './file.js'
+import { playInBuilder } from './player.js'
 import { toggle_code_editor } from './code_editor.js'
 import { showHint } from './ui.js'
 import { toggle_preference_window } from './preference.js'
@@ -52,7 +53,6 @@ import { addPolygon, addCircle, addAngle, FillableShape } from '../components/fi
 import { addAngleMarker, addLengthMarker } from '../components/measure.js'
 import { addLaTeX } from '../components/latex.js'
 import { chooseIntersectPoint } from './appending-point.js'
-import { animatic } from './animatic.js'
 
 let _keydownHandler, _keyupHandler
 
@@ -101,6 +101,9 @@ export function init_module_keybinding(draw) {
   }
   document.addEventListener('keyup', _keyupHandler)
 
+  const playerWindow = SVG('#playerWindow')
+  const playerViewbox = SVG('#playerViewbox')
+
   _keydownHandler = evt => {
     console.log(evt.code)
     draw.shiftKey = evt.shiftKey
@@ -108,6 +111,15 @@ export function init_module_keybinding(draw) {
     if (typeof window.FSG_BUILDER !== 'undefined' && evt.target != document.body) return
 
     if (!draw.ready) return // don't responde before system ready
+
+    // close player with escape
+    if (!playerWindow.hasClass('hidden')) {
+      evt.preventDefault()
+      evt.stopPropagation()
+      playerViewbox.node.innerHTML = ''
+      playerWindow.addClass('hidden')
+      return
+    }
 
     if (draw.appendingPoint) {
       // escape from appending modes
@@ -125,15 +137,9 @@ export function init_module_keybinding(draw) {
     let refs
     if (points) refs = points.map(p => p.attr(NO_ATTR))
     switch(evt.code) {
-      case 'Period':
+      case 'Enter':
         {
-          animatic([["test", actionEnd => {
-            actionEnd(true)
-          }], ["test2", actionEnd => {
-            actionEnd(true)
-          }]
-
-          ])
+          playInBuilder(draw)
         }
         break
       case 'F1':

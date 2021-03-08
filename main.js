@@ -16,6 +16,8 @@ import {
 } from './common/define.js'
 import { wait } from "./common/common.js"
 
+import { init_module_extension } from './module/extension.js'
+import { init_module_player } from './module/player.js'
 import { init_module_history } from './module/history.js'
 import { init_module_selection } from './module/selection.js'
 import { init_module_keybinding } from './module/keybinding.js'
@@ -33,7 +35,6 @@ import { init_module_marker } from './module/marker.js'
 import { init_component_system, deinit_component_system, componentByNo } from './components/component.js'
 import { reconstruct_components } from './module/file.js'
 import { init_module_script, findUserScript, execute_user_script } from './module/script.js'
-import { init_module_extension } from './module/extension.js'
 import { getCode } from './module/server.js'
 import './lib/svg.panzoom.js'
 
@@ -220,6 +221,7 @@ function init() {
 
   init_module_extension()
   init_module_color_picker()
+  init_module_player()
 
   _draw = newFSG() // new file
   console.assert(_draw, 'something wrong failed to get draw')

@@ -50,6 +50,31 @@ body {
   font: 1em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
 }
 
+#playerWindow {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  min-height: 50% !important;
+  font-size: 13px !important;
+  visibility: visible;
+  transition: opacity 0.4s cubic-bezier(0.02, 1.11, 0.57, 0.98);
+  border: none;
+  background-color: #00000088;
+  opacity: 1;
+}
+
+#playerWindow.hidden {
+  /* top: -300px; */
+  opacity: 0;
+  visibility: hidden;
+}
+
+#playerWindow iframe {
+  border: 0px;
+}
+
 #preferenceWindow {
   position: absolute;
   background-color: #232425;

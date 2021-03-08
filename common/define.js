@@ -1,7 +1,7 @@
 'use strict'
 
-export const DEV_TESTING = false
-// export const DEV_TESTING = true
+// export const DEV_TESTING = false
+export const DEV_TESTING = true
 
 export const SERVER_ROOT = (DEV_TESTING) ? 'https://localhost:8080' : 'https://rintaroutw.github.io/fsg'
 

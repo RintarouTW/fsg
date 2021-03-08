@@ -300,9 +300,7 @@ export function svgDocument(draw, optional_attributes = {}) {
     .attr('xmlns:fsg', FSG_NAMESPACE)
     .attr('style', null)
 
-  for (const [key, value] of Object.entries(optional_attributes)) {
-    tmp.attr(key, value)
-  }
+  for (const [key, value] of Object.entries(optional_attributes)) tmp.attr(key, value)
 
   patchSVGJS(tmp)
   cleanupDirtyElements(tmp)
@@ -314,6 +312,25 @@ export function svgDocument(draw, optional_attributes = {}) {
   // &nbsp; is not a defined entity in svg, replace it with &#160;
   const html = tmp.svg()
   return html.replace(/\&nbsp;/g, '&#160;')
+}
+
+export function htmlForPlayer(draw) {
+  const isLocal = window.location.origin.match(/^https:\/\/localhost/) != null
+  const SERVER_ROOT = isLocal ? window.location.origin : window.location.href
+  const katexCDN = isLocal ? `${SERVER_ROOT}/lib/katex` : 'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist' 
+  const svgjsCDN = isLocal ? `${SERVER_ROOT}/lib` : 'https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist'
+  const runtime = isLocal ? `${SERVER_ROOT}/runtime.js` : `${SERVER_ROOT}/runtime.min.js`
+  const content = svgDocument(draw)
+  const head = String.raw`<head>
+    <link rel="icon" href="${SERVER_ROOT}/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="${katexCDN}/katex.min.css">
+    <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/runtime.css">
+    <script defer src="${svgjsCDN}/svg.min.js"></script>
+    <script defer type="module" src="${runtime}"></script>
+  </head>
+`
+  const html = '<!DOCTYPE html>' + head + '<body><div style="overflow:hidden">' + content + '</div></body></html>'
+  return html
 }
 
 export function saveAsSVG(draw) {
@@ -331,7 +348,7 @@ export function saveAsSVG(draw) {
 export function exportToHTML(draw) {
   const filename = draw.fsg.filename.replace(/\.svg/, '.html')
   var element = document.createElement('a');
-  let content = svgDocument(draw, { 'style' :  'width:100%;' }) // only for HTML
+  const content = svgDocument(draw, { 'style' :  'width:100%;' }) // only for HTML
 
   const head = String.raw`<head>
     <title>Fast SVG Geometry</title>
@@ -341,13 +358,8 @@ export function exportToHTML(draw) {
     <link rel="icon" href="${SERVER_ROOT}/images/favicon.ico" type="image/x-icon" />
   </head>
 `
-  // <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/runtime.css">
-  // <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/dark-background.css">
-  // <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/theme-dark.css">
-  // <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/theme-light.css">
-
-  content = '<!DOCTYPE html>' + head + '<body><div style="overflow:hidden">' + content + '</div></body></html>'
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+  const html = '<!DOCTYPE html>' + head + '<body><div style="overflow:hidden">' + content + '</div></body></html>'
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(html));
   element.setAttribute('download', filename);
   element.style.display = 'none';
   document.body.appendChild(element);

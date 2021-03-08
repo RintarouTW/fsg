@@ -1,6 +1,6 @@
 'use strict'
 
-import { SERVER_ROOT } from './common/define.js'
+import { FSG_NAMESPACE, SERVER_ROOT } from './common/define.js'
 import { fetchSrc } from './common/common.js'
 import { init_component_system } from './components/component.js'
 import { init_module_extension } from './module/extension.js'
@@ -67,21 +67,36 @@ function showPlayButton(draw) {
     .on('mouseleave', () => runButton.attr('filter', null) )
 }
 
+function loadSVG(svg, title, filename) {
+  // const svg = SVG('svg')
+  if (!svg || svg.attr('xmlns:fsg') != FSG_NAMESPACE) return false
+
+  const draw = svg.first()
+  draw._document = svg.svg() // remember the original content
+  init_modules(draw)
+  draw.fsg.filename = filename ?? window.location.pathname.split('/').pop()
+  draw.ready = true
+
+  // get title specified by the user in iframe
+  title = title ?? window.frameElement?.getAttribute('title')
+  if (title) drawTitle(draw, title)
+  if (contain_user_script(draw)) showPlayButton(draw)
+
+  // support autoPlay attribute in iframe
+  const autoPlay = window.frameElement?.getAttribute('autoplay')
+  if (autoPlay == 'true') execute_user_script(draw)
+  return true
+}
+
 function loadFSG(fsg) {
   const src = fsg.attr('src')
   fetchSrc(src).then(content => {
     if (!content) return
     fsg.clear()
-    const svg = SVG(content)
-    const draw = svg.first()
-    draw._document = svg.svg()
-    init_modules(draw)
-    draw.fsg.filename = src.split('/').pop()
-    draw.ready = true
-    fsg.add(svg)
     const title = fsg.attr('title')
-    if (title) drawTitle(draw, title)
-    if (contain_user_script(draw)) showPlayButton(draw)
+    const filename = src.split('/').pop()
+    const svg = SVG(content)
+    if (loadSVG(svg, title, filename)) fsg.add(svg)
   })
 }
 
@@ -101,24 +116,21 @@ function init() {
   init_module_extension()
 
   if (document.contentType.includes('html')) { // loaded by html
+    // load by exported html
+    const svg = SVG('svg')
+    loadSVG(svg)
     // for reload
     document.addEventListener('load-fsg', evt => loadFSG(evt.detail) )
     // search for custom tag <fsg>
-    SVG.find('fsg')?.forEach(fsg => loadFSG(fsg))
+    SVG.find('fsg').forEach(fsg => loadFSG(fsg))
+    console.log('runtime loaded in html')
     return
   }
+
   // loaded by standalone svg
   const svg = SVG('svg')
-  const draw = svg.first()
-  draw._document = svg.svg() // remember the original content
-  init_modules(draw)
-  draw.fsg.filename = window.location.pathname.split('/').pop()
-  draw.ready = true
-  // get title specified by the user in iframe
-  const title = window.frameElement?.getAttribute('title')
-  if (title) drawTitle(draw, title)
-  if (contain_user_script(draw)) showPlayButton(draw)
-  // console.log('runtime done')
+  loadSVG(svg)
+  console.log('runtime loaded in svg')
 }
 
 SVG.on(document, 'DOMContentLoaded', () => init())
