@@ -1,17 +1,16 @@
 'use strict';
 
-const speechLang = 'en'
+let speechLang = 'en'
 
 let allVoices = []
-
-speechSynthesis.onvoiceschanged = initAllVoices
-
-initAllVoices() // for FireFox
-
 let _storyboard
 let isUtterEnd = true, isActionEnd = true
 
-window.animatic = animatic
+export function init_module_animatic() {
+  speechSynthesis.onvoiceschanged = initAllVoices
+  initAllVoices() // for FireFox
+  window.animatic = animatic
+}
 
 export function animatic(storyboard) {
   _storyboard = storyboard

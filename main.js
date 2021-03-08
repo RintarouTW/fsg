@@ -18,6 +18,7 @@ import { wait } from "./common/common.js"
 
 import { init_module_extension } from './module/extension.js'
 import { init_module_player } from './module/player.js'
+import { init_module_animatic } from './module/animatic.js'
 import { init_module_history } from './module/history.js'
 import { init_module_selection } from './module/selection.js'
 import { init_module_keybinding } from './module/keybinding.js'
@@ -222,6 +223,7 @@ function init() {
   init_module_extension()
   init_module_color_picker()
   init_module_player()
+  init_module_animatic()
 
   _draw = newFSG() // new file
   console.assert(_draw, 'something wrong failed to get draw')

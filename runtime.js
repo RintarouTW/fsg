@@ -4,6 +4,7 @@ import { FSG_NAMESPACE, SERVER_ROOT } from './common/define.js'
 import { fetchSrc } from './common/common.js'
 import { init_component_system } from './components/component.js'
 import { init_module_extension } from './module/extension.js'
+import { init_module_animatic } from './module/animatic.js'
 import { init_module_marker } from './module/marker.js'
 import { init_module_drag } from './module/drag.js'
 import { init_module_selection } from './module/selection.js'
@@ -114,6 +115,7 @@ function init() {
   window.FSG_RUNTIME = true // runtime should only be loaded once.
 
   init_module_extension()
+  init_module_animatic()
 
   if (document.contentType.includes('html')) { // loaded by html
     // load by exported html
