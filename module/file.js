@@ -7,6 +7,8 @@ import {
   TEXT_ATTR,
   SERVER_ROOT,
   FSG_NAMESPACE,
+  FSG_RUNTIME_NAMESPACE,
+  SVGJS_SCRIPT_NAMESPACE,
   RUNTIME_DEFAULT_STYLE,
   RUNTIME_STYLE_LINK,
   KATEX_STYLE_LINK,
@@ -27,6 +29,7 @@ import { addMidPoint, addIntersectPoint } from '../components/point.js'
 import { addPoint, addPinPoint } from '../components/draggable-point.js'
 import { addLaTeX } from '../components/latex.js'
 import { addAngleMarker, addLengthMarker } from '../components/measure.js'
+import { findScript, findUserScript } from './script.js'
 
 // reconstruct order by component.no
 function findAllComponentElements(draw) {
@@ -317,16 +320,30 @@ export function svgDocument(draw, optional_attributes = {}) {
 export function htmlForPlayer(draw) {
   const isLocal = window.location.origin.match(/^https:\/\/localhost/) != null
   const SERVER_ROOT = isLocal ? window.location.origin : window.location.href
-  const katexCDN = isLocal ? `${SERVER_ROOT}/lib/katex` : 'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist' 
-  const svgjsCDN = isLocal ? `${SERVER_ROOT}/lib` : 'https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist'
-  const runtime = isLocal ? `${SERVER_ROOT}/runtime.js` : `${SERVER_ROOT}/runtime.min.js`
-  const content = svgDocument(draw)
+  // const katexCDN = isLocal ? `${SERVER_ROOT}/lib/katex` : 'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist' 
+  const svgjsURL = isLocal ? `${SERVER_ROOT}/lib/svg.min.js` : 'https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js'
+  const runtimeURL = isLocal ? `${SERVER_ROOT}/runtime.min.js` : `${SERVER_ROOT}/runtime.min.js`
+  const orgContent = svgDocument(draw)
+  const tmp = SVG(orgContent)
+  // patch the scripts and links
+  const runtimeScript = findScript(tmp.first(), FSG_RUNTIME_NAMESPACE)
+  runtimeScript.attr('href', runtimeURL)
+  const svgjs = findScript(tmp.first(), SVGJS_SCRIPT_NAMESPACE)
+  svgjs.attr('href', svgjsURL)
+  const userScript = findUserScript(tmp.first())
+  const orgScript = userScript.node.textContent
+  userScript.node.textContent = `__autoPlay__ = \`${orgScript}\``
+
+  tmp.defs().find('link').forEach(link => link.remove())
+  const content = tmp.svg()
+
+  // <script src="${svgjsCDN}/svg.min.js"></script>
+  // <script type="module" src="${runtime}"></script>
+  // <link rel="stylesheet" href="${katexCDN}/katex.min.css">
+  // <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/runtime.css">
+
   const head = String.raw`<head>
     <link rel="icon" href="${SERVER_ROOT}/images/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="${katexCDN}/katex.min.css">
-    <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/runtime.css">
-    <script defer src="${svgjsCDN}/svg.min.js"></script>
-    <script defer type="module" src="${runtime}"></script>
   </head>
 `
   const html = '<!DOCTYPE html>' + head + '<body><div style="overflow:hidden">' + content + '</div></body></html>'

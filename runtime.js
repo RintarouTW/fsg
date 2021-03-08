@@ -118,6 +118,19 @@ function init() {
   init_module_animatic()
 
   if (document.contentType.includes('html')) { // loaded by html
+    // autoPlay means it's run in the player of builder.
+    const autoPlay = window.frameElement?.getAttribute('autoplay')
+    if (autoPlay) {
+       const svg = SVG('svg')
+       loadSVG(svg)
+       try {
+        eval(__autoPlay__)
+      } catch (err) {
+        console.log(err)
+        alert(err.stack)
+      }
+      return
+    }
     // load by exported html
     const svg = SVG('svg')
     loadSVG(svg)

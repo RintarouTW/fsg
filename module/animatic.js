@@ -1,14 +1,17 @@
 'use strict';
 
+import { wait } from '../common/common.js'
+
 let speechLang = 'en'
 
 let allVoices = []
 let _storyboard
 let isUtterEnd = true, isActionEnd = true
 
+speechSynthesis.onvoiceschanged = initAllVoices
+initAllVoices() // for FireFox
+
 export function init_module_animatic() {
-  speechSynthesis.onvoiceschanged = initAllVoices
-  initAllVoices() // for FireFox
   window.animatic = animatic
 }
 
@@ -43,7 +46,17 @@ export function actionStart() {
 }
 
 export function speak(text, callback) {
-  const voiceIndex = voicesBy(speechLang)[0].index
+  if (allVoices.length == 0) { // wait for voices initialization
+    wait(300).then(() => speak(text, callback))
+    return
+  }
+
+  const availableVoices = voicesBy(speechLang)
+  if (availableVoices.length == 0) {
+    console.warn('no available voice')
+    return
+  }
+  const voiceIndex = availableVoices[0].index
   queueSpeech(voiceIndex, text, callback)
 }
 
