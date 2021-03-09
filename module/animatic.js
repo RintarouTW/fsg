@@ -15,7 +15,8 @@ export function init_module_animatic() {
   window.animatic = animatic
 }
 
-export function animatic(storyboard) {
+export function animatic(lang, storyboard) {
+  speechLang = lang
   _storyboard = storyboard
   actionStart()
 }
