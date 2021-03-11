@@ -345,6 +345,7 @@ ${orgScript}
   // <link rel="stylesheet" type="text/css" href="${SERVER_ROOT}/style/runtime.css">
 
   const head = String.raw`<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
     <link rel="icon" href="${SERVER_ROOT}/images/favicon.ico" type="image/x-icon" />
   </head>
 `
