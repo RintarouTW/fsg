@@ -129,6 +129,10 @@ function inspect_detach() {
     field.value = fieldDefaultValue[name]
   })
   _inspecting_element = null
+
+  // remove colorchange event listeners
+  SVG(document).off('colorpicker:change-start')
+  SVG(document).off('colorpicker:change-end')
 }
 
 // in order to see original color of elements, 
@@ -158,6 +162,7 @@ export function init_module_inspector(draw) {
 
   // window.lastVisibleStrokeColor = lastVisibleStrokeColor
   // window.lastVisibleFillColor =  lastVisibleFillColor
+  inspect_detach()
 
   init_fields(draw)
   SVG('#inspector').on('inspect-component', evt => {
@@ -167,7 +172,7 @@ export function init_module_inspector(draw) {
     inspect_detach()
   })
 
-  document.addEventListener('colorpicker:change-start', evt => {
+  SVG(document).on('colorpicker:change-start', evt => {
     if(!_inspecting_element) return
     if (draw.targetComponents) return
     if (!draw.selectedComponents) unsetAllSelected(draw)
@@ -188,9 +193,7 @@ export function init_module_inspector(draw) {
       element.orgValue = orgValue
     })
     unsetInspecting(_inspecting_element)
-  })
-
-  document.addEventListener('colorpicker:change-end', evt => {
+  }).on('colorpicker:change-end', evt => {
     if (!_inspecting_element) return
     if (!draw.targetComponents) return // FIXME: temp workaround, somehow change-end was triggered twice. 
 
@@ -231,6 +234,7 @@ function init_fields(draw) {
     const field = SVG('#field_' + name)
     console.assert(field, `#field_${name} not found`)
 
+    field.off('input')
     field.on('input', evt => { // when user edit the field, apply to the inspecting element.
 
       const attributeName = evt.target.id.substr(6)

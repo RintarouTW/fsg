@@ -191,6 +191,7 @@ export function loadFSG(content) {
   init_appending_point_module(draw)
   init_module_drag(draw)
 
+  init_module_inspector(draw)
   init_module_keybinding(draw)
   reconstruct_components(draw)
   draw.ready = true

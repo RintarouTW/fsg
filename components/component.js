@@ -39,7 +39,7 @@ export function deinit_component_system(draw) {
 
 export function componentByNo(draw, no) {
   const found = draw.fsg.component.all.find(item => item.no == Number(no))
-  console.assert(found, 'component not found', no)
+  console.assert(found, 'component not found', no, draw)
   return found
 }
 
