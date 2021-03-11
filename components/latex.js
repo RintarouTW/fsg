@@ -101,7 +101,10 @@ export class LaTeX extends SelectableComponent {
     if (componetRef) newElement.attr(OF_ATTR, componetRef)
     newElement.component = this
     this.element = newElement
-    if (componetRef) this.watchTarget(draw, componetRef)
+    if (componetRef) {
+      const targetElement = componentByNo(draw, componetRef).element
+      targetElement.on('update', this.update).on('remove', this.remove)
+    }
     this.makeDraggable(draw, newElement)
     this.setAttribute('stroke', strokeColor)
     draw.add(newElement)
