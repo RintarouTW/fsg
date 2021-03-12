@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" rx="8" ry="8" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="43.5" y="-190"></rect><line x1="-433.5" y1="80" x2="433.5" y2="80" class="perp-line" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="11" fsg-refs="8,9" fsg_hidden="true"></line><line x1="-433.5" y1="40" x2="433.5" y2="40" class="perp-line" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="15" fsg-refs="8,13" fsg_hidden="true"></line><line x1="-433.5" y1="-45" x2="433.5" y2="-45" class="perp-line" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="24" fsg-refs="8,23"></line><line x1="-433.5" y1="-90" x2="433.5" y2="-90" class="perp-line" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="29" fsg-refs="8,25"></line><line x1="-433.5" y1="-135" x2="433.5" y2="-135" class="perp-line" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="37" fsg-refs="8,36"></line><line x1="-433.5" y1="-180" x2="433.5" y2="-180" class="perp-line" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="43" fsg-refs="8,42"></line><line x1="0" y1="-325.125" x2="0" y2="325.125" class="perp-line" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="8" fsg-refs="1,7"></line><line x1="-433.5" y1="0" x2="433.5" y2="0" class="axis-x" fsg_shape="true" stroke="#888888aa" marker-end="url(#SvgjsMarker1000)" fsg-no="1"></line><circle r="3" cx="0" cy="0" class="pin-point" fsg-no="7" fsg-refs="1" fsg_hidden="true"></circle><line x1="0" y1="80" x2="140" y2="80" class="edge" fsg_shape="true" stroke="#888888aa" fsg-no="18" fsg-refs="9,12" fsg-text="a"></line><line x1="7.555288461538424" y1="-325.125" x2="220.13701923076925" y2="325.125" class="parallel-line" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="46" fsg-refs="45,12" fsg_hidden="true"></line><line x1="0" y1="80" x2="-85" y2="-180" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="45" fsg-refs="9,44" fsg_hidden="true"></line><circle r="3" cx="0" cy="80" class="pin-point" fsg-no="9" fsg-refs="8"></circle><line x1="85" y1="80" x2="140" y2="80" class="edge" fsg_shape="true" stroke="#888888aa" fsg-no="20" fsg-refs="19,12"></line><path d="M 85 107 L 85 93
+  M 140 107 L 140 93
+  M 85 100 L 140 100" class="length-marker" fill="none" fsg_shape="true" stroke="#888888aa" fsg-no="22" fsg-refs="19,12" fsg-text="a-b"></path><circle r="3" cx="140" cy="80" class="pin-point" fsg-no="12" fsg-refs="11"></circle><line x1="0" y1="40" x2="85" y2="40" class="edge" fsg_shape="true" stroke="#888888aa" fsg-no="17" fsg-refs="13,16" fsg-text="b"></line><line x1="154.47596153846155" y1="-325.12499999999994" x2="-120.62980769230771" y2="325.125" class="parallel-line" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="32" fsg-refs="31,13" fsg_hidden="true"></line><line x1="-177.34642857142862" y1="-325.125" x2="138.48928571428576" y2="325.125" class="parallel-line" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="39" fsg-refs="38,13" fsg_hidden="true"></line><circle r="3" cx="0" cy="40" class="pin-point" fsg-no="13" fsg-refs="8"></circle><line x1="140" y1="-90" x2="85" y2="40" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="31" fsg-refs="30,16" fsg_hidden="true"></line><line x1="85" y1="40" x2="0" y2="-135" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="38" fsg-refs="16,36" fsg_hidden="true"></line><circle r="3" cx="85" cy="40" class="pin-point" fsg-no="16" fsg-refs="15"></circle><text class="label" offset_x="-5.9375" offset_y="7.9375" fsg-of="17" transform="matrix(1,0,0,-1,0,0)" x="36.5625" y="-41.75" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="36.5625" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">b</tspan></text><text class="label" offset_x="-4.234375" offset_y="3" fsg-of="18" transform="matrix(1,0,0,-1,0,0)" x="65.765625" y="-86.796875" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="65.765625" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">a</tspan></text><circle r="3" cx="85" cy="80" class="intersect-point" index="0" fsg-no="19" fsg-refs="18,16"></circle><text class="label" offset_x="-3.828125" offset_y="0.9375" fsg-of="22" transform="matrix(1,0,0,-1,0,0)" x="99.671875" y="-131.75" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="99.671875" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">a-b</tspan></text><line x1="0" y1="-45" x2="140" y2="-45" class="vector" fsg_shape="true" stroke="#888888aa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" fsg-no="28" fsg-refs="23,26" fsg-text="+a"></line><circle r="3" cx="0" cy="-45" class="pin-point" fsg-no="23" fsg-refs="8"></circle><line x1="0" y1="-90" x2="55" y2="-90" class="vector" fsg_shape="true" stroke="#888888aa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" fsg-no="35" fsg-refs="25,33" fsg-text="+a-b"></line><circle r="3" cx="0" cy="-90" class="pin-point" fsg-no="25" fsg-refs="8"></circle><circle r="3" cx="140" cy="-45" class="intersect-point" index="0" fsg-no="26" fsg-refs="24,12"></circle><text class="label" offset_x="-3.75" offset_y="7.984375" fsg-of="28" transform="matrix(1,0,0,-1,0,0)" x="66.25" y="43.1953125" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="66.25" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">+a</tspan></text><line x1="140" y1="-90" x2="55" y2="-90" class="vector" fsg_shape="true" stroke="#888888aa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" fsg-no="34" fsg-refs="30,33" fsg-text="-b"></line><circle r="3" cx="140" cy="-90" class="intersect-point" index="0" fsg-no="30" fsg-refs="29,12"></circle><circle r="3" cx="55" cy="-90" class="intersect-point" index="0" fsg-no="33" fsg-refs="32,29"></circle><text class="label" offset_x="-3.609375" offset_y="7.9375" fsg-of="34" transform="matrix(1,0,0,-1,0,0)" x="93.8984375" y="88.25" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="93.8984375" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">-b</tspan></text><text class="label" offset_x="-17.34375" offset_y="7.9375" fsg-of="35" transform="matrix(1,0,0,-1,0,0)" x="10.15625" y="88.25" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="10.15625" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">+a-b</tspan></text><line x1="0" y1="-135" x2="-85" y2="-135" class="vector" fsg_shape="true" stroke="#888888aa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" fsg-no="41" fsg-refs="36,40" fsg-text="-b"></line><circle r="3" cx="0" cy="-135" class="pin-point" fsg-no="36" fsg-refs="8"></circle><circle r="3" cx="-85" cy="-135" class="intersect-point" index="0" fsg-no="40" fsg-refs="39,37"></circle><text class="label" offset_x="-8.59375" offset_y="7.9375" fsg-of="41" transform="matrix(1,0,0,-1,0,0)" x="-51.09375" y="133.25" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-51.09375" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">-b</tspan></text><circle r="3" cx="0" cy="-180" class="pin-point" fsg-no="42" fsg-refs="8" fsg_hidden="true"></circle><line x1="-85" y1="-180" x2="55" y2="-180" class="vector" fsg_shape="true" stroke="#888888aa" marker-start="url(#SvgjsMarker1001)" marker-end="url(#SvgjsMarker1000)" fsg-no="48" fsg-refs="44,47" fsg-text="-b+a"></line><circle r="3" cx="-85" cy="-180" class="intersect-point" index="0" fsg-no="44" fsg-refs="43,40"></circle><circle r="3" cx="55" cy="-180" class="intersect-point" index="0" fsg-no="47" fsg-refs="46,43"></circle><text class="label" offset_x="-19.84375" offset_y="7.9375" fsg-of="48" transform="matrix(1,0,0,-1,0,0)" x="-34.84375" y="178.25" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-34.84375" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">-b+a</tspan></text></g><defs><style>
+svg {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+svg .fsg-board {
+  fill: #151c23;
+}
+
+svg .fsg-ui-select-box {
+  stroke-width: 0.5;
+  fill: none;
+}
+
+svg .menu {
+  font: 0.9em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
+}
+
+svg .menu_title {
+  fill: #aaa;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+svg .menu_item {
+  font-weight: 300;
+  fill: #888;
+}
+
+svg .menu_item:hover {
+  fill: #fff;
+  cursor: pointer;
+}
+
+svg *[fsg_hidden] {
+  visibility: hidden;
+}
+
+svg *[fsg_shape]:hover {
+  stroke: #fff;
+}
+
+svg *[fsg-stroke-type="dashed"] {
+  stroke-dasharray: 2.5 2.5;
+  stroke-width: 1.2;
+}
+
+svg *[fsg-stroke-type="dashed2"] {
+  stroke-dasharray: 6 3;
+  stroke-width: 1.2;
+}
+
+svg *[fsg-stroke-type="dashed3"] {
+  stroke-dasharray: 5 5;
+  stroke-width: 1.2;
+}
+
+svg *[fsg-stroke-type="dashed4"] {
+  stroke-dasharray: 3 2 8;
+  stroke-width: 1.2;
+}
+
+svg .axis-x, svg .axis-y {
+  stroke: #555; 
+  stroke-width: 1.2;
+}
+
+svg .vector-marker-start, svg .vector-marker-end {
+  fill: #999;
+}
+
+svg .point {
+  fill: #2f2f2f;
+  stroke: #ff0;
+}
+
+svg .pin-point {
+  fill: #777777aa;
+  stroke: #ff0;
+}
+
+svg .mid-point, svg .intersect-point {
+  fill: #777777aa;
+  stroke: #8a8a8aaa;
+}
+
+svg .point:hover, svg .pin-point:hover {
+  cursor: grab;
+}
+
+svg .mid-point:hover, svg .intersect-point:hover {
+  cursor: pointer;
+}
+
+svg g, svg div, svg foreignObject, svg span {
+  position: relative;
+}
+
+svg span.base {
+  position: relative !important;
+}
+
+svg .latex-container {
+  width: max-content;
+  height: max-content;
+  position: fixed; /* important for Safari */
+}
+
+svg .latex,
+svg .label {
+  color: #999;
+  fill: #999;
+  font-family: 'KaTeX_Math', 'Times New Roman', Times, serif;
+}
+
+svg .length-marker,
+svg .angle-marker {
+  fill: none
+}
+</style><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://localhost:8080/style/runtime.css"></link><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://localhost:8080/lib/katex/katex.min.css"></link><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker" id="SvgjsMarker1001"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3, 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><script href="https://localhost:8080/lib/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://localhost:8080/runtime.min.js" namespace="FSG_RUNTIME"></script><script xmlns="https://rintaroutw.github.io/fsg"></script></defs></svg>
