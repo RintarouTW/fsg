@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" rx="8" ry="8" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="-200.5" y="-85"></rect><circle r="191.049731745428" cx="0" cy="5" class="circle" fsg-stroke-type="dashed" fsg_shape="true" fill="none" stroke="#888888aa" fsg-no="7" fsg-refs="5,6"></circle><circle r="3" cx="0" cy="5" class="point" stroke="#888888aa" fsg-no="5"></circle><circle r="3" cx="190" cy="-15" class="point" stroke="#888888aa" fsg-no="6"></circle><line x1="152.28424108121064" y1="120.36684930394746" x2="151.0675522243884" y2="-111.95552430275231" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="15" fsg-refs="10,13"></line><line x1="152.28424108121064" y1="120.36684930394746" x2="-32.15299408922495" y2="193.3246796654604" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="16" fsg-refs="10,11"></line><line x1="152.28424108121064" y1="120.36684930394746" x2="-182.87498640905756" y2="-50.28778658878483" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="19" fsg-refs="10,12"></line><circle r="3" cx="152.28424108121064" cy="120.36684930394746" class="pin-point" fsg-no="10" fsg-refs="7"></circle><line x1="-182.87498640905756" y1="-50.28778658878483" x2="-32.15299408922495" y2="193.3246796654604" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="17" fsg-refs="12,11"></line><line x1="-32.15299408922495" y1="193.3246796654604" x2="151.0675522243884" y2="-111.95552430275231" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="18" fsg-refs="11,13"></line><circle r="3" cx="-32.15299408922495" cy="193.3246796654604" class="pin-point" fsg-no="11" fsg-refs="7"></circle><line x1="-182.87498640905756" y1="-50.28778658878483" x2="151.0675522243884" y2="-111.95552430275231" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="14" fsg-refs="12,13"></line><circle r="3" cx="-182.87498640905756" cy="-50.28778658878483" class="pin-point" fsg-no="12" fsg-refs="7"></circle><circle r="3" cx="151.0675522243884" cy="-111.95552430275231" class="pin-point" fsg-no="13" fsg-refs="7"></circle><circle r="3" cx="44.55535372023692" cy="65.51401357753156" class="intersect-point" index="0" fsg-no="20" fsg-refs="19,18"></circle></g><defs><style>
+svg {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+svg .fsg-board {
+  fill: #151c23;
+}
+
+svg .fsg-ui-select-box {
+  stroke-width: 0.5;
+  fill: none;
+}
+
+svg .menu {
+  font: 0.9em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
+}
+
+svg .menu_title {
+  fill: #aaa;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+svg .menu_item {
+  font-weight: 300;
+  fill: #888;
+}
+
+svg .menu_item:hover {
+  fill: #fff;
+  cursor: pointer;
+}
+
+svg *[fsg_hidden] {
+  visibility: hidden;
+}
+
+svg *[fsg_shape]:hover {
+  stroke: #fff;
+}
+
+svg *[fsg-stroke-type="dashed"] {
+  stroke-dasharray: 2.5 2.5;
+  stroke-width: 1.2;
+}
+
+svg *[fsg-stroke-type="dashed2"] {
+  stroke-dasharray: 6 3;
+  stroke-width: 1.2;
+}
+
+svg *[fsg-stroke-type="dashed3"] {
+  stroke-dasharray: 5 5;
+  stroke-width: 1.2;
+}
+
+svg *[fsg-stroke-type="dashed4"] {
+  stroke-dasharray: 3 2 8;
+  stroke-width: 1.2;
+}
+
+svg .axis-x, svg .axis-y {
+  stroke: #555; 
+  stroke-width: 1.2;
+}
+
+svg .vector-marker-start, svg .vector-marker-end {
+  fill: #999;
+}
+
+svg .point {
+  fill: #2f2f2f;
+  stroke: #ff0;
+}
+
+svg .pin-point {
+  fill: #777777aa;
+  stroke: #ff0;
+}
+
+svg .mid-point, svg .intersect-point {
+  fill: #777777aa;
+  stroke: #8a8a8aaa;
+}
+
+svg .point:hover, svg .pin-point:hover {
+  cursor: grab;
+}
+
+svg .mid-point:hover, svg .intersect-point:hover {
+  cursor: pointer;
+}
+
+svg g, svg div, svg foreignObject, svg span {
+  position: relative;
+}
+
+svg span.base {
+  position: relative !important;
+}
+
+svg .latex-container {
+  width: max-content;
+  height: max-content;
+  position: fixed; /* important for Safari */
+}
+
+svg .latex,
+svg .label {
+  color: #999;
+  fill: #999;
+  font-family: 'KaTeX_Math', 'Times New Roman', Times, serif;
+}
+
+svg .length-marker,
+svg .angle-marker {
+  fill: none
+}
+</style><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://localhost:8080/style/runtime.css"></link><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://localhost:8080/lib/katex/katex.min.css"></link><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3, 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><script href="https://localhost:8080/lib/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://localhost:8080/runtime.min.js" namespace="FSG_RUNTIME"></script><script xmlns="https://rintaroutw.github.io/fsg"></script></defs></svg>

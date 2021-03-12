@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="867" height="650.25" viewBox="0 0 867 650.25" xmlns:svgjs="https://svgjs.com/svgjs" xmlns:fsg="https://rintaroutw.github.io/fsg"><g transform="matrix(1,0,0,-1,433.5,325.125)"><rect width="867" height="650.25" class="fsg-board" fill="#ffffff00" rx="8" ry="8" x="-433.5" y="-325.125"></rect><rect width="0" height="0" class="fsg-ui-select-box" x="65" y="0"></rect><circle r="261.00766272276377" cx="0" cy="0" class="circle" fsg-stroke-type="dashed" fsg_shape="true" fill="none" stroke="#888888aa" fsg-no="6" fsg-refs="4,5"></circle><line x1="239.97321428571428" y1="-325.125" x2="-239.97321428571428" y2="325.125" class="line" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="13" fsg-refs="5,4"></line><circle r="3" cx="0" cy="0" class="point" stroke="#888888aa" fsg-no="4"></circle><line x1="-19.64282841050651" y1="260.2674764392113" x2="155" y2="-210" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="15" fsg-refs="7,5"></line><path d="M -14.420764858973724 246.20582460652275 A 15 15 0 0 1 -6.513163521328634 253.01407034980133 L -19.64282841050651 260.2674764392113 Z" class="angle" fsg_shape="true" fill="#ff955cbc" stroke="#888888aa" fsg-no="18" fsg-refs="5,7,8"></path><path d="M -146.09221554744326 197.93138880621345 A 15 15 0 0 1 -140.37629333703944 206.6612572073183 L -154.99999999999997 209.99999999999994 Z" class="angle" fsg_shape="true" fill="#ff955cbc" stroke="#888888aa" fsg-no="19" fsg-refs="5,14,8"></path><path d="M 149.77793644846722 -195.93834816731146 A 15 15 0 0 1 146.0922155474433 -197.9313888062135 L 155 -210 Z" class="angle" fsg_shape="true" fill="#61ff66a3" stroke="#888888aa" fsg-no="20" fsg-refs="17,5,14"></path><line x1="230.78124857201368" y1="121.92216905691289" x2="155" y2="-210" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="22" fsg-refs="8,5"></line><path d="M -19.64282841050651 260.2674764392113 L -33.70448024319504 255.0454128876785 L -28.48241669166226 240.98376105498997 L -14.420764858973724 246.20582460652275 Z" class="angle" fsg_shape="true" fill="none" stroke="#888888aa" fsg-no="24" fsg-refs="14,7,5"></path><path d="M 230.78124857201368 121.92216905691289 L 216.15754190905315 125.26091184959454 L 212.8187991163715 110.63720518663399 L 227.44250577933204 107.29846239395235 Z" class="angle" fsg_shape="true" fill="none" stroke="#888888aa" fsg-no="25" fsg-refs="14,8,5"></path><path d="M 158.33874279268164 -195.37629333703947 A 15 15 0 0 1 149.77793644846722 -195.93834816731146 L 155 -210 Z" class="angle" fsg_shape="true" fill="#4d70ffbc" stroke="#888888aa" fsg-no="26" fsg-refs="8,5,17"></path><circle r="3" cx="155" cy="-210" class="point" stroke="#888888aa" fsg-no="5" fsg-text="A"></circle><line x1="230.78124857201368" y1="121.92216905691289" x2="-19.64282841050651" y2="260.2674764392113" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="9" fsg-refs="8,7"></line><path d="M 217.6515836828358 129.17557514632287 A 15 15 0 0 1 216.15754190905315 125.26091184959454 L 230.78124857201368 121.92216905691289 Z" class="angle" fsg_shape="true" fill="#61ff66a3" stroke="#888888aa" fsg-no="21" fsg-refs="7,8,14"></path><line x1="-19.64282841050651" y1="260.2674764392113" x2="-154.99999999999997" y2="209.99999999999994" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="23" fsg-refs="7,14"></line><path d="M -140.37629333703944 206.6612572073183 A 15 15 0 0 1 -140.93834816731143 215.22206355153273 L -154.99999999999997 209.99999999999994 Z" class="angle" fsg_shape="true" fill="#4d70ffbc" stroke="#888888aa" fsg-no="27" fsg-refs="17,14,7"></path><circle r="94.60919653997384" cx="13.294187382240096" cy="171.57670431151044" class="circle" fsg-stroke-type="dashed" fsg_shape="true" fill="none" stroke="#888888aa" fsg-no="28" fsg-refs="17,7" fsg_hidden="true"></circle><circle r="3" cx="-19.64282841050651" cy="260.2674764392113" class="pin-point" fsg-no="7" fsg-refs="6" fsg-text="C"></circle><line x1="230.78124857201368" y1="121.92216905691289" x2="-154.99999999999997" y2="209.99999999999994" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="16" fsg-refs="8,14"></line><circle r="223.08338050225615" cx="13.294187382240096" cy="171.57670431151044" class="circle" fsg-stroke-type="dashed" fsg_shape="true" fill="none" stroke="#888888aa" fsg-no="30" fsg-refs="17,8" fsg_hidden="true"></circle><circle r="3" cx="230.78124857201368" cy="121.92216905691289" class="pin-point" fsg-no="8" fsg-refs="6" fsg-text="B"></circle><circle r="172.62468872734755" cx="13.294187382240096" cy="171.57670431151044" class="circle" fsg-stroke-type="dashed" fsg_shape="true" fill="none" stroke="#888888aa" fsg-no="33" fsg-refs="17,14" fsg_hidden="true"></circle><circle r="3" cx="-154.99999999999997" cy="209.99999999999994" class="intersect-point" index="0" fsg-no="14" fsg-refs="13,6" fsg-text="D"></circle><circle r="3" cx="13.294187382240096" cy="171.57670431151044" class="intersect-point" index="0" fsg-no="17" fsg-refs="16,15" fsg-text="E"></circle><text class="label" offset_x="5" offset_y="5" fsg-of="5" transform="matrix(1,0,0,-1,0,0)" x="160" y="205.65625" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="160" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">A</tspan></text><text class="label" offset_x="5" offset_y="5" fsg-of="8" transform="matrix(1,0,0,-1,0,0)" x="235.7872910615747" y="-126.72209807586307" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="235.7872910615747" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">B</tspan></text><text class="label" offset_x="-1.09375" offset_y="-21.13296227723623" fsg-of="7" transform="matrix(1,0,0,-1,0,0)" x="-20.729477223866795" y="-290.91073074446274" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-20.729477223866795" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">C</tspan></text><text class="label" offset_x="-26.62500000000003" offset_y="-7.015625000000057" fsg-of="14" transform="matrix(1,0,0,-1,0,0)" x="-181.625" y="-226.80468749999994" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="-181.625" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">D</tspan></text><text class="label" offset_x="5" offset_y="5" fsg-of="17" transform="matrix(1,0,0,-1,0,0)" x="18.30939199531369" y="-176.36826077413787" opacity="1" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="20.8" x="18.30939199531369" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;,&quot;newLined&quot;:true}">E</tspan></text><line x1="90.95789340047688" y1="-37.55135077394982" x2="-78.9416218056905" y2="192.635089182793" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="32" fsg-refs="31,29"></line><circle r="3" cx="-78.9416218056905" cy="192.635089182793" class="intersect-point" index="0" fsg-no="29" fsg-refs="16,28"></circle><circle r="3" cx="90.95789340047688" cy="-37.55135077394982" class="intersect-point" index="0" fsg-no="31" fsg-refs="15,30"></circle><line x1="105.52999657017064" y1="150.51831944022788" x2="73.39132705542505" y2="9.750819604164121" class="edge" fsg-stroke-type="dashed" fsg_shape="true" stroke="#888888aa" fsg-no="36" fsg-refs="35,34"></line><circle r="3" cx="73.39132705542505" cy="9.750819604164121" class="intersect-point" index="0" fsg-no="34" fsg-refs="15,33"></circle><circle r="3" cx="105.52999657017064" cy="150.51831944022788" class="intersect-point" index="1" fsg-no="35" fsg-refs="16,28"></circle></g><defs><style>
+svg {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+svg .fsg-board {
+  fill: #151c23;
+}
+
+svg .fsg-ui-select-box {
+  stroke-width: 0.5;
+  fill: none;
+}
+
+svg .menu {
+  font: 0.9em Roboto, Helvetica, Sans-Serif, Times, serif, monospace;
+}
+
+svg .menu_title {
+  fill: #aaa;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+svg .menu_item {
+  font-weight: 300;
+  fill: #888;
+}
+
+svg .menu_item:hover {
+  fill: #fff;
+  cursor: pointer;
+}
+
+svg *[fsg_hidden] {
+  visibility: hidden;
+}
+
+svg *[fsg_shape]:hover {
+  stroke: #fff;
+}
+
+svg *[fsg-stroke-type="dashed"] {
+  stroke-dasharray: 2.5 2.5;
+  stroke-width: 1.2;
+}
+
+svg *[fsg-stroke-type="dashed2"] {
+  stroke-dasharray: 6 3;
+  stroke-width: 1.2;
+}
+
+svg *[fsg-stroke-type="dashed3"] {
+  stroke-dasharray: 5 5;
+  stroke-width: 1.2;
+}
+
+svg *[fsg-stroke-type="dashed4"] {
+  stroke-dasharray: 3 2 8;
+  stroke-width: 1.2;
+}
+
+svg .axis-x, svg .axis-y {
+  stroke: #555; 
+  stroke-width: 1.2;
+}
+
+svg .vector-marker-start, svg .vector-marker-end {
+  fill: #999;
+}
+
+svg .point {
+  fill: #2f2f2f;
+  stroke: #ff0;
+}
+
+svg .pin-point {
+  fill: #777777aa;
+  stroke: #ff0;
+}
+
+svg .mid-point, svg .intersect-point {
+  fill: #777777aa;
+  stroke: #8a8a8aaa;
+}
+
+svg .point:hover, svg .pin-point:hover {
+  cursor: grab;
+}
+
+svg .mid-point:hover, svg .intersect-point:hover {
+  cursor: pointer;
+}
+
+svg g, svg div, svg foreignObject, svg span {
+  position: relative;
+}
+
+svg span.base {
+  position: relative !important;
+}
+
+svg .latex-container {
+  width: max-content;
+  height: max-content;
+  position: fixed; /* important for Safari */
+}
+
+svg .latex,
+svg .label {
+  color: #999;
+  fill: #999;
+  font-family: 'KaTeX_Math', 'Times New Roman', Times, serif;
+}
+
+svg .length-marker,
+svg .angle-marker {
+  fill: none
+}
+</style><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://localhost:8080/style/runtime.css"></link><link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" href="https://localhost:8080/lib/katex/katex.min.css"></link><marker markerWidth="6" markerHeight="6" refX="3" refY="3" viewBox="0 0 6 6" orient="auto" class="vector-start-marker"><circle r="3" cx="3" cy="3" class="vector-marker-start"></circle></marker><marker markerWidth="10" markerHeight="6" refX="10" refY="3" viewBox="0 0 10 6" orient="auto" class="vector-end-marker" id="SvgjsMarker1000"><polygon points="0 0, 10 3, 0 6" stroke-width="1" class="vector-marker-end"></polygon></marker><script href="https://localhost:8080/lib/svg.min.js" namespace="SVGJS_SCRIPT"></script><script href="https://localhost:8080/runtime.min.js" namespace="FSG_RUNTIME"></script><script xmlns="https://rintaroutw.github.io/fsg"></script></defs></svg>
